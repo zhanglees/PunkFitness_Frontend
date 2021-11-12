@@ -1,0 +1,46 @@
+<!--memberinfo.wxml-->
+<view class="container">
+  <view class='top_layout'>
+    <!-- <image src='{{coverImage}}' mode='aspectFill'></image> -->
+    <view class="userinfo">
+    <block wx:if="{{userInfo}}">
+      <view class="userinfo-top">
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+        <view class="">
+          <view class="userinfo-detail-n">
+            <text class="userinfo-nickname">{{userInfo.name}}</text>
+            <text class="userinfo-mobile">{{userInfo.mobile}}</text>
+          </view>
+          <view class="userinfo-detail-b">
+            <text class="userinfo-birthday">{{userInfo.birthday}}</text>
+            <text class="userinfo-age">{{userInfo.age}}岁</text>
+          </view>
+        </view>
+      </view>
+      <view class="userinfo-tags">
+        <text class="userinfo-tags-item" wx:for="{{userInfo.tags}}" wx:key="i">{{item}}</text>
+      </view>
+      <view class="userinfo-remarks" wx:if="userInfo.remark">
+        <text class="userinfo-remarks-c">备注：{{userInfo.remark}}</text>
+      </view>
+    </block>
+    <block wx:else>
+    </block>
+    </view> 
+  </view>
+  <view class="userserver">
+    <view class="member-title">客户服务</view>
+    <ul class="userserver-list">
+      <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">{{item.name}}</li>
+    </ul>
+  </view>
+  <view class="usernews">
+    <view class="member-title">客户动态</view>
+    <view class='usernews-view'> 
+      <view wx:for="{{news}}" wx:key="key" wx:for-index="key"  wx:for-item="value">
+        <view class="usernews-title">{{key}}</view>
+        <timeAxis axisArr="{{value}}"></timeAxis>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,42 @@
+<!--experience.wxml-->
+<view class="container page-form">
+  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+  <mp-form id="form" rules="{{rules}}" models="{{formData}}" class="experience-form">
+    <mp-cell prop="name" title="姓名">
+        <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="请输入姓名"/>
+    </mp-cell>
+    <mp-cell prop="mobile" title="手机号">
+        <input bindinput="formInputChange" data-field="mobile" class="weui-input" placeholder="请输入手机号"/>
+    </mp-cell>
+    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+        <view slot="title" class="weui-label">性别</view>
+        <picker bindchange="bindGendersChange" value="{{gendersIndex}}" range="{{genders}}">
+            <view class="weui-select">{{genders[gendersIndex]}}</view>
+        </picker>
+    </mp-cell>
+    <mp-cell prop="birthday" title="生日" ext-class="">
+        <picker data-field="birthday" mode="date" value="{{birthday}}" start="1930-01-01" end="2021-09-01" bindchange="bindBirthdayChange">
+            <view class="weui-input">{{birthday}}</view>
+        </picker>
+    </mp-cell>
+
+    <mp-cell ext-class="weui-cell-nosplit" title="客户标签"></mp-cell>
+    <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="form-checkbox">
+      <checkbox-group id="tags" name="tags" bindchange="tagsChange">
+          <label wx:for="{{tagsItems}}" wx:key="value" class="form-checkbox-item">
+            <checkbox value="{{item.value}}" checked="{{item.checked}}" />
+            {{item.name}}
+            </label>
+        </checkbox-group>
+    </mp-cell>
+
+    <mp-cell ext-class="weui-cell-nosplit" title="备注"></mp-cell>
+    <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="form-textarea weui-cell-nosplit">
+      <textarea class="weui-textarea" placeholder="请输入备注" />
+    </mp-cell>
+  </mp-form>
+
+    <view slot="button">
+        <button class="form-btn-confirm" type="primary" bindtap="submitForm">保存</button>
+    </view>
+</view>

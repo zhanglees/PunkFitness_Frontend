@@ -1,0 +1,41 @@
+/**index.wxss**/
+.container{
+  /* background: #eee; */
+  /* height: 100%; */
+}
+.index-navigator{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 80rpx;
+}
+.index-navigator-item{
+  width: 40%;
+  margin: 10rpx;
+  text-align: center;
+  border: 1px solid green;
+  color: white;
+  background: green;
+  border-radius: 10rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+}
+
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.usermotto {
+  margin-top: 200px;
+}

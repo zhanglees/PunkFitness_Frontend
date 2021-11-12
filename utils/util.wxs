@@ -1,0 +1,10 @@
+function defineIndexOf(arr, item) {
+    return arr ? arr.indexOf(item) : -1;
+}
+function tofixed(n, digits){
+  return n.toFixed(digits);
+}
+module.exports = {
+    indexOf: defineIndexOf,
+    tofixed: tofixed
+}

@@ -1,0 +1,57 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+  font-size: 28rpx;
+  color: #333;
+} 
+.page-form{
+  width: 100%;
+  padding: 10rpx 10rpx 20rpx;
+}
+.container .form-btn-confirm{
+  background: #387E22;
+  border-radius: 10rpx;
+}
+.container .form-btn-confirm:hover{
+  background: #387E22;
+}
+
+/* .container .toptips--weui-toptips_error{
+  background: rgba(238, 238, 238, 0.8);
+  border-radius: 2px;
+  color: red;
+  top: 0;
+  left: 0;
+  right: 0;
+} */
+/*radio 选项框大小  */
+radio .wx-radio-input {
+  width: 20rpx;
+  height: 20rpx;
+  font-size: 20rpx;
+}
+/*checkbox 选项框大小  */
+checkbox .wx-checkbox-input {
+  width: 20rpx;
+  height: 20rpx;
+  font-size: 20rpx;
+}
+/*checkbox选中后样式  */
+/* checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: green;
+  border: green;
+} */
+/*checkbox选中后图标样式  */
+/* checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  text-align: center;
+  font-size: 20rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+} */

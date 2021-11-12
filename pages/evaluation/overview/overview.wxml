@@ -1,0 +1,30 @@
+<!--evaluation    overview.wxml-->
+<view class="container">
+    <view class="type-tab">
+        <view wx:for="{{tabList}}" wx:key="id" bindtap="tabChange" data-id="{{item.id}}"  class="'tab-item' {{item.id == type ? 'tab-item-act' : ''}}">
+        {{item.name}}
+        </view>
+    </view>
+    <view class='top_layout'>
+        <view class="top-say-sth">添加评估测试后，可以更好的定制适合您的训练</view>
+        <view bindtap="gotoEvaluation" class="goto-btn">
+            + 添加评估测试
+        </view>
+    </view>
+    <view class="detail">
+        <view wx:for="{{evaluation}}" wx:key="index">
+            <view class="detail-top">
+                <text>{{item.type}}</text>
+                <view class="detatil-top-right">
+                    <text class="detail-coach">{{item.coach}}</text>
+                    <text class="detatil-time">{{item.time}}</text>
+                </view>
+            </view>
+            <ul class="detail-ul">
+                <li class="detail-li" wx:for="{{evaluation}}" wx:key="index">
+                    <view class="detail-li-a">{{item.a}}</view>
+                </li>
+            </ul>
+        </view>
+    </view>
+</view>

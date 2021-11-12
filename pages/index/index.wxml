@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="index-navigator">
+      <view class="index-navigator-item" bindtap='bindAct' wx:for="{{navigatorList}}" wx:key="link" data-link='{{item.link}}'>
+      <!--<image class="index-mine_icon iconfont fa-user-o" src="../../static/search/icon_portrait@3x.png"></image>-->
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+</view>

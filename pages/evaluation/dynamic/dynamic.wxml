@@ -1,0 +1,91 @@
+<!--pages/evaluation/dynamic/dynamic.wxml-->
+<view class="container">
+    <block wx:if="{{!showReport}}">
+    <view class="top_layout">
+        <view class="top-tab">
+            <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
+            {{item}}
+            </view>
+        </view>
+    </view>
+    <swiper class="content-swiper" indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
+        <swiper-item wx:for="{{tabList}}" wx:key="index">
+            <view class="swiper-item" id="swiperItem{{index}}">
+                <view class="exp-image-wrapper">
+                    <image class="exp-image" src="{{expImage[current]}}" mode="cover"></image>
+                </view>
+
+                <view class="act-area">
+                    <view>拍摄视频（最多2个）</view>
+                    <view class="user-image-wrapper" wx:for="{{userVideo[index]}}" wx:key="index">
+                        <image class="user-image" src="{{item}}" mode="widthFix"></image>
+                    </view>
+                    <view class="eva-camera-wrapper" wx:if="{{userVideo[index].length<2}}">
+                        <view class="eva-camera" bindtap="startPhoto">
+                            <mp-icon type="field" icon="camera" color="gray" size="{{25}}"></mp-icon>
+                            <view>添加视频</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="feedback">
+                    <view class="feedback-title">问题反馈</view>
+                    <checkbox-group class="feedback-list">
+                        <view  wx:for="{{feedbackList[index]}}" wx:key="index" class="feedback-item">
+                            <label class="form-checkbox-item" data-index="{{index}}" class="feedback-checkbox" bindtap="setChoice">
+                                <checkbox value="{{index}}" checked="{{item.checked}}" />
+                                {{item.name}}
+                            </label>
+                            <radio-group wx:if="{{item.checked}}" class="feedback-radios" data-index="{{index}}" bindchange="radioChange">
+                                <label wx:for="{{item.options}}" wx:key="index" wx:for-item="option" class="feedback-radio-item">
+                                    <radio value="{{option}}" />
+                                    {{option}}
+                                </label>
+                            </radio-group>
+                        </view>
+                    </checkbox-group>
+                    <view class="feedback-remark">教练备注：</view>
+                    <textarea class="feedback-remark-area" placeholder="请输入备注" bindinput="remarkChange" />
+                    <view>
+                        <button class="form-btn-confirm" type="primary" bindtap="submitFirstStep" wx:if="{{index==0}}">下一步</button>
+                        <button class="form-btn-confirm" type="primary" bindtap="finishStep" wx:else>生成报告</button>
+                    </view>
+                </view>
+            </view>
+        </swiper-item>
+    </swiper>
+    <block wx:if="{{startPhoto&&authCamera}}" >
+        <camera class="camera" binderror="handleCameraError" device-position="{{devicePosition}}" flash="off">  
+            <cover-view class="camera-cover">  
+                <cover-image class="line" src="/images/evaluation/static-cover.png"></cover-image>  
+                <cover-view class="camera-btn-wrapper">
+                    <button class="camera-btn" bindtap="takePhoto">拍照</button>  
+                    <button class="camera-btn camera-btn-cancel" bindtap="cancelPhone">取消</button>  
+                    <view class="error-handler" wx:if="{{!authCamera && startPhoto}}">  
+                        <button class="nobtn" openType="openSetting">打开相机授权</button>  
+                    </view>  
+                </cover-view>
+            </cover-view>  
+        </camera>  
+    </block>
+    </block>
+    
+    <view class="report-list" wx:else>
+    <block wx:for="{{feedbackList}}" wx:key="index">
+        <view class="report-img-list">
+            <view class="report-image-wrapper" wx:for="{{userImg[index]}}" wx:for-item="image" wx:key="*this">
+                <image class="report-image" src="{{image}}" mode="cover"></image>
+            </view>
+        </view>
+        <view class="report-problem-list">
+        <block wx:for="{{item}}" wx:for-item="problem" wx:key="name">
+            <view class="report-problem" wx:if="{{problem.checked}}">
+                {{problem.name}}: {{problem.result}}
+            </view>
+        </block>
+        </view>
+    </block>
+    <view>
+        <button class="form-btn-confirm" type="primary" bindtap="finish">完成</button>
+    </view> 
+    </view>
+</view>

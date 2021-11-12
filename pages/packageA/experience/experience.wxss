@@ -1,0 +1,42 @@
+/**experience.wxss**/
+.container{
+}
+.experience-form{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10rpx 64rpx 60rpx;
+}
+.page-form .weui-cell{
+  padding-left: 0rpx;
+  padding-right: 0rpx;
+  color: #333;
+}
+.weui-cell::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  color: rgba(0,0,0,0.1);
+  z-index: 2;
+}
+.weui-cell .weui-select{
+  color: #333;
+}
+.weui-cell-nosplit::after{
+  display: none;
+}
+.form-textarea, .form-checkbox{
+  padding-top: 0;
+}
+.form-textarea .weui-textarea{
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+.form-checkbox .form-checkbox-item{
+  margin-right: 50rpx;
+}

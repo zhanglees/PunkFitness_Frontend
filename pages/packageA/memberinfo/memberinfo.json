@@ -1,0 +1,6 @@
+{
+  "usingComponents": { 
+    "timeAxis": "/components/timeAxis/timeAxis"
+  },
+  "navigationBarTitleText": "会员详情"
+}

@@ -1,0 +1,17 @@
+<!--pages/packageA/report/report.wxml-->
+<view class="container">
+    <view class="report-list">
+        <view class="report-img-list">
+            <view class="report-image-wrapper" wx:for="{{imageList}}" wx:key="index">
+                <image class="report-image" src="{{item}}" mode="cover"></image>
+            </view>
+        </view>
+        <view class="report-problem" wx:for="{{problemList}}" wx:key="index">
+            {{item.name}}: {{item.result}}
+        </view>
+    </view>
+    <view>
+        <button class="form-btn-confirm" type="primary" bindtap="finishStep">完成</button>
+    </view>         
+</view>
+

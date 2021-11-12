@@ -1,0 +1,11 @@
+/* pages/packageA/report/report.wxss */
+.report-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.report-image-wrapper{
+    border: 1px solid red;
+    width: 300rpx;
+    height: 400rpx;
+}

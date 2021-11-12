@@ -1,0 +1,20 @@
+<!--questionnaire    overview.wxml-->
+<view class="container">
+    <view class='top_layout'>
+        <view class="top-say-sth">添加健身问卷，可以更好的定制您的训练</view>
+        <view bindtap="gotoFitness" class="goto-fitness-btn">
+            + 添加健身问卷
+        </view>
+    </view>
+    <view class="detail">
+        <view class="detail-tab">
+            <view wx:for="{{typeList}}" wx:key="index" bindtap="tabChange" data-type="{{index}}" class="'tab-item' {{index == type ? 'tab-item-act' : ''}}">{{item}}</view>
+        </view>
+        <ul class="detail-ul">
+            <li class="detail-li" wx:for="{{questionnaire}}" wx:key="index">
+                <view class="detail-li-q">{{index+1}}. {{item.q}}</view>
+                <view class="detail-li-a">{{item.a}}</view>
+            </li>
+        </ul>
+    </view>
+</view>

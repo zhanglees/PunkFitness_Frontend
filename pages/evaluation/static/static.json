@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "mp-icon": "weui-miniprogram/icon/icon",
+        "mp-cell": "weui-miniprogram/cell/cell"
+    },
+    "backgroundColor": "#eeeeee",
+    "navigationBarTitleText": "静态评估"
+}

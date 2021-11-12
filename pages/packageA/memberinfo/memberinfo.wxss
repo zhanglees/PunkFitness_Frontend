@@ -1,0 +1,96 @@
+/**memberinfo.wxss**/
+.container{
+  background-color: #eee;
+}
+.top_layout{
+  /* background: url("https://wx1.sinaimg.cn/large/008aFBN9ly4gkvowkxov5j30ng0g90tx.jpg") center no-repeat;
+  background-size: cover; */
+  background-color: #fff;
+  width: 100%;
+  /* height: 400rpx; */
+  overflow: hidden;
+  padding: 40rpx 40rpx;
+  box-sizing: border-box;
+}
+.userinfo-top{
+  display: flex;
+  align-items: center;
+}
+.userinfo-avatar{
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx 20rpx 20rpx 0;
+  border-radius: 50%;
+  background-color: rgba(56, 126, 34, .1);
+}
+.userinfo-detail-b{
+  background-color: rgba(56, 126, 34, .1);
+  border: 1px solid green;
+  border-radius: 10rpx;
+  padding: 0 10rpx;
+  line-height: 36rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+.userinfo-nickname, .userinfo-birthday{
+  margin-right: 20rpx;
+  display: inline-block;
+}
+.userinfo-tags{
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: green;
+}
+.userinfo-tags-item{
+  display: inline-block;
+  border: 1px solid green;
+  border-radius: 8rpx;
+  background-color: rgba(56, 126, 34, .1);
+  padding: 0 10rpx;
+  margin-right: 20rpx;
+}
+.userinfo-remarks{
+  border: 1px solid green;
+  border-radius: 8rpx;
+  background-color: rgba(56, 126, 34, .1);
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  padding: 10rpx;
+}
+
+.userserver, .usernews{
+  background: #fff;
+  margin-top: 30rpx;
+  width: 100%;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+.member-title{
+  font-size: 36rpx;
+}
+.userserver-list{
+  padding: 20rpx 0;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.userserver-li{
+  display: inline-block;
+  border: 1px solid green;
+  color: green;
+  border-radius: 8rpx;
+  padding: 10rpx 20rpx;
+  margin-right: 20rpx;
+  margin-top: 15rpx;
+  min-width: 20%;
+  text-align: center;
+}
+.usernews-view{
+  margin-bottom: 20rpx;
+}
+.usernews-title{
+  color: green;
+  line-height: 2;
+}
