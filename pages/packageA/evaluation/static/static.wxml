@@ -20,8 +20,11 @@
                     <view class="exp-image-wrapper">
                         <image class="exp-image" src="{{expImage[current]}}" mode="cover"></image>
                     </view>
-                    <view class="exp-image-wrapper" wx:for="{{userImg[index]}}" wx:key="index">
+                    <view class="exp-image-wrapper" wx:for="{{userImg[index]}}" wx:key="index" wx:for-index="i">
                         <image class="exp-image" src="{{item}}" mode="widthFix"></image>
+                        <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="{{i}}">
+                            <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
+                        </view>
                     </view>
                     <view class="eva-camera-wrapper" wx:if="{{userImg[index].length<5}}">
                         <view class="eva-camera" bindtap="startPhoto">
@@ -52,8 +55,8 @@
                     <view class="feedback-remark">教练备注：</view>
                     <textarea class="feedback-remark-area" placeholder="请输入备注" bindinput="remarkChange" />
                     <view>
-                        <button class="form-btn-confirm" type="primary" bindtap="submitFirstStep" wx:if="{{index==0}}">下一步</button>
-                        <button class="form-btn-confirm" type="primary" bindtap="finishStep" wx:else>生成报告</button>
+                        <button class="form-btn-confirm" type="primary" bindtap="nextStep" wx:if="{{index==0}}">下一步</button>
+                        <button class="form-btn-confirm" type="primary" bindtap="generateReport" wx:else>生成报告</button>
                     </view>
                 </view>
             </view>

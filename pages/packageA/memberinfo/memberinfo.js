@@ -19,7 +19,7 @@ Page({
       link: '/pages/packageA/questionnaire/overview/overview'
     }, {
       name: '评估测试',
-      link: '/pages/evaluation/overview/overview'
+      link: '/pages/packageA/evaluation/overview/overview'
     }, {
       name: '体测报告',
       link: ''

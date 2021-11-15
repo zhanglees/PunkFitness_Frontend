@@ -1,0 +1,73 @@
+<!--pages/evaluation/dynamic/dynamic.wxml-->
+<view class="container">
+    <block wx:if="{{!showReport}}">
+    <view class="top_layout">
+        <view class="top-tab">
+            <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
+            {{item}}
+            </view>
+        </view>
+    </view>
+    <swiper class="content-swiper" indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
+        <swiper-item wx:for="{{tabList}}" wx:key="index">
+            <view class="swiper-item" id="swiperItem{{index}}">
+                <view class="exp-image-wrapper">
+                    <image class="exp-image" src="{{expImage[current]}}" mode="heightFix"></image>
+                </view>
+
+                <view class="act-area">
+                    <view>拍摄视频（最多2个）</view>
+                    <view class="act-video-list">
+                        <view class="user-video-wrapper video-wrapper" wx:for="{{userVideo[index]}}" wx:key="index" wx:for-item="video" wx:for-index="i">
+                            <video class="user-video" src="{{video}}"></video>
+                            <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="{{i}}">
+                                <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
+                            </view>
+                        </view>
+                        <view class="eva-camera-wrapper video-wrapper" wx:if="{{userVideo[index].length<2}}">
+                            <view class="eva-camera" bindtap="startVideo">
+                                <mp-icon type="field" icon="video-call" color="gray" size="{{20}}"></mp-icon>
+                                <view>添加视频</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="feedback">
+                    <view class="feedback-title">问题反馈</view>
+                    <view class="feedback-list">
+                        <view wx:for="{{feedbackList[index]}}" wx:key="index" class="feedback-item {{problem.checked ? 'feedback-item_act' : ''}}" wx:for-item="problem" bindtap="setChoice" data-i="{{index}}">
+                            {{problem.name}}
+                        </view>
+                    </view>
+                    <view class="feedback-remark">教练备注：
+                        <textarea class="feedback-remark-area" placeholder="请输入备注" bindinput="remarkChange" />
+                    </view>
+                    <view class="report-remark">
+                        <button class="form-btn-confirm" type="primary" bindtap="generateReport" wx:if="{{index==tabList.length-1}}">生成报告</button>
+                        <button class="form-btn-confirm" type="primary" bindtap="nextStep" wx:else>下一步</button>
+                    </view>
+                </view>
+            </view>
+        </swiper-item>
+    </swiper>
+    </block>
+    
+    <view class="report-list" wx:else>
+        <view class="report-item" wx:for="{{datas}}" wx:key="index">
+            <view class="report-item-title">
+                {{item.name}}
+            </view>
+            <block wx:for="{{item.feedback}}" wx:for-item="problem" wx:key="name">
+                <view class="report-problem feedback-item" wx:if="{{problem.checked}}">
+                    {{problem.name}}
+                </view>
+            </block>
+            <view class="report-remark">
+                备注：{{item.remark.length ? item.remark : '--'}}
+            </view>
+        </view>
+        <view class="step-btn">
+            <button class="form-btn-confirm" type="primary" bindtap="finish">完成</button>
+        </view> 
+    </view>
+</view>

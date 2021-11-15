@@ -1,11 +1,7 @@
 {
-  "entryPagePath": "pages/index/index",  
+  "entryPagePath": "pages/packageA/evaluation/dynamic/dynamic",  
   "pages":[
     "pages/index/index",
-    "pages/evaluation/dynamic/dynamic",
-    "pages/evaluation/static/static",
-    "pages/evaluation/report/report",
-    "pages/evaluation/overview/overview",
     "pages/logs/logs"
   ],
 	"subpackages": [
@@ -15,7 +11,10 @@
         "questionnaire/overview/overview",
         "questionnaire/healthy/healthy",
         "memberinfo/memberinfo",
-        "experience/experience"
+        "experience/experience",
+        "evaluation/dynamic/dynamic",
+        "evaluation/static/static",
+        "evaluation/overview/overview"
       ]
     }
   ],

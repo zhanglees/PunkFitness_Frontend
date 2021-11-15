@@ -1,5 +1,5 @@
 // evaluation static.js
-var util = require('../../../utils/util.js');
+var util = require('../../../../utils/util.js');
 const app = getApp()
 Page({
   data: {
@@ -154,10 +154,11 @@ Page({
                 this.setData({  
                   authCamera:false,  
                 });
-                wx.showToast({  
-                  title:'请打开相机授权',  
-                  icon: 'none'  
-                })  
+                this.open_permission_setting();
+                // wx.showToast({  
+                //   title:'请打开相机授权',  
+                //   icon: 'none'  
+                // })  
               }  
           }  
         }); 
@@ -165,6 +166,27 @@ Page({
       this.setData({
         startPhoto: true
       })
+  },
+  open_permission_setting() {
+    wx.showModal({
+      title: '申请权限',
+      content: '需要使用麦克风和摄像头功能，请前往设置打开权限',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.openSetting({
+            success(res) {
+              console.log('成功', res)
+            },
+            fail(err) {
+              console.log('失败', err)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
   cancelPhone(){
     this.setData({
@@ -221,6 +243,15 @@ Page({
   openSetting(){
       // 打开相机授权。。。
   },
+  /**删除某个用户图片 */
+  delAct(e){
+    const {index, i} = e.currentTarget.dataset;
+    let imgArr = this.data.userImg[index];
+    imgArr.splice(i, 1);
+    this.setData({
+      [`userImg[${index}]`]: imgArr
+    })
+  },
   /***选择问题反馈的身体部位 */
   setChoice(e){
     const index = e.currentTarget.dataset.index;
@@ -245,7 +276,7 @@ Page({
     })
   },
   /***提交侧面信息 */
-  submitFirstStep(){
+  nextStep(){
     //图片列表and问题反馈
     let data = {
         img: this.data.userImg[0],
@@ -258,7 +289,7 @@ Page({
     console.log(88888, data)
   },
   /***生成报告 */
-  finishStep(){
+  generateReport(){
       //提交背面信息  跳转报告页面
     let data = {
         img: this.data.userImg[1],

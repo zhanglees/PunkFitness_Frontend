@@ -37,7 +37,7 @@ Page({
   //跳转新建评估页面
   gotoEvaluation(e) {
       wx.navigateTo({
-          url: `/pages/evaluation/${this.data.type}/${this.data.type}`
+          url: `/pages/packageA/evaluation/${this.data.type}/${this.data.type}`
       })
   },
 

@@ -55,3 +55,17 @@ checkbox .wx-checkbox-input {
   background: transparent;
   transform: translate(-50%, -50%) scale(1);
 } */
+.del-act-btn{
+  border-radius: 50%;
+  background: #999;
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  height: 20rpx;
+  width: 20rpx;
+}
+.del-act-btn .weui-icon{
+  height: 10rpx;
+  width: 10rpx;
+  vertical-align: top;
+}
