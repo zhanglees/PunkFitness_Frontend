@@ -5,5 +5,7 @@
       <!--<image class="index-mine_icon iconfont fa-user-o" src="../../static/search/icon_portrait@3x.png"></image>-->
         <text>{{item.name}}</text>
       </view>
+      <view class="index-item" wx:if="{{navigatorList.length%2}}">
+      </view>
     </view>
 </view>

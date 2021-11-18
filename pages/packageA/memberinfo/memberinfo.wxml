@@ -6,7 +6,7 @@
     <block wx:if="{{userInfo}}">
       <view class="userinfo-top">
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <view class="">
+        <view class="userinfo-right">
           <view class="userinfo-detail-n">
             <text class="userinfo-nickname">{{userInfo.name}}</text>
             <text class="userinfo-mobile">{{userInfo.mobile}}</text>
@@ -14,6 +14,9 @@
           <view class="userinfo-detail-b">
             <text class="userinfo-birthday">{{userInfo.birthday}}</text>
             <text class="userinfo-age">{{userInfo.age}}岁</text>
+          </view>
+          <view class="right-btn" bindtap="getQr">
+            关联客户
           </view>
         </view>
       </view>
@@ -43,4 +46,11 @@
       </view>
     </view>
   </view>
+  <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask>    
+      <view class="qr-view">
+          <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
+          <image class="qr-img" src="{{imgUrl}}" />
+          <view>点击客户微信扫码，便于客户微信收到个人运动相关动态信息</view>
+      </view>
+  </mp-dialog>
 </view>

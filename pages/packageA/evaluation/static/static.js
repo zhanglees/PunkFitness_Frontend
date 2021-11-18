@@ -305,8 +305,11 @@ Page({
   },
   /***回到评估测试 */
   finish(){
-    wx.navigateTo({
-      url: '/pages/packageA/evaluation/overview/overview',
+    wx.navigateBack({
+      delta: 0,
     })
+    // wx.redirectTo({
+    //   url: '/pages/packageA/evaluation/overview/overview',
+    // })
   }
 })

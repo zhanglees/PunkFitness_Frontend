@@ -1,4 +1,8 @@
 /**app.wxss**/
+page{
+  --base:green;
+  --base-bg: rgba(56, 126, 34, .1);
+}
 .container {
   height: 100%;
   display: flex;
@@ -15,11 +19,12 @@
   padding: 10rpx 10rpx 20rpx;
 }
 .container .form-btn-confirm{
-  background: #387E22;
+  background: var(--base);
   border-radius: 10rpx;
+  color: #fff;
 }
 .container .form-btn-confirm:hover{
-  background: #387E22;
+  background: var(--base);
 }
 
 /* .container .toptips--weui-toptips_error{
@@ -44,8 +49,8 @@ checkbox .wx-checkbox-input {
 }
 /*checkbox选中后样式  */
 /* checkbox .wx-checkbox-input.wx-checkbox-input-checked {
-  background: green;
-  border: green;
+  background: var(--base);
+  border: var(--base);
 } */
 /*checkbox选中后图标样式  */
 /* checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {

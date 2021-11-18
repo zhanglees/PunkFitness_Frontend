@@ -14,6 +14,8 @@ Page({
       tags: ['增肌', '减脂', '康复'],
       remark: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳。被酒莫惊春睡重，赌书消得泼茶香，当时只道是寻常。'
     },
+    qrShow: false,
+    imgUrl: '',  //后端返回的绑定二维码
     serverList: [{
       name: '健康问卷',
       link: '/pages/packageA/questionnaire/overview/overview'
@@ -22,16 +24,16 @@ Page({
       link: '/pages/packageA/evaluation/overview/overview'
     }, {
       name: '体测报告',
-      link: ''
+      link: '/pages/packageA/inbody/overview/overview'
     }, {
       name: '体验课教案',
-      link: ''
+      link: '/pages/packageA/training/list/list'
     }, {
       name: '训练规划',
-      link: ''
+      link: '/pages/packageA/training/plan/plan'
     }, {
       name: '训练记录',
-      link: ''
+      link: '/pages/packageA/training/record/record'
     }],
     news: {
       '#2021': {
@@ -117,7 +119,8 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad() {
+  onLoad(options) {
+    const userId = options.userid;  //会员id
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
@@ -143,6 +146,14 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  /**关联客户 */
+  getQr(){
+    // 接口获取二维码
+    this.setData({
+      imgUrl: '/images/member/qr.png',  
+      qrShow: true
     })
   },
    //跳转到其他页面

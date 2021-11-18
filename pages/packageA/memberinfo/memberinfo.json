@@ -1,6 +1,7 @@
 {
   "usingComponents": { 
-    "timeAxis": "/components/timeAxis/timeAxis"
+    "timeAxis": "/components/timeAxis/timeAxis",
+    "mp-dialog": "weui-miniprogram/dialog/dialog"
   },
   "navigationBarTitleText": "会员详情"
 }

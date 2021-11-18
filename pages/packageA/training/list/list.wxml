@@ -1,0 +1,59 @@
+<!--pages/packageA/training/list/list.wxml-->
+<view class="container">
+    <view class="page-title">
+        私教体验课
+        <view class="save-btn add-one-btn" bindtap="saveList">保存</view>
+    </view>
+    <view class="training-list">
+        <view class="training-item" wx:for="{{trainingList}}" wx:key="index">
+            <view class="training-title">{{item.name}}</view>
+            <view class="action-list" wx:if="{{item.actionList.length}}">
+                <view wx:for="{{item.actionList}}" wx:for-index="i" wx:key="index" wx:for-item="action" class="action-item"> 
+                <block wx:if="{{item.editIndex !== i}}">
+                    <mp-cell wx:for="{{items}}" wx:key="index" wx:for-item="ia" title="{{ia.name}}" footer="{{action[ia.id]}}"></mp-cell>
+                    <view class="edit-one">
+                        <view class="add-one-btn add-one-btn-edit" bindtap="editOne" data-index="{{index}}" data-a="{{i}}">编辑</view>
+                        <view class="add-one-btn add-one-btn-del" bindtap="delOne" data-index="{{index}}" data-a="{{i}}">删除</view>
+                    </view>
+                </block>
+                </view>
+            </view>
+            <view wx:if="{{item.showAdd}}" class="add-one">    
+                <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+                    <view slot="title" class="weui-label">训练部位</view>
+                    <picker class="physical-item-input" bindchange="bindSelChange" data-name="part" data-index="{{index}}" value="{{item.detail.partIndex}}" range="{{trainingPart}}" range-key="name">
+                        <view class="weui-select">{{trainingPart[item.detail.partIndex].name}}</view>
+                    </picker>
+                </mp-cell>
+                <view>
+                    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+                        <view slot="title" class="weui-label">动作</view>
+                        <picker class="physical-item-input" bindchange="bindSelChange" data-name="action" data-index="{{index}}" value="{{item.detail.actionIndex}}" range="{{trainingPart[item.detail.partIndex].actionList}}" disabled="{{!item.detail.part}}">
+                            <view class="weui-select">{{trainingPart[item.detail.partIndex].actionList[item.detail.actionIndex]}}</view>
+                        </picker>
+                    </mp-cell>
+                    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+                        <view slot="title" class="weui-label">器械</view>
+                        <picker class="physical-item-input" bindchange="bindSelChange" data-name="equipment" data-index="{{index}}" value="{{item.detail.equipmentIndex}}" range="{{equipment}}">
+                            <view class="weui-select">{{equipment[item.detail.equipmentIndex]}}</view>
+                        </picker>
+                    </mp-cell>    
+                    <mp-cell prop="ounterweight" title="配重">
+                        <input bindinput="inputChange" data-index="{{index}}" data-name="ounterweight" class="weui-input" placeholder="" value="{{item.detail.ounterweight}}" />
+                    </mp-cell>    
+                    <mp-cell prop="times" title="单组次数">
+                        <input bindinput="inputChange" data-index="{{index}}" data-name="times" class="weui-input" placeholder="" value="{{item.detail.times}}"/>
+                    </mp-cell>    
+                    <mp-cell prop="groups" title="组数">
+                        <input bindinput="inputChange" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{item.detail.groups}}"/>
+                    </mp-cell>
+                    <view class="add-one-bottom">
+                        <view class="add-one-btn" bindtap="saveOne" data-index="{{index}}">保存</view>
+                        <view class="add-one-btn add-one-btn-cancel" bindtap="cancelOne" data-index="{{index}}">取消</view>
+                    </view>
+                </view>
+            </view>
+            <view wx:else class="training-add" bindtap="addone" data-index="{{index}}">+ 添加动作</view>
+        </view>
+    </view>
+</view>

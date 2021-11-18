@@ -1,0 +1,63 @@
+/* pages/packageA/evaluation/physical/physical.wxss */
+.physical-list, .report-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx 40rpx;
+}
+.physical-list-item{
+    margin-bottom: 48rpx;
+}
+.physical-item{
+    margin-bottom: 20rpx;
+    position: relative;
+    padding-left: 30rpx;
+    word-break: keep-all;
+    white-space: nowrap;
+    height: 44rpx;
+    line-height: 44rpx;
+}
+.physical-item::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 20rpx;
+    width: 20rpx;
+    background: red;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-10rpx);
+}
+.physical-list-item .physical-item:nth-child(2)::after{
+    background: var(--base);
+}
+.physical-list-item .physical-item:nth-child(3)::after{
+    background: orange;
+}
+.physical-item-input{
+    width: 180rpx;
+    height: 44rpx;
+    display: inline-block;
+    border-bottom: 1px solid #333;
+    vertical-align: bottom;
+}
+.physical-item-input .weui-select{
+    height: 44rpx;
+    line-height: 44rpx;
+}
+.physical-item .arrow-icon .weui-icon{
+    transform: rotate(90deg);
+    margin-left: 20rpx;
+}
+.report-list-item{
+    margin-bottom: 20rpx;
+}
+.step-btn{
+    width: 100%;
+    position: fixed;
+    bottom: 20rpx;
+    box-sizing: border-box;
+    right: 0;
+    left: 0;
+    text-align: center
+}

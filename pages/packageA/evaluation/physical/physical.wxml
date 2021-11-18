@@ -1,0 +1,45 @@
+<!--pages/packageA/evaluation/physical/physical.wxml-->
+<view class="container">
+    <view class="physical-list" wx:if="{{!showReport}}">
+        <view class="physical-list-item" wx:for="{{list}}" wx:key="index">
+            <view class="physical-item">
+                评估项目：{{item.name}}
+            </view>
+            <view class="physical-item">
+                评估方式：{{item.method}}
+            </view>
+            <view class="physical-item">
+            具体表现：
+            <block wx:if="{{item.options}}">
+                <picker class="physical-item-input" bindchange="bindSelChange" data-i="{{index}}" value="{{item.performanceIndex}}" range="{{item.options}}">
+                    <view class="weui-select">{{item.performance}}</view>
+                </picker>
+                <mp-icon class="arrow-icon" type="field" icon="arrow" color="#333" size="{{10}}"></mp-icon>
+            </block>
+            <block wx:else>
+                <input type="number" class="physical-item-input" bindinput="bindInputChange" data-i="{{index}}" />次/min
+            </block>
+            </view>
+        </view>
+        <view class="btn-wrapper">
+            <button class="form-btn-confirm" bindtap="generateReport">生成报告</button>
+        </view>
+    </view>
+    <view wx:else class="report-list">
+        <view class="report-list-item" wx:for="{{list}}" wx:key="index">
+            <view class="report-item">
+                评估项目：{{item.name}}
+            </view>
+            <view class="report-item">
+                评估方式：{{item.method}}
+            </view>
+            <view class="report-item">
+                具体表现：{{item.performance || '--'}}
+            </view>
+        </view>
+        <view class="step-btn">
+            <button class="form-btn-confirm" bindtap="finish">完成</button>
+        </view> 
+    </view>
+</view>
+

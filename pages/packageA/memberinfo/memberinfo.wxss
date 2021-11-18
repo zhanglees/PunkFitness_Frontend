@@ -22,38 +22,65 @@
   height: 128rpx;
   margin: 20rpx 20rpx 20rpx 0;
   border-radius: 50%;
-  background-color: rgba(56, 126, 34, .1);
+  background-color: var(--base-bg);
+}
+.userinfo-right{
+  flex: 1;
+  position: relative;
 }
 .userinfo-detail-b{
-  background-color: rgba(56, 126, 34, .1);
-  border: 1px solid green;
+  background-color: var(--base-bg);
+  border: 1px solid var(--base);
   border-radius: 10rpx;
   padding: 0 10rpx;
   line-height: 36rpx;
   font-size: 24rpx;
   text-align: center;
+  width: fit-content;
 }
 .userinfo-nickname, .userinfo-birthday{
   margin-right: 20rpx;
   display: inline-block;
 }
+.right-btn{
+  position: absolute;
+  right: 10rpx;
+  top: 20rpx;
+  border-radius: 10rpx;
+  width: 120rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  border: 1px solid var(--base);
+  text-align: center;
+}
+.qr-img{
+  width: 100%;
+}
+.qr-view{
+  font-size: 20rpx;
+  line-height: 2;
+}
+.weui-dialog__ft, .weui-dialog__hd{
+  display: none;
+}
 .userinfo-tags{
   font-size: 24rpx;
   line-height: 32rpx;
-  color: green;
+  color: var(--base);
 }
 .userinfo-tags-item{
   display: inline-block;
-  border: 1px solid green;
+  border: 1px solid var(--base);
   border-radius: 8rpx;
-  background-color: rgba(56, 126, 34, .1);
+  background-color: var(--base-bg);
   padding: 0 10rpx;
   margin-right: 20rpx;
 }
 .userinfo-remarks{
-  border: 1px solid green;
+  border: 1px solid var(--base);
   border-radius: 8rpx;
-  background-color: rgba(56, 126, 34, .1);
+  background-color: var(--base-bg);
   margin-top: 20rpx;
   font-size: 24rpx;
   padding: 10rpx;
@@ -78,8 +105,8 @@
 }
 .userserver-li{
   display: inline-block;
-  border: 1px solid green;
-  color: green;
+  border: 1px solid var(--base);
+  color: var(--base);
   border-radius: 8rpx;
   padding: 10rpx 20rpx;
   margin-right: 20rpx;
@@ -91,6 +118,6 @@
   margin-bottom: 20rpx;
 }
 .usernews-title{
-  color: green;
+  color: var(--base);
   line-height: 2;
 }

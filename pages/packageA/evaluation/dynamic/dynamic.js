@@ -157,6 +157,14 @@ Page({
           showReport: true
       })
     },
+    finish(){
+      // wx.redirectTo({
+      //   url: '/pages/packageA/evaluation/overview/overview'
+      // })
+      wx.navigateBack({
+        delta: 0,
+      })
+    },
     /**
      * Lifecycle function--Called when page is initially rendered
      */

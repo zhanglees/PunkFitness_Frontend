@@ -14,12 +14,15 @@
   width: 40%;
   margin: 10rpx;
   text-align: center;
-  border: 1px solid green;
+  border: 1px solid var(--base);
   color: white;
-  background: green;
+  background: var(--base);
   border-radius: 10rpx;
   height: 80rpx;
   line-height: 80rpx;
+}
+.index-item{
+  width: 40%;
 }
 .userinfo {
   display: flex;

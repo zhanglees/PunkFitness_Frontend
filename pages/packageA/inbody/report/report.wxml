@@ -1,0 +1,83 @@
+<!--pages/packageA/inbody/report/report.wxml-->
+<view class="container">
+    <block wx:if="{{!showReport}}">
+    <view class='top_layout'>
+        <view class="userinfo">
+            <view class="panel-title">基本信息</view>
+            <block wx:if="{{userInfo}}">
+                <view class="userinfo-top">
+                    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+                    <view class="userinfo-right">
+                        <view class="userinfo-detail-n">
+                            <text class="userinfo-nickname">{{userInfo.name}}</text>
+                            <text class="text-gray"> | </text>
+                            <text class="userinfo-mobile">{{userInfo.genders}}</text>
+                        </view>
+                        <!-- <view class="right-btn">
+                            <image bindtap="bindViewTap" class="change-icon" src="/images/inbody/changeuser2.png" mode="cover"></image>
+                            切换客户
+                        </view> -->
+                    </view>
+                </view>
+                <view class="userinfo-tags">
+                    <text class="userinfo-tags-item">年龄 <text class="userinfo-number">{{userInfo.age}}</text> <text class="text-gray"> 岁 </text></text>
+                    <text class="userinfo-tags-item">身高 <text class="userinfo-number">{{userInfo.height}}</text> <text class="text-gray"> cm </text></text>
+                    <!-- <text class="userinfo-tags-item">体重 <text class="userinfo-number">{{userInfo.weight}}</text> <text class="text-gray"> kg </text></text> -->
+                </view>
+            </block>
+        </view>
+    </view>
+    <view class="report-content">
+        <view class="top-tab">
+            <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
+            {{item}}
+            </view>
+        </view>    
+        <swiper class="swiper" indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
+            <swiper-item wx:for="{{tabList}}" wx:key="index">
+                <view class="swiper-item" id="swiperItem{{index}}">
+                    <view class="img-list">
+                        <view class="{{current==1 ? 'img-item' : 'img-upload'}}" wx:for="{{imgList[current]}}" wx:key="index" bindtap="takePhoto" data-index="{{index}}">
+                            <image wx:if="{{item.src.length}}" src="{{item.src}}" class="img-item-img" mode="aspectFill" />
+                            <view wx:elif="{{current==0}}" class="img-upload-btn">体测报告上传</view>
+                            <text wx:else>{{item.name}}照片</text>
+                        </view>
+                    </view>
+                    <view class="input-list">
+                        <mp-cell wx:for="{{inputList[index]}}" wx:key="index" wx:for-item="input" wx:for-index="i" prop="weight" title="{{input.name}}" footer="{{input.unit}}">
+                            <image slot="icon" src="{{input.icon}}" class="input-icon"></image>
+                            <input bindinput="inputChange" data-field="weight" data-i="i" class="weui-input" placeholder=""/>
+                        </mp-cell>
+                    </view>
+                    <view class="btn-wrapper">
+                        <button class="form-btn-confirm" bindtap="generateReport" wx:if="{{index==tabList.length-1}}">生成报告</button>
+                        <button class="form-btn-confirm" bindtap="nextStep" wx:else>下一步</button>
+                    </view>
+                </view>
+            </swiper-item>
+        </swiper>
+    </view>
+    </block>
+    <view class="report-res" wx:else>
+        <view class="report-res-title">体测详情</view>
+        <view class="report-res-detail-title">健康分析</view>
+        <view class="report-res-detail--list">
+            <mp-cell link wx:for="{{inputList[0]}}" wx:key="index" wx:for-item="input" wx:for-index="i" title="{{input.name + ' ' + (input.value ? (input.value + input.unit) : '--')}}">
+                <image slot="icon" src="{{input.icon2}}" class="input-icon"></image>
+                <view slot="footer" class="detail-res detail-res{{input.res ? input.res : ''}}">{{input.res ? (resList[input.res]) : '--'}}</view>
+            </mp-cell>
+        </view>
+        <view class="report-res-detail-title">身体测量</view>
+        <view class="report-res-detail--list2">
+            <view class="report-res-detail-item2" wx:for="{{inputList[1]}}" wx:key="index" wx:for-item="input" wx:for-index="j">
+                <view class="detail-res2-name">{{input.name}}({{input.unit}})</view>
+                <view class="detail-res2-value">{{input.value || '--'}}</view>
+            </view>
+            <view class="flex-item"></view>
+        </view>
+        <view>
+            <button class="form-btn-confirm" bindtap="finish">完成</button>
+        </view> 
+    </view>
+</view>
+

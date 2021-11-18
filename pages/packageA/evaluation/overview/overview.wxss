@@ -16,7 +16,7 @@
     height: 60rpx;
 }
 .tab-item-act{
-    color: green;
+    color: var(--base);
     position: relative;
 }
 .tab-item-act::after{
@@ -28,7 +28,7 @@
     left: 0;
     right: 0;
     content: '';
-    background-color: green;
+    background-color: var(--base);
 }
 .top_layout{
     background: #fff;
@@ -37,16 +37,16 @@
     position: relative;
     box-sizing: border-box;
     padding: 60rpx 0 20rpx;
-    /* border-top: 1px solid green; */
+    /* border-top: 1px solid var(--base); */
 }
 .top-say-sth{
     margin-bottom: 40rpx;
 }
 .goto-btn{
     display: inline-block;
-    border: 1px solid green;
+    border: 1px solid var(--base);
     border-radius: 30rpx;
-    color: green;
+    color: var(--base);
     padding: 0 20rpx;
     line-height: 60rpx;
     font-size: 32rpx;

@@ -96,7 +96,7 @@
 }
 .camera-btn{
     display: inline-block;
-    background: green;
+    background: var(--base);
     color: #fff;
     margin: 0 20rpx;
     position: relative;

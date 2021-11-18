@@ -1,0 +1,222 @@
+/* pages/packageA/inbody/report/report.wxss */
+.container{
+    background: #eee;
+}
+.top_layout{
+    background-color: #fff;
+    width: 100%;
+    overflow: hidden;
+    padding: 40rpx 40rpx;
+    box-sizing: border-box;
+}
+.panel-title{
+    font-size: 36rpx;
+}
+.userinfo-top{
+    display: flex;
+    align-items: center;
+  }
+  .userinfo-avatar{
+    overflow: hidden;
+    width: 128rpx;
+    height: 128rpx;
+    margin: 20rpx 20rpx 20rpx 0;
+    border-radius: 50%;
+    background-color: var(--base-bg);
+  }
+  .userinfo-right{
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .right-btn{
+      font-size: 20rpx;
+      background: var(--base-bg);
+      border-radius: 24rpx;
+      height: 48rpx;
+      line-height: 48rpx;
+      padding: 0 20rpx;
+      color: #999;
+  }
+.change-icon{
+    width: 40rpx;
+    height: 40rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+.userinfo-tags-item{
+    display: inline-block;
+    margin-right: 40rpx;
+  }
+  .userinfo-number{
+      font-size: 34rpx;
+      color: #000;
+  }
+  .text-gray{
+      color: #999;
+  }
+.report-content{
+    width: 100%;
+    box-sizing: border-box;
+}
+.top-tab{
+    padding: 20rpx 40rpx 0;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    color: #ccc;
+    background: #eee;
+    width: 100%;
+    box-sizing: border-box;
+}
+.tab-item{
+    display: inline-block;
+    margin: 0 40rpx;
+    line-height: 2;
+    height: 60rpx;
+    padding-bottom: 16rpx;
+}
+.tab-item-act{
+    position: relative;
+    font-weight: bold;
+    color: #999;
+}
+.tab-item-act::after{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-10rpx);
+    right: 0;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10rpx solid transparent;
+    border-bottom: 10px solid #fff;
+}
+.swiper{
+    background: #fff;
+}
+.swiper-item{
+    padding: 20rpx 10rpx;
+}
+.img-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 20rpx;
+    display: flex;
+    justify-content: space-between;
+}
+.img-item{
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+    height: 120rpx;
+    width: 120rpx;
+    display: inline-block;
+    color: #ddd;
+    font-size: 20rpx;
+    line-height: 120rpx;
+    text-align: center;
+    overflow: hidden;
+}
+.img-item .img-item-img{
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 4px;
+}
+.img-upload{
+    width: 100%;
+    position: relative;
+}
+.img-upload-btn{
+    width: 70%;
+    border: 1px solid var(--base);
+    text-align: center;
+    height: 100rpx;
+    line-height: 100rpx;
+    border-radius: 10px;
+    margin: 0 auto;
+    color: var(--base);
+}
+.img-upload .img-item-img{
+    width: 100%;
+    /* height: 120rpx; */
+}
+.input-list{
+    width: 100%;
+    box-sizing: border-box;
+}
+.input-icon{
+    margin-right: 10rpx;
+    vertical-align: middle;
+    width: 40rpx; 
+    height: 40rpx;
+}
+.report-res{
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 10rpx 20rpx;
+}
+.report-res-title{
+    width: 100%;
+    text-align: center;
+    font-size: 32rpx;
+}
+.report-res-detail-title{
+    line-height: 80rpx;
+}
+.report-res .weui-cell{
+    border: 1px solid #ddd;
+    padding: 20rpx;
+    margin-bottom: 20rpx;
+    border-radius: 4px;
+  }
+  .detail-res{
+      border-radius: 20rpx;
+      height: 40rpx;
+      line-height: 40rpx;
+      padding: 0 10rpx;
+      width: fit-content;
+      background: #11B79F;
+      font-size: 24rpx;
+      color: #fff;
+  }
+  .detail-res4{
+      background: red;
+  }
+  .detail-res0{
+      background: #8E84FA;
+  }
+  .detail-res1{
+      background: #56B2FD;
+  }
+  .detail-res3{
+      background: #FF5858;
+  }
+  .report-res-detail--list2{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+  }
+  .report-res-detail-item2{
+      width: 160rpx;
+      border: 1px solid #86C4EC;
+      border-radius: 5px;
+      color: #86C4EC;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      text-align: center;
+      margin-bottom: 20rpx;
+      font-size: 20rpx;
+      line-height: 2;
+  }
+  .detail-res2-name{
+      background: #CEE8FC;
+      flex: 1;
+  }
+  .flex-item{
+      width: 160rpx;
+  }

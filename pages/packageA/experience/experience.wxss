@@ -40,3 +40,21 @@
 .form-checkbox .form-checkbox-item{
   margin-right: 50rpx;
 }
+.form-bottom{
+  font-size: 24rpx;
+  color: #999;
+  line-height: 2;
+}
+.form-bottom .form-btn-confirm{
+  margin-bottom: 10rpx;
+}
+.qr-img{
+  width: 100%;
+}
+.qr-view{
+  font-size: 20rpx;
+  line-height: 2;
+}
+.weui-dialog__ft, .weui-dialog__hd{
+  display: none;
+}

@@ -1,0 +1,26 @@
+<!--pages/packageA/training/plan/plan.wxml-->
+<view class="container">
+    <view class="body-data content">
+        <view class="content-title">身体数据</view>
+        <view class="data-panel">
+            <view class="data-item" wx:for="{{bodyData}}" wx:key="index">
+                <view class="data-name">{{item.name}}</view>
+                <view class="data-value">{{item.value}}</view>
+                <view class="data-status">{{statusList[item.status]}}</view>
+            </view>
+        </view>
+        <view class="data-tips">以上数据来自{{dataTime}}身体测试</view>
+    </view>
+    <view class="target-plan content">
+        <view class="content-title">健身目标&方案</view>
+        <view class="target-list">
+            <view class="target-item" wx:for="{{targetList}}" wx:key="index">
+                {{targetList}}
+            </view>
+            <view class="target-item">
+            + 其他
+            </view>
+        </view>
+    </view>
+</view>
+

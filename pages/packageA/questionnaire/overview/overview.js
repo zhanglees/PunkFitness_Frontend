@@ -26,7 +26,7 @@ Page({
   },
     //跳转问卷填写页面
     gotoFitness(e) {
-        wx.navigateTo({
+        wx.redirectTo({
             url: '../healthy/healthy'
         })
     },

@@ -81,7 +81,7 @@ Page({
     submitSecondStep(e){
         console.log("问卷二提交：", this.data.questionList2)
         //发请求保存数据
-        wx.navigateTo({
+        wx.redirectTo({
           url: '../../memberinfo/memberinfo',
         })
     }

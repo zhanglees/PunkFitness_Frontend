@@ -1,7 +1,9 @@
 {
-  "entryPagePath": "pages/packageA/evaluation/dynamic/dynamic",  
+  "entryPagePath": "pages/packageA/training/plan/plan",  
   "pages":[
     "pages/index/index",
+    "pages/mine/mine",
+    "pages/schedule/schedule",
     "pages/logs/logs"
   ],
 	"subpackages": [
@@ -14,7 +16,13 @@
         "experience/experience",
         "evaluation/dynamic/dynamic",
         "evaluation/static/static",
-        "evaluation/overview/overview"
+        "evaluation/overview/overview",
+        "evaluation/physical/physical",
+        "inbody/overview/overview",
+        "inbody/report/report",
+        "training/plan/plan",
+        "training/record/record",
+        "training/list/list"
       ]
     }
   ],
@@ -34,12 +42,12 @@
       "selectedIconPath": "images/tb/tb-icon1.png",
       "text": "工作台"
     }, {
-      "pagePath": "pages/index/index",
+      "pagePath": "pages/schedule/schedule",
       "iconPath": "images/tb/tb-icon2-g.png",
       "selectedIconPath": "images/tb/tb-icon2.png",
       "text": "日程"
     }, {
-      "pagePath": "pages/index/index",
+      "pagePath": "pages/mine/mine",
       "iconPath": "images/tb/tb-icon3-g.png",
       "selectedIconPath": "images/tb/tb-icon3.png",
       "text": "我的"

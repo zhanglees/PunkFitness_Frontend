@@ -8,24 +8,20 @@ Page({
         name: '首次体验',
         link: '/pages/packageA/experience/experience',
         icon: ''
-      },
-      {
+      }, {
         name: '准会员',
         link: '../experience/experience',
         icon: ''
-      },
-      {
+      }, {
         name: '会员',
         link: '../experience/experience',
         icon: ''
-      },
-      {
-        name: '动作库',
-        link: '../experience/experience',
-        icon: ''
+      // }, {
+      //   name: '动作库',
+      //   link: '../experience/experience',
+      //   icon: ''
       }
     ],
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -37,11 +33,6 @@ Page({
     var link = e.currentTarget.dataset.link;
     wx.navigateTo({
       url: link
-    })
-  },
-  bindViewTap() {
-    wx.navigateTo({
-      url: '../logs/logs'
     })
   },
   onLoad() {

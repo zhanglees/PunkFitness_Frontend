@@ -55,8 +55,8 @@
                     <view class="feedback-remark">教练备注：</view>
                     <textarea class="feedback-remark-area" placeholder="请输入备注" bindinput="remarkChange" />
                     <view>
-                        <button class="form-btn-confirm" type="primary" bindtap="nextStep" wx:if="{{index==0}}">下一步</button>
-                        <button class="form-btn-confirm" type="primary" bindtap="generateReport" wx:else>生成报告</button>
+                        <button class="form-btn-confirm" bindtap="nextStep" wx:if="{{index==0}}">下一步</button>
+                        <button class="form-btn-confirm" bindtap="generateReport" wx:else>生成报告</button>
                     </view>
                 </view>
             </view>
@@ -94,7 +94,7 @@
         </view>
     </block>
     <view>
-        <button class="form-btn-confirm" type="primary" bindtap="finish">完成</button>
+        <button class="form-btn-confirm" bindtap="finish">完成</button>
     </view> 
     </view>
 </view>
