@@ -1,7 +1,7 @@
 /**app.wxss**/
 page{
-  --base:green;
-  --base-bg: rgba(56, 126, 34, .1);
+  --base:#008DEA;
+  --base-bg: rgba(0, 141, 234, .1);
 }
 .container {
   height: 100%;

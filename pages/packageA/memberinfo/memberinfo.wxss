@@ -42,14 +42,19 @@
   margin-right: 20rpx;
   display: inline-block;
 }
-.right-btn{
-  position: absolute;
-  right: 10rpx;
-  top: 20rpx;
-  border-radius: 10rpx;
-  width: 120rpx;
+.userinfo-btn-wrapper{
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  margin: 30rpx 0 0 0;
+}
+.userinfo-btn{
+  border-radius: 20rpx;
+  width: fit-content;
   height: 40rpx;
   line-height: 40rpx;
+  padding: 10rpx 30rpx;
   font-size: 24rpx;
   border: 1px solid var(--base);
   text-align: center;
@@ -81,9 +86,11 @@
   border: 1px solid var(--base);
   border-radius: 8rpx;
   background-color: var(--base-bg);
-  margin-top: 20rpx;
   font-size: 24rpx;
   padding: 10rpx;
+  max-height: 180rpx;
+  overflow: scroll;
+  flex: 1;
 }
 
 .userserver, .usernews{

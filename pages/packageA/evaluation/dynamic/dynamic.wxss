@@ -1,5 +1,4 @@
 /* pages/evaluation/dynamic/dynamic.wxss */
-
 .top_layout{
     background: #3D4257;
     width: 100%;
@@ -12,7 +11,6 @@
     right: 20rpx;
     font-size: 24rpx;
 }
-
 .top-tab{
     margin-top: 40rpx;
     padding: 20rpx 40rpx 10rpx;

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "mp-icon": "weui-miniprogram/icon/icon",
+    "mp-slideview": "weui-miniprogram/slideview/slideview",
+    "mp-dialog": "weui-miniprogram/dialog/dialog",
+    "mp-cell": "weui-miniprogram/cell/cell"
+  },
+  "navigationBarTitleText": "课程计划"
+}

@@ -41,7 +41,7 @@ Page({
         const question = this.data.questionList[index];
         let options = question.option;
         const value = e.detail.value;
-        const answer = question.answer;
+        const answer = question.answer || [];
         if(value != ''){
             options.push(value);
             answer.push(value);

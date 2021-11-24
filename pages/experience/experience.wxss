@@ -4,7 +4,7 @@
 .experience-form{
   width: 100%;
   box-sizing: border-box;
-  padding: 10rpx 64rpx 60rpx;
+  padding: 10rpx 64rpx 20rpx;
 }
 .page-form .weui-cell{
   padding-left: 0rpx;

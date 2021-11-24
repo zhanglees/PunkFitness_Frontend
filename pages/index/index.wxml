@@ -1,11 +1,59 @@
 <!--index.wxml-->
-<view class="container">
+<!-- <view class="container">
     <view class="index-navigator">
       <view class="index-navigator-item" bindtap='bindAct' wx:for="{{navigatorList}}" wx:key="link" data-link='{{item.link}}'>
-      <!--<image class="index-mine_icon iconfont fa-user-o" src="../../static/search/icon_portrait@3x.png"></image>-->
         <text>{{item.name}}</text>
       </view>
       <view class="index-item" wx:if="{{navigatorList.length%2}}">
       </view>
     </view>
+</view> -->
+<view class="container">
+  <view class="top_layout">
+        <view class="top-tab">
+            <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
+            {{item}}{{nums[index] ? '（ ' + nums[index] + ' ）' : ''}}
+            </view>
+        </view>
+    </view>
+    <swiper class="content-swiper" indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
+        <swiper-item wx:for="{{tabList}}" wx:key="index">
+            <view class="swiper-item" id="swiperItem{{index}}">
+              <block wx:if="{{index !== 2}}">
+              <view class="weui-search-bar {{showSearchInput[index] ? 'weui-search-bar_focusing' : ''}}">
+                <view class="weui-search-bar__form">
+                  <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search" size="12" type="search" role="img"></icon>
+                    <input class="weui-search-bar__input" bindinput="searchInputChange" placeholder="搜索" type="text" value="{{searchText[index]}}" selection-end="-1" selection-start="-1" cursor="-1">搜索</input>
+                    <text bindtap="clearInput" class="weui-icon-clear"></text>
+                  </view>
+                  <label bindtap="showInput" class="weui-search-bar__label searchbar--weui-search-bar__label">
+                    <icon class="weui-icon-search" size="12" type="search" role="img"></icon>
+                    <text class="weui-search-bar__text">搜索</text>
+                  </label>
+                </view>
+              </view>
+              <view class="filter-list" wx:if="{{index == 0}}">
+                <view wx:for="{{fliterList}}" wx:key="index" wx:for-index="i" bindtap="filterTap" data-index="{{i}}" class="filter-item {{i===fliterChecked ? 'filter-item__act' : ''}}">
+                  {{item.name}}<!--<view>（ {{item.num || '--'}} ）</view>-->
+                </view>
+              </view>
+              <view class="member-list">
+                <mp-cell wx:for="{{memberList[index]}}" wx:key="m" wx:for-item="member" wx:for-index="m" link url="{{'/pages/packageA/training/classlist/classlist?id=' + member.id}}" class="item" footer="课时计划">
+                <view slot="title" class="weui-label">
+                    <view class="member-name" bindtap="memberDetail" data-index="{{member.id}}">
+                      {{member.userName}}
+                      <image src="/images/member/wx{{member.wxid ? '1' : ''}}.png"  class="member-icon" />
+                    </view>
+                    <view class="member-class">
+                      课时： {{member.classComp}}/{{member.classCount}}
+                    </view>
+                </view>
+                </mp-cell>
+              </view>
+              </block>
+              <experience wx:else></experience>
+            </view>
+        </swiper-item>
+    </swiper>
 </view>

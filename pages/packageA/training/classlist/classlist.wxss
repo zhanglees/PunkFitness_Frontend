@@ -1,0 +1,37 @@
+/* pages/packageA/training/classlist/classlist.wxss */
+.top_layout{
+    background: #F6F6F6;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 100rpx 0;
+}
+.top-say-sth{
+    margin-bottom: 60rpx;
+}
+.add-plan-btn{
+    display: inline-block;
+    border: 1px solid var(--base);
+    border-radius: 30rpx;
+    color: var(--base);
+    padding: 0 20rpx;
+    line-height: 60rpx;
+    font-size: 32rpx;
+    height: 60rpx;
+}
+.list{
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20rpx;
+    padding: 20rpx;
+}
+.item{
+    background: #F6F6F6;
+    display: block;
+    border-bottom: 5px solid #fff;
+}
+.coach, .time{
+    font-size: 24rpx;
+}
+

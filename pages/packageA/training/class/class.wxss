@@ -1,0 +1,43 @@
+/* pages/packageA/training/class/class.wxss */
+.top_layout{
+    background: #F6F6F6;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 40rpx 20rpx;
+}
+.stage-title{
+    font-size: 48rpx;
+    margin-bottom: 40rpx;
+}
+.stage-coach{
+    margin-bottom: 40rpx;
+    color: var(--base);
+}
+.class-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx;
+}
+.class-li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 20rpx 20rpx 20rpx 0;
+}
+.class-item-create{
+    color: #999;
+}
+.class-item-index{
+    font-size: 32rpx;
+    display: inline-block;
+    margin-right: 20rpx;
+}
+.class-item-right{
+    flex: 1;
+    text-align: right;
+}
+.class-item-right .arrow-icon{
+    margin-left: 20rpx;
+}

@@ -1,0 +1,34 @@
+<!--pages/packageA/training/classlist/classlist.wxml-->
+<!-- 阶段课程列表-->
+<view class="container">
+    <view class='top_layout'>
+        <view class="top-say-sth">添加训练计划，可以更好的定制您的训练</view>
+        <view bindtap="addBtn" class="add-plan-btn">
+            + 添加训练计划
+        </view>
+    </view>
+    <view class="list">
+        <mp-slideview wx:for="{{list}}" wx:key="index" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" data-index="{{index}}">
+            <mp-cell link url="{{'/pages/packageA/training/class/class?id=' + index}}" class="item">
+                <view slot="title" class="weui-label">
+                    <view class="item-title">
+                        {{item.name}}
+                    </view>
+                    <view class="count">
+                        <block wx:if="{{item.classes}}">
+                            {{item.complete || 0}}/{{item.classes}}
+                        </block>
+                        <block wx:else>
+                            --
+                        </block>
+                    </view>
+                </view>
+                <view slot="footer">
+                    <view class="coach">{{item.coach}}</view>
+                    <view class="time">{{item.time}}</view>
+                </view>
+            </mp-cell>
+        </mp-slideview>
+    </view>
+</view>
+

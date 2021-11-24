@@ -5,14 +5,15 @@ const app = getApp()
 Page({
   data: {
     coverImage: '',
+    avatarUrl: '/images/member/avatar.png',
     userInfo: {
-      name: "Ada",
-      avatarUrl: '/images/member/avatar.png',
-      mobile: "13888888888",
+      userName: "Ada",
+      headImg: '',
+      phone: "13888888888",
       birthday: "2020-10-22",
       age: '27',
-      tags: ['增肌', '减脂', '康复'],
-      remark: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳。被酒莫惊春睡重，赌书消得泼茶香，当时只道是寻常。'
+      customerTag: ['增肌', '减脂', '康复'],
+      remarks: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳。'
     },
     qrShow: false,
     imgUrl: '',  //后端返回的绑定二维码
@@ -27,13 +28,13 @@ Page({
       link: '/pages/packageA/inbody/overview/overview'
     }, {
       name: '体验课教案',
-      link: '/pages/packageA/training/list/list'
+      link: '/pages/packageA/training/edit/edit'
     }, {
       name: '训练规划',
-      link: '/pages/packageA/training/plan/plan'
+      link: '/pages/packageA/training/classlist/classlist'
     }, {
       name: '训练记录',
-      link: '/pages/packageA/training/record/record'
+      link: '/pages/packageA/training/class/class?id=0'
     }],
     news: {
       '#2021': {
@@ -120,12 +121,20 @@ Page({
     })
   },
   onLoad(options) {
-    const userId = options.userid;  //会员id
-    if (wx.getUserProfile) {
+    const userId = options.id;  //会员id
+    // const memberInfo = wx.getStorageSync("memberInfo");
+    app.req.api.getUserById({id: userId}).then(res => {
+      console.log('返回：', res.data);
+      let userInfo = res.data;
+      let birthday = userInfo.birthday.match(/([0-9]+)-[0-9]+-[0-9]+/);
+      userInfo.birthday = birthday[0];
+      userInfo.age = new Date().getFullYear() - birthday[1];
+      userInfo.customerTag = userInfo.customerTag.split(',');
+      console.log(886668, userInfo);
       this.setData({
-        canIUseGetUserProfile: true
+        userInfo: userInfo
       })
-    }
+    })
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

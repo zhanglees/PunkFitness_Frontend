@@ -5,26 +5,32 @@
     <view class="userinfo">
     <block wx:if="{{userInfo}}">
       <view class="userinfo-top">
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.headImg ? userInfo.headImg : avatarUrl}}" mode="cover"></image>
         <view class="userinfo-right">
           <view class="userinfo-detail-n">
-            <text class="userinfo-nickname">{{userInfo.name}}</text>
-            <text class="userinfo-mobile">{{userInfo.mobile}}</text>
+            <text class="userinfo-nickname">{{userInfo.userName}}</text>
+            <text class="userinfo-mobile">{{userInfo.phone}}</text>
           </view>
           <view class="userinfo-detail-b">
             <text class="userinfo-birthday">{{userInfo.birthday}}</text>
             <text class="userinfo-age">{{userInfo.age}}岁</text>
           </view>
-          <view class="right-btn" bindtap="getQr">
-            关联客户
-          </view>
+        </view>
+        <view class="userinfo-remarks" wx:if="userInfo.remarks">
+          <text class="userinfo-remarks-c">备注：{{userInfo.remarks}}</text>
         </view>
       </view>
       <view class="userinfo-tags">
-        <text class="userinfo-tags-item" wx:for="{{userInfo.tags}}" wx:key="i">{{item}}</text>
+        <text class="userinfo-tags-item" wx:for="{{userInfo.customerTag}}" wx:key="i">{{item}}</text>
       </view>
-      <view class="userinfo-remarks" wx:if="userInfo.remark">
-        <text class="userinfo-remarks-c">备注：{{userInfo.remark}}</text>
+
+      <view class="userinfo-btn-wrapper">
+        <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn" bindtap="getQr">
+          转为正式会员
+        </view>
+        <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn" bindtap="getQr">
+          关联客户微信
+        </view>
       </view>
     </block>
     <block wx:else>

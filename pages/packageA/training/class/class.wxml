@@ -1,0 +1,22 @@
+<!--pages/packageA/training/class/class.wxml-->
+<view class="container">
+    <view class="top_layout">
+        <view class="stage-title">{{name}}课程训练计划</view>
+        <view class="stage-coach">{{coach}}</view>
+    </view>
+    <view class="class-list">
+        <mp-slideview wx:for="{{classes}}" wx:key="index" buttons="{{slideButtons[item.status ? 0 : 1]}}" bindbuttontap="slideButtonTap" data-type="{{item.status ? 0 : 1}}" data-index="{{index}}">
+            <mp-cell link="{{item.status != 2}}" url="{{'/pages/packageA/training/edit/edit?id=' + (index+1)}}" footer="{{item.status ? (item.status == 1 ? '未完成' : ('已完成 '+ item.time)) : ''}}">
+                <view slot="title" class="weui-label">
+                    <text class="class-item-index">{{item.index ? item.index : (index+1)}}</text>
+                    <text class="class-item-title" wx:if="{{item.name}}">{{item.name}}</text>
+                    <text class="class-item-create" wx:else>新建训练课</text>
+                </view>
+            </mp-cell>
+        </mp-slideview>
+    </view>
+
+    <mp-dialog title="确认删除该课程" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+        <view>该操作不可撤销</view>
+    </mp-dialog>
+</view>

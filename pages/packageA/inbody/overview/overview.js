@@ -26,7 +26,7 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const userid = options.userid;
+        const userid = options.id;
         //获取用户体重数据
         var x_data=["12-05", "12-06", "12-07", "12-08", "12-09", "12-10", "12-11"]
         var y_data= ["55", "56", "53", "55", "55", "57", "53"]

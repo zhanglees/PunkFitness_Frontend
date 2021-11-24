@@ -3,12 +3,12 @@ const req = require('./mp-req/index.js');
 const api = require('./api.js');
 
 const apiUrlTable = {
-  local: 'http://localhost:8080',
-  dev: 'http://localhost:8080',
+  local: 'http://182.92.189.147:443/api',
+  dev: 'http://182.92.189.147:8023/api',
   pre: 'https://localhost:8080',
   release: 'https://localhost:8080',
 };
-const apiUrl = apiUrlTable.release;
+const apiUrl = apiUrlTable.dev;
 
 /**
  * code换取sessionId

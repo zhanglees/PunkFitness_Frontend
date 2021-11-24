@@ -4,11 +4,12 @@ const app = getApp()
 
 Page({
   data: {
-    name: '',
+    userName: '',
     genders: ["男", "女"],
-    gendersIndex: 0,
+    sex: 0,
     birthday: '',
-    tagsItems: [{
+    tagsItems: ['增肌', '减脂', '康复'],
+    tagsItems1: [{
       name: '增肌',
       value: '01',
       checked: false
@@ -22,15 +23,19 @@ Page({
       checked: false
     }],
     rules: [{
-        name: 'name',
-        // rules: {required: true, message: '请输入姓名'},
+        name: 'userName',
+        rules: {required: true, message: '请输入姓名'},
     }, {
-        name: 'mobile',
-        // rules: [{required: true, message: '请输入手机号'}, {mobile: true, message: '请输入正确的手机号'}],
+        name: 'phone',
+        rules: [{required: true, message: '请输入手机号'}, {mobile: true, message: '请输入正确的手机号'}],
     }],
     formData: {
-      name: '',
-      mobile: ''
+      userName: '',
+      phone: '',
+      sex: 0,
+      remarks: '',
+      birthday: '',
+      customerTag: ''
     },
     imgUrl: '',  //后端返回的绑定二维码
     qrShow: false,
@@ -47,22 +52,18 @@ Page({
   },
   bindGendersChange(e){
     this.setData({
-      gendersIndex: e.detail.value
+      [`formData.sex`]: e.detail.value
     })
   },
   bindBirthdayChange(e){
     this.setData({
-      birthday: e.detail.value
+      [`formData.birthday`]: e.detail.value
     })
   },
   tagsChange(e){
-    var tagsItems = this.data.tagsItems, values = e.detail.value;
-    for (var i = 0, lenI = tagsItems.length; i < lenI; ++i) {
-      tagsItems[i].checked = values.includes(tagsItems[i].value);
-    }
+    const value = e.detail.value;
     this.setData({
-        tagsItems: tagsItems,
-        [`formData.tags`]: e.detail.value
+        [`formData.customerTag`]: value.join(',')
     });
   },
   submitForm() {
@@ -78,47 +79,60 @@ Page({
         }
       } else {
         //提交表单，拿返回的二维码弹窗显示，轮询客户扫码结果，客户扫码后跳转会员详情页
-        console.log(9999, this.data.formData)
+        console.log('传参：', this.data.formData)
         // wx.showToast({
         //     title: '保存成功'
+        // });  
+        let data = this.data.formData;
+         app.req.api.userRegister({
+          "teacherId": "string", ...data
+         })
+          .then((res) => {
+            console.log('返回：', res.data);
+            const id = res.data.id;
+            _this.setData({
+              imgUrl: '/images/member/qr.png',  
+              qrShow: true,
+              userid: id
+            })
+            _this.startWaiting();
+          })
+          .catch(app.req.err.show);
+        // wx.setStorage({
+        //   key: "memberInfo",
+        //   data: this.data.formData
         // });
-        const id = '123445'; //返回的用户id
-        this.startWaiting();
-        _this.setData({
-          imgUrl: '/images/member/qr.png',  
-          qrShow: true,
-          userid: id
-        })
       }
     })
   },
   /***轮询接口判断是否绑定成功 */
-  qrStatusUpdate() {
-    const id = this.data.userid;
+  qrStatusUpdate(_this) {
+    const id = _this.data.userid;
     var maxWait = 10 //超时次数
-    var newWait = this.data.waitTimes + 1 //执行的次数
+    var newWait = _this.data.waitTimes + 1 //执行的次数
     if (newWait >= maxWait) { //超时了
         console.log(new Date(), '轮询超时')
     } else { //未超时
-        var time = setTimeout(this.qrStatusUpdate, 2000)
-        this.data.timeList.push(time) // 存储定时器
+        var time = setTimeout(function(){_this.qrStatusUpdate(_this)}, 2000)
+        _this.data.timeList.push(time) // 存储定时器
         //这里发送请求判断绑定结果，如果绑定成功则进入拿到数据流程
         console.log(new Date(), '第', newWait, '次轮询中...')
         if (newWait === 2) { //拿到数据，轮询终止
             console.log(new Date(), '拿到了所需数据！轮询停止')
             wx.redirectTo({
-              url: '../memberinfo/memberinfo' + '?userid=' + id,
+              url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + id,
             })
-            this.stopWaiting()
+            _this.stopWaiting()
         } else { //继续轮询
-            this.setData({
+            _this.setData({
                 waitTimes: newWait
             })
         }
     }
   },
   startWaiting() {
-      setTimeout(this.qrStatusUpdate, 2000)
+    const _this = this;
+      setTimeout(function(){_this.qrStatusUpdate(_this)}, 2000)
   },
   stopWaiting() {
       for (var i = 0; i < this.data.timeList.length; i++) {

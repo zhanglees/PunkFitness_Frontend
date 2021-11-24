@@ -1,12 +1,13 @@
 <!--pages/packageA/training/plan/plan.wxml-->
+<wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
     <view class="body-data content">
         <view class="content-title">身体数据</view>
         <view class="data-panel">
             <view class="data-item" wx:for="{{bodyData}}" wx:key="index">
-                <view class="data-name">{{item.name}}</view>
+                <view class="data-name">{{item.name}}{{item.unit ? '('+item.unit+')' : ''}}</view>
                 <view class="data-value">{{item.value}}</view>
-                <view class="data-status">{{statusList[item.status]}}</view>
+                <view class="data-status data-status{{item.status ? item.status : ''}}">{{statusList[item.status]}}</view>
             </view>
         </view>
         <view class="data-tips">以上数据来自{{dataTime}}身体测试</view>
@@ -15,12 +16,80 @@
         <view class="content-title">健身目标&方案</view>
         <view class="target-list">
             <view class="target-item" wx:for="{{targetList}}" wx:key="index">
-                {{targetList}}
+                {{item}}
             </view>
             <view class="target-item">
             + 其他
             </view>
         </view>
+        <view class="plan-info">
+            <view class="info-item">
+                <image class="info-item-icon" src="/images/training/frequency.png" />健身频率
+                <input bindchange="inputChange" class="info-input" />
+                <view class="info-item-unit">次/周</view>
+            </view>
+            <view class="info-item">
+                <image class="info-item-icon" src="/images/training/cycle.png"></image> 健身总周期
+                <input bindchange="inputChange" class="info-input" />
+                <view class="info-item-unit">月</view>
+            </view>
+        </view>
+        <view class="stage-list">
+            <view class="stage-item" wx:for="{{stageList}}" wx:key="index">
+                <view class="stage-title {{item.exp ? 'stage-title-act' : ''}}" bindtap="expDetail" data-index="{{index}}">
+                    <text class="stage-title-block" style="background-color: {{stageColors[index%6]}};"></text>
+                    {{item.name}}
+                    <mp-icon class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
+                </view>
+                <view class="stage-detail {{item.exp ? 'stage-detail-exp' : ''}}" id="stage{{index}}">
+                    <block wx:for="{{item.detail}}" wx:for-item="dItem" wx:for-index="dIndex" wx:key="dIndex">
+                    <view class="stage-detail-title">{{dItem.name}}</view>
+                    <view wx:if="{{dItem.name!='训练目标'}}" class="stage-detail-list">
+                        <view wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" class="stage-detail-item {{utils.indexOf(dItem.checked, option) != -1 ? 'stage-detail-item-checked' : ''}}" bindtap="checkedOne" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}">
+                            {{option}}
+                        </view>
+                        <input wx:if="{{dItem.addFlag}}" bindchange="addOption" class="weui-input" data-index="{{index}}" data-d="{{dIndex}}" placeholder="" />
+                        <view wx:else class="stage-detail-item option-customize" bindtap="tapAddOption" data-index="{{index}}" data-d="{{dIndex}}">+自定义</view>
+                    </view>
+                    <view wx:else class="stage-detail-list">
+                        <view wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" class="stage-detail-item {{option.checked ? 'stage-detail-item-checked' : ''}}" bindtap="checkedOneTarget" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}">
+                            {{option.name}}
+                        </view>
+                        <block wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" >
+                        <view wx:if="{{option.checked}}" class="stage-target-item">
+                            {{option.name}}
+                            <input bindchange="targetValue" class="weui-input" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" value="{{option.value}}" placeholder="" />
+                            <text class="target-unit">kg</text>
+                        </view>
+                        </block>
+                    </view>
+                    </block>
+                    <view class="stage-fct-list">
+                        <view class="stage-fct-item">
+                            阶段频率<input bindinput="changefct" data-index="{{index}}" data-id="frequency" value="{{item.frequency}}" /><text class="stage-fct-unit">次/周</text>
+                        </view>
+                        <view class="stage-fct-item">
+                            阶段周期<input bindinput="changefct" data-index="{{index}}" data-id="cycle" value="{{item.cycle}}" /><text class="stage-fct-unit">周</text>
+                        </view>
+                        <view class="stage-fct-item">
+                            阶段次数<input bindinput="changefct" data-index="{{index}}" data-id="times" value="{{item.times}}" /><text class="stage-fct-unit">次</text>
+                        </view>
+                    </view>
+                    <view class="stage-classes">
+                        所需课时{{item.classes ? item.classes : '--'}}节
+                    </view>
+                    <view class="stage-remark">
+                        <textarea class="stage-remark-area" placeholder="备注" bindinput="remarkChange" data-index="{{index}}" />
+                    </view>
+                </view>
+            </view>
+            <view class="stage-item-add" bindtap="addStage">
+            +  添加阶段
+            </view>
+        </view>
+    </view>
+    <view class="btn-wrapper">
+        <view class="create-btn" bindtap="createPlan">创建训练方案</view>
     </view>
 </view>
 
