@@ -1,0 +1,74 @@
+/* components/calendarWeek/calendarWeek.wxss */ 
+.date-choose {
+    background: var(--base);
+    overflow: hidden;
+    height: auto;
+  }
+  
+  .data-month {
+    width: 100%;
+    align-items: center;
+    padding: 0 0 10rpx 40rpx;
+    text-align: left;
+    color: #fff;
+    font-size: 36rpx;
+  }
+  
+  .date-choose-swiper {
+    flex-grow: 1;
+    height: 120rpx;
+  }
+  
+  .swiper-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .weekday,
+  .dateday {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    flex-grow: 1;
+  }
+  
+  .week,
+  .day {
+    width: 14.286%;
+    flex-basis: 14.286%;
+  }
+  
+  .week {
+    color: #85B6EE;
+    font-size: 24rpx;
+  }
+  
+  .weekday .week,.day text {
+    position: relative;
+    color: #85B6EE;
+  }
+  
+.day .active::before {
+    /* 圈圈 */
+    content: "";
+    position: absolute;
+    width: 76rpx;
+    height: 76rpx;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10%;
+    background: #4E97E7;
+    z-index: -1;
+  }
+  
+  .day text.active, .weekday .active {
+    color: #fff;
+  }
+  
+  .day text.reds {
+    color: #fff;
+  }
+  

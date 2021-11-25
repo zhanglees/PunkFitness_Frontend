@@ -119,3 +119,9 @@
 .member-class{
   font-size: 24rpx;
 }
+.no-member{
+  width: 100%;
+  text-align: center;
+  color: #ddd;
+  margin-top: 40rpx;
+}

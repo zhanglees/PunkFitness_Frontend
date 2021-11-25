@@ -1,10 +1,10 @@
 {
-  "entryPagePath": "pages/index/index",  
+  "entryPagePath": "pages/schedule/schedule",  
   "pages":[
     "pages/index/index",
     "pages/mine/mine",
     "pages/schedule/schedule",
-    "pages/logs/logs"
+    "pages/reserve/reserve"
   ],
 	"subpackages": [
     {

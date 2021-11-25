@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "Calendar": "/components/calendar/calendar",
+    "mp-dialog": "weui-miniprogram/dialog/dialog",
+    "calendarWeek": "/components/calendarWeek/calendarWeek"
+  },
+  "navigationBarTitleText": "课程预约"
+
 }

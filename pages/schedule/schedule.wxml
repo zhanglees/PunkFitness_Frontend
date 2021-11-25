@@ -1,2 +1,27 @@
 <!--pages/schedule/schedule.wxml-->
-<text>pages/schedule/schedule.wxml</text>
+<view class="container">
+    <view class="top-layout">
+        <view class="top-title">课程预约列表</view>
+        <calendarWeek bindmydata="mydata"></calendarWeek> 
+    </view>
+    <view class="training-list">
+        <view wx:for="{{list}}" wx:key="index" class="training-item">
+            <view class="training-name">{{item.userName || '--'}}</view>
+            <view class="training-item-b">
+                <view class="training-time">{{item.time}}</view>
+                <view wx:if="{{item.status}}" class="status checkin-btn" bindtap="checkin">签课</view>
+                <view wx:else class="status have-done">已签课</view>
+            </view>
+        </view>
+    </view>
+    <view class="btn-wrapper">
+        <view class="reserve-btn" bindtap="goReserve">预约</view>
+    </view>
+    <mp-dialog title="签课" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}" data-index="{{index}}">
+        <picker-view indicator-style="height: 50rpx;" class="dialog-picker" value="{{checkClass}}" bindchange="bindClassChange">
+            <picker-view-column>
+                <view wx:for="{{classList}}" wx:key="index" class="dialog-picker-item"> {{item.index}}. {{item.title}}</view>
+            </picker-view-column>
+        </picker-view>
+    </mp-dialog>
+</view>

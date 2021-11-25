@@ -33,12 +33,12 @@
                   </label>
                 </view>
               </view>
-              <view class="filter-list" wx:if="{{index == 0}}">
+              <view class="filter-list" wx:if="{{index == 0 && !showSearchInput[index]}}">
                 <view wx:for="{{fliterList}}" wx:key="index" wx:for-index="i" bindtap="filterTap" data-index="{{i}}" class="filter-item {{i===fliterChecked ? 'filter-item__act' : ''}}">
-                  {{item.name}}<!--<view>（ {{item.num || '--'}} ）</view>-->
+                  {{item.name}}<view>（ {{item.num || '--'}} ）</view>
                 </view>
               </view>
-              <view class="member-list">
+              <view class="member-list" wx:if="{{nums[index]}}">
                 <mp-cell wx:for="{{memberList[index]}}" wx:key="m" wx:for-item="member" wx:for-index="m" link url="{{'/pages/packageA/training/classlist/classlist?id=' + member.id}}" class="item" footer="课时计划">
                 <view slot="title" class="weui-label">
                     <view class="member-name" bindtap="memberDetail" data-index="{{member.id}}">
@@ -50,6 +50,9 @@
                     </view>
                 </view>
                 </mp-cell>
+              </view>
+              <view class="no-member" wx:else>
+                暂无数据~
               </view>
               </block>
               <experience wx:else></experience>

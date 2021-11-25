@@ -1,0 +1,60 @@
+/* pages/reserve/reserve.wxss */
+page{
+    background: #eee;
+}
+.container{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40rpx;
+}
+.form{
+    background: #fff;
+    border-radius: 10rpx;
+    width: 100%;
+    box-sizing: border-box;
+}
+.form .weui-input, .weui-cell__bd{
+    text-align: right;
+}
+.btn-wrapper{
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 20%;
+    margin-top: 80rpx;
+}
+.reserve-btn{
+    background: var(--base);
+    border-radius: 30rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    color: #fff;
+    text-align: center;
+}
+.form .weui-cell:first-child::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 90%;
+    margin: 0 auto;
+    background: #eee;
+}
+.search-result{
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 20rpx;
+    position: absolute;
+    right: 30rpx;
+    border-radius: 0 0 5px 5px;
+    border-top: 0;
+    left: 250rpx;
+    right: 30rpx;
+    z-index: 10;
+    text-align: center;
+    box-shadow: 2px 6px 2px -3px #eee;
+}
+.no-result{
+    font-size: 24rpx;
+    color: #ddd;
+}

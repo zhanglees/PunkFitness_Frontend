@@ -59,7 +59,8 @@ Page({
       const nums = [memberList[0].length, memberList[1].length];
       this.setData({
         memberList: memberList,
-        nums: nums
+        nums: nums,
+        current: nums[0] ? 0 : 1
       });
       this.comSwiperHeight();
     })
@@ -77,32 +78,6 @@ Page({
   },
   tabChange(e){
     const curr = e.currentTarget.dataset.id;
-    // if(curr == 1 && !this.data.memberList[curr].length){
-    //   this.setData({
-    //     [`memberList[${curr}]`]: [{
-    //       name: '准会员^0^',
-    //       link: false,
-    //       classComp: 1,
-    //       classCount: 10,
-    //       type: 1,  //准会员
-    //       id: 1
-    //     }, {
-    //       name: '准会员大灰狼',
-    //       link: false,
-    //       classComp: 0,
-    //       classCount: 0,
-    //       type: 1,
-    //       id: 2
-    //     },{
-    //       name: '准会员小白兔',
-    //       link: true,
-    //       classComp: 0,
-    //       classCount: 0,
-    //       type: 1,
-    //       id: 3
-    //     }]
-    //   })
-    // }
     this.setData({
         current: curr
     })
@@ -150,13 +125,18 @@ Page({
   },
   searchInputChange: function (e) {
     const value = e.detail.value;
-    const fliterChecked = this.data.fliterChecked;
-    if((fliterChecked!=='') && (value != this.data.fliterList[fliterChecked].name)){
-      this.setData({
-        fliterChecked: ''
-      })
-    }
+    // const fliterChecked = this.data.fliterChecked;
+    // if((fliterChecked!=='') && (value != this.data.fliterList[fliterChecked].name)){
+    //   this.setData({
+    //     fliterChecked: ''
+    //   })
+    // }
     //发送搜索请求
+    // app.req.api.search({
+    //   key: value
+    // }).then(res=>{
+      
+    // })
       // return new Promise((resolve, reject) => {
       //     setTimeout(() => {
       //         resolve([{text: '搜索结果', value: 1}, {text: '搜索结果2', value: 2}])

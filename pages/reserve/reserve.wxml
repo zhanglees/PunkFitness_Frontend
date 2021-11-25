@@ -1,0 +1,25 @@
+<!--pages/reserve/reserve.wxml-->
+<view class="container">
+    <view class="form">
+        <mp-cell prop="name" title="会员姓名">
+            <input bindinput="formInputChange" value="{{userName}}" class="weui-input" placeholder="请输入会员姓名/手机号进行搜索"/>
+            <view class="search-result" wx:if="{{showResult}}">
+                <block wx:if="{{result.length}}">
+                <view class="result-item" wx:for="{{result}}" wx:key="index" bindtap="chooseUser" data-id="{{item.id}}" data-name="{{item.userName}}"> 
+                    {{item.userName}}  {{item.phone}}
+                </view>
+                </block>
+                <view wx:else class="no-result">未查询到该用户~</view>
+            </view>
+        </mp-cell>
+        <mp-cell link title="预约时间">
+            <time-picker mode="dateTime" class="picker" placeholder="请选择时间" bind:onPickerChange="onPickerChange"></time-picker>
+            <!-- <picker data-field="time" mode="time" value="{{time}}" start="1930-01-01" end="" bindchange="bindTimeChange">
+                <view class="weui-input">{{time}}</view>
+            </picker> -->
+        </mp-cell>
+    </view>
+    <view class="btn-wrapper">
+        <view class="reserve-btn" bindtap="goReserve">确认预约</view>
+    </view>
+</view>

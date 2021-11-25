@@ -12,7 +12,10 @@ function install(req, request) {
             const url = `${req.apiUrl}/user/byid`;
             return request({ url, method: 'GET', data }, false);
         },
-        
+        getUserAll(data){
+            const url = `${req.apiUrl}/user/getUserAll`;
+            return request({ url, method: 'GET', data }, false);
+        },
         login(){
             const url = `${req.apiUrl}/api/user/login`;
             return request({ url }, false);

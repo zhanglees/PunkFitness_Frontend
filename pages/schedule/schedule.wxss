@@ -1,1 +1,64 @@
 /* pages/schedule/schedule.wxss */
+.top-layout{
+    width: 100%;
+    background: var(--base);
+    color: #fff;
+}
+.top-title{
+    width: 100%;
+    text-align: center;
+    line-height: 80rpx;
+}
+.training-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx;
+}
+.training-item{
+    border-radius: 5px;
+    border: 1px solid var(--base);
+    box-sizing: border-box;
+    padding: 20rpx;
+    margin-bottom: 20rpx;
+}
+.training-item-b{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+.training-time{
+    color: var(--base);
+}
+.status{
+    float: right;
+}
+.checkin-btn{
+    border: 1px solid var(--base);
+    border-radius: 14rpx;
+    padding: 0 10rpx;
+    color: var(--base);
+}
+.have-done{
+    color: #999;
+}
+.dialog-picker{
+    width: 100%; 
+    height: 200rpx;
+}
+.dialog-picker-item{
+    line-height: 50rpx; 
+    text-align: center;
+}
+.btn-wrapper{
+    position: fixed;
+    bottom: 20rpx;
+}
+.reserve-btn{
+    border: 2px solid var(--base);
+    border-radius: 20rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding: 0 80rpx;
+    font-weight: bold;
+    color: var(--base);
+}

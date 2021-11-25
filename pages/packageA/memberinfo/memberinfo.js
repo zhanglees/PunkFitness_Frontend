@@ -17,6 +17,8 @@ Page({
     },
     qrShow: false,
     imgUrl: '',  //后端返回的绑定二维码
+    dialogShow: false,
+    dialogButtons: [{ text: '取消' }, { text: '确定' }],
     serverList: [{
       name: '健康问卷',
       link: '/pages/packageA/questionnaire/overview/overview'
@@ -164,6 +166,25 @@ Page({
       imgUrl: '/images/member/qr.png',  
       qrShow: true
     })
+  },
+  /***转为正式会员弹窗 */
+  changeLevel(e){
+    this.setData({
+        dialogShow: true
+    })
+  },
+  /***转为正式会员 */
+  tapDialogButton(e) {
+      if(e.detail.index === 1){
+          //确认
+          const id = this.data.id;
+          app.req.api.changeLevel({id : id}).then(res=>{
+            //请求返回之后的结果 失败提示  成功更新按钮状态
+          })
+      }
+      this.setData({
+          dialogShow: false
+      })
   },
    //跳转到其他页面
    gotoServer: function (e) {
