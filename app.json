@@ -1,5 +1,5 @@
 {
-  "entryPagePath": "pages/schedule/schedule",  
+  "entryPagePath": "pages/index/index", 
   "pages":[
     "pages/index/index",
     "pages/mine/mine",
@@ -23,9 +23,15 @@
         "training/record/record",
         "training/class/class",  
         "training/classlist/classlist", 
-        "training/list/list"
-      ]
-    }
+        "training/edit/edit", 
+        "training/stagedetail/stagedetail"
+      ]}, {
+      "root": "pages/packageB",
+      "pages": [
+        "mine/setting/setting",
+        "mine/buy/buy",
+        "mine/cash/cash"
+      ]}
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -35,7 +41,7 @@
   },
   "tabBar": {
     "color": "#515151",
-    "selectedColor": "#387E22",
+    "selectedColor": "#4182E9",
     "borderStyle": "white",
     "list": [{
       "pagePath": "pages/index/index",

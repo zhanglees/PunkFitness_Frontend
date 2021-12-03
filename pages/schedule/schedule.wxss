@@ -1,7 +1,7 @@
 /* pages/schedule/schedule.wxss */
 .top-layout{
     width: 100%;
-    background: var(--base);
+    background: var(--base-gradient);
     color: #fff;
 }
 .top-title{
@@ -16,7 +16,7 @@
 }
 .training-item{
     border-radius: 5px;
-    border: 1px solid var(--base);
+    border: 1px solid var(--base-light);
     box-sizing: border-box;
     padding: 20rpx;
     margin-bottom: 20rpx;
@@ -37,6 +37,7 @@
     border-radius: 14rpx;
     padding: 0 10rpx;
     color: var(--base);
+    margin-left: 20rpx;
 }
 .have-done{
     color: #999;
@@ -52,13 +53,4 @@
 .btn-wrapper{
     position: fixed;
     bottom: 20rpx;
-}
-.reserve-btn{
-    border: 2px solid var(--base);
-    border-radius: 20rpx;
-    height: 60rpx;
-    line-height: 60rpx;
-    padding: 0 80rpx;
-    font-weight: bold;
-    color: var(--base);
 }

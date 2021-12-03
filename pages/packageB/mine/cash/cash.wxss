@@ -1,0 +1,92 @@
+/* pages/packageB/mine/cash/cash.wxss */
+.info, .list{
+    padding: 20rpx;
+    width: 100%;
+    box-sizing: border-box;
+}
+.info-title{
+    font-size: 32rpx;
+    font-weight: 500;
+    margin: 30rpx 0;
+}
+.info-detail{
+    font-size: 28rpx;
+    margin-bottom: 20rpx;
+}
+.info-tips{
+    font-size: 24rpx;
+    color: #515151;
+}
+.qr-img{
+  width: 100%;
+}
+.qr-view{
+  font-size: 20rpx;
+  line-height: 2;
+}
+
+
+.list-tab{
+    padding: 20rpx 40rpx 10rpx;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+    color: #999;
+  }
+  .tab-item{
+    display: inline-block;
+    flex: 1;
+    line-height: 2;
+    height: 60rpx;
+    text-align: center;
+  }
+  .tab-item-act{
+    color: var(--base);
+    position: relative;
+    font-weight: bold;
+  }
+  .tab-item-act::after{
+    position: absolute;
+    width: 80%;
+    height: 2px;
+    border-radius: 1px;
+    bottom: 0;
+    left: 10%;
+    right: 0;
+    content: '';
+    background-color: var(--base);
+  }
+  .list-list{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 20rpx;
+  }
+  .list-item{
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      line-height: 60rpx;
+      height: 60rpx;
+  }
+  .list-item-type{
+      color: #515151;
+  }
+  .img-dialog .weui-dialog{
+      background: transparent;
+  }
+  .qr-view{
+      margin-bottom: 40rpx;
+      position: relative;
+  }
+  .close-icon{
+      position: absolute;
+      right: 8rpx;
+      top: 10rpx;
+  }
+  .qr-img{
+      width: 560rpx;
+      height: 700rpx;
+  }

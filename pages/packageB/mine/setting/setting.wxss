@@ -1,0 +1,42 @@
+/* pages/packageB/mine/setting/setting.wxss */
+.userinfo-avatar {
+    overflow: hidden;
+    width: 128rpx;
+    height: 128rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+    border: 1px solid #eee;
+  }
+  .head-portrait{
+    height: 130rpx;
+    width: 130rpx;
+    display: inline-block;
+    position: relative;
+  }
+  .form{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 20rpx;
+  }
+  .form .weui-input,.form  .weui-select{
+      text-align: right;
+      color: #808080;
+  }
+  .phone-wrapper{
+      display: flex;
+      align-items: center;
+  }
+  .phone-wrapper .weui-input{
+      flex: 1;
+  }
+  .get-phone{
+      display: inline-block;
+      color: var(--base);
+      font-size: 28rpx;
+      background: transparent;
+      width: 220rpx !important;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+      line-height: 44px;
+  }

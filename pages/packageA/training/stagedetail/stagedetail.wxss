@@ -1,0 +1,66 @@
+/* pages/packageA/training/stagedetail/stagedetail.wxss */
+
+.stage-detail-title{
+    padding-left: 20rpx;
+    position: relative;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-weight: bold;
+    margin: 30rpx 0 0 0;
+}
+.stage-detail-title::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    background: #008CE9;
+    width: 2px;
+    border-radius: 2px;
+    top: 18rpx;
+    height: 24rpx;
+}
+.item-detail-item{
+    padding: 0 20rpx;
+    background: #eee;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 20rpx;
+    color: #515151;
+}
+.stage-title{
+    width: 100%;
+    box-sizing: border-box;
+    background: #D4EDF9;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding: 0 40rpx 0 60rpx;
+    position: relative;
+    margin-top: 20rpx;
+}
+
+.stage-title::after{
+    content: "";
+    height: 10rpx;
+    width: 10rpx;
+    position: absolute;
+    left: 20rpx;
+    top: 35rpx;
+    background: #FAB44F;
+    display: block;
+}
+.stage-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 20rpx 20rpx;
+}
+.stage-fct{
+    margin-top: 40rpx;
+}
+.stage-fct-item{
+    background: #F1F1F1;
+    line-height: 60rpx;
+    padding-left: 20rpx;
+    margin: 20rpx 0;
+}
+.text-gray{
+    color: #515151;
+}

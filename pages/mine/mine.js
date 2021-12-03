@@ -10,8 +10,19 @@ Page({
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         canIUseGetUserProfile: false,
-        canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
-
+        canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+        withdraw: 6888,
+        memberTime: '2021-12-30',
+        actionList: [{
+            title: '资料设置',
+            link: '/pages/packageB/mine/setting/setting'
+        }, {
+            title: '会员购买',
+            link: '/pages/packageB/mine/buy/buy'
+        }, {
+            title: '推广返现',
+            link: '/pages/packageB/mine/cash/cash'
+        }]
     },
 
     /**

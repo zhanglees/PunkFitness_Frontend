@@ -1,0 +1,48 @@
+/* pages/packageB/mine/buy/buy.wxss */
+.buy-list{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40rpx;
+}
+.buy-item{
+    border: 1px solid var(--base);
+    border-radius: 10rpx;
+    width: 180rpx;
+    height: 180rpx;
+    text-align: center;
+    padding-top: 40rpx;
+    box-sizing: border-box;
+}
+.price-icon{
+    width: 30rpx;
+    height: 38rpx;
+}
+.buy-item-title{
+    font-weight: bold;
+    color: var(--base);
+}
+.buy-item-price{
+    font-size: 48rpx;
+    color: #E28B13;
+}
+.buy-list .buy-item_act{
+    border-color: red;
+}
+.buy-list .buy-item_act .buy-item-title{
+    color: red;
+}
+.content{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 40rpx;
+}
+.content-title{
+    font-size: 32rpx;
+    font-weight: 500;
+    margin: 30rpx 0;
+}
+.content-detail{
+    margin-bottom: 20rpx;
+}

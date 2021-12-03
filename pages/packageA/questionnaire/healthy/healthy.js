@@ -4,31 +4,44 @@ Page({
     data: {
         questionList: [],
         questionList2: [],
-        currentPage: 0
+        currentPage: 0,
+        userId: ''
     },
-    onLoad(){
+    onLoad(options){
         const list=[{
-            q: '您之前有没有参加过健身？',
-            type: '0',
-            option: ['没有', '有']
+            questionContent: '您之前有没有参加过健身？',
+            questionType: '0',
+            items: [{describes: '没有'}, {describes: '有'}]
         }, {
-            q: '您希望通过健身达到哪些改变？',
-            type: 1,
-            option: ['减脂', '增肌', '瘦身', '塑形', '运动康复', '提高运动表现']
+            questionContent: '您希望通过健身达到哪些改变？',
+            questionType: 1,
+            items: [{describes: '减脂'}, {describes: '增肌'},{describes:  '瘦身'}, {describes: '塑形'}, {describes: '运动康复'}, {describes: '提高运动表现'}]
         }];
         const list2=[{
-            q: '您之前有没有参加过健身？',
-            type: '0',
-            option: ['没有', '有']
+            questionContent: '您之前有没有参加过健身？',
+            questionType: '0',
+            items: [{describes: '没有'},{describes:  '有'}]
         }, {
-            q: '您希望通过健身达到哪些改变？',
-            type: 1,
-            option: ['减脂', '增肌', '瘦身', '塑形', '运动康复', '提高运动表现']
+            questionContent: '您希望通过健身达到哪些改变？',
+            questionType: 1,
+            items: [{describes: '减脂'},{describes:  '增肌'},{describes:  '瘦身'},{describes:  '塑形'},{describes:  '运动康复'},{describes:  '提高运动表现'}]
         }];
         this.setData({
             questionList: list,
-            questionList2: list2
+            questionList2: list2,
+            userId: options.id
         })
+        // console.log(888, options.id)
+        // app.req.api.getQuestionnaireAll({
+        //     coachId: 'string'
+        // }).then(res=>{
+        //     const list = res.data;
+        //     console.log('问卷:', list)
+        //     this.setData({
+        //         questionList: list,
+        //         userId: options.id
+        //     })
+        // })
     },
     tapAddOption(e){
         const index = e.currentTarget.dataset.index;

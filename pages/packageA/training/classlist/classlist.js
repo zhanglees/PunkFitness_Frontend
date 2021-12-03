@@ -5,12 +5,8 @@ Page({
      * Page initial data
      */
     data: {
-        list: [{
-            name: '',
-            classes: '',
-            coach: '',
-            time: ''
-        }],
+        type: 'plan',  //默认是训练计划进来
+        list: [],
         slideButtons: [{
             type: 'warn',
             text: '删除',
@@ -26,14 +22,16 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
+        const type = options.type;   //用来区分是训练规划还是训练记录,记录则每条跳转到该阶段对应的课程，规划则每条跳转到该阶段的详情
         //取数据
         const stageList = wx.getStorageSync('stageList');
-        stageList.map(i=>{
+        stageList.length && stageList.map(i=>{
             i.coach= "王建祥";
             i.time= "2021/10/11";
         })
         this.setData({
-            list: stageList
+            list: stageList,
+            type: type
         });
     },
     /****添加训练计划 */

@@ -1,15 +1,16 @@
 <!--pages/packageA/training/classlist/classlist.wxml-->
-<!-- 阶段课程列表-->
+<!-- 训练规划列表-->
 <view class="container">
     <view class='top_layout'>
         <view class="top-say-sth">添加训练计划，可以更好的定制您的训练</view>
         <view bindtap="addBtn" class="add-plan-btn">
-            + 添加训练计划
+            + 添加训练规划
         </view>
     </view>
     <view class="list">
+        <block wx:if="{{list.length}}">
         <mp-slideview wx:for="{{list}}" wx:key="index" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" data-index="{{index}}">
-            <mp-cell link url="{{'/pages/packageA/training/class/class?id=' + index}}" class="item">
+            <mp-cell link url="{{(type == 'plan' ? '/pages/packageA/training/stagedetail/stagedetail?id=' : '/pages/packageA/training/class/class?id=') + index}}" class="item">
                 <view slot="title" class="weui-label">
                     <view class="item-title">
                         {{item.name}}
@@ -29,6 +30,8 @@
                 </view>
             </mp-cell>
         </mp-slideview>
+        </block>
+        <view class="no-data" wx:else>暂无数据~</view>
     </view>
     <mp-dialog title="确认删除?" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
         <view>该操作不可撤销</view>

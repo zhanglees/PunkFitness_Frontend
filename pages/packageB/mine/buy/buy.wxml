@@ -1,0 +1,22 @@
+<!--pages/packageB/mine/buy/buy.wxml-->
+<view class="container">
+    <view class="buy-list">
+        <view wx:for="{{buyList}}" wx:key="index" bindtap="changeCurrent" data-index="{{index}}" class="buy-item {{current == index ? 'buy-item_act' : ''}}">
+            <view class="buy-item-title">{{item.title}}</view>
+            <view class="buy-item-price">
+                <image src="/images/member/money-icon.png" class="price-icon"></image>
+                {{item.price}}
+            </view>
+        </view>
+    </view>
+    <view class="content">
+        <view wx:for="{{detail}}" wx:key="index">
+            <view class="content-title">
+            {{item.title}}：
+            </view>
+            <view class="content-detail" wx:for="{{item.list}}" wx:for-item="i" wx:for-index="j" wx:key="i">
+                {{j+1}}. {{i}}
+            </view>
+        </view>
+    </view>
+</view>

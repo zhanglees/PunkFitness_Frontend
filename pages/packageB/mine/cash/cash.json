@@ -3,6 +3,5 @@
     "mp-dialog": "weui-miniprogram/dialog/dialog",
     "mp-icon": "weui-miniprogram/icon/icon"
   },
-  "backgroundColor": "#eeeeee",
-  "navigationBarTitleText": "训练规划"
+  "navigationBarTitleText": "推广返现"
 }

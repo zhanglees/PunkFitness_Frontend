@@ -1,6 +1,9 @@
 /**app.wxss**/
 page{
-  --base:#008DEA;
+  --base:#4182E9;
+  --base-light:#5DA0E6;
+  --base-gradient: linear-gradient(#5DA0E6, #4182E9);
+  /* --base-gradient: linear-gradient(rgba(93, 160, 230, .2), rgba(65, 130, 233 .2)); */
   --base-bg: rgba(0, 141, 234, .1);
 }
 .container {
@@ -73,4 +76,32 @@ checkbox .wx-checkbox-input {
   height: 10rpx;
   width: 10rpx;
   vertical-align: top;
+}
+.border-gradient{
+  border-image: var(--base-gradient);
+  border-image-slice: 10;
+}
+.btn-gradient{
+  background: var(--base-gradient);
+  color: #fff;
+  border-radius: 20rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 80rpx;
+  display: inline-block;
+}
+.btn-hollow-gradient{
+  border: 1px solid var(--base-light);
+  color: var(--base);
+  border-radius: 20rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 80rpx;
+}
+
+.footer{
+  width: 100%;
+  position: fixed;
+  bottom: 80rpx;
+  text-align: center;
 }

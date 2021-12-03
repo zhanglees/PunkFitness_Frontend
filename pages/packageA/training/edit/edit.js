@@ -151,6 +151,7 @@ Page({
      */
     onLoad: function (options) {
         const id = options.id;//当前编辑课程的id
+        const userId = options.userId;
         const item = wx.getStorageInfoSync('class')[parseInt(id)-1];
         if(id && item){
             this.setData({

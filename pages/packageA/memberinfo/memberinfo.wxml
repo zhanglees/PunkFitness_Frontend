@@ -52,11 +52,11 @@
       </view>
     </view>
   </view>
-  <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask>    
+  <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask class="qr-dialog">    
       <view class="qr-view">
           <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
           <image class="qr-img" src="{{imgUrl}}" />
-          <view>点击客户微信扫码，便于客户微信收到个人运动相关动态信息</view>
+          <view>点击客户微信扫码，便于客户收到个人运动相关动态信息</view>
       </view>
   </mp-dialog>
   <mp-dialog title="确定转为正式会员" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">

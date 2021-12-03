@@ -52,7 +52,9 @@ function requestP(options = {}) {
   const header = Object.assign({
     [req.sessionHeaderKey]: sessionId,
   }, options.header);
-
+  wx.showLoading({
+    title: '加载中',
+  })
   return new Promise((res, rej) => {
     wx.request(Object.assign(
       {},
@@ -66,8 +68,10 @@ function requestP(options = {}) {
               success(r.data);
               return;
             }
+            wx.hideLoading();
             res(r.data);
           } else {
+            wx.hideLoading();
             const err = {
               msg: `服务器出了点小问题（错误代码：${r.statusCode}）`,
               detail: r,
@@ -80,6 +84,7 @@ function requestP(options = {}) {
           }
         },
         fail(err) {
+          wx.hideLoading();
           if (fail) {
             fail(err);
             return;

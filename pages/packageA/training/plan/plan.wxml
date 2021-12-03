@@ -1,4 +1,4 @@
-<!--pages/packageA/training/plan/plan.wxml-->
+<!--pages/packageA/training/plan/plan.wxml    添加训练规划-->
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
     <view class="body-data content">
@@ -36,10 +36,14 @@
         </view>
         <view class="stage-list">
             <view class="stage-item" wx:for="{{stageList}}" wx:key="index">
-                <view class="stage-title {{item.exp ? 'stage-title-act' : ''}}" bindtap="expDetail" data-index="{{index}}">
+                <view class="stage-title {{item.exp ? 'stage-title-act' : ''}}">
                     <text class="stage-title-block" style="background-color: {{stageColors[index%6]}};"></text>
-                    {{item.name}}
-                    <mp-icon class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
+                    <text wx:if="{{index < 3}}" bindtap="changeName" data-index="{{index}}">{{item.name}}</text>
+                    <block wx:else>
+                        <input bindchange="changeStageTitle" data-index="{{index}}" class="stage-title-input" value="{{item.name}}" />
+                        <view class="stage-title-del" bindtap="delStage" data-index="{{index}}">删除</view>
+                    </block>
+                    <mp-icon bindtap="expDetail" data-index="{{index}}" class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
                 </view>
                 <view class="stage-detail {{item.exp ? 'stage-detail-exp' : ''}}" id="stage{{index}}">
                     <block wx:for="{{item.detail}}" wx:for-item="dItem" wx:for-index="dIndex" wx:key="dIndex">
@@ -71,12 +75,12 @@
                         <view class="stage-fct-item">
                             阶段周期<input bindinput="changefct" data-index="{{index}}" data-id="cycle" value="{{item.cycle}}" /><text class="stage-fct-unit">周</text>
                         </view>
-                        <view class="stage-fct-item">
+                        <!-- <view class="stage-fct-item">
                             阶段次数<input bindinput="changefct" data-index="{{index}}" data-id="times" value="{{item.times}}" /><text class="stage-fct-unit">次</text>
-                        </view>
+                        </view> -->
                     </view>
                     <view class="stage-classes">
-                        所需课时{{item.classes ? item.classes : '--'}}节
+                        所需课时{{item.classes ? item.classes : '   '}}节
                     </view>
                     <view class="stage-remark">
                         <textarea class="stage-remark-area" placeholder="备注" bindinput="remarkChange" data-index="{{index}}" />
@@ -91,5 +95,7 @@
     <view class="btn-wrapper">
         <view class="create-btn" bindtap="createPlan">创建训练方案</view>
     </view>
+    <mp-dialog title="确定删除该阶段吗？" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+    </mp-dialog>
 </view>
 

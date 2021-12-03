@@ -21,22 +21,22 @@ Page({
     dialogButtons: [{ text: '取消' }, { text: '确定' }],
     serverList: [{
       name: '健康问卷',
-      link: '/pages/packageA/questionnaire/overview/overview'
+      link: '/pages/packageA/questionnaire/overview/overview?'
     }, {
       name: '评估测试',
-      link: '/pages/packageA/evaluation/overview/overview'
+      link: '/pages/packageA/evaluation/overview/overview?'
     }, {
       name: '体测报告',
-      link: '/pages/packageA/inbody/overview/overview'
+      link: '/pages/packageA/inbody/overview/overview?'
     }, {
       name: '体验课教案',
-      link: '/pages/packageA/training/edit/edit'
+      link: '/pages/packageA/training/edit/edit?'
     }, {
       name: '训练规划',
-      link: '/pages/packageA/training/classlist/classlist'
+      link: '/pages/packageA/training/classlist/classlist?type=plan&'
     }, {
       name: '训练记录',
-      link: '/pages/packageA/training/class/class?id=0'
+      link: '/pages/packageA/training/classlist/classlist?type=record&'
     }],
     news: {
       '#2021': {
@@ -188,8 +188,9 @@ Page({
   },
    //跳转到其他页面
    gotoServer: function (e) {
+    let link = e.currentTarget.dataset.link;
     wx.navigateTo({
-      url: e.currentTarget.dataset.link
+      url: link + 'userId=' + this.data.userInfo.id
     })
   }
 })

@@ -43,6 +43,7 @@ Page({
      */
     onLoad: function (options) {
         //日历初始化的时候就会调用接口请求数据，所以页面load完之后不用再请求一遍
+        // getAppointmentAllByDate
     },
     getList(date){
         console.log('日期： ', date)

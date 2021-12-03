@@ -1,4 +1,4 @@
-<!--pages/packageA/training/edit/edit.wxml-->
+<!--pages/packageA/training/edit/edit.wxml 编辑具体课程-->
 <view class="container">
     <view class="page-title">
         {{id ? (id + '. ') : '私教体验课'}}
@@ -73,6 +73,7 @@
                     </block>
                 </view>
             </view>
+            <block wx:if="{{editFlag}}">
             <view wx:if="{{item.showAdd}}" class="add-one">    
                 <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                     <view slot="title" class="weui-label">训练部位</view>
@@ -108,7 +109,8 @@
                     </view>
                 </view>
             </view>
-            <view wx:elif="{{editFlag}}" class="training-add" bindtap="addone" data-index="{{index}}">+ 添加动作</view>
+            <view wx:else class="training-add" bindtap="addone" data-index="{{index}}">+ 添加动作</view>
+            </block>
         </view>
     </view>
 </view>

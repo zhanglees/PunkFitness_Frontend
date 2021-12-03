@@ -4,6 +4,7 @@ Page({
   data: {
     typeList: ['健身问卷', '健康问卷'],
     type: 0,
+    userId: '',
     questionnaire: [],
     questionLib: [[{
         q: '您之前有没有参加过健身？',
@@ -19,15 +20,18 @@ Page({
         a: '没有'
     }]]
   },
-  onLoad() {
+  onLoad(options) {
+    console.log(888, options.id)
     this.setData({
-        questionnaire: this.data.questionLib[this.data.type]
+        questionnaire: this.data.questionLib[this.data.type],
+        userId: options.id
     });
   },
     //跳转问卷填写页面
     gotoFitness(e) {
+        console.log('overview: ', this.data.userId)
         wx.redirectTo({
-            url: '../healthy/healthy'
+            url: '../healthy/healthy?id=' + this.data.userId
         })
     },
     tabChange(e){

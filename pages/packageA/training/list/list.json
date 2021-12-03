@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "mp-cell": "weui-miniprogram/cell/cell"
-  },
-  "navigationBarBackgroundColor": "#3D4257",
-  "navigationBarTitleText": "体验课教案"
-}

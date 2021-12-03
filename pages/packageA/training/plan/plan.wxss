@@ -1,6 +1,5 @@
 /* pages/packageA/training/plan/plan.wxss */
 .container{
-    background: #eee;
     width: 100%;
 }
 .content{
@@ -133,7 +132,10 @@
     line-height: 80rpx;
     padding: 0 40rpx 0 60rpx;
     position: relative;
-    margin-top: 20rpx;
+    margin-top: 20rpx;    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .stage-title-act{
     background: #D4EDF9;
@@ -148,8 +150,22 @@
     background: #FAB44F;
     display: block;
 }
-.stage-title .arrow-icon{
-    float: right;
+
+.stage-title-input{
+    width: 400rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    display: inline-block;
+}
+.stage-title-del{
+    color: red;
+    font-size: 24rpx;
+    line-height: 20px;
+    vertical-align: top;
+    border: 1px solid red;
+    padding: 0 10rpx;
+    height: 40rpx;
+    border-radius: 10rpx;
 }
 .stage-title .arrow-icon .weui-icon{
     transform: rotate(90deg);
@@ -291,6 +307,7 @@
     box-sizing: border-box;
     background: white;
     text-align: center;
+    margin-bottom: 40rpx;
   }
   .create-btn{
     width: 80%;

@@ -35,3 +35,9 @@
     font-size: 24rpx;
 }
 
+.no-data{
+    font-size: 24rpx;
+    color: #ddd;
+    width: 100%;
+    text-align: center;
+}

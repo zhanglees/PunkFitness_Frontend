@@ -7,17 +7,17 @@
             <mp-form id="form" rules="{{rules}}" models="{{firstStepData}}">
                 <view class="question-list">
                     <view class="question-item" wx:for="{{questionList}}" wx:key="index">
-                        <view class="question-q">{{index+1}}. {{item.q}}</view>
-                        <radio-group wx:if="{{item.type==0}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.option}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <radio checked="{{}}" value="{{option}}" />
-                                {{option}}
+                        <view class="question-q">{{index+1}}. {{item.questionContent}}</view>
+                        <radio-group wx:if="{{item.questionType==1}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
+                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
+                                <radio checked="{{}}" value="{{option.describes}}" />
+                                {{option.describes}}
                             </label>
                         </radio-group>
-                        <checkbox-group wx:else="{{true}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.option}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <checkbox value="{{option}}" checked="{{utils.indexOf(item.answer, option) != -1}}" />
-                                {{option}}
+                        <checkbox-group wx:elif="{{item.questionType==2}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
+                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
+                                <checkbox value="{{option.describes}}" checked="{{utils.indexOf(item.answer, option.describes) != -1}}" />
+                                {{option.describes}}
                             </label>
                             <input wx:if="{{item.addFlag}}" bindchange="addOption" value="{{item.addInput}}" class="weui-input" data-index="{{index}}" placeholder="" />
                             <view wx:else class="option-customize" bindtap="tapAddOption" data-index="{{index}}">+自定义</view>
@@ -35,17 +35,17 @@
             <mp-form id="form2" rules="{{rules}}" models="{{secondStepData}}">
                 <view class="question-list">
                     <view class="question-item" wx:for="{{questionList2}}" wx:key="index">
-                        <view class="question-q">{{index+1}}. {{item.q}}</view>
-                        <radio-group wx:if="{{item.type==0}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.option}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <radio checked="{{}}" value="{{option}}" />
-                                {{option}}
+                        <view class="question-q">{{index+1}}. {{item.questionContent}}</view>
+                        <radio-group wx:if="{{item.questionType==0}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
+                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
+                                <radio checked="{{}}" value="{{option.describes}}" />
+                                {{option.describes}}
                             </label>
                         </radio-group>
                         <checkbox-group wx:else="{{true}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.option}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <checkbox value="{{option}}" checked="{{utils.indexOf(item.answer, option) != -1}}" />
-                                {{option}}
+                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
+                                <checkbox value="{{option.describes}}" checked="{{utils.indexOf(item.answer, option) != -1}}" />
+                                {{option.describes}}
                             </label>
                             <input wx:if="{{item.addFlag}}" bindchange="addOption" value="{{item.addInput}}" class="weui-input" data-index="{{index}}" placeholder="" />
                             <view wx:else class="option-customize" bindtap="tapAddOption" data-index="{{index}}">+自定义</view>

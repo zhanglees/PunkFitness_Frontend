@@ -76,7 +76,10 @@ Page({
             classes: ''
         },
         stageArr: ['适应期', '进步期', '巩固期', '第4阶段', '第5阶段'],
-        stageList: []
+        stageList: [],
+
+        dialogShow: false,
+        dialogButtons: [{ text: '取消' }, { text: '确定' }],
     },
 
     /**
@@ -189,6 +192,39 @@ Page({
         stageList.push({...base, name: `第${stageList.length + 1}阶段`})
         this.setData({
             stageList: stageList
+        })
+    },
+    /****删除阶段 */
+    delStage(e){
+        const {index} = e.currentTarget.dataset;
+        this.setData({
+            delIndex: index,
+            dialogShow: true
+        })
+    },
+
+    tapDialogButton(e) {
+        if(e.detail.index === 1){
+            //确定  删除
+            const index = this.data.delIndex;
+            let stageList = this.data.stageList;
+            stageList.splice(index, 1);
+            this.setData({
+                stageList: stageList,
+                dialogShow: false
+            })
+        }else{
+            this.setData({
+                dialogShow: false
+            })
+        }
+    },
+    /*****修改阶段名称 */
+    changeStageTitle(e){
+        const {index} = e.currentTarget.dataset;
+        const value = e.detail.value;
+        this.setData({
+            [`stageList[${index}].name`]: value
         })
     },
     /*****创建训练方案 */

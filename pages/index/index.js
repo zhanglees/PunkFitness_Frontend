@@ -43,28 +43,130 @@ Page({
     userInfo: {}
   },
   onLoad() {
-    app.req.api.getTrainerInfoByCoachId({
-      coachId: 'string'
-    }).then(res => {
-      let data = res.data;
-      console.log('返回：', res);
-      let memberList = [[], []];
-      data.forEach(item => {
-        if(item.coustomLevel){
-          memberList[0].push(item);
-        }else{
-          memberList[1].push(item);
-        }
-      });
-      const nums = [memberList[0].length, memberList[1].length];
-      this.setData({
-        memberList: memberList,
-        nums: nums,
-        current: nums[0] ? 0 : 1
-      });
-      this.comSwiperHeight();
-    })
+    const data = [[{
+      age: 0,
+      appointmentNum: null,
+      birthday: "2021-11-24T02:29:19.000+0000",
+      coustomLevel: 0,
+      customerTag: "string",
+      email: "string",
+      headImg: "string",
+      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
+      phone: "string",
+      remarks: "string",
+      sex: 0,
+      singInNum: null,
+      userName: "是用户名呀",
+      wxid: "string"
+    }, {
+      age: 0,
+      appointmentNum: null,
+      birthday: "2021-11-24T02:29:19.000+0000",
+      coustomLevel: 0,
+      customerTag: "string",
+      email: "string",
+      headImg: "string",
+      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
+      phone: "string",
+      remarks: "string",
+      sex: 0,
+      singInNum: null,
+      userName: "string",
+      wxid: "string"
+    }, {
+      age: 0,
+      appointmentNum: null,
+      birthday: "2021-11-24T02:29:19.000+0000",
+      coustomLevel: 0,
+      customerTag: "string",
+      email: "string",
+      headImg: "string",
+      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
+      phone: "string",
+      remarks: "string",
+      sex: 0,
+      singInNum: null,
+      userName: "string",
+      wxid: "string"
+    }], [{
+      age: 0,
+      appointmentNum: null,
+      birthday: "2021-11-24T02:29:19.000+0000",
+      coustomLevel: 0,
+      customerTag: "string",
+      email: "string",
+      headImg: "string",
+      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
+      phone: "string",
+      remarks: "string",
+      sex: 0,
+      singInNum: null,
+      userName: "是用户名呀",
+      wxid: "string"
+    }, {
+      age: 0,
+      appointmentNum: null,
+      birthday: "2021-11-24T02:29:19.000+0000",
+      coustomLevel: 0,
+      customerTag: "string",
+      email: "string",
+      headImg: "string",
+      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
+      phone: "string",
+      remarks: "string",
+      sex: 0,
+      singInNum: null,
+      userName: "string",
+      wxid: "string"
+    }, {
+      age: 0,
+      appointmentNum: null,
+      birthday: "2021-11-24T02:29:19.000+0000",
+      coustomLevel: 0,
+      customerTag: "string",
+      email: "string",
+      headImg: "string",
+      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
+      phone: "string",
+      remarks: "string",
+      sex: 0,
+      singInNum: null,
+      userName: "string",
+      wxid: "string"
+    }]];
+    this.setData({
+      ['memberList[0]']: data[0],
+      ['nums[0]']: data[0].length,
+      ['memberList[1]']: data[1],
+      ['nums[1]']: data[1].length
+    });
+    this.comSwiperHeight();
+    // app.req.api.getTrainerInfoByCoachId({
+    //   coachId: 'string',
+    //   trainerType: 1
+    // }).then(res => {
+    //   let data = res.data;
+    //   console.log('返回：', res);
+    //   this.setData({
+    //     ['memberList[0]']: data,
+    //     ['nums[0]']: data.length
+    //   });
+    //   this.comSwiperHeight();
+    // });
+
+    // app.req.api.getTrainerInfoByCoachId({
+    //   coachId: 'string',
+    //   trainerType: 0
+    // }).then(res => {
+    //   let data = res.data;
+    //   console.log('返回：', res);
+    //   this.setData({
+    //     ['memberList[1]']: data,
+    //     ['nums[1]']: data.length
+    //   });
+    // })
   },
+
   comSwiperHeight(){
     var query = wx.createSelectorQuery();
     const _this = this;

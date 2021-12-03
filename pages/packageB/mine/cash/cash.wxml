@@ -1,0 +1,41 @@
+<!--pages/packageB/mine/cash/cash.wxml-->
+<view class="container">
+    <view class="info">
+        <view class="info-title">
+        {{info.title}}
+        </view>
+        <view class="info-detail" wx:for="{{info.content}}" wx:key="index">
+            {{item}}
+        </view>
+        <view class="info-tips">
+            {{info.tips}}
+        </view>
+    </view>
+    <view class="list">
+        <view class="info-title">
+            当前推广情况：
+        </view>
+        <view class="list-tab">
+            <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
+            {{item}}
+            </view>
+        </view>
+        <view class="list-list">
+            <view wx:for="{{list[current]}}" wx:key="index" class="list-item">
+                <view class="list-item-title">用户名：{{item.name}}</view>
+                <view class="list-item-type">标识：{{item.type == 1 ? '未入驻' : '已入驻'}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="footer">
+        <view class="btn-gradient" bindtap="getQr">获取推广图片</view>
+    </view>
+    <mp-dialog class="img-dialog" title="" show="{{dialogShow}}" buttons="{{false}}" bindbuttontap="tapDialogButton" mask>    
+        <view class="qr-view">
+            <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
+            <image class="qr-img" src="{{imgUrl}}" />
+            <mp-icon class="close-icon" type="field" bindtap="closeDialog" icon="close2" color="#333" size="{{20}}"></mp-icon>
+        </view>
+        <view class="btn-gradient">保存到相册</view>
+    </mp-dialog>
+</view>

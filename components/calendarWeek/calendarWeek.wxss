@@ -1,6 +1,6 @@
 /* components/calendarWeek/calendarWeek.wxss */ 
 .date-choose {
-    background: var(--base);
+    background: transparent;
     overflow: hidden;
     height: auto;
   }
