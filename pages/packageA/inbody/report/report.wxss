@@ -153,6 +153,9 @@
     width: 40rpx; 
     height: 40rpx;
 }
+.input-list .weui-input{
+    text-align: right;
+}
 .report-res{
     width: 100%;
     box-sizing: border-box;

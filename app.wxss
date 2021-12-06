@@ -105,3 +105,9 @@ checkbox .wx-checkbox-input {
   bottom: 80rpx;
   text-align: center;
 }
+.no-data{
+  font-size: 24rpx;
+  color: #ddd;
+  width: 100%;
+  text-align: center;
+}

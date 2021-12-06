@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    id: '',
     coverImage: '',
     avatarUrl: '/images/member/avatar.png',
     userInfo: {
@@ -15,6 +16,7 @@ Page({
       customerTag: ['增肌', '减脂', '康复'],
       remarks: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳。'
     },
+    userInfoGet: {},
     qrShow: false,
     imgUrl: '',  //后端返回的绑定二维码
     dialogShow: false,
@@ -125,40 +127,27 @@ Page({
   onLoad(options) {
     const userId = options.id;  //会员id
     // const memberInfo = wx.getStorageSync("memberInfo");
-    app.req.api.getUserById({id: userId}).then(res => {
+    this.setData({
+      id: userId
+    });
+    this.getMemberInfo();
+  },
+  getMemberInfo(){
+    app.req.api.getUserById({id: this.data.id}).then(res => {
       console.log('返回：', res.data);
-      let userInfo = res.data;
+      let userInfo = {...res.data};
       let birthday = userInfo.birthday.match(/([0-9]+)-[0-9]+-[0-9]+/);
       userInfo.birthday = birthday[0];
       userInfo.age = new Date().getFullYear() - birthday[1];
       userInfo.customerTag = userInfo.customerTag.split(',');
-      console.log(886668, userInfo);
       this.setData({
-        userInfo: userInfo
-      })
+        userInfo: userInfo,
+        userInfoGet: res.data
+      });
+      console.log(886668, this.data.userInfoGet);
     })
   },
-  getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    wx.getUserProfile({
-      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        console.log(res)
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    })
-  },
-  getUserInfo(e) {
-    // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-    console.log(e)
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
+
   /**关联客户 */
   getQr(){
     // 接口获取二维码
@@ -177,14 +166,31 @@ Page({
   tapDialogButton(e) {
       if(e.detail.index === 1){
           //确认
+          const _this = this;
           const id = this.data.id;
-          app.req.api.changeLevel({id : id}).then(res=>{
+          app.req.api.transformMember(this.data.userInfoGet).then(res=>{
+            if(res.data) {
+              _this.getMemberInfo();
+              _this.setData({
+                dialogShow: false
+              })
+            }else{
+              wx.showToast({
+                  title: '请稍后重试',
+                  icon: 'error',
+                  duration: 2000
+              });
+              _this.setData({
+                dialogShow: false
+              })
+            }
             //请求返回之后的结果 失败提示  成功更新按钮状态
           })
+      }else{
+        this.setData({
+            dialogShow: false
+        })
       }
-      this.setData({
-          dialogShow: false
-      })
   },
    //跳转到其他页面
    gotoServer: function (e) {

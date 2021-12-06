@@ -1,6 +1,7 @@
 // pages/packageA/inbody/inbody.js
 var wxCharts = require('../../../../utils/wxcharts.js');
 var lineChart = null;
+const app = getApp();
 Page({
 
     /**
@@ -9,15 +10,6 @@ Page({
     data: {
         textcolor1:'#014f8e',
         textcolor2:'#bfbfbf',
-        userInfo: {
-          name: "Ada",
-          avatarUrl: '/images/member/avatar.png',
-          mobile: "13888888888",
-          birthday: "2020-10-22",
-          age: '27',
-          tags: ['增肌', '减脂', '康复'],
-          remark: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳。被酒莫惊春睡重，赌书消得泼茶香，当时只道是寻常。'
-        },
         dataTitle: '',
         reportList: []
     },
@@ -26,40 +18,39 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const userid = options.id;
+        const userid = options.userId;
         //获取用户体重数据
-        var x_data=["12-05", "12-06", "12-07", "12-08", "12-09", "12-10", "12-11"]
-        var y_data= ["55", "56", "53", "55", "55", "57", "53"]
+        // var x_data=["12-05", "12-06", "12-07", "12-08", "12-09", "12-10", "12-11"]
+        // var y_data= ["55", "56", "53", "55", "55", "57", "53"]
             //绘制折线图
-        this.OnWxChart(x_data,y_data);
+        // this.OnWxChart(x_data,y_data);
         this.getReportList(userid);
         this.setData({
-            dataTitle: '2021/10/11-2021/10/22'
+            userId: userid
         })
     },
     getReportList(userid){
         //获取用户的报告记录
-        const reportList = [{
-            coach: '张小凡',
-            time: '2021/10/11',
-            weight: '50',
-            fatrate: '10',
-            ratio: '2.0'
-        }, {
-            coach: '张小凡',
-            time: '2021/10/9',
-            weight: '50',
-            fatrate: '20.33',
-            ratio: '1.0'
-        }, {
-            coach: '张小凡',
-            time: '2021/10/8',
-            weight: '50',
-            fatrate: '10',
-            ratio: '2.0'
-        }];
-        this.setData({
-            reportList: reportList
+        app.req.api.getUserHealthCheckAll({
+          coachId: 'string',
+          userId: userid
+        }).then(res=>{
+          const data = res.data;
+          let x_data = [], y_data = [];
+          let startDate, endDate;
+          const len = data.length;
+          data.forEach((i, k)=>{
+            const date = i.createTime.match(/[0-9]+-([0-9]+-[0-9]+)/);
+            k == 0 && (endDate = date[0]);
+            (k == len-1) && (startDate = date[0]);
+            x_data.push(date[1]);
+            y_data.push(i.weight);
+          });
+          this.OnWxChart(x_data,y_data);
+          this.setData({
+              dataTitle: startDate + ' ~ ' + endDate,
+              reportList: data
+          })
         })
     },
     OnWxChart:function(x_data,y_data,name){
@@ -110,8 +101,15 @@ Page({
     },
     /***添加体测报告*/
     addReport(){
+      console.log(88888888888)
       wx.redirectTo({
-        url: '/pages/packageA/inbody/report/report',
+        url: '/pages/packageA/inbody/report/report?userId=' + this.data.userId,
+      })
+    },
+    reportDetail(e){
+      const id = e.currentTarget.dataset.id;
+      wx.navigateTo({
+        url: '/pages/packageA/inbody/report/report?reportId=' + id,
       })
     },
     /**

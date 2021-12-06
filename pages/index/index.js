@@ -43,128 +43,31 @@ Page({
     userInfo: {}
   },
   onLoad() {
-    const data = [[{
-      age: 0,
-      appointmentNum: null,
-      birthday: "2021-11-24T02:29:19.000+0000",
-      coustomLevel: 0,
-      customerTag: "string",
-      email: "string",
-      headImg: "string",
-      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
-      phone: "string",
-      remarks: "string",
-      sex: 0,
-      singInNum: null,
-      userName: "是用户名呀",
-      wxid: "string"
-    }, {
-      age: 0,
-      appointmentNum: null,
-      birthday: "2021-11-24T02:29:19.000+0000",
-      coustomLevel: 0,
-      customerTag: "string",
-      email: "string",
-      headImg: "string",
-      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
-      phone: "string",
-      remarks: "string",
-      sex: 0,
-      singInNum: null,
-      userName: "string",
-      wxid: "string"
-    }, {
-      age: 0,
-      appointmentNum: null,
-      birthday: "2021-11-24T02:29:19.000+0000",
-      coustomLevel: 0,
-      customerTag: "string",
-      email: "string",
-      headImg: "string",
-      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
-      phone: "string",
-      remarks: "string",
-      sex: 0,
-      singInNum: null,
-      userName: "string",
-      wxid: "string"
-    }], [{
-      age: 0,
-      appointmentNum: null,
-      birthday: "2021-11-24T02:29:19.000+0000",
-      coustomLevel: 0,
-      customerTag: "string",
-      email: "string",
-      headImg: "string",
-      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
-      phone: "string",
-      remarks: "string",
-      sex: 0,
-      singInNum: null,
-      userName: "是用户名呀",
-      wxid: "string"
-    }, {
-      age: 0,
-      appointmentNum: null,
-      birthday: "2021-11-24T02:29:19.000+0000",
-      coustomLevel: 0,
-      customerTag: "string",
-      email: "string",
-      headImg: "string",
-      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
-      phone: "string",
-      remarks: "string",
-      sex: 0,
-      singInNum: null,
-      userName: "string",
-      wxid: "string"
-    }, {
-      age: 0,
-      appointmentNum: null,
-      birthday: "2021-11-24T02:29:19.000+0000",
-      coustomLevel: 0,
-      customerTag: "string",
-      email: "string",
-      headImg: "string",
-      id: "052ae9c1-626e-4c9b-966d-bbabb3be7107",
-      phone: "string",
-      remarks: "string",
-      sex: 0,
-      singInNum: null,
-      userName: "string",
-      wxid: "string"
-    }]];
-    this.setData({
-      ['memberList[0]']: data[0],
-      ['nums[0]']: data[0].length,
-      ['memberList[1]']: data[1],
-      ['nums[1]']: data[1].length
-    });
     this.comSwiperHeight();
-    // app.req.api.getTrainerInfoByCoachId({
-    //   coachId: 'string',
-    //   trainerType: 1
-    // }).then(res => {
-    //   let data = res.data;
-    //   console.log('返回：', res);
-    //   this.setData({
-    //     ['memberList[0]']: data,
-    //     ['nums[0]']: data.length
-    //   });
-    //   this.comSwiperHeight();
-    // });
+    app.req.api.getTrainerInfoByCoachId({
+      coachId: 'string',
+      trainerType: 1
+    }).then(res => {
+      let data = res.data;
+      console.log('返回：', res);
+      this.setData({
+        ['memberList[0]']: data,
+        ['nums[0]']: data.length
+      });
+      this.comSwiperHeight();
+    });
 
-    // app.req.api.getTrainerInfoByCoachId({
-    //   coachId: 'string',
-    //   trainerType: 0
-    // }).then(res => {
-    //   let data = res.data;
-    //   console.log('返回：', res);
-    //   this.setData({
-    //     ['memberList[1]']: data,
-    //     ['nums[1]']: data.length
-    //   });
-    // })
+    app.req.api.getTrainerInfoByCoachId({
+      coachId: 'string',
+      trainerType: 0
+    }).then(res => {
+      let data = res.data;
+      console.log('返回：', res);
+      this.setData({
+        ['memberList[1]']: data,
+        ['nums[1]']: data.length
+      });
+    })
   },
 
   comSwiperHeight(){
@@ -216,14 +119,27 @@ Page({
     const index = this.data.current;
     this.setData({
       [`showSearchInput[${index}]`]: true,
+      fliterChecked: '',
     })
   },
   clearInput(e){
     const index = this.data.current;
+    //这里需要请求一下全量数据  清空查询条件就是查全量数据
     this.setData({
       [`searchText[${index}]`]: '',
       [`showSearchInput[${index}]`]: false,
     })
+    // app.req.api.getTrainerInfoByCoachId({
+    //   coachId: 'string',
+    //   trainerType: (index === 0) ? 1 : 0
+    // }).then(res => {
+    //   let data = res.data;
+    //   console.log('返回：', res);
+    //   this.setData({
+    //     ['memberList[${index}]']: data
+    //   });
+    //   this.comSwiperHeight();
+    // });
   },
   searchInputChange: function (e) {
     const value = e.detail.value;
@@ -252,11 +168,10 @@ Page({
     const index = this.data.current;
     const i = e.currentTarget.dataset.index;
     const checked = (i !== this.data.fliterChecked);
-    console.log(8888, i, checked, this.data.fliterChecked)
     this.setData({
       fliterChecked: (checked ? i : ''),
-      [`searchText[${index}]`]: checked ? this.data.fliterList[i].name : '',
-      [`showSearchInput[${index}]`]: checked,
+      // [`searchText[${index}]`]: checked ? this.data.fliterList[i].name : '',
+      // [`showSearchInput[${index}]`]: checked,
     })
   },
   memberDetail(e){

@@ -21,10 +21,10 @@ Page({
     }]]
   },
   onLoad(options) {
-    console.log(888, options.id)
+    console.log(888, options.userId)
     this.setData({
         questionnaire: this.data.questionLib[this.data.type],
-        userId: options.id
+        userId: options.userId
     });
   },
     //跳转问卷填写页面

@@ -20,6 +20,11 @@ function install(req, request) {
             // const url = `${req.apiUrl}/user/decodePhone`;
             return request({ url: 'url', data }, false);
         },
+        transformMember(data){
+            const url = `${req.apiUrl}/user/transformMember`;
+            return request({ url, method: 'POST', data }, false);
+        },
+        
 /*****问卷 */
 
         getQuestionnaireAll(data){
@@ -39,6 +44,34 @@ function install(req, request) {
             const url = `${req.apiUrl}/userAppointment/singIn`;
             return request({ url, method: 'POST', data }, false);
         },
+        /****体测报告**/
+        getUserHealthCheckAll(data){   //得到用户所有体测信息
+            const url = `${req.apiUrl}/healthCheck/getUserHealthCheckAll`;
+            return request({ url, method: 'GET', data }, false);
+        },
+        addHealthCheckReport(data){   //提交
+            const url = `${req.apiUrl}/healthCheck/addHealthCheckReport`;
+            return request({ url, method: 'POST', data }, false);
+        },
+        getHealthReportDetail(data){   //查看详情
+            const url = `${req.apiUrl}/healthCheck/getHealthReportDetail`;
+            return request({ url, method: 'POST', data, header:{ 'content-type': 'application/x-www-form-urlencoded'} }, false);
+        },
+        uploadFile(data){
+            wx.uploadFile({
+                url: `${req.apiUrl}/resource/uploadFile`,
+                filePath: data.path,
+                name: 'file',
+                formData: data.formData,
+                header: { 'content-type': 'multipart/form-data'},
+                success (res){
+                  const data = res.data
+                  //do something
+                  console.log(888888, data)
+                }
+            })
+
+        },
         /***上传图片
          * 多张图片上传
         */
@@ -51,7 +84,7 @@ function install(req, request) {
             
             console.log('path',data.path[i]);
             wx.uploadFile({
-                url: data.url,
+                url: `${req.apiUrl}/resource/uploadFile`,
                 filePath: data.path[i],
                 name: 'fileData',//这里根据自己的实际情况改
                 header: data.header,

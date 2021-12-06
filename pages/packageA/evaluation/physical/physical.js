@@ -1,4 +1,5 @@
 // pages/packageA/evaluation/physical/physical.js
+const app = getApp()
 Page({
 
     /**
