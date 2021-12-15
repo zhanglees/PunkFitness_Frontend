@@ -28,14 +28,16 @@
         </view>
     </view>
     <view class="footer">
-        <view class="btn-gradient" bindtap="getQr">获取推广图片</view>
+        <view class="btn-gradient" bindtap="createNewImg">获取推广图片</view>
     </view>
     <mp-dialog class="img-dialog" title="" show="{{dialogShow}}" buttons="{{false}}" bindbuttontap="tapDialogButton" mask>    
         <view class="qr-view">
             <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
-            <image class="qr-img" src="{{imgUrl}}" />
+            <image class="qr-img" src="{{shareImg}}" />
             <mp-icon class="close-icon" type="field" bindtap="closeDialog" icon="close2" color="#333" size="{{20}}"></mp-icon>
         </view>
-        <view class="btn-gradient">保存到相册</view>
+        <view class="btn-gradient" bindtap="tapDialogButton">{{authAlbum ? '保存到相册' : '授权保存'}}</view>
     </mp-dialog>
+    <canvas type="2d" id="shareFrends" class="hide" style="width: 600rpx; height: 1000rpx;"></canvas>
+
 </view>

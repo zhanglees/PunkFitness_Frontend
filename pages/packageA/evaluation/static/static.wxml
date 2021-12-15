@@ -42,10 +42,10 @@
                         <view  wx:for="{{feedbackList[index]}}" wx:key="index" class="feedback-item">
                             <label class="form-checkbox-item" data-index="{{index}}" class="feedback-checkbox" bindtap="setChoice">
                                 <checkbox value="{{index}}" checked="{{item.checked}}" />
-                                {{item.name}}
+                                {{item.feedbackItem}}
                             </label>
                             <radio-group wx:if="{{item.checked}}" class="feedback-radios" data-index="{{index}}" bindchange="radioChange">
-                                <label wx:for="{{item.options}}" wx:key="index" wx:for-item="option" class="feedback-radio-item">
+                                <label wx:for="{{item.childFeedbacks}}" wx:key="index" wx:for-item="option" class="feedback-radio-item">
                                     <radio value="{{option}}" />
                                     {{option}}
                                 </label>
@@ -88,7 +88,7 @@
         <view class="report-problem-list">
         <block wx:for="{{item}}" wx:for-item="problem" wx:key="name">
             <view class="report-problem" wx:if="{{problem.checked}}">
-                {{problem.name}}: {{problem.result}}
+                {{problem.feedbackItem}}: {{problem.result}}
             </view>
         </block>
         </view>

@@ -2,60 +2,103 @@ function install(req, request) {
     req.api = {
         userRegister(data){
             const url = `${req.apiUrl}/user/register`;
-            return request({ url, method: 'POST', data }, false);
+            return request({ url, method: 'POST', data });
         },
         getTrainerInfoByCoachId(data){
             const url = `${req.apiUrl}/user/getTrainerInfoByCoachId`;
-            return request({ url, method: 'POST', header:{ 'content-type': 'application/x-www-form-urlencoded'}, data }, false);
+            return request({ url, method: 'POST', header:{ 'content-type': 'application/x-www-form-urlencoded'}, data });
         },
         getUserById(data){
             const url = `${req.apiUrl}/user/byid`;
-            return request({ url, method: 'GET', data }, false);
+            return request({ url, method: 'GET', data });
         },
         getUserAll(data){
             const url = `${req.apiUrl}/user/getUserAll`;
-            return request({ url, method: 'GET', data }, false);
+            return request({ url, method: 'GET', data });
         },
         decodePhone(data){
             // const url = `${req.apiUrl}/user/decodePhone`;
-            return request({ url: 'url', data }, false);
+            return request({ url: 'url', data });
         },
         transformMember(data){
             const url = `${req.apiUrl}/user/transformMember`;
-            return request({ url, method: 'POST', data }, false);
+            return request({ url, method: 'POST', data });
         },
-        
+        //搜索
+        searchMember(data){
+            const url = `${req.apiUrl}/user/searchMembers`;
+            return request({ url, method: 'POST', data });
+        },
+        //筛选
+        getAppointmentAllByDate(data){
+            const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
+            return request({ url, method: 'GET', data });
+        },
 /*****问卷 */
 
-        getQuestionnaireAll(data){
-            const url = `${req.apiUrl}/questionnaire/getQuestionnaireAll`;
-            return request({ url, method: 'POST', header:{ 'content-type': 'application/x-www-form-urlencoded'}, data }, false);
+        getQuestionByType(data){
+            const url = `${req.apiUrl}/questionnaire/getQuestionByType`;
+            return request({ url, method: 'POST', header:{ 'content-type': 'application/x-www-form-urlencoded'}, data });
+        },
+        saveUserQuestion(data){
+            const url = `${req.apiUrl}/questionnaire/saveUserQuestion`;
+            return request({ url, method: 'POST', data });
+        },
+        saveUserTemplateQuestion(data){
+            const url = `${req.apiUrl}/questionnaire/saveUserTemplateQuestion`;
+            return request({ url, method: 'POST', data });
+        },
+        getQuestionDetail(data){
+            const url = `${req.apiUrl}/questionnaire/getQuestionDetail`;
+            return request({ url, method: 'POST', header:{ 'content-type': 'application/x-www-form-urlencoded'}, data });
+        },
+        getUserTemplateQuestionDetail(data){
+            const url = `${req.apiUrl}/questionnaire/getUserTemplateQuestionDetail`;
+            return request({ url, method: 'POST', header:{ 'content-type': 'application/x-www-form-urlencoded'}, data });
+        },
+        
+        getUserQuestionList(data){
+            const url = `${req.apiUrl}/questionnaire/getUserQuestionListByType`;
+            return request({ url, method: 'GET', data });
+        },
+/****评估测试 */
+        getAssessmentByCoachId(data){
+            const url = `${req.apiUrl}/assessment/getAssessmentByCoachId`;
+            return request({ url, method: 'GET', data });
+        },
+        addUserAssessment(data){
+            const url = `${req.apiUrl}/assessment/addUserAssessment`;
+            return request({ url, method: 'POST', data });
+        },
+        getTrainersAssessment(data){
+            const url = `${req.apiUrl}/assessment/getTrainersAssessment`;
+            return request({ url, method: 'POST', data });
         },
 /******预约 */
         appointment(data){
             const url = `${req.apiUrl}/userAppointment/appointment`;
-            return request({ url, method: 'POST', data }, false);
+            return request({ url, method: 'POST', data });
         },
         getAppointmentAllByDate(data){
             const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
-            return request({ url, method: 'GET', data }, false);
+            return request({ url, method: 'GET', data });
         },
         singIn(data){   //签到
             const url = `${req.apiUrl}/userAppointment/singIn`;
-            return request({ url, method: 'POST', data }, false);
+            return request({ url, method: 'POST', data });
         },
         /****体测报告**/
         getUserHealthCheckAll(data){   //得到用户所有体测信息
             const url = `${req.apiUrl}/healthCheck/getUserHealthCheckAll`;
-            return request({ url, method: 'GET', data }, false);
+            return request({ url, method: 'GET', data });
         },
         addHealthCheckReport(data){   //提交
             const url = `${req.apiUrl}/healthCheck/addHealthCheckReport`;
-            return request({ url, method: 'POST', data }, false);
+            return request({ url, method: 'POST', data });
         },
         getHealthReportDetail(data){   //查看详情
             const url = `${req.apiUrl}/healthCheck/getHealthReportDetail`;
-            return request({ url, method: 'POST', data, header:{ 'content-type': 'application/x-www-form-urlencoded'} }, false);
+            return request({ url, method: 'POST', data, header:{ 'content-type': 'application/x-www-form-urlencoded'} });
         },
         uploadFile(data){
             wx.uploadFile({

@@ -1,63 +1,60 @@
 <!--question.wxml-->
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
+    <block wx:if="{{!recordTime}}">
     <view class="top-tips">您好！感谢您抽时间填写该健康问卷，我们会根据您的宝贵意见不断改进，谢谢！</view>
-    <swiper indicator-dots="{{false}}" autoplay="{{false}}" current="{{currentPage}}">
-        <swiper-item>
-            <mp-form id="form" rules="{{rules}}" models="{{firstStepData}}">
+    <swiper indicator-dots="{{false}}" autoplay="{{false}}" current="{{currentPage}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
+        <swiper-item wx:for="{{typeList}}" wx:for-index="typeIndex" wx:key="typeIndex">
+            <mp-form id="{{'swiperItem' + typeIndex}}">
                 <view class="question-list">
-                    <view class="question-item" wx:for="{{questionList}}" wx:key="index">
+                    <view class="question-item" wx:for="{{questionList[typeIndex]}}" wx:key="index">
                         <view class="question-q">{{index+1}}. {{item.questionContent}}</view>
+                            <!----编辑状态-->
                         <radio-group wx:if="{{item.questionType==1}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <radio checked="{{}}" value="{{option.describes}}" />
+                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" wx:for-index="i" class="form-checkbox-item">
+                                <radio checked="{{utils.indexOf(item.answer, option.questionItemId) != -1}}" value="{{option.questionItemId}}"  />
                                 {{option.describes}}
                             </label>
                         </radio-group>
                         <checkbox-group wx:elif="{{item.questionType==2}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
                             <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <checkbox value="{{option.describes}}" checked="{{utils.indexOf(item.answer, option.describes) != -1}}" />
+                                <checkbox value="{{option.questionItemId}}" checked="{{utils.indexOf(item.answer, option.questionItemId) != -1}}"  />
                                 {{option.describes}}
                             </label>
-                            <input wx:if="{{item.addFlag}}" bindchange="addOption" value="{{item.addInput}}" class="weui-input" data-index="{{index}}" placeholder="" />
-                            <view wx:else class="option-customize" bindtap="tapAddOption" data-index="{{index}}">+自定义</view>
+                            <!-- <input wx:if="{{item.addFlag}}" bindchange="addOption" value="{{item.addInput}}" class="weui-input" data-index="{{index}}" placeholder="" />
+                            <view wx:else class="option-customize" bindtap="tapAddOption" data-index="{{index}}">+自定义</view> -->
                         </checkbox-group>
                         <label class="answer-remarks">补充说明：</label>
                         <input class="weui-input" placeholder="" bindchange="setRemark" data-index="{{index}}" />
+                           
                     </view>
                 </view>
-                <view>
-                    <button class="form-btn-confirm" hover-class="button-hover" bindtap="submitFirstStep">下一步</button>
-                </view>
-            </mp-form>
-        </swiper-item>
-        <swiper-item>
-            <mp-form id="form2" rules="{{rules}}" models="{{secondStepData}}">
-                <view class="question-list">
-                    <view class="question-item" wx:for="{{questionList2}}" wx:key="index">
-                        <view class="question-q">{{index+1}}. {{item.questionContent}}</view>
-                        <radio-group wx:if="{{item.questionType==0}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <radio checked="{{}}" value="{{option.describes}}" />
-                                {{option.describes}}
-                            </label>
-                        </radio-group>
-                        <checkbox-group wx:else="{{true}}" class="question-o" bindchange="setChoice" data-index="{{index}}">
-                            <label wx:for="{{item.items}}" wx:key="index" wx:for-item="option" class="form-checkbox-item">
-                                <checkbox value="{{option.describes}}" checked="{{utils.indexOf(item.answer, option) != -1}}" />
-                                {{option.describes}}
-                            </label>
-                            <input wx:if="{{item.addFlag}}" bindchange="addOption" value="{{item.addInput}}" class="weui-input" data-index="{{index}}" placeholder="" />
-                            <view wx:else class="option-customize" bindtap="tapAddOption" data-index="{{index}}">+自定义</view>
-                        </checkbox-group>
-                        <label class="answer-remarks">补充说明：</label>
-                        <input class="weui-input" placeholder="" bindchange="setRemark" data-index="{{index}}" />
-                    </view>
-                </view>
-                <view>
-                    <button class="form-btn-confirm" bindtap="submitSecondStep">提交</button>
+                <view class="btn-wrapper" wx:if="{{!recordTime}}">
+                    <button class="btn-gradient" hover-class="button-hover" bindtap="nextStep" data-value="{{typeIndex}}">
+                        {{typeIndex == 0 ? '下一步' : '提交'}}
+                    </button>
                 </view>
             </mp-form>
         </swiper-item>
     </swiper>
+    </block>
+    <!----查看状态-->
+    <view class="question-list" wx:else>
+        <view class="question-item" wx:for="{{questionList[currentPage]}}" wx:key="index">
+            <view class="question-q">{{index+1}}. {{item.questionContent}}</view> 
+            <block wx:if="{{item.items.length}}">
+            <label class="form-checkbox-item form-checkbox-item-show" wx:for="{{item.items}}" wx:key="index" wx:for-item="option">
+                {{option.describes}}
+            </label> 
+            </block>
+            <label wx:else class="form-checkbox-item form-checkbox-item-holder">--</label>
+            <!-- <block wx:for="{{item.items}}" wx:key="index" wx:for-item="option" wx:for-index="i"> -->
+                <!-- <label wx:if="{{utils.indexOf(answers[typeIndex], option.questionItemId) != -1}}" class="form-checkbox-item form-checkbox-item-show">
+                {{option.describes}}
+                </label> -->
+            <!-- </block> -->
+            <!-- <label class="form-checkbox-item"></label> -->
+            <label class="answer-remarks answer-remarks-show" wx:if="{{item.itemExplain}}">补充说明：{{item.itemExplain}}</label>
+        </view>
+    </view>
 </view>

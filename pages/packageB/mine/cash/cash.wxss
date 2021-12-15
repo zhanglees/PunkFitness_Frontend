@@ -1,4 +1,7 @@
 /* pages/packageB/mine/cash/cash.wxss */
+.container{
+    position: relative;
+}
 .info, .list{
     padding: 20rpx;
     width: 100%;
@@ -89,4 +92,8 @@
   .qr-img{
       width: 560rpx;
       height: 700rpx;
+  }
+  .hide{
+    position:fixed;
+    left:9000px;
   }

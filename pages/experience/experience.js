@@ -84,8 +84,11 @@ Page({
         //     title: '保存成功'
         // });  
         let data = this.data.formData;
-         app.req.api.userRegister({
-          "teacherId": "string", ...data
+        let userId = wx.getStorageSync('mp-req-user-id');
+        // data.age = new Date().getFullYear() - data.birthday.split('-')[0];
+        app.req.api.userRegister({
+           teacherId: userId, 
+           ...data
          })
           .then((res) => {
             console.log('返回：', res.data);

@@ -31,26 +31,29 @@ Page({
     },
     getReportList(userid){
         //获取用户的报告记录
-        app.req.api.getUserHealthCheckAll({
-          coachId: 'string',
+      let coachId = wx.getStorageSync('mp-req-user-id');
+      app.req.api.getUserHealthCheckAll({
+          coachId: coachId,
           userId: userid
         }).then(res=>{
           const data = res.data;
-          let x_data = [], y_data = [];
-          let startDate, endDate;
           const len = data.length;
-          data.forEach((i, k)=>{
-            const date = i.createTime.match(/[0-9]+-([0-9]+-[0-9]+)/);
-            k == 0 && (endDate = date[0]);
-            (k == len-1) && (startDate = date[0]);
-            x_data.push(date[1]);
-            y_data.push(i.weight);
-          });
-          this.OnWxChart(x_data,y_data);
-          this.setData({
-              dataTitle: startDate + ' ~ ' + endDate,
-              reportList: data
-          })
+          if(len){
+            let x_data = [], y_data = [];
+            let startDate, endDate;
+            data.forEach((i, k)=>{
+              const date = i.createTime.match(/[0-9]+-([0-9]+-[0-9]+)/);
+              k == 0 && (endDate = date[0]);
+              (k == len-1) && (startDate = date[0]);
+              x_data.push(date[1]);
+              y_data.push(i.weight);
+            });
+            this.OnWxChart(x_data,y_data);
+            this.setData({
+                dataTitle: startDate + ' ~ ' + endDate,
+                reportList: data
+            })
+          }
         })
     },
     OnWxChart:function(x_data,y_data,name){
@@ -101,7 +104,6 @@ Page({
     },
     /***添加体测报告*/
     addReport(){
-      console.log(88888888888)
       wx.redirectTo({
         url: '/pages/packageA/inbody/report/report?userId=' + this.data.userId,
       })

@@ -63,7 +63,13 @@
 }
 .detail-li {
     margin-bottom: 20rpx;
-    display: block;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.detail-li-right{
+    color: #d5d5d5;
 }
 .detail-li view{
     line-height: 60rpx;

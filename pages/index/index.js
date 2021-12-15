@@ -9,13 +9,13 @@ Page({
     current: 0,
     fliterList: [{
       name: '周出勤2次',
-      num: 26
+      num: null
     }, {
       name: '7天未出勤',
-      num: 2
+      num: null
     }, {
       name: '14天未出勤',
-      num: 26
+      num: null
     }],
     fliterChecked: '',
     navigatorList:[
@@ -43,33 +43,29 @@ Page({
     userInfo: {}
   },
   onLoad() {
-    this.comSwiperHeight();
+    // this.comSwiperHeight();
+    let userId = wx.getStorageSync('mp-req-user-id');
+    this.setData({
+      userId: userId
+    })
+    this.getAllData(0);
+    this.getAllData(1);
+  },
+  getAllData(type){
     app.req.api.getTrainerInfoByCoachId({
-      coachId: 'string',
-      trainerType: 1
+      coachId: this.data.userId,
+      trainerType: 1-type   //0为准会员 1为会员
     }).then(res => {
       let data = res.data;
       console.log('返回：', res);
       this.setData({
-        ['memberList[0]']: data,
-        ['nums[0]']: data.length
+        [`memberList[${type}]`]: data,
+        [`nums[${type}]`]: data.length
       });
       this.comSwiperHeight();
-    });
-
-    app.req.api.getTrainerInfoByCoachId({
-      coachId: 'string',
-      trainerType: 0
-    }).then(res => {
-      let data = res.data;
-      console.log('返回：', res);
-      this.setData({
-        ['memberList[1]']: data,
-        ['nums[1]']: data.length
-      });
     })
+    
   },
-
   comSwiperHeight(){
     var query = wx.createSelectorQuery();
     const _this = this;
@@ -129,6 +125,7 @@ Page({
       [`searchText[${index}]`]: '',
       [`showSearchInput[${index}]`]: false,
     })
+    this.getAllData(index);
     // app.req.api.getTrainerInfoByCoachId({
     //   coachId: 'string',
     //   trainerType: (index === 0) ? 1 : 0
@@ -143,31 +140,48 @@ Page({
   },
   searchInputChange: function (e) {
     const value = e.detail.value;
-    // const fliterChecked = this.data.fliterChecked;
-    // if((fliterChecked!=='') && (value != this.data.fliterList[fliterChecked].name)){
-    //   this.setData({
-    //     fliterChecked: ''
-    //   })
-    // }
-    //发送搜索请求
-    // app.req.api.search({
-    //   key: value
-    // }).then(res=>{
-      
-    // })
-      // return new Promise((resolve, reject) => {
-      //     setTimeout(() => {
-      //         resolve([{text: '搜索结果', value: 1}, {text: '搜索结果2', value: 2}])
-      //     }, 200)
-      // })
+    const _this = this;
+    const current = this.data.current;
+    if(value){
+      //发送搜索请求
+      app.req.api.searchMember({
+        "coachId": this.data.userId,
+        "condition": value,
+        "trainerType": 1-current
+      }).then(res=>{
+        const data = res.data;
+        _this.setData({
+          [`memberList[${current}]`]: data,
+          [`nums[${current}]`]: data ? data.length : 0
+        })
+      })
+    }else{
+      this.getAllData(current);
+    }
   },
   selectResult: function (e) {
       console.log('select result', e.detail)
   },
   filterTap(e){
-    const index = this.data.current;
     const i = e.currentTarget.dataset.index;
     const checked = (i !== this.data.fliterChecked);
+    if(checked){
+      app.req.api.getAppointmentAllByDate({
+        coachId:  this.data.userId,
+        dateType: i,
+        customerType : 1
+      }).then(res=>{
+        let data = res.data;
+        console.log('返回：', res);
+        this.setData({
+          [`memberList[0]`]: data.trainners,
+          [`fliterList[${i}]`]: data.trainnerNums
+        });
+      })
+    }else{
+      //取消选择 展示全量数据
+      this.getAllData(0);
+    }
     this.setData({
       fliterChecked: (checked ? i : ''),
       // [`searchText[${index}]`]: checked ? this.data.fliterList[i].name : '',
@@ -176,10 +190,10 @@ Page({
   },
   memberDetail(e){
     const index = e.currentTarget.dataset.index;
-    wx.setStorage({
-      key: "memberInfo",
-      data: this.data.memberList[this.data.current][index]
-    })
+    // wx.setStorage({
+    //   key: "memberInfo",
+    //   data: this.data.memberList[this.data.current][index]
+    // })
     wx.navigateTo({
       url: '/pages/packageA/memberinfo/memberinfo?id=' + index,
     })
@@ -192,7 +206,6 @@ Page({
       hasUserInfo: true
     })
   },
-
 
    //跳转到其他页面
    bindCreateActiviy: function (event) {

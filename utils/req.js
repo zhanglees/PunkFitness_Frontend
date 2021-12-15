@@ -3,13 +3,13 @@ const req = require('./mp-req/index.js');
 const api = require('./api.js');
 
 const apiUrlTable = {
-  local: 'http://182.92.189.147:443/api',
-  dev: 'http://182.92.189.147:8023/api',
+  local: 'http://182.92.189.147:443',
+  dev: 'http://182.92.189.147:8023',
   pre: 'https://localhost:8080',
   release: 'https://localhost:8080',
 };
-const apiUrl = apiUrlTable.dev;
-
+const baseUrl = apiUrlTable.dev;
+const apiUrl = baseUrl + '/api';
 /**
  * code换取sessionId
  * @param {string} code
@@ -17,14 +17,16 @@ const apiUrl = apiUrlTable.dev;
 function code2sessionId(code) {
   return new Promise((res, rej) => {
     wx.request({
-      url: `${apiUrl}/api/sys/login`,   //后台登录地址
+      url: `${baseUrl}/wechatLogin/coachWeixiLogin`,   //后台登录地址
       method: 'POST',
+      header: { 'content-type': 'application/x-www-form-urlencoded'},
       data: {
         code,
       },
       success(r1) {
+        console.log(888888888888888, r1)
         if (r1.data && r1.data.code === 0) {
-          res(r1.data.data.sessionId);
+          res(r1.data.data);
         } else {
           rej(r1);
         }
@@ -39,7 +41,7 @@ function code2sessionId(code) {
  * @param {any} res
  */
 function isSessionAvailable(res) {
-  return res.code !== 3000;
+  return res.code !== 1029;
 }
 
 req.init({

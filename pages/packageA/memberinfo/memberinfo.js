@@ -1,4 +1,5 @@
 // memberinfo.js
+var util = require('../../../utils/util.js');
 // 获取应用实例
 const app = getApp()
 
@@ -6,16 +7,8 @@ Page({
   data: {
     id: '',
     coverImage: '',
-    avatarUrl: '/images/member/avatar.png',
-    userInfo: {
-      userName: "Ada",
-      headImg: '',
-      phone: "13888888888",
-      birthday: "2020-10-22",
-      age: '27',
-      customerTag: ['增肌', '减脂', '康复'],
-      remarks: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳。'
-    },
+    avatarUrl: '/images/avatar.png',
+    userInfo: {},
     userInfoGet: {},
     qrShow: false,
     imgUrl: '',  //后端返回的绑定二维码
@@ -136,10 +129,10 @@ Page({
     app.req.api.getUserById({id: this.data.id}).then(res => {
       console.log('返回：', res.data);
       let userInfo = {...res.data};
-      let birthday = userInfo.birthday.match(/([0-9]+)-[0-9]+-[0-9]+/);
-      userInfo.birthday = birthday[0];
-      userInfo.age = new Date().getFullYear() - birthday[1];
-      userInfo.customerTag = userInfo.customerTag.split(',');
+      const birthday = new Date(userInfo.birthday);
+      userInfo.birthday = util.formatDate(birthday);
+      userInfo.age = new Date().getFullYear() - birthday.getFullYear();
+      userInfo.customerTag && (userInfo.customerTag = userInfo.customerTag.split(','));
       this.setData({
         userInfo: userInfo,
         userInfoGet: res.data

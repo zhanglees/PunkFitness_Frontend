@@ -1,6 +1,8 @@
 
-const sessionStorageKey = 'mp-req-session-id';
+const sessionStorageKey = 'mp-req-session-id',
+userStorageKey = 'mp-req-user-id';
 let sessionId = wx.getStorageSync(sessionStorageKey);
+let userId = wx.getStorageSync(userStorageKey);
 const loginQueue = [];
 let isLoginning = false;
 
@@ -8,7 +10,7 @@ const req = {
   apiUrl: '',
   code2sessionId: null,
   isSessionAvailable: null,
-  sessionHeaderKey: 'sessionId',
+  sessionHeaderKey: 'sessionkey',
   init(opt = {}) {
     const {
       apiUrl,
@@ -50,7 +52,8 @@ function requestP(options = {}) {
   } = options;
   // 统一注入约定的header
   const header = Object.assign({
-    [req.sessionHeaderKey]: sessionId,
+    [req.sessionHeaderKey]: sessionId, 
+    timestamp: new Date().getTime()
   }, options.header);
   wx.showLoading({
     title: '加载中',
@@ -112,12 +115,19 @@ function login() {
           }
           req.code2sessionId(r1.code)
             .then((r2) => {
-              const newSessionId = r2;
+              const newSessionId = r2.session_key;
+              const newUserId = r2.userId;
               sessionId = newSessionId; // 更新sessionId
+              userId = newUserId;
+              console.log(9999999999999, userId)
               // 保存sessionId
               wx.setStorage({
                 key: sessionStorageKey,
                 data: newSessionId,
+              });
+              wx.setStorage({
+                key: userStorageKey,
+                data: newUserId,
               });
               res(r2);
             })

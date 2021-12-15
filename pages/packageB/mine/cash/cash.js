@@ -12,8 +12,9 @@ Page({
             tips: '注：返现金额可以通过绑定个人银行卡申请提现或微信提现，体现到账周期为T+1。'
         },
         dialogShow: false,
-        imgUrl: '',  //后端返回的绑定二维码
-        dialogButtons: [{ text: '保存到相册' }],
+        shareImg: '',    //分享图片本地临时地址
+        qrUrl: 'https://weixin.hotapp.cn/src/home/img/qrcode_example.png',//后端返回的绑定二维码
+        bgImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F11027940679%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1642063080&t=79b634c4f6f7daffb2d8aad1408a55ce', //分享图片地址
         authAlbum: true,
         tabList: ['未入驻', '已入驻'],
         current: 0,
@@ -45,39 +46,146 @@ Page({
               console.log(res.authSetting)
               if(res.authSetting['scope.writePhotosAlbum'] != undefined && !res.authSetting['scope.writePhotosAlbum']){
                   _this.setData({
-                      authAlbum: false,
-                      [`dialogButtons[0].text`]: '授权保存' 
+                      authAlbum: false
+                    //   [`dialogButtons[0].text`]: '授权保存' 
                   })
               }
             }
         })
     },
     /***获取推广图片 */
-    getQr(){
+    showQr(url){
     // 接口获取二维码
       this.setData({
-        imgUrl: '/images/hb.png',  
+        shareImg: url,  
         dialogShow: true
       })
     },
+    /****开始画图 */
+    createNewImg(){
+        if(this.data.shareImg){
+            this.showQr(this.data.shareImg);
+        }else{
+            const that = this;
+            wx.showToast({
+              title: '图片生成中',
+              mask: true,
+              icon: 'loading',
+              duration: 100000
+            });
+            wx.createSelectorQuery().select('#shareFrends')
+            .fields({ 
+              node: true,
+              size: true 
+            }).exec(function (res) {
+                console.log(res)
+              const canvas = res[0].node
+              const context = canvas.getContext('2d')
+              const width = res[0].width
+              const height = res[0].height
+              context.restore();
+              const dpr = wx.getSystemInfoSync().pixelRatio
+              canvas.width = width * dpr
+              canvas.height = height * dpr
+              context.scale(dpr, dpr)
+              context.clearRect(0, 0, width , height);
+              context.fillStyle = 'white'
+              context.fillRect(0, 0, width, height)
+              context.save();
+              let path = that.data.bgImg;
+              const hbPromise = new Promise((resolve, reject) => {
+                const hb = canvas.createImage()
+                hb.onload = () => {
+                  resolve(hb)
+                }
+                hb.onerror = () => {
+                  reject(new Error(`fail to fetch image form: ${path}`))
+                }
+                hb.src = path
+              })
+              hbPromise.then(img => {
+                context.drawImage(img, 0, 0, width, height * 0.8)
+              })
+      
+              // 画二维码
+              var codepath = that.data.qrUrl;
+              const codePromise = new Promise((resolve, reject) => {
+                const code = canvas.createImage()
+                code.onload = () => {
+                  resolve(code)
+                }
+                code.onerror = () => {
+                  reject(new Error(`fail to fetch image form: ${codepath}`))
+                }
+                code.src = codepath
+              })
+              codePromise.then(img => {
+                context.drawImage(img, 15, height * 0.83 , 100 , 100)
+              })
+    
+                // 画话
+            var t1 = "长按扫码";
+            var title = "";
+            var tishi = "每一個想要學習的念頭，那有可能是未來的你在向你求救。";
+            context.fillStyle = '#333';
+            context.fillText(t1, 130, height * 0.872);
+            context.font = 'normal bold 13px sans-serif';
+            context.fillText(title, 130, height * 0.9);
+            context.fillStyle = '#999';
+            context.font = 'normal 10px sans-serif';
+            context.fillText(tishi, 130, height * 0.93);
+            context.stroke();
+            context.save();  
+    
+            setTimeout(() => {
+              that.toSave(canvas);
+            }, 1000);
+            })
+
+        }
+        
+    },
+    toSave(canvas) {
+        console.log(canvas)
+        let that = this
+        wx.canvasToTempFilePath({
+          x : 0,
+          y: 0,
+          canvasId: 'share',
+          canvas: canvas,
+          width: that.data.widths,
+          height: that.data.heights ,
+          destWidth: that.data.widths * wx.getSystemInfoSync().pixelRatio,
+          destHeight: that.data.heights * wx.getSystemInfoSync().pixelRatio,
+          success: function (res) {
+            let canvasToTempFilePath = res.tempFilePath // 返回的图片地址保存到一个全局变量里
+            // console.log(res)
+            wx.hideToast();
+            that.showQr(canvasToTempFilePath)
+          },
+            fail: function (error) {
+              console.log(error)
+            }
+        })
+      },
     tapDialogButton(e) {
         const _this = this;
+        console.log(8888, e.currentTarget)
         // if(e.detail.index === 1){
-            if(this.data.dialogButtons[0].text == '授权保存' ){
+            if( !this.data.authAlbum ){
                 this.getSetting();
             }else{
-                //下载
-                const imgSrc = "http://yijiao.oss-cn-qingdao.aliyuncs.com/images/http://tmp/wx1b4e5e756cd48af1.o6zAJsws4grEQvYrWTjBigy-6QaU.0llhudiKSF2V955a1c48350d9328ef064b4d36d12746.jpg";
-                wx.downloadFile({
-                    url: imgSrc,
-                    success: function (res) {
-                        console.log(res);
+                const imgSrc = _this.data.shareImg;
+                // wx.downloadFile({
+                //     url: imgSrc,
+                //     success: function (res) {
+                //         console.log(res);
                         //图片保存到本地
                         wx.saveImageToPhotosAlbum({
-                            filePath: res.tempFilePath,
+                            filePath: imgSrc,
                             success: function (data) {
                                 wx.showToast({
-                                    title: '下载成功',
+                                    title: '保存成功',
                                     icon: 'success',
                                     duration: 2000
                                 });
@@ -100,8 +208,8 @@ Page({
                                 console.log(res);
                             }
                         })
-                    }
-                })
+                //     }
+                // })
             }
         // }else{
         //     this.setData({

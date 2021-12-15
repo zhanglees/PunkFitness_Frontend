@@ -116,7 +116,27 @@ Page({
     }]]
   },
   onLoad(){
-    this.comSwiperHeight();
+    this.getAssessment();
+  },
+  getAssessment(){
+    let userId = wx.getStorageSync('mp-req-user-id');
+    app.req.api.getAssessmentByCoachId({
+      coachId: userId,
+      assessmentType: 0
+    }).then(res => {
+      let data = [];
+      res.data.forEach(item => {
+        if(item.assessmentName == '左侧'){
+          data[0] = item.feedbacks;
+        }else if(item.assessmentName == '背面'){
+          data[1] = item.feedbacks;
+        }
+      });
+      this.setData({
+        feedbackList: data
+      });
+      this.comSwiperHeight();
+    });
   },
   comSwiperHeight(){
     var query = wx.createSelectorQuery();
@@ -303,8 +323,23 @@ Page({
     //   url: '/pages/packageA/report/report',
     // })
   },
-  /***回到评估测试 */
+  /***提交报告并回到评估测试 */
   finish(){
+    const assessmentId0 = this.data.feedbackList[0].assessmentId,
+    assessmentId1 = this.data.feedbackList[1].assessmentId;
+    let remarks = [{
+      assessmentId: assessmentId0,
+      remark: this.data.remark[0]
+    }, {
+      assessmentId: assessmentId1,
+      remark: this.data.remark[1]
+    }];
+    app.req.api.addUserAssessment({
+      flagRemarks: remarks,
+      userAssessmentFeedbacks: [],
+      userAssessmentResources: []
+    }).then(res => {
+    });
     wx.navigateBack({
       delta: 0,
     })

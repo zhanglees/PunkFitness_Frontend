@@ -2,33 +2,33 @@
 const app = getApp()
 Page({
   data: {
-    type: 'static',
+    type: '0',
     tabList: [{
       name: '静态评估',
-      id: 'static'
+      id: '0'
     }, {
       name: '体适能评估',
-      id: 'physical'
+      id: '2'
     }, {
       name: '动态评估',
-      id: 'dynamic'
+      id: '1'
     }],
     evaluation: []//评估结果预览
   },
   onLoad(){
     //页面加载完请求数据
-    this.getEvaluationData();
+    this.getEvaluationData(0);
   },
   getEvaluationData(){
     const type = this.data.type;
-    this.setData({
-      evaluation: [{
-        type: type == 'static' ? '静态评估' : (type == 'physical' ? '体适能评估' : '动态评估'),
-        coach: '王建祥',
-        time: '2021-11-11',
-        list: []
-      }]
-    })
+    app.req.api.getTrainersAssessment({
+      assessmentType: type
+    }).then(res=>{
+      this.setData({
+        evaluation: res.data
+      })
+
+    });
   },
   tabChange(e){
     const type = e.currentTarget.dataset.id;
@@ -36,12 +36,13 @@ Page({
     this.setData({
         type: type
     });
-    this.getEvaluationData();
+    this.getEvaluationData(type);
   },
   //跳转新建评估页面
   gotoEvaluation(e) {
+    const url = ['static', 'dynamic', 'physical'][this.data.type];
       wx.navigateTo({
-          url: `/pages/packageA/evaluation/${this.data.type}/${this.data.type}`
+          url: `/pages/packageA/evaluation/${url}/${url}`
       })
   },
 

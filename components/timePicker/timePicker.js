@@ -175,6 +175,9 @@ Component({
             this.setData({
                 dateString: currentDate
             })
+            this.triggerEvent('onPickerChange', {
+                value: currentDate
+            });
 
         },
 

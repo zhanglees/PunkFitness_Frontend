@@ -1,4 +1,5 @@
 <!--evaluation    overview.wxml-->
+<wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
     <view class="type-tab">
         <view wx:for="{{tabList}}" wx:key="id" bindtap="tabChange" data-id="{{item.id}}"  class="'tab-item' {{item.id == type ? 'tab-item-act' : ''}}">
@@ -12,19 +13,23 @@
         </view>
     </view>
     <view class="detail">
+        <block wx:if="{{evaluation.length}}">
         <view wx:for="{{evaluation}}" wx:key="index">
             <view class="detail-top">
                 <text>{{item.type}}</text>
                 <view class="detatil-top-right">
-                    <text class="detail-coach">{{item.coach}}</text>
-                    <text class="detatil-time">{{item.time}}</text>
+                    <text class="detail-coach">{{item.userName}}</text>
+                    <text class="detatil-time">{{utils.formatDate(item.createTime)}}</text>
                 </view>
             </view>
-            <ul class="detail-ul">
+            <!-- <ul class="detail-ul">
                 <li class="detail-li" wx:for="{{evaluation}}" wx:key="index">
                     <view class="detail-li-a">{{item.a}}</view>
                 </li>
-            </ul>
+            </ul> -->
         </view>
+        </block>
+
+        <view class="no-data" wx:else>暂无数据~</view>
     </view>
 </view>

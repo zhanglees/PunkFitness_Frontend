@@ -5,7 +5,7 @@
             <input bindinput="formInputChange" value="{{userName}}" class="weui-input" placeholder="请输入会员姓名/手机号进行搜索"/>
             <view class="search-result" wx:if="{{showResult}}">
                 <block wx:if="{{result.length}}">
-                <view class="result-item" wx:for="{{result}}" wx:key="index" bindtap="chooseUser" data-id="{{item.id}}" data-name="{{item.userName}}"> 
+                <view class="result-item" wx:for="{{result}}" wx:key="index" bindtap="chooseUser" data-id="{{item.id}}" data-info="{{item}}" data-name="{{item.userName}}"> 
                     {{item.userName}}  {{item.phone}}
                 </view>
                 </block>
@@ -22,4 +22,6 @@
     <view class="btn-wrapper">
         <view class="reserve-btn" bindtap="goReserve">确认预约</view>
     </view>
+  <mp-dialog title="准会员无法预约课程，是否转为正式会员？" show="{{showDialog}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+  </mp-dialog>
 </view>

@@ -310,10 +310,11 @@ Page({
     finish(){
         //提交数据
         const userInfo = this.data.userInfo;
+        let coachId = wx.getStorageSync('mp-req-user-id');
         const userhealthcheckReport = {
             ...this.data.formData, 
             age: userInfo.age, 
-            coachId: "string",
+            coachId: coachId,
             createTime: util.formatDate(new Date()),
             userId: userInfo.id,
             userName: userInfo.userName

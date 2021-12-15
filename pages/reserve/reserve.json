@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "mp-cell": "weui-miniprogram/cell/cell",
+    "mp-dialog": "weui-miniprogram/dialog/dialog",
     "time-picker": "/components/timePicker/timePicker"
   },
   "navigationBarTitleText": "预约私教课"

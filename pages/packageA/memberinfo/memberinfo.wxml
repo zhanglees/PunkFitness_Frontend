@@ -16,19 +16,19 @@
             <text class="userinfo-age">{{userInfo.age}}岁</text>
           </view>
         </view>
-        <view class="userinfo-remarks" wx:if="userInfo.remarks">
-          <text class="userinfo-remarks-c">备注：{{userInfo.remarks}}</text>
-        </view>
       </view>
-      <view class="userinfo-tags">
+      <view class="userinfo-tags" wx:if="{{userInfo.customerTag.length}}">
         <text class="userinfo-tags-item" wx:for="{{userInfo.customerTag}}" wx:key="i">{{item}}</text>
       </view>
 
+      <view class="userinfo-remarks" wx:if="{{userInfo.remarks}}">
+        <text class="userinfo-remarks-c">备注：{{userInfo.remarks}}</text>
+      </view>
       <view class="userinfo-btn-wrapper">
-        <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn" bindtap="changeLevel">
+        <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn btn-gradient" bindtap="changeLevel">
           转为正式会员
         </view>
-        <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn" bindtap="getQr">
+        <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
           关联客户微信
         </view>
       </view>

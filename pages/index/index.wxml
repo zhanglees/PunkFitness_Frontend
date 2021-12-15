@@ -46,7 +46,7 @@
                       <image src="/images/member/wx{{member.wxid ? '1' : ''}}.png"  class="member-icon" />
                     </view>
                     <view class="member-class" wx:if="{{index == 0}}">
-                      课时： {{member.singInNum || '--'}}/{{member.appointmentNum || '--'}}
+                      课时： {{member.singInNum || '--'}}/{{member.trainClassNumbers || '--'}}
                     </view>
                 </view>
                 </mp-cell>
