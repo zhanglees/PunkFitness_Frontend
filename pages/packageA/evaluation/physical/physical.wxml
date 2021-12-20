@@ -1,12 +1,12 @@
 <!--pages/packageA/evaluation/physical/physical.wxml-->
 <view class="container">
     <view class="physical-list" wx:if="{{!showReport}}">
-        <view class="physical-list-item" wx:for="{{list}}" wx:key="index">
+        <view class="physical-list-item" wx:for="{{feedbackList}}" wx:key="index">
             <view class="physical-item">
-                评估项目：{{item.name}}
+                评估项目：{{item.assessmentName}}
             </view>
             <view class="physical-item">
-                评估方式：{{item.method}}
+                评估方式：{{item.feedbacks[0].feedbackItem}}
             </view>
             <view class="physical-item">
             具体表现：
@@ -17,7 +17,7 @@
                 <mp-icon class="arrow-icon" type="field" icon="arrow" color="#333" size="{{10}}"></mp-icon>
             </block>
             <block wx:else>
-                <input type="number" class="physical-item-input" bindinput="bindInputChange" data-i="{{index}}" />次/min
+                <input type="number" class="physical-item-input" bindinput="bindInputChange" data-i="{{index}}" />{{item.unit}}
             </block>
             </view>
         </view>
@@ -26,18 +26,18 @@
         </view>
     </view>
     <view wx:else class="report-list">
-        <view class="report-list-item" wx:for="{{list}}" wx:key="index">
+        <view class="report-list-item" wx:for="{{feedbackList}}" wx:key="index">
             <view class="report-item">
-                评估项目：{{item.name}}
+                评估项目：{{item.assessmentName}}
             </view>
             <view class="report-item">
-                评估方式：{{item.method}}
+                评估方式：{{item.method || '--'}}
             </view>
             <view class="report-item">
-                具体表现：{{item.performance || '--'}}
+                具体表现：{{item.performance || '--'}}{{item.unit}}
             </view>
         </view>
-        <view class="step-btn">
+        <view class="step-btn" wx-if="{{newFlag}}">
             <button class="form-btn-confirm" bindtap="finish">完成</button>
         </view> 
     </view>

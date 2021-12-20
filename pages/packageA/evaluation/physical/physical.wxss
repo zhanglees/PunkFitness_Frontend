@@ -55,7 +55,7 @@
 .step-btn{
     width: 100%;
     position: fixed;
-    bottom: 20rpx;
+    bottom: 80rpx;
     box-sizing: border-box;
     right: 0;
     left: 0;

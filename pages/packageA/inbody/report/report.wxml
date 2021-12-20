@@ -37,15 +37,15 @@
             <swiper-item wx:for="{{tabList}}" wx:key="index">
                 <view class="swiper-item" id="swiperItem{{index}}">
                     <view class="img-list">
-                        <view class="{{current==1 ? 'img-item' : 'img-upload'}}" wx:for="{{imgList[current]}}" wx:key="index" bindtap="takePhoto" data-index="{{index}}" data-field="{{item.id}}">
+                        <view class="{{current==1 ? 'img-item' : 'img-upload'}}" wx:for="{{imgList[current]}}" wx:for-index="i" wx:key="i" bindtap="takePhoto" data-index="{{i}}" data-field="{{item.id}}">
                             <image wx:if="{{item.src.length}}" src="{{item.src}}" class="img-item-img" mode="aspectFill" />
                             <view wx:elif="{{current==0}}" class="img-upload-btn">体测报告上传</view>
                             <text wx:else>{{item.name}}照片</text>
                         </view>
                     </view>
                     <view class="input-list">
-                        <mp-cell wx:for="{{inputList[index]}}" wx:key="index" wx:for-item="input" wx:for-index="i" title="{{input.name}}" footer="{{input.unit}}">
-                            <image slot="icon" src="{{input.icon}}" class="input-icon"></image>
+                        <mp-cell wx:for="{{inputList[index]}}" wx:key="i" wx:for-item="input" wx:for-index="i" title="{{input.name}}" footer="{{input.unit}}">
+                            <image slot="icon" src="{{'/images/inbody/icon-'+index+'-'+i+'.png'}}" class="input-icon"></image>
                             <input bindinput="inputChange" data-field="{{input.id}}" data-i="{{i}}" class="weui-input" placeholder="" value="{{formData[input.id]}}"/>
                         </mp-cell>
                     </view>
@@ -63,14 +63,14 @@
         <view class="report-res-detail-title">健康分析</view>
         <view class="report-res-detail--list">
             <mp-cell link wx:for="{{inputList[0]}}" wx:key="index" wx:for-item="input" wx:for-index="i" title="{{input.name + ' ' + (formData[input.id] ? (formData[input.id] + input.unit) : '--')}}">
-                <image slot="icon" src="{{input.icon2}}" class="input-icon"></image>
+                <image slot="icon" src="{{'/images/inbody/icon-' + i +'-b.png'}}" class="input-icon"></image>
                 <view slot="footer" class="detail-res detail-res{{input.res ? input.res : ''}}">{{input.res ? (resList[input.res]) : '--'}}</view>
             </mp-cell>
         </view>
         <view class="report-res-detail-title">身体测量</view>
         <view class="report-res-detail--list2">
             <view class="report-res-detail-item2" wx:for="{{inputList[1]}}" wx:key="index" wx:for-item="input" wx:for-index="j">
-                <view class="detail-res2-name">{{input.name}}({{input.unit}})</view>
+                <view class="detail-res2-name">{{input.name}}{{input.unit ? ('('+input.unit + ')' ) : ''}}</view>
                 <view class="detail-res2-value">{{formData[input.id] || '--'}}</view>
             </view>
             <view class="flex-item"></view>

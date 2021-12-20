@@ -65,6 +65,10 @@ function install(req, request) {
         getAssessmentByCoachId(data){
             const url = `${req.apiUrl}/assessment/getAssessmentByCoachId`;
             return request({ url, method: 'GET', data });
+        }, 
+        getAssessmentByType(data){
+            const url = `${req.apiUrl}/assessment/getAssessmentByType`;
+            return request({ url, method: 'GET', data });
         },
         addUserAssessment(data){
             const url = `${req.apiUrl}/assessment/addUserAssessment`;
@@ -72,6 +76,14 @@ function install(req, request) {
         },
         getTrainersAssessment(data){
             const url = `${req.apiUrl}/assessment/getTrainersAssessment`;
+            return request({ url, method: 'POST', data });
+        },
+        getTrainerAssessmentByRecord(data){
+            const url = `${req.apiUrl}/assessment/getTrainerAssessmentByRecord`;
+            return request({ url, method: 'POST', data });
+        },
+        getTrainerAssessmentDetail(data){
+            const url = `${req.apiUrl}/assessment/getTrainerAssessmentDetail`;
             return request({ url, method: 'POST', data });
         },
 /******预约 */
@@ -101,16 +113,17 @@ function install(req, request) {
             return request({ url, method: 'POST', data, header:{ 'content-type': 'application/x-www-form-urlencoded'} });
         },
         uploadFile(data){
+            console.log('上传参数：', data.formData)
             wx.uploadFile({
                 url: `${req.apiUrl}/resource/uploadFile`,
                 filePath: data.path,
-                name: 'file',
+                name: 'files',
                 formData: data.formData,
                 header: { 'content-type': 'multipart/form-data'},
-                success (res){
-                  const data = res.data
+                complete (res){
                   //do something
-                  console.log(888888, data)
+                  console.log('图片上传完：', res.data)
+                  data.success && data.success(JSON.parse(res.data));
                 }
             })
 

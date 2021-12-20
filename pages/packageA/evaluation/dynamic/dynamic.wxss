@@ -149,6 +149,16 @@
 .report-item{
     margin-bottom: 40rpx;
 }
+.report-item-title{
+    font-size: 30rpx;
+    margin-bottom: 10rpx;
+}
+.report-remark{
+    font-size: 26rpx;
+}
+.report-video-list .user-video{
+    margin-right: 20rpx;
+}
 .report-problem{
     color: #fff;
     border-color: #fff;
@@ -159,10 +169,7 @@
 }
 .step-btn{
     width: 100%;
-    position: absolute;
-    bottom: 20rpx;
+    margin-bottom: 20rpx;
     box-sizing: border-box;
-    right: 0;
-    left: 0;
     text-align: center
 }

@@ -4,7 +4,7 @@
     <view class="top_layout">
         <view class="top-tab">
             <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
-            {{item}}
+            {{item.assessmentName}}
             </view>
         </view>
     </view>
@@ -16,7 +16,7 @@
                 </view>
 
                 <view class="act-area">
-                    <view>拍摄视频（最多2个）</view>
+                    <view>拍摄视频</view>
                     <view class="act-video-list">
                         <view class="user-video-wrapper video-wrapper" wx:for="{{userVideo[index]}}" wx:key="index" wx:for-item="video" wx:for-index="i">
                             <video class="user-video" src="{{video}}"></video>
@@ -24,7 +24,7 @@
                                 <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
                             </view>
                         </view>
-                        <view class="eva-camera-wrapper video-wrapper" wx:if="{{userVideo[index].length<2}}">
+                        <view class="eva-camera-wrapper video-wrapper" wx:if="{{userVideo[index].length<1}}">
                             <view class="eva-camera" bindtap="startVideo">
                                 <mp-icon type="field" icon="video-call" color="gray" size="{{20}}"></mp-icon>
                                 <view>添加视频</view>
@@ -36,7 +36,7 @@
                     <view class="feedback-title">问题反馈</view>
                     <view class="feedback-list">
                         <view wx:for="{{feedbackList[index]}}" wx:key="index" class="feedback-item {{problem.checked ? 'feedback-item_act' : ''}}" wx:for-item="problem" bindtap="setChoice" data-i="{{index}}">
-                            {{problem.name}}
+                            {{problem.feedbackItem}}
                         </view>
                     </view>
                     <view class="feedback-remark">教练备注：
@@ -53,20 +53,25 @@
     </block>
     
     <view class="report-list" wx:else>
-        <view class="report-item" wx:for="{{datas}}" wx:key="index">
+        <view class="report-item" wx:for="{{feedbackList}}" wx:key="index">
             <view class="report-item-title">
-                {{item.name}}
+                {{tabList[index].assessmentName}}
             </view>
-            <block wx:for="{{item.feedback}}" wx:for-item="problem" wx:key="name">
+            <view class="report-video-list" wx-if="{{userVideo[index].length}}">
+                <view class="report-video-wrapper">
+                    <video wx:for="{{userVideo[index]}}" wx:for-item="video" wx:key="*this" class="user-video" src="{{video}}"></video>
+                </view>
+            </view>
+            <block wx:for="{{item}}" wx:for-item="problem" wx:key="name">
                 <view class="report-problem feedback-item" wx:if="{{problem.checked}}">
-                    {{problem.name}}
+                    {{problem.feedbackItem}}
                 </view>
             </block>
-            <view class="report-remark">
-                备注：{{item.remark.length ? item.remark : '--'}}
+            <view class="report-remark" wx:if="{{remark[index].length}}">
+                备注：{{remark[index]}}
             </view>
         </view>
-        <view class="step-btn">
+        <view class="step-btn" wx-if="{{newFlag}}">
             <button class="form-btn-confirm" bindtap="finish">完成</button>
         </view> 
     </view>

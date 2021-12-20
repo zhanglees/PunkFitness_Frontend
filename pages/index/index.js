@@ -52,6 +52,29 @@ Page({
     this.getAllData(1);
   },
   getAllData(type){
+    // const data = [{age: null,
+    //   appointmentNum: null,
+    //   birthday: 1512691200000,
+    //   coustomLevel: 1,
+    //   customerTag: "康复,减脂,增肌",
+    //   email: null,
+    //   headImg: null,
+    //   id: "75d15de0-f99a-4a37-ad53-0bb5abf2c09b",
+    //   phone: "13766767677",
+    //   remarks: "",
+    //   sessionKey: null,
+    //   sex: 0,
+    //   singInNum: null,
+    //   trainClassNumbers: null,
+    //   userName: "小明",
+    //   versionKey: null,
+    //   wxid: null,}]
+
+      // this.setData({
+      //   [`memberList[${type}]`]: data,
+      //   [`nums[${type}]`]: data.length
+      // });
+      // this.comSwiperHeight();
     app.req.api.getTrainerInfoByCoachId({
       coachId: this.data.userId,
       trainerType: 1-type   //0为准会员 1为会员

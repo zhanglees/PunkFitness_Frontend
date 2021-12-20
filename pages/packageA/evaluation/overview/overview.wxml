@@ -14,19 +14,12 @@
     </view>
     <view class="detail">
         <block wx:if="{{evaluation.length}}">
-        <view wx:for="{{evaluation}}" wx:key="index">
-            <view class="detail-top">
-                <text>{{item.type}}</text>
-                <view class="detatil-top-right">
-                    <text class="detail-coach">{{item.userName}}</text>
-                    <text class="detatil-time">{{utils.formatDate(item.createTime)}}</text>
-                </view>
+        <view class="detail-item" wx:for="{{evaluation}}" wx:key="index" wx:for-item="li" bindtap="gotoDetail" data-createtime="{{li.createTime}}" data-coachid="{{li.coachId}}">
+            <text>{{['静态评估', '动态评估', '健康体适能'][li.assessmentType]}}</text>
+            <view class="detatil-top-right">
+                <text class="detail-coach">{{li.coachName}}</text>
+                <text class="detatil-time">{{utils.formatDate(li.createTime)}}</text>
             </view>
-            <!-- <ul class="detail-ul">
-                <li class="detail-li" wx:for="{{evaluation}}" wx:key="index">
-                    <view class="detail-li-a">{{item.a}}</view>
-                </li>
-            </ul> -->
         </view>
         </block>
 

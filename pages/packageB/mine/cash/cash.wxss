@@ -93,7 +93,3 @@
       width: 560rpx;
       height: 700rpx;
   }
-  .hide{
-    position:fixed;
-    left:9000px;
-  }

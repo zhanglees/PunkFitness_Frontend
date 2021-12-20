@@ -2,12 +2,13 @@
 const app = getApp()
 Page({
   data: {
+    userId: '',
     type: '0',
     tabList: [{
       name: '静态评估',
       id: '0'
     }, {
-      name: '体适能评估',
+      name: '健康体适能',
       id: '2'
     }, {
       name: '动态评估',
@@ -15,14 +16,18 @@ Page({
     }],
     evaluation: []//评估结果预览
   },
-  onLoad(){
-    //页面加载完请求数据
-    this.getEvaluationData(0);
+  onLoad(options){
+    const userId = options.userId;
+    this.setData({
+      userId
+    });
   },
   getEvaluationData(){
     const type = this.data.type;
-    app.req.api.getTrainersAssessment({
-      assessmentType: type
+    console.log(type, 9999999)
+    app.req.api.getTrainerAssessmentByRecord({
+      assessmentType: type,
+      userId: this.data.userId
     }).then(res=>{
       this.setData({
         evaluation: res.data
@@ -36,14 +41,25 @@ Page({
     this.setData({
         type: type
     });
-    this.getEvaluationData(type);
+    this.getEvaluationData();
   },
   //跳转新建评估页面
   gotoEvaluation(e) {
     const url = ['static', 'dynamic', 'physical'][this.data.type];
       wx.navigateTo({
-          url: `/pages/packageA/evaluation/${url}/${url}`
+          url: `/pages/packageA/evaluation/${url}/${url}?userId=${this.data.userId}`
       })
   },
-
+  //点击查看详情
+  gotoDetail(e){
+    const {createtime, coachid} = e.currentTarget.dataset;
+    const url = ['static', 'dynamic', 'physical'][this.data.type];
+      wx.navigateTo({
+          url: `/pages/packageA/evaluation/${url}/${url}?userId=${this.data.userId}&createTime=${createtime}&coachId=${coachid}`
+      })
+  },
+  onShow(){
+    //请求数据
+    this.getEvaluationData();
+  }
 })
