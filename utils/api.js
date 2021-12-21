@@ -112,6 +112,15 @@ function install(req, request) {
             const url = `${req.apiUrl}/healthCheck/getHealthReportDetail`;
             return request({ url, method: 'POST', data, header:{ 'content-type': 'application/x-www-form-urlencoded'} });
         },
+        /**训练规划***/
+        getTrainClassByCoachId(data){   //得到教练下得课程
+            const url = `${req.apiUrl}/trainPlan/getTrainClassByCoachId`;
+            return request({ url, method: 'GET', data });
+        },
+        createUserTrainPlan(data){   //提交
+            const url = `${req.apiUrl}/trainPlan/createUserTrainPlan`;
+            return request({ url, method: 'POST', data });
+        },
         uploadFile(data){
             console.log('上传参数：', data.formData)
             wx.uploadFile({
@@ -126,7 +135,6 @@ function install(req, request) {
                   data.success && data.success(JSON.parse(res.data));
                 }
             })
-
         },
         /***上传图片
          * 多张图片上传

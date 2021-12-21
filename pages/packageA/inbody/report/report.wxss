@@ -160,7 +160,7 @@
     width: 100%;
     box-sizing: border-box;
     background: #fff;
-    padding: 10rpx 20rpx;
+    padding: 10rpx 20rpx 60rpx;
 }
 .report-res-title{
     width: 100%;
@@ -175,6 +175,14 @@
     padding: 20rpx;
     margin-bottom: 20rpx;
     border-radius: 4px;
+  }
+  .file-item-img{
+      width: 300rpx;
+      height: 100rpx;
+  }
+  .report-res .img-item{
+    height: 160rpx;
+    line-height: 28rpx;
   }
   .detail-res{
       border-radius: 20rpx;
@@ -222,4 +230,9 @@
   }
   .flex-item{
       width: 160rpx;
+  }
+  .btn-wrapper{
+      width: 100%;
+      text-align: center;
+      margin: 40rpx 0 40rpx;
   }

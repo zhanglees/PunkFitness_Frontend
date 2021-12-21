@@ -36,7 +36,7 @@
             <li wx:for="{{reportList}}" wx:key="index" class="report-item" bindtap="reportDetail" data-id="{{item.userHealthcheckId}}">
                 <view class="report-item-cell">
                     <view class="report-item-title">身体测试报告</view>
-                    <view class="report-item-coach">{{item.userName}} | {{utils.formatDate(item.createTime)}}</view>
+                    <view class="report-item-coach">{{item.userName}} | {{utils.timestampDate(item.createTime)}}</view>
                 </view>
                 <view class="report-item-cell">
                     <view class="report-data">
@@ -46,7 +46,7 @@
                         体脂率 <text class="report-data-number">{{item.bodyFatRatio || '--'}}%</text>
                     </view>
                     <view class="report-data">
-                        腰臀比 <text class="report-data-number">{{item.ratio || '--'}}</text>
+                        腰臀比 <text class="report-data-number">{{item.waistHipRatio || '--'}}</text>
                     </view>
                 </view>
             </li>

@@ -10,40 +10,34 @@ Page({
     data: {
         showReport: false,
         showBtn: true,  //是否显示完成按钮，当为查看时没有按钮
-        userInfo: {
-          name: "Ada",
-          avatarUrl: '/images/member/avatar.png',
-          mobile: "13888888888",
-          birthday: "2020-10-22",
-          age: '27',
-          genders: '男',
-          height: 178,
-          weight: 60
-        },
+        userInfo: {},
         tabList: ['身体成分', '身体测量'],
         current: 0,
         swiperHeight: 160, //动态计算swiper高度
-        imgList: [[{
-            id: 'report',
-            name: '体测报告',
-            src: ''
-        }],[{
-            id: 'itemAheadPath',
-            name: '正面',
-            src: ''
-        }, {
-            id: 'itemLeftPath',
-            name: '左侧面',
-            src: ''
-        }, {
-            id: 'itemRightPath',
-            name: '右侧面',
-            src: ''
-        }, {
-            id: 'itemBackPath',
-            name: '背面',
-            src: ''
-        }]],
+        imgList: [{
+            healthReportPath:{
+                id: 'healthReportPath',
+                name: '体测报告',
+                src: ''
+            }}, {
+            itemAheadPath:{
+                id: 'itemAheadPath',
+                name: '正面',
+                src: ''
+            }, itemLeftPath:{
+                id: 'itemLeftPath',
+                name: '左侧面',
+                src: ''
+            }, itemRightPath:{
+                id: 'itemRightPath',
+                name: '右侧面',
+                src: ''
+            }, itemBackPath:{
+                id: 'itemBackPath',
+                name: '背面',
+                src: ''
+            }
+        }],
         resList: ['理想', '偏低', '标准', '超高', '极高风险'],
         inputList: [[{
             name: '身高',
@@ -71,37 +65,37 @@ Page({
             res: '4'
         }, {
             name: '体脂率',
-            id: 'tz',
+            id: 'bodyFatRatio',
             unit: '%',
             value: '',
             res: '2'
         }, {
             name: '脂肪量',
-            id: 'zf',
+            id: 'fatContent',
             unit: '%',
             value: '',
             res: '2'
         }, {
             name: '水分',
-            id: 'sf',
+            id: 'waterContent',
             unit: '%',
             value: '',
             res: '2'
         }, {
             name: '骨骼肌',
-            id: 'gg',
+            id: 'skeletalMuscle',
             unit: '%',
             value: '',
             res: '0'
         }, {
             name: '肌肉量',
-            id: 'jr',
+            id: 'muscleMass',
             unit: '%',
             value: '',
             res: '2'
         }, {
             name: '腰臀比',
-            id: 'yt',
+            id: 'waistHipRatio',
             unit: '',
             value: '',
             res: '3'
@@ -133,43 +127,44 @@ Page({
             icon: '/images/inbody/waist.png',
             value: ''
         }, {
-            id: 'tw',
+            id: 'hipline',
             name: '臀围',
             icon: '/images/inbody/hips.png',
             unit: 'cm',
             value: ''
         }, {
-            id: 'zs',
+            id: 'leftArmCircumference',
             name: '左上臂围',
             unit: 'cm',
             value: ''
         }, {
-            id: 'ys',
+            id: 'rightArmCircumference',
             name: '右上臂围',
             unit: 'cm',
             value: ''
         }, {
-            id: 'zd',
+            id: 'leftThighCircumference',
             name: '左大腿围',
             unit: 'cm',
             value: ''
         }, {
-            id: 'yd',
+            id: 'rightThighCircumference',
             name: '右大腿围',
             unit: 'cm',
             value: ''
         }, {
-            id: 'zx',
+            id: 'leftShankCircumference',
             name: '左小腿围',
             unit: 'cm',
             value: ''
         }, {
-            id: 'yx',
+            id: 'rightShankCircumference',
             name: '右小腿围',
             unit: 'cm',
             value: ''
         }]],
         formData: {},
+        formResourceUrl: {},
         formResource: {}
     },
 
@@ -178,6 +173,7 @@ Page({
      */
     onLoad: function (options) {
         const {userId, reportId} = options;
+        const _this = this;
         if(reportId){
             //查看报告
             this.setData({
@@ -188,8 +184,10 @@ Page({
                 reportId: reportId
             }).then(res=>{
                 console.log('查询报告：', res.data)
+                const {userhealthcheckReport, userhealthcheckResource} =  res.data;
                 this.setData({
-                    formData: res.data
+                    formData: userhealthcheckReport,
+                    formResourceUrl: userhealthcheckResource
                 });
             });
         }else{
@@ -205,8 +203,7 @@ Page({
       app.req.api.getUserById({id: this.data.userId}).then(res => {
         console.log('返回：', res.data);
         let userInfo = res.data;
-        let birthday = userInfo.birthday.match(/([0-9]+)-[0-9]+-[0-9]+/);
-        userInfo.age = new Date().getFullYear() - birthday[1];
+        userInfo.age = new Date().getFullYear() - new Date(userInfo.birthday).getFullYear();
         this.setData({
           userInfo: userInfo
         });
@@ -258,18 +255,27 @@ Page({
                     success(res){
                         console.log('图片上传：', res)
                         _this.setData({
-                            [`formResource.${field}`]: res
+                            [`formResource.${field}`]: res.data
                         })
                     }
                 })
                 _this.setData({
-                    [`imgList[${cur}][${index}].src`]: tempFilePath
+                    [`formResourceUrl.${field}`]: tempFilePath
                 })
                 if(cur == 0){
                     _this.comSwiperHeight();
                 }
             }
         })
+    },
+
+    /***预览图片 */
+    previewImg(e){
+        const src = e.currentTarget.dataset.src;
+        wx.previewImage({ 
+            current: src, // 当前显示图片的http链接 
+            urls: [src] // 需要预览的图片http链接列表 
+        }) 
     },
     inputChange(e){
         const cur = this.data.current;
@@ -321,23 +327,21 @@ Page({
         };
         const userhealthcheckResource = {
             userId: userInfo.id,
-            itemAheadPath: '',
-            itemBackPath: '',
-            itemLeftPath: '',
-            itemRightPath: '',
-            userHealthcheckId: '',
-            userHealthcheckrecourceId: ''
+            ...this.data.formResource
         };
+        console.log(8888, userhealthcheckResource)
         app.req.api.addHealthCheckReport({
-            userhealthcheckReport: userhealthcheckReport,
-            userhealthcheckResource: userhealthcheckResource
+            userhealthcheckReport,
+            userhealthcheckResource
         }).then( res => {
-            wx.redirectTo({
-              url: '/pages/packageA/inbody/overview/overview?userId=' + userInfo.id,
-            });
-            wx.showToast({
-              title: '提交成功',
-            })
+            if(res.code === 0){
+                wx.redirectTo({
+                url: '/pages/packageA/inbody/overview/overview?userId=' + userInfo.id,
+                });
+                wx.showToast({
+                title: '提交成功',
+                })
+            }
         }).catch( e =>{
             wx.showToast({
                 title: '请重试',

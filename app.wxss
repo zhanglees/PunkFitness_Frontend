@@ -111,3 +111,7 @@ checkbox .wx-checkbox-input {
   width: 100%;
   text-align: center;
 }
+.hide{
+  position:fixed;
+  left:9000px;
+}

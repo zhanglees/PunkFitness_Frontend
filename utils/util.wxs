@@ -14,7 +14,6 @@ function formatNumber(n) {
 function timestampDate(time) {
   var t = getDate(time);
   return t ? [t.getFullYear(), t.getMonth() + 1, t.getDate()].map(formatNumber).join('-') : '--'
-
 }
 module.exports = {
     indexOf: defineIndexOf,

@@ -38,7 +38,7 @@
                 <view class="swiper-item" id="swiperItem{{index}}">
                     <view class="img-list">
                         <view class="{{current==1 ? 'img-item' : 'img-upload'}}" wx:for="{{imgList[current]}}" wx:for-index="i" wx:key="i" bindtap="takePhoto" data-index="{{i}}" data-field="{{item.id}}">
-                            <image wx:if="{{item.src.length}}" src="{{item.src}}" class="img-item-img" mode="aspectFill" />
+                            <image wx:if="{{formResourceUrl[i] && formResourceUrl[i].length}}" src="{{formResourceUrl[i]}}" class="img-item-img" mode="aspectFill" />
                             <view wx:elif="{{current==0}}" class="img-upload-btn">体测报告上传</view>
                             <text wx:else>{{item.name}}照片</text>
                         </view>
@@ -62,11 +62,17 @@
         <view class="report-res-title">体测详情</view>
         <view class="report-res-detail-title">健康分析</view>
         <view class="report-res-detail--list">
-            <mp-cell link wx:for="{{inputList[0]}}" wx:key="index" wx:for-item="input" wx:for-index="i" title="{{input.name + ' ' + (formData[input.id] ? (formData[input.id] + input.unit) : '--')}}">
+            <mp-cell wx:for="{{inputList[0]}}" wx:key="index" wx:for-item="input" wx:for-index="i" title="{{input.name}}">
                 <image slot="icon" src="{{'/images/inbody/icon-' + i +'-b.png'}}" class="input-icon"></image>
-                <view slot="footer" class="detail-res detail-res{{input.res ? input.res : ''}}">{{input.res ? (resList[input.res]) : '--'}}</view>
+                <view slot="footer">{{formData[input.id] ? (formData[input.id] + input.unit) : '--'}}</view>
+                <!-- <view slot="footer" class="detail-res detail-res{{input.res ? input.res : ''}}">{{input.res ? (resList[input.res]) : '--'}}</view> -->
             </mp-cell>
         </view>
+        <view class="report-res-detail-file" wx:if="{{formResourceUrl.healthReportPath && formResourceUrl.healthReportPath.length}}">
+            体测报告：
+            <image src="{{formResourceUrl.healthReportPath}}" class="file-item-img" mode="aspectFill" bindtap="previewImg" data-src="{{formResourceUrl.healthReportPath}}" />
+        </view>
+
         <view class="report-res-detail-title">身体测量</view>
         <view class="report-res-detail--list2">
             <view class="report-res-detail-item2" wx:for="{{inputList[1]}}" wx:key="index" wx:for-item="input" wx:for-index="j">
@@ -75,7 +81,15 @@
             </view>
             <view class="flex-item"></view>
         </view>
-        <view wx:if="{{showBtn}}">
+        <view class="img-list">
+            <block wx:for="{{imgList[1]}}" wx:for-index="i" wx:for-item="img" wx:key="i">
+            <view wx:if="{{formResourceUrl[i] && formResourceUrl[i].length}}" class="img-item">
+                <image src="{{formResourceUrl[i]}}" class="img-item-img" mode="aspectFill" bindtap="previewImg" data-src="{{formResourceUrl[i]}}" />
+                <text>{{img.name}}照片</text>
+            </view>
+            </block>
+        </view>
+        <view class="btn-wrapper" wx:if="{{showBtn}}">
             <button class="form-btn-confirm" bindtap="finish">完成</button>
         </view> 
     </view>

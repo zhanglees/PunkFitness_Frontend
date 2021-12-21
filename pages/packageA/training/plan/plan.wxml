@@ -7,7 +7,7 @@
             <view class="data-item" wx:for="{{bodyData}}" wx:key="index">
                 <view class="data-name">{{item.name}}{{item.unit ? '('+item.unit+')' : ''}}</view>
                 <view class="data-value">{{item.value}}</view>
-                <view class="data-status data-status{{item.status ? item.status : ''}}">{{statusList[item.status]}}</view>
+                <!-- <view class="data-status data-status{{item.status ? item.status : ''}}">{{statusList[item.status]}}</view> -->
             </view>
         </view>
         <view class="data-tips">以上数据来自{{dataTime}}身体测试</view>
@@ -15,22 +15,23 @@
     <view class="target-plan content">
         <view class="content-title">健身目标&方案</view>
         <view class="target-list">
-            <view class="target-item" wx:for="{{targetList}}" wx:key="index">
-                {{item}}
+            <view class="target-item{{item.checked ? ' target-item-act' : ''}}" bindtap="tapAddTarget" wx:for="{{targetList}}" wx:key="index" data-index="{{index}}">
+                {{item.name}}
             </view>
-            <view class="target-item">
+            <input wx:if="{{addTargetFlag}}" bindchange="addTarget" class="weui-input" placeholder="" />
+            <view wx:else class="target-item" bindtap="tapAddTarget">
             + 其他
             </view>
         </view>
         <view class="plan-info">
             <view class="info-item">
                 <image class="info-item-icon" src="/images/training/frequency.png" />健身频率
-                <input bindchange="inputChange" class="info-input" />
+                <input bindchange="inputChange" class="info-input" data-field="frequencies" />
                 <view class="info-item-unit">次/周</view>
             </view>
             <view class="info-item">
                 <image class="info-item-icon" src="/images/training/cycle.png"></image> 健身总周期
-                <input bindchange="inputChange" class="info-input" />
+                <input bindchange="inputChange" class="info-input" data-field="totalPeriod" />
                 <view class="info-item-unit">月</view>
             </view>
         </view>
@@ -38,7 +39,7 @@
             <view class="stage-item" wx:for="{{stageList}}" wx:key="index">
                 <view class="stage-title {{item.exp ? 'stage-title-act' : ''}}">
                     <text class="stage-title-block" style="background-color: {{stageColors[index%6]}};"></text>
-                    <text wx:if="{{index < 3}}" bindtap="changeName" data-index="{{index}}">{{item.name}}</text>
+                    <text wx:if="{{index < 3}}" bindtap="changeName" data-index="{{index}}">{{item.className}}</text>
                     <block wx:else>
                         <input bindchange="changeStageTitle" data-index="{{index}}" class="stage-title-input" value="{{item.name}}" />
                         <view class="stage-title-del" bindtap="delStage" data-index="{{index}}">删除</view>

@@ -78,14 +78,18 @@
     border-bottom: 1px solid #ddd;
 }
 .target-item{
-    border: 1px solid #86C4EC;
+    border: 1px solid #ddd;
+    color: #999;
     border-radius: 20rpx;
     height: 40rpx;
     line-height: 40rpx;
-    color: #86C4EC;
     padding: 0 20rpx;
     display: inline-block;
     margin: 0 10rpx 30rpx 0;
+}
+.target-item-act{
+    border: 1px solid #86C4EC;
+    color: #86C4EC;
 }
 .plan-info{
     display: flex;
@@ -180,7 +184,7 @@
     background: #F6F6F6;
 }
 .stage-detail-exp{
-    max-height: 600px;
+    max-height: unset;
 }
 .stage-detail-list{
     display: felx;

@@ -1,5 +1,6 @@
 // pages/packageA/inbody/inbody.js
 var wxCharts = require('../../../../utils/wxcharts.js');
+var util = require('../../../../utils/util.js');
 var lineChart = null;
 const app = getApp();
 Page({
@@ -42,12 +43,14 @@ Page({
             let x_data = [], y_data = [];
             let startDate, endDate;
             data.forEach((i, k)=>{
-              const date = i.createTime.match(/[0-9]+-([0-9]+-[0-9]+)/);
-              k == 0 && (endDate = date[0]);
-              (k == len-1) && (startDate = date[0]);
-              x_data.push(date[1]);
-              y_data.push(i.weight);
+              const date = util.formatDate(new Date(i.createTime));
+              if(i.weight){
+                x_data.push(date);
+                y_data.push(i.weight);
+              }
             });
+            startDate = x_data[0];
+            endDate = x_data[x_data.length - 1];
             this.OnWxChart(x_data,y_data);
             this.setData({
                 dataTitle: startDate + ' ~ ' + endDate,

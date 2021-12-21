@@ -1,6 +1,6 @@
 // pages/packageA/training/plan/plan.js
+const app = getApp()
 Page({
-
     /**
      * Page initial data
      */
@@ -33,7 +33,19 @@ Page({
         }],
         statusList: ['理想', '偏低', '标准', '超高', '极高风险'],
         dataTime: '2021/10/11',
-        targetList: ['减脂', '增肌', '塑形', '增强体质'],
+        targetList: [{
+            name: '减脂',
+            checked: false
+        }, {
+            name:  '增肌', 
+            checked: false
+        }, {
+            name: '塑形', 
+            checked: false
+        }, {
+            name: '增强体质',
+            checked: false
+        }],
         stageColors: ['#F8A803', '#10B89E', '#E95041', '#1093E9', '#EF7710', '#756DFF', '#F5AB13'],
         stageBase: {
             name: '',
@@ -77,23 +89,85 @@ Page({
         },
         stageArr: ['适应期', '进步期', '巩固期', '第4阶段', '第5阶段'],
         stageList: [],
-
+        stageItems: ['训练重点', '训练项目', '训练目标'],
+        stageItemBase: [{
+            id: 'points',
+            name: '训练重点',
+            options: [],
+            checked: [],
+            addFlag: false//添加自定义
+        }, {
+            id: 'items',
+            name: '训练项目',
+            options: [],
+            checked: [],
+            addFlag: false
+        }, {
+            id: 'target',
+            name: '训练目标',
+            checked: [],
+            options: [],
+            addFlag: false
+        }],
         dialogShow: false,
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
+        totalPeriod: '',
+        frequencies: ''
     },
 
     /**
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        let stageList = this.data.stageList;
-        const stageArr = this.data.stageArr;
-        let base = this.data.stageBase;
-        stageArr.forEach((item, index)=>{
-            stageList.push({...base, name: item});
-        })
+        let coachId = wx.getStorageSync('mp-req-user-id');
         this.setData({
-            stageList: stageList
+            userId: options.userId,
+            coachId
+        })
+        this.getStageList();
+    },
+    getStageList(){
+        app.req.api.getTrainClassByCoachId({
+            coachId: this.data.coachId
+        }).then(res=>{
+            console.log('fanhui:', res.data)
+            let data = res.data;
+            const stageItems = this.data.stageItemBase;
+            data.forEach(stage=>{
+                let classContents = stage.classContents;
+                let detail = [];
+                classContents.forEach(item=>{
+                    const trainTarg = item.trainTarg;
+                    if(detail[trainTarg]){
+                        if(trainTarg == 2){
+                            detail[item.trainTarg].options.push({
+                                name: item.itemName,
+                                value: '',
+                                checked: false
+                            })
+                        }else{
+                            detail[item.trainTarg].options.push(item.itemName)
+                        }
+                    }else{
+                        detail[trainTarg] = {
+                            id: trainTarg,
+                            name: this.data.stageItems[trainTarg],
+                            options: trainTarg == 2 ? [{
+                                name: item.itemName,
+                                value: '',
+                                checked: false
+                            }] : [item.itemName],
+                            checked: [],
+                            addFlag: false
+                        }
+                    }
+                })
+                stage.detail = detail;
+            })
+            console.log(999999, data)
+            this.setData({
+                stageList: data
+            })
         })
     },
     /***点击某个阶段  展开阶段详情 */
@@ -126,6 +200,38 @@ Page({
         })
         console.log(888, this.data.stageList[index].detail[d].options[i])
     },
+    /*****健身目标 */
+    tapAddTarget(e){
+        const {index} = e.currentTarget.dataset;
+        const checked = this.data.targetList[index].checked;
+        this.setData({
+            [`targetList[${index}].checked`]: !checked 
+        })
+    },
+     /***点击+其他 */
+     tapAddTarget(e){
+        this.setData({
+            addTargetFlag: true
+        });
+    },
+    /***添加完成 */
+    addTarget(e){
+        const targetList = this.data.targetList;
+        const value = e.detail.value;
+        if(value != ''){
+            targetList.push({
+                name: value,
+                checked: true
+            })
+            this.setData({
+                targetList
+            })
+        }
+        this.setData({
+            addTargetFlag: false
+        });
+    },
+    /****健身目标 end****/
     targetValue(e){
         const {i, d, index} = e.currentTarget.dataset;
         const value = e.detail.value;
@@ -227,15 +333,31 @@ Page({
             [`stageList[${index}].name`]: value
         })
     },
+    inputChange(e){
+        const {field} = e.currentTarget.dataset
+        this.setData({
+            [`${field}`]: e.detail.value
+        })
+    },
     /*****创建训练方案 */
     createPlan(){
         //整理提交数据  跳转回上一页
-        wx.setStorage({
-            key: "stageList",
-            data: this.data.stageList
+        const {coachId, frequencies, totalPeriod, userId, stageList} = this.data;
+        const userTrainItems = [];
+        stageList.forEach(stage=>{
+            
         });
-        wx.redirectTo({
-          url: '/pages/packageA/training/classlist/classlist',
+        app.req.api.createUserTrainPlan({
+            coachId, 
+            frequencies, 
+            totalPeriod, 
+            userId,            
+            userTrainItems
+        }).then(res=>{
+            console.log('返回：', res.data)
+            wx.redirectTo({
+              url: '/pages/packageA/training/classlist/classlist',
+            })
         })
     },
     /**
