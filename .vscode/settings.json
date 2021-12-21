@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "*.wxss": "css"
+        "*.wxss": "css",
+        "*.wxml": "html"
     }
 }
