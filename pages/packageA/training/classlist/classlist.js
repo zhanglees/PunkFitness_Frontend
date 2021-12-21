@@ -23,6 +23,12 @@ Page({
      */
     onLoad: function (options) {
         const type = options.type;   //用来区分是训练规划还是训练记录,记录则每条跳转到该阶段对应的课程，规划则每条跳转到该阶段的详情
+        let coachId = wx.getStorageSync('mp-req-user-id');
+        this.setData({
+            userId: options.userId,
+            coachId,
+            type: type
+        })
         //取数据
         const stageList = wx.getStorageSync('stageList');
         stageList.length && stageList.map(i=>{
@@ -30,14 +36,13 @@ Page({
             i.time= "2021/10/11";
         })
         this.setData({
-            list: stageList,
-            type: type
+            list: stageList
         });
     },
     /****添加训练计划 */
     addBtn(e){
         wx.navigateTo({
-          url: '/pages/packageA/training/plan/plan',
+          url: '/pages/packageA/training/plan/plan?userId=' + this.data.userId,
         })
     },
     /***查看该阶段课程列表 */

@@ -98,7 +98,7 @@
 }
 .info-item{
     flex: 1;
-    color: #95979D;
+    color: #5d5d5d;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;

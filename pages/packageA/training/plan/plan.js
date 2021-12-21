@@ -85,7 +85,7 @@ Page({
             cycle: '',
             times: '',
             remark: '',
-            classes: ''
+            classNum: ''
         },
         stageArr: ['适应期', '进步期', '巩固期', '第4阶段', '第5阶段'],
         stageList: [],
@@ -139,24 +139,22 @@ Page({
                 classContents.forEach(item=>{
                     const trainTarg = item.trainTarg;
                     if(detail[trainTarg]){
-                        if(trainTarg == 2){
-                            detail[item.trainTarg].options.push({
-                                name: item.itemName,
-                                value: '',
-                                checked: false
-                            })
-                        }else{
-                            detail[item.trainTarg].options.push(item.itemName)
-                        }
+                        detail[item.trainTarg].options.push({
+                            id: item.classContentId,
+                            name: item.itemName,
+                            value: '',
+                            checked: false
+                        })
                     }else{
                         detail[trainTarg] = {
                             id: trainTarg,
                             name: this.data.stageItems[trainTarg],
-                            options: trainTarg == 2 ? [{
+                            options: [{
+                                id: item.classContentId,
                                 name: item.itemName,
                                 value: '',
                                 checked: false
-                            }] : [item.itemName],
+                            }],
                             checked: [],
                             addFlag: false
                         }
@@ -170,6 +168,38 @@ Page({
             })
         })
     },
+    /*****健身目标 选择*/
+    tapTarget(e){
+        const {index} = e.currentTarget.dataset;
+        const checked = this.data.targetList[index].checked;
+        this.setData({
+            [`targetList[${index}].checked`]: !checked 
+        })
+    },
+    /***健身目标 点击+其他 */
+    tapAddTarget(e){
+       this.setData({
+           addTargetFlag: true
+       });
+   },
+   /***健身目标 添加完成 */
+   addTarget(e){
+       const targetList = this.data.targetList;
+       const value = e.detail.value;
+       if(value != ''){
+           targetList.push({
+               name: value,
+               checked: true
+           })
+           this.setData({
+               targetList
+           })
+       }
+       this.setData({
+           addTargetFlag: false
+       });
+   },
+   /****健身目标 end****/
     /***点击某个阶段  展开阶段详情 */
     expDetail(e){
         const index = e.currentTarget.dataset.index;
@@ -177,8 +207,8 @@ Page({
             [`stageList[${index}].exp`]: !this.data.stageList[index].exp
         })
     },
-    /****选择某项 */
-    checkedOne(e){
+    /****选择某项 重点 项目*/
+    checkedOne2222(e){
         const {i, index, d} = e.currentTarget.dataset;
         const detail = this.data.stageList[index].detail[d];
         const point = detail.options[i];
@@ -193,50 +223,20 @@ Page({
             [`stageList[${index}].detail[${d}].checked`]: checked,
         })
     },
-    checkedOneTarget(e){
+    /*****选择 阶段目标 */
+    checkedOne(e){
         const {i, index, d} = e.currentTarget.dataset;
         this.setData({
             [`stageList[${index}].detail[${d}].options[${i}].checked`]: !this.data.stageList[index].detail[d].options[i].checked
         })
         console.log(888, this.data.stageList[index].detail[d].options[i])
     },
-    /*****健身目标 */
-    tapAddTarget(e){
-        const {index} = e.currentTarget.dataset;
-        const checked = this.data.targetList[index].checked;
-        this.setData({
-            [`targetList[${index}].checked`]: !checked 
-        })
-    },
-     /***点击+其他 */
-     tapAddTarget(e){
-        this.setData({
-            addTargetFlag: true
-        });
-    },
-    /***添加完成 */
-    addTarget(e){
-        const targetList = this.data.targetList;
-        const value = e.detail.value;
-        if(value != ''){
-            targetList.push({
-                name: value,
-                checked: true
-            })
-            this.setData({
-                targetList
-            })
-        }
-        this.setData({
-            addTargetFlag: false
-        });
-    },
-    /****健身目标 end****/
+    /***** 阶段目标 值*/
     targetValue(e){
         const {i, d, index} = e.currentTarget.dataset;
         const value = e.detail.value;
         this.setData({
-            [`stageList[${index}].detail[${d}].option[${i}]`]: value
+            [`stageList[${index}].detail[${d}].options[${i}].value`]: value
         })
     },
     /***点击自定义 */
@@ -277,9 +277,9 @@ Page({
         })
         console.log(stage.frequency, stage.cycle)
         if(id != 'times' && stage.frequency && stage.cycle){
-                let classes = stage.frequency * stage.cycle;
+                let classNum = stage.frequency * stage.cycle;
             this.setData({
-                [`stageList[${index}].classes`]: classes
+                [`stageList[${index}].classNum`]: classNum
             });
         }
     },
@@ -344,8 +344,26 @@ Page({
         //整理提交数据  跳转回上一页
         const {coachId, frequencies, totalPeriod, userId, stageList} = this.data;
         const userTrainItems = [];
-        stageList.forEach(stage=>{
-            
+        console.log(8888, stageList)
+        stageList.forEach((stage, i)=>{
+            let userTrainplanClassContents = [];
+            const {classId, classNum} = stage;
+            stage.detail.forEach(d=>{
+                d.options.forEach(item=>{
+                    if(item.checked){
+                        userTrainplanClassContents.push({
+                            ...item,
+                            classId
+                        })
+                    }
+                })
+            })
+            console.log(8888888899999, stage)
+            userTrainItems.push({
+                classId,                                                  
+                classNum,                                                                      
+                userTrainplanClassContents
+            })
         });
         app.req.api.createUserTrainPlan({
             coachId, 
