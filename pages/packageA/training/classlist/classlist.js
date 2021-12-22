@@ -1,6 +1,6 @@
 // pages/packageA/training/classlist/classlist.js
+const app = getApp()
 Page({
-
     /**
      * Page initial data
      */
@@ -22,27 +22,33 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const type = options.type;   //用来区分是训练规划还是训练记录,记录则每条跳转到该阶段对应的课程，规划则每条跳转到该阶段的详情
-        let coachId = wx.getStorageSync('mp-req-user-id');
+        const { userId, type } = options;   //用来区分是训练规划还是训练记录,记录则每条跳转到该阶段对应的课程，规划则每条跳转到该阶段的详情
+        const coachId = wx.getStorageSync('mp-req-user-id');
         this.setData({
-            userId: options.userId,
+            userId,
             coachId,
             type: type
         })
+        this.getStageList();
+    },
+    getStageList(){
+        const { userId, coachId } = this.data;
         //取数据
-        const stageList = wx.getStorageSync('stageList');
-        stageList.length && stageList.map(i=>{
-            i.coach= "王建祥";
-            i.time= "2021/10/11";
+        app.req.api.getUserClassByCoachId({
+            userId,
+            coachId
+        }).then(res=>{
+            console.log('fanhui list:', res.data);
+            let stageList = res.data.userTrainItems;
+            this.setData({
+                list: stageList
+            });
         })
-        this.setData({
-            list: stageList
-        });
     },
     /****添加训练计划 */
     addBtn(e){
         wx.navigateTo({
-          url: '/pages/packageA/training/plan/plan?userId=' + this.data.userId,
+          url: '/pages/packageA/training/plan/plan?userId=' + this.data.userId + '&newIndex=' + (this.data.list ? this.data.list.length : 0),
         })
     },
     /***查看该阶段课程列表 */
@@ -53,23 +59,39 @@ Page({
         })
     },
     slideButtonTap(e) {
-        const {index} = e.currentTarget.dataset;
+        const {index, id} = e.currentTarget.dataset;
         //删除
         this.setData({
             dialogShow: true,
-            dialogIndex: index
+            dialogIndex: index,
+            delId: id
         })
     },
-
+/***删除一条阶段 */
     tapDialogButton(e) {
         if(e.detail.index === 1){
             //删除
-            let list = this.data.list;
-            const index = this.data.dialogIndex;
-            list.splice(index, 1);
-            this.setData({
-                list: list,
-                dialogIndex: ''
+            app.req.api.delUserTrainClassById({
+                userTrainitemId: this.data.delId
+            }).then(res=>{
+                if(res.data){
+                    wx.showToast({
+                      title: '删除成功',
+                      icon: 'success'
+                    })
+                    let list = this.data.list;
+                    const index = this.data.dialogIndex;
+                    list.splice(index, 1);
+                    this.setData({
+                        list: list,
+                        dialogIndex: ''
+                    })
+                }else{
+                    wx.showToast({
+                      title: '稍后重试',
+                      icon: 'error'
+                    })
+                }
             })
         }
         this.setData({
@@ -87,6 +109,7 @@ Page({
      * Lifecycle function--Called when page show
      */
     onShow: function () {
+        this.getStageList();
 
     },
 

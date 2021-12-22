@@ -47,84 +47,30 @@ Page({
             checked: false
         }],
         stageColors: ['#F8A803', '#10B89E', '#E95041', '#1093E9', '#EF7710', '#756DFF', '#F5AB13'],
-        stageBase: {
-            name: '',
-            exp: false,  //是否展开
-            detail: [{
-                id: 'points',
-                name: '训练重点',
-                options: ['综合体能', '柔韧性', '力量', '心肺功能', '肌肉含量', '提高基础代谢'],
-                checked: [],
-                addFlag: false//添加自定义
-            }, {
-                id: 'items',
-                name: '训练项目',
-                options: ['基础力量', '基础体能', '自由力量', '固定器械', '核心训练', '被动拉伸'],
-                checked: [],
-                addFlag: false
-            }, {
-                id: 'target',
-                name: '训练目标',
-                checked: [],
-                options: [{
-                    name: '体重变化',
-                    value: '',
-                    checked: false
-                }, {
-                    name: '体脂变化',
-                    value: '',
-                    checked: false
-                }, {
-                    name: '肌肉变化',
-                    value: '',
-                    checked: false
-                }],
-                addFlag: false
-            }],
-            frequency: '',
-            cycle: '',
-            times: '',
-            remark: '',
-            classNum: ''
-        },
         stageArr: ['适应期', '进步期', '巩固期', '第4阶段', '第5阶段'],
         stageList: [],
         stageItems: ['训练重点', '训练项目', '训练目标'],
-        stageItemBase: [{
-            id: 'points',
-            name: '训练重点',
-            options: [],
-            checked: [],
-            addFlag: false//添加自定义
-        }, {
-            id: 'items',
-            name: '训练项目',
-            options: [],
-            checked: [],
-            addFlag: false
-        }, {
-            id: 'target',
-            name: '训练目标',
-            checked: [],
-            options: [],
-            addFlag: false
-        }],
         dialogShow: false,
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
         totalPeriod: '',
-        frequencies: ''
+        frequencies: '',
+        newIndex: ''   //新增的索引
     },
 
     /**
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        let coachId = wx.getStorageSync('mp-req-user-id');
+        const coachId = wx.getStorageSync('mp-req-user-id');
+        let {userId, newIndex} = options;
         this.setData({
-            userId: options.userId,
+            userId,
+            newIndex: parseInt(newIndex),
             coachId
         })
-        this.getStageList();
+        if(newIndex < 3){
+            this.getStageList();
+        }
     },
     getStageList(){
         app.req.api.getTrainClassByCoachId({
@@ -132,7 +78,6 @@ Page({
         }).then(res=>{
             console.log('fanhui:', res.data)
             let data = res.data;
-            const stageItems = this.data.stageItemBase;
             data.forEach(stage=>{
                 let classContents = stage.classContents;
                 let detail = [];
@@ -140,9 +85,9 @@ Page({
                     const trainTarg = item.trainTarg;
                     if(detail[trainTarg]){
                         detail[item.trainTarg].options.push({
-                            id: item.classContentId,
-                            name: item.itemName,
-                            value: '',
+                            classContentId: item.classContentId,
+                            itemName: item.itemName,
+                            contentItemValue: '',
                             checked: false
                         })
                     }else{
@@ -150,21 +95,21 @@ Page({
                             id: trainTarg,
                             name: this.data.stageItems[trainTarg],
                             options: [{
-                                id: item.classContentId,
-                                name: item.itemName,
-                                value: '',
+                                classContentId: item.classContentId,
+                                itemName: item.itemName,
+                                contentItemValue: '',
                                 checked: false
                             }],
-                            checked: [],
                             addFlag: false
                         }
                     }
                 })
                 stage.detail = detail;
             })
-            console.log(999999, data)
             this.setData({
-                stageList: data
+                stageList: data,
+                newIndex: data.length,
+                newFlag: true
             })
         })
     },
@@ -229,14 +174,13 @@ Page({
         this.setData({
             [`stageList[${index}].detail[${d}].options[${i}].checked`]: !this.data.stageList[index].detail[d].options[i].checked
         })
-        console.log(888, this.data.stageList[index].detail[d].options[i])
     },
     /***** 阶段目标 值*/
     targetValue(e){
         const {i, d, index} = e.currentTarget.dataset;
         const value = e.detail.value;
         this.setData({
-            [`stageList[${index}].detail[${d}].options[${i}].value`]: value
+            [`stageList[${index}].detail[${d}].options[${i}].contentItemValue`]: value
         })
     },
     /***点击自定义 */
@@ -249,17 +193,31 @@ Page({
     /***添加完成 */
     addOption(e){
         const {d, index} = e.currentTarget.dataset;
-        const detail = this.data.stageList[index].detail[d];
+        const stage = this.data.stageList[index];
+        const detail = stage.detail[d];
         let options = detail.options;
         let checked = detail.checked;
         const value = e.detail.value;
         if(value != ''){
-            checked.push(value);
-            options.push(value);
-            this.setData({
-                [`stageList[${index}].detail[${d}].options`]: options,
-                [`stageList[${index}].detail[${d}].checked`]: checked,
-                [`stageList[${index}].detail[${d}].addFlag`]: false
+            // checked.push(value);
+            app.req.api.addTrainClassContent({  
+                itemName: value,    
+                owner: this.data.coachId,       
+                trainClassId: stage.classId,  
+                trainTarg: d
+            }).then(res=>{
+                options.push({
+                    classContentId: res.data.classContentId,
+                    itemName: res.data.itemName,
+                    contentItemValue: '',
+                    checked: true
+                });
+                console.log(options)
+                this.setData({
+                    [`stageList[${index}].detail[${d}].options`]: options,
+                    // [`stageList[${index}].detail[${d}].checked`]: checked,
+                    [`stageList[${index}].detail[${d}].addFlag`]: false
+                })
             })
         }else{
             this.setData({
@@ -275,9 +233,9 @@ Page({
         this.setData({
             [`stageList[${index}].${id}`]: value
         })
-        console.log(stage.frequency, stage.cycle)
-        if(id != 'times' && stage.frequency && stage.cycle){
-                let classNum = stage.frequency * stage.cycle;
+        console.log(stage.stageFrequency, stage.stagePeriod)
+        if(id != 'times' && stage.stageFrequency && stage.stagePeriod){
+                let classNum = stage.stageFrequency * stage.stagePeriod;
             this.setData({
                 [`stageList[${index}].classNum`]: classNum
             });
@@ -288,16 +246,31 @@ Page({
         const {index} = e.currentTarget.dataset;
         const value = e.detail.value;
         this.setData({
-            [`stageList[${index}].remark`]: value
+            [`stageList[${index}].coachRemarks`]: value
         })
     },
     /***添加阶段 */
     addStage(e){
         let stageList = this.data.stageList;
+        let newIndex = this.data.newIndex;
         const base = this.data.stageBase;
-        stageList.push({...base, name: `第${stageList.length + 1}阶段`})
+        stageList.push({
+            detail: [{
+                id: 0,
+                name: this.data.stageItems[0],
+                options: [{
+                    classContentId: 'item.classContentId',
+                    itemName: 'item.itemName',
+                    contentItemValue: '',
+                    checked: false
+                }],
+                addFlag: false
+            }], 
+            className: `第${++newIndex}阶段`
+        })
         this.setData({
-            stageList: stageList
+            stageList: stageList,
+            newIndex
         })
     },
     /****删除阶段 */
@@ -342,12 +315,13 @@ Page({
     /*****创建训练方案 */
     createPlan(){
         //整理提交数据  跳转回上一页
-        const {coachId, frequencies, totalPeriod, userId, stageList} = this.data;
+        const {coachId, frequencies, totalPeriod, userId, stageList, targetList} = this.data;
         const userTrainItems = [];
+        let goalsMethod = [];
         console.log(8888, stageList)
         stageList.forEach((stage, i)=>{
             let userTrainplanClassContents = [];
-            const {classId, classNum} = stage;
+            const {classId, classNum, stageFrequency, stagePeriod, coachRemarks} = stage;
             stage.detail.forEach(d=>{
                 d.options.forEach(item=>{
                     if(item.checked){
@@ -358,23 +332,31 @@ Page({
                     }
                 })
             })
-            console.log(8888888899999, stage)
             userTrainItems.push({
                 classId,                                                  
-                classNum,                                                                      
+                classNum,    
+                stageFrequency, 
+                stagePeriod,    
+                coachRemarks,                                                             
                 userTrainplanClassContents
             })
+        });
+        targetList.forEach(t=>{
+            if(t.checked){
+                goalsMethod.push(t.name);
+            }
         });
         app.req.api.createUserTrainPlan({
             coachId, 
             frequencies, 
             totalPeriod, 
-            userId,            
+            userId, 
+            goalsMethod: goalsMethod.join(','),           
             userTrainItems
         }).then(res=>{
             console.log('返回：', res.data)
-            wx.redirectTo({
-              url: '/pages/packageA/training/classlist/classlist',
+            wx.navigateBack({
+              delta: 0,
             })
         })
     },

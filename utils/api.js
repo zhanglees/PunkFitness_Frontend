@@ -121,6 +121,19 @@ function install(req, request) {
             const url = `${req.apiUrl}/trainPlan/createUserTrainPlan`;
             return request({ url, method: 'POST', data });
         },
+        getUserClassByCoachId(data){   //得到计划阶段列表
+            const url = `${req.apiUrl}/trainPlan/getUserClassByCoachId`;
+            return request({ url, method: 'GET', data });
+        },
+        addTrainClassContent(data){   //创建训练课自定义标签
+            const url = `${req.apiUrl}/trainPlan/addTrainClassContent`;
+            return request({ url, method: 'POST', data });
+        }, 
+        delUserTrainClassById(data){   //删除某个阶段
+            const url = `${req.apiUrl}/trainPlan/delUserTrainClassById`;
+            return request({ url, method: 'GET', data });
+        },
+
         uploadFile(data){
             console.log('上传参数：', data.formData)
             wx.uploadFile({
