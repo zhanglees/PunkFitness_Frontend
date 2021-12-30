@@ -98,7 +98,7 @@ Page({
               qrShow: true,
               userid: id
             })
-            _this.startWaiting();
+            // _this.startWaiting();
           })
           .catch(app.req.err.show);
         // wx.setStorage({
@@ -120,7 +120,7 @@ Page({
         _this.data.timeList.push(time) // 存储定时器
         //这里发送请求判断绑定结果，如果绑定成功则进入拿到数据流程
         console.log(new Date(), '第', newWait, '次轮询中...')
-        if (newWait === 2) { //拿到数据，轮询终止
+        if (newWait === 1) { //拿到数据，轮询终止
             console.log(new Date(), '拿到了所需数据！轮询停止')
             wx.redirectTo({
               url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + id,
@@ -141,6 +141,17 @@ Page({
       for (var i = 0; i < this.data.timeList.length; i++) {
           clearTimeout(this.data.timeList[i]); //清除了所有定时器
       }
+  },
+  confirmBind() {
+    //展示一个列表选择
+    wx.redirectTo({
+      url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
+    })
+  },
+  cancelBind() {
+    wx.redirectTo({
+      url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
+    })
   },
   onHide: function () {
     this.stopWaiting();

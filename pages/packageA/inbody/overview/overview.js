@@ -43,8 +43,8 @@ Page({
             let x_data = [], y_data = [];
             let startDate, endDate;
             data.forEach((i, k)=>{
-              const date = util.formatDate(new Date(i.createTime));
-              if(i.weight){
+              if(i.weight && i.createTime){
+                const date = util.formatDate(new Date(i.createTime.replace(/\.|\-/g, '/')));
                 x_data.push(date);
                 y_data.push(i.weight);
               }

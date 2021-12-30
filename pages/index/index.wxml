@@ -38,15 +38,15 @@
                   {{item.name}}<view>（ {{item.num || '--'}} ）</view>
                 </view>
               </view>
-              <view class="member-list" wx:if="{{nums[index]}}">
-                <mp-cell wx:for="{{memberList[index]}}" wx:key="m" wx:for-item="member" wx:for-index="m" link url="{{'/pages/packageA/training/classlist/classlist?type=plan&id=' + member.id}}" class="item" footer="课时计划">
+              <view class="member-list" wx:if="{{memberList[index].length}}">
+                <mp-cell wx:for="{{memberList[index]}}" wx:key="m" wx:for-item="member" wx:for-index="m" link url="{{'/pages/packageA/training/classlist/classlist?type=record&userId=' + member.id}}" class="item" footer="课时计划">
                 <view slot="title" class="weui-label">
                     <view class="member-name" bindtap="memberDetail" data-index="{{member.id}}">
                       {{member.userName}}
                       <image src="/images/member/wx{{member.wxid ? '1' : ''}}.png"  class="member-icon" />
                     </view>
                     <view class="member-class" wx:if="{{index == 0}}">
-                      课时： {{member.singInNum || '--'}}/{{member.trainClassNumbers || '--'}}
+                      课时： {{member.trainClassNumbers ? ((member.singInNum || 0) + '/' + member.trainClassNumbers) : '--'}}
                     </view>
                 </view>
                 </mp-cell>

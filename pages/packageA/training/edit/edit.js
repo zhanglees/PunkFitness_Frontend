@@ -1,4 +1,5 @@
 // pages/packageA/training/edit/edit.js
+const app = getApp()
 Page({
 
     /**
@@ -8,44 +9,34 @@ Page({
         editFlag: false,
         items: [{
             name: '训练部位',
-            id: 'part'
+            id: 'trainingAreaName'
         }, {
             name: '动作',
-            id: 'action'
+            id: 'actionName'
         }, {
             name: '器械',
-            id: 'equipment'
+            id: 'equipmentName'
         }, {
             name: '配重',
-            id: 'ounterweight'
+            id: 'counterWeight'
         }, {
             name: '单组次数',
-            id: 'times'
+            id: 'numberSinglegroup'
         }, {
             name: '组数',
             id: 'groups'
         }],
         trainingList: [{
             name: '热身训练',
-            actionList: [{
-                part: '胸大肌',
-                partIndex: 0,
-                action: '平板推胸',
-                actionIndex: 0,
-                equipment: '龙门架',
-                equipmentIndex: 3,
-                ounterweight: '3',
-                times: '3',
-                groups: '3'
-            }],
+            actionList: [],
             showAdd: false,
             editIndex: '',
             detail: {
-                part: '',
-                action: '',
-                equipment: '',
-                ounterweight: '',
-                times: '',
+                trainingAreaName: '',
+                actionName: '',
+                equipmentName: '',
+                counterWeight: '',
+                numberSinglegroup: '',
                 groups: ''
             }
         }, {
@@ -53,11 +44,11 @@ Page({
             actionList: [],
             showAdd: false,
             detail: {
-                part: '',
-                action: '',
-                equipment: '',
-                ounterweight: '',
-                times: '',
+                trainingAreaName: '',
+                actionName: '',
+                equipmentName: '',
+                counterWeight: '',
+                numberSinglegroup: '',
                 groups: ''
             }
         }, {
@@ -65,11 +56,11 @@ Page({
             actionList: [],
             showAdd: false,
             detail: {
-                part: '',
-                action: '',
-                equipment: '',
-                ounterweight: '',
-                times: '',
+                trainingAreaName: '',
+                actionName: '',
+                equipmentName: '',
+                counterWeight: '',
+                numberSinglegroup: '',
                 groups: ''
             }
         }],
@@ -143,27 +134,86 @@ Page({
             name: '胫骨前肌',
             actionList: ['自定义']
         }],
-        equipment: ['哑铃', '杠铃', '龙门架', '拉力器', '固定训练器械', '弹力带', '壶铃', '自由深蹲架', '360训练架', '瑜伽垫', '徒手', '自定义']
+        equipment: ['哑铃', '杠铃', '龙门架', '拉力器', '固定训练器械', '弹力带', '壶铃', '自由深蹲架', '360训练架', '瑜伽垫', '徒手', '自定义'],
+        editedIndex: []  //这个数组用来记录被编辑过的动作索引
     },
 
     /**
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const id = options.id;//当前编辑课程的id
-        const userId = options.userId;
-        const item = wx.getStorageInfoSync('class')[parseInt(id)-1];
-        if(id && item){
+        const type = options.type;
+        const coachId = wx.getStorageSync('mp-req-user-id');
+        const { userId } = options;
+        if(type == 'edit') {
+            //编辑
+            const { showOrder, usertrainSectionId, sectionName,trainingPlanId, userTrainitemId } = options;
             this.setData({
-                id: id,
-                name: item.name,
-                trainingList: item.trainingList
+                coachId,
+                userId, 
+                sectionName, 
+                usertrainSectionId,
+                trainingPlanId, 
+                userTrainitemId,
+                showOrder,
+                type
             })
-        }else if(id != undefined){
+            this.getClassDetail(coachId, userId, usertrainSectionId, sectionName);
+        }else if(type == 'new'){
+            //新建
+            const { showOrder, userTrainitemId, trainingPlanId } = options;
             this.setData({
-                id: id
+                coachId,
+                userId, 
+                userTrainitemId, 
+                trainingPlanId,
+                showOrder,
+                editFlag: true,
+                type
+            })
+        }else{
+            app.req.api.getUserExperienceLessonDetail({
+                coachId,
+                userId
+            }).then(res=>{
+                this.setData({
+                    ...res.data,
+                    trainingList: this.dataFormate(res.data),
+                    coachId,
+                    userId, 
+                    editFlag: !res.data.userTraionSectionDetails,
+                    type
+                })
             })
         }
+        // const item = wx.getStorageInfoSync('class')[parseInt(id)-1];
+        // if(id && item){
+        //     this.setData({
+        //         name: item.name,
+        //         trainingList: item.trainingList
+        //     })
+        // }
+    },
+    getClassDetail(coachId, userId, usertrainSectionId, sectionName){
+        app.req.api.getUserClassSectionDetail({coachId, userId, usertrainSectionId, sectionName}).then(res=>{
+            this.setData({
+                trainingList: this.dataFormate(res.data)
+            })
+        })
+    },
+    dataFormate(data){
+        const userTraionSectionDetails = data.userTraionSectionDetails;
+        let trainingList = this.data.trainingList;
+        userTraionSectionDetails && userTraionSectionDetails.forEach(section => {
+            let training = trainingList[section.trainingType || 0];
+            training.actionList.push({
+                ...section,
+                trainingAreaName: (section.trainingArea!=null) ? this.data.trainingPart[section.trainingArea].name : '',
+                actionName: ((section.trainingArea!=null) && (section.action!=null)) ? this.data.trainingPart[section.trainingArea].actionList[section.action] : '',
+                equipmentName: (section.equipment!=null)  ? this.data.equipment[section.equipment] : ''
+            })
+        })
+        return trainingList;
     },
     edit(e){
         this.setData({
@@ -174,7 +224,7 @@ Page({
     inputNameChange(e){
         const value = e.detail.value;
         this.setData({
-            name: value
+            sectionName: value
         });
     },
     addone(e){
@@ -182,11 +232,11 @@ Page({
         this.setData({
             [`trainingList[${index}].showAdd`]: true,
             [`trainingList[${index}].detail`]: {
-                part: '',
-                action: '',
-                equipment: '',
-                ounterweight: '',
-                times: '',
+                trainingAreaName: '',
+                actionName: '',
+                equipmentName: '',
+                counterWeight: '',
+                numberSinglegroup: '',
                 groups: ''
             }
         })
@@ -195,20 +245,20 @@ Page({
         const {index, name} = e.currentTarget.dataset;
         const valueIndex = e.detail.value;
         let value = '';
-        if(name=='part'){
+        if(name=='trainingArea'){
             value = this.data.trainingPart[valueIndex].name;
             this.setData({
-                [`trainingList[${index}].detail.actionIndex`]: '',
-                [`trainingList[${index}].detail.action`]: ''
+                [`trainingList[${index}].detail.action`]: '',
+                [`trainingList[${index}].detail.actionName`]: ''
             });
         }else if(name == 'action'){
-            value = this.data.trainingPart[this.data.trainingList[index].detail.partIndex].actionList[valueIndex];
+            value = this.data.trainingPart[this.data.trainingList[index].detail.trainingArea].actionList[valueIndex];
         }else{
             value = this.data.equipment[valueIndex];
         }
         this.setData({
-            [`trainingList[${index}].detail.${name}Index`]: valueIndex,
-            [`trainingList[${index}].detail.${name}`]: value
+            [`trainingList[${index}].detail.${name}`]: valueIndex,
+            [`trainingList[${index}].detail.${name}Name`]: value
         });
     },
     inputChange(e){
@@ -222,26 +272,29 @@ Page({
         const {index, name, i} = e.currentTarget.dataset;
         const valueIndex = e.detail.value;
         let value = '';
-        if(name=='part'){
+        if(name=='trainingArea'){
             value = this.data.trainingPart[valueIndex].name;
             this.setData({
-                [`trainingList[${index}].actionList[${i}].actionIndex`]: '',
+                [`trainingList[${index}].actionList[${i}].actionName`]: '',
                 [`trainingList[${index}].actionList[${i}].action`]: ''
             });
         }else if(name == 'action'){
-            const partIndex = this.data.trainingList[index].actionList[i].partIndex;
-            value = this.data.trainingPart[partIndex].actionList[valueIndex];
+            const trainingArea = this.data.trainingList[index].actionList[i].trainingArea;
+            value = this.data.trainingPart[trainingArea].actionList[valueIndex];
         }else{
             value = this.data.equipment[valueIndex];
         }
+        this.data.editedIndex.push(index+'-'+ i);
         this.setData({
-            [`trainingList[${index}].actionList[${i}].${name}Index`]: valueIndex,
-            [`trainingList[${index}].actionList[${i}].${name}`]: value
+            [`trainingList[${index}].actionList[${i}].${name}`]: valueIndex,
+            [`trainingList[${index}].actionList[${i}].${name}Name`]: value,
         });
+        console.log(9999, this.data.editedIndex)
     },
     inputChangeEdit(e){
         const {index, name, i} = e.currentTarget.dataset;
         const value = e.detail.value;
+        this.data.editedIndex.push(index+'-'+ i);
         this.setData({
             [`trainingList[${index}].actionList[${i}].${name}`]: value
         });
@@ -256,20 +309,33 @@ Page({
           maxDuration: 60,
           camera: 'back',
           success(res) {
-            console.log(res.tempFilePath)
+            let key = '';
+            if(i == 'detail'){
+                key = `trainingList[${index}].detail.video`
+            }else{
+                key = `trainingList[${index}].actionList[${i}].video`
+            }
             _this.setData({
-                [`trainingList[${index}].actionList[${i}].video`]: res.tempFilePath
+                [key]: res.tempFilePath
             });
-            console.log(888, _this.data.trainingList[index])
+            _this.uploadVideo(res.tempFilePath, index, i);
           }
         })
       },
       /**删除某个视频 */
     delAct(e){
-    const {index, i} = e.currentTarget.dataset;
-    this.setData({
-        [`trainingList[${index}].actionList[${i}].video`]: ''
-    })
+        const {index, i} = e.currentTarget.dataset;
+        let key = '';
+        if(i == 'detail'){
+            key = `trainingList[${index}].detail`;
+        }else{
+            key = `trainingList[${index}].actionList[${i}]`;
+            this.data.editedIndex.push(index+'-'+ i);
+        }
+        this.setData({
+            [key + '.video']: '',
+            [key + '.videourl']: ''
+        })
     },
     /***编辑一条动作 */
     // editOne(e){
@@ -281,20 +347,94 @@ Page({
     //         [`trainingList[${index}].editIndex`]: a
     //     })
     // },
+/****上传视频 */
+    uploadVideo(video, index, i){
+        const _this = this;
+        if(video.length){
+            app.req.api.uploadFile({
+                path: video,  
+                formData: {
+                    userId: this.data.userId
+                },
+                success(res){
+                    console.log('上传:', index, res)
+                    let key = '';
+                    if(i == 'detail'){
+                        key = `trainingList[${index}].detail`;
+                    }else{
+                        key = `trainingList[${index}].actionList[${i}]`;
+                        _this.data.editedIndex.push(index+'-'+ i);
+                    }
+                    _this.setData({
+                        [`${key}.videourl`]: res.data
+                    })
+                }
+            })
+        }
+    },
+    previewVideo(e){
+        const src = e.currentTarget.dataset.src;
+        console.log(e.currentTarget.dataset)
+        wx.previewImage({ 
+          current: src, // 当前显示图片的http链接 
+          urls: [src] // 需要预览的图片http链接列表 
+         }) 
+    },
     delOne(e){
-        const {index, a} = e.currentTarget.dataset;
-        const training = this.data.trainingList[index];
-        let actionList = training.actionList;
-        actionList.splice(a, 1);;
-        this.setData({
-            [`trainingList[${index}].actionList`]: actionList,
-        })
+        const {index, a, sectiondetailid} = e.currentTarget.dataset;
+        if(this.data.type != 'new'){
+            //编辑状态的删除就真的提交删除了
+            const {coachId, userId} = this.data;
+            app.req.api.delUserSectionDetail({
+                coachId,
+                userId,
+                sectionDetailId: sectiondetailid
+            }).then(res=>{
+                if(res.code == 0){
+                    const training = this.data.trainingList[index];
+                    let actionList = training.actionList;
+                    actionList.splice(a, 1);;
+                    this.setData({
+                        [`trainingList[${index}].actionList`]: actionList,
+                    })
+                }
+            })
+        }else{
+            const training = this.data.trainingList[index];
+            let actionList = training.actionList;
+            actionList.splice(a, 1);;
+            this.setData({
+                [`trainingList[${index}].actionList`]: actionList,
+            })
+        }
     },
     /***保存一条新增动作 */
     saveOne(e){
         const {index} = e.currentTarget.dataset;
+        if(this.data.type != 'new'){
+            //编辑进来就真的新增一条
+            const {coachId, userId, sectionName, usertrainSectionId} = this.data;
+            app.req.api.adddUserSectionDetail({
+                ...this.data.trainingList[index].detail,
+                coachId, userId, sectionName, usertrainSectionId,
+                trainingType: index
+            }).then(res=>{
+                if(res.code == 0){
+                    this.saveOneDo(index, res.data);
+                }else{
+                    wx.showToast({
+                      title: '请重试',
+                      icon: 'error'
+                    })
+                }
+            })
+        }else{
+            this.saveOneDo(index);
+        }
+    },
+    saveOneDo(index, data){
         const training = this.data.trainingList[index];
-        const detail = training.detail;
+        const detail = {...training.detail, ...(data || {})};
         const editIndex = training.editIndex;
         let actionList = training.actionList;
         if(editIndex || (editIndex===0)){
@@ -307,6 +447,7 @@ Page({
             [`trainingList[${index}].showAdd`]: false,
             [`trainingList[${index}].editIndex`]: ''
         });
+        console.log(8888, this.data.trainingList[index].actionList)
     },
     cancelOne(e){
         const {index} = e.currentTarget.dataset;
@@ -317,25 +458,83 @@ Page({
     },
     /*****全页面的保存提交 */
     saveList(){
-        //提交哪些数据，是每次操作触发提交还是一次整体提交，如果一次整体提交 用户会不会忘了提交直接点回退按钮
-        const id = this.data.id;
         this.setData({
             editFlag: false
         })
-        let classes = wx.getStorageSync('classee') || [];
-        const trainingList = this.data.trainingList;
-        classes[parseInt(id)-1] = {
-            name: this.data.name,
-            trainingList: trainingList
+        const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId } = this.data;
+        if(type != 'new'){
+            //编辑进来 只修改课程名称
+            if(type == 'edit'){
+                app.req.api.submitUserClassSection({
+                    coachId,                                         
+                    sectionName,                          
+                    showOrder,                                             
+                    trainingPlanId,          
+                    userId,              
+                    userTrainitemId,    
+                    usertrainSectionId: this.data.usertrainSectionId
+                }).then(res=>{
+                    if(res.code == 0){
+                        wx.showToast({
+                            title: '提交成功',
+                        })
+                        wx.navigateBack({
+                            delta: 0,
+                        })
+                    }
+                })
+            }
+            //然后挨个去看哪些动作被编辑过了，就调用编辑接口，这个实现实在是糟糕
+            let editedIndex = this.data.editedIndex;
+            console.log(9999, editedIndex)
+            if(editedIndex.length){
+                editedIndex = [...new Set(editedIndex)];
+                editedIndex.forEach(i=>{
+                    const t = i.split('-');
+                    let data = this.data.trainingList[t[0]].actionList[t[1]];
+                    app.req.api.editUserClassSectionDetail({
+                        ...data,
+                        trainingType: t[0]
+                    }).then(res=>{
+                        console.log('保存：', res.data)
+                    })
+                })
+            }
+            if(type == 'experience'){
+                wx.navigateBack({
+                    delta: 0,
+                })
+            }
+        }else{
+            let trainingList = this.data.trainingList;
+            let userTraionSectionDetails = [];
+            trainingList.forEach((training, type) => {
+                training.actionList.forEach(action => {
+                    userTraionSectionDetails.push({
+                        ...action,              
+                        sectionName,      
+                        trainingType: type  
+                    })
+                })
+            })
+            console.log('提交：', userTraionSectionDetails)
+            app.req.api.addUserTrainClassSection({
+                showOrder,
+                coachId,                                     
+                sectionName: sectionName || `第${showOrder}节训练课`,                               
+                trainingPlanId,                                
+                userId,         
+                userTrainitemId,  
+                userTraionSectionDetails
+            }).then(res=>{
+                console.log('提交返回：', res.data)
+                if(res.code == 0){
+                    wx.navigateBack({
+                        delta: 0,
+                    })
+                }
+            })
         }
-        wx.setStorage({
-            key: 'classee',
-            data: classes
-        })
-        console.log(8888, classes, wx.getStorageSync('classee'))
-        // wx.navigateBack({
-        //     delta: 0,
-        // })
     },
     /**
      * Lifecycle function--Called when page is initially rendered

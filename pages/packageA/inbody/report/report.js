@@ -321,7 +321,7 @@ Page({
             ...this.data.formData, 
             age: userInfo.age, 
             coachId: coachId,
-            createTime: util.formatDate(new Date()),
+            createTime: new Date().getTime(),
             userId: userInfo.id,
             userName: userInfo.userName
         };

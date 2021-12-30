@@ -5,7 +5,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    selDate: {
+      type: String,
+      // observer: 'goInit'
+    }
   },
 
   /**
@@ -24,13 +27,16 @@ Component({
     this.setData({
       today,
     });
-    var d = new Date();
-    this.initDate(-5, 2, d); // 日历组件程序  -4左表示过去4周  右1表示过去一周 
+    this.goInit();
   },
   /**
    * 组件的方法列表
    */
   methods: {
+    goInit(){
+      var d = new Date(this.data.selDate);
+      this.initDate(-5, 2, d); // 日历组件程序  -4左表示过去4周  右1表示过去一周 
+    },
     tiaotime(e) {
       let data = e.detail.value.split("-")
       var d = new Date(Number(data[0]), Number(data[1]) - 1, Number(data[2]));
@@ -38,6 +44,9 @@ Component({
         dateList: []
       })
       this.initDate(-5, 2, d); // 日历组件程序  -4左表示过去4周  右1表示过去一周
+      this.triggerEvent('mydata', {
+        data: e.detail.value
+      })
     },
 
     // 日历组件部分
@@ -58,9 +67,9 @@ Component({
         dateCurrentStr: year + "-" + month + "-" + day,
         dayCurrentStr: this.data.dateListArray[d.getDay()]
       });
-      this.triggerEvent('mydata', {
-        data: year + "-" + month + "-" + day
-      })
+      // this.triggerEvent('mydata', {
+      //   data: year + "-" + month + "-" + day
+      // })
     },
     // 获取这周从周日到周六的日期
     calculateDate(_date) {
@@ -173,7 +182,6 @@ Component({
     // 点击日历某日
     chooseDate(e) {
       var {id, dayweek} = e.currentTarget.dataset;
-      console.log(99999, id, dayweek)
       this.setData({
         dateCurrentStr: id,
         dayCurrentStr: this.data.dateListArray[dayweek]

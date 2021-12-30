@@ -31,7 +31,11 @@ function install(req, request) {
         },
         //筛选
         getAppointmentAllByDate(data){
-            const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
+            const url = `${req.apiUrl}/coachAppointment/getAppointMembersByDates`;
+            return request({ url, method: 'GET', data });
+        },
+        getUserLogById(data){
+            const url = `${req.apiUrl}/userSystemLog/getUserLogById`;
             return request({ url, method: 'GET', data });
         },
 /*****问卷 */
@@ -86,19 +90,6 @@ function install(req, request) {
             const url = `${req.apiUrl}/assessment/getTrainerAssessmentDetail`;
             return request({ url, method: 'POST', data });
         },
-/******预约 */
-        appointment(data){
-            const url = `${req.apiUrl}/userAppointment/appointment`;
-            return request({ url, method: 'POST', data });
-        },
-        getAppointmentAllByDate(data){
-            const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
-            return request({ url, method: 'GET', data });
-        },
-        singIn(data){   //签到
-            const url = `${req.apiUrl}/userAppointment/singIn`;
-            return request({ url, method: 'POST', data });
-        },
         /****体测报告**/
         getUserHealthCheckAll(data){   //得到用户所有体测信息
             const url = `${req.apiUrl}/healthCheck/getUserHealthCheckAll`;
@@ -121,6 +112,10 @@ function install(req, request) {
             const url = `${req.apiUrl}/trainPlan/createUserTrainPlan`;
             return request({ url, method: 'POST', data });
         },
+        addTrainClass(data){   //教练添加阶段
+            const url = `${req.apiUrl}/trainPlan/addTrainClass`;
+            return request({ url, method: 'POST', data });
+        },
         getUserClassByCoachId(data){   //得到计划阶段列表
             const url = `${req.apiUrl}/trainPlan/getUserClassByCoachId`;
             return request({ url, method: 'GET', data });
@@ -133,6 +128,93 @@ function install(req, request) {
             const url = `${req.apiUrl}/trainPlan/delUserTrainClassById`;
             return request({ url, method: 'GET', data });
         },
+        getTrainClassItemContent(data){   //查用户阶段详情
+            const url = `${req.apiUrl}/trainPlan/getTrainClassItemContent`;
+            return request({ url, method: 'POST', data });
+        }, 
+        getLastHealthReport(data){   //最近一次身体报告
+            const url = `${req.apiUrl}/healthCheck/getLastHealthReport`;
+            return request({ url, method: 'GET', data });
+        },
+        getUserTrainPlainDetail(data){   //训练计划详情
+            const url = `${req.apiUrl}/trainPlan/getUserTrainPlainDetai`;
+            return request({ url, method: 'GET', data });
+        },
+        deleteCoachTrainClass(data){   //教练删除阶段
+            const url = `${req.apiUrl}/trainPlan/deleteCoachTrainClass`;
+            return request({ url, method: 'POST', data });
+        }, 
+        modifyUserTrainClass(data){   //修改
+            const url = `${req.apiUrl}/trainPlan/modifyUserTrainClass`;
+            return request({ url, method: 'POST', data });
+        }, 
+        createUserTrainClass(data){   //用户新增阶段
+            const url = `${req.apiUrl}/trainPlan/createUserTrainClass`;
+            return request({ url, method: 'POST', data });
+        }, 
+        /***训练记录**/
+        getUserClassSection(data){   //课时列表
+            const url = `${req.apiUrl}/trainPlan/getUserClassSection`;
+            return request({ url, method: 'POST', data });
+        }, 
+        addUserTrainClassSection(data){   //保存课程
+            const url = `${req.apiUrl}/trainPlan/addUserTrainClassSection`;
+            return request({ url, method: 'POST', data });
+        }, 
+        getUserClassSectionDetail(data){   //查看详情
+            const url = `${req.apiUrl}/trainPlan/getUserClassSectionDetail`;
+            return request({ url, method: 'POST', data });
+        }, 
+        delUserSectionDetail(data){   //删除某个动作
+            const url = `${req.apiUrl}/trainPlan/delUserSectionDetail`;
+            return request({ url, method: 'POST', data });
+        }, 
+        deleteUserClassSection(data){   //删除某节课
+            const url = `${req.apiUrl}/trainPlan/deleteUserClassSection`;
+            return request({ url, method: 'POST', data });
+        }, 
+        copyUserClassSection(data){   //复制一节小时课
+            const url = `${req.apiUrl}/trainPlan/copyUserClassSection`;
+            return request({ url, method: 'POST', data });
+        }, 
+        submitUserClassSection(data){   //保存编辑  其实只编辑了课程名称
+            const url = `${req.apiUrl}/trainPlan/submitUserClassSection`;
+            return request({ url, method: 'POST', data });
+        }, 
+        adddUserSectionDetail(data){   //编辑的时候新增一个动作
+            const url = `${req.apiUrl}/trainPlan/adddUserSectionDetail`;
+            return request({ url, method: 'POST', data });
+        }, 
+        editUserClassSectionDetail(data){   //编辑的时候编辑一个动作 多么的无奈~
+            const url = `${req.apiUrl}/trainPlan/editUserClassSectionDetail`;
+            return request({ url, method: 'POST', data });
+        }, 
+        getUserExperienceLessonDetail(data){   //体验课
+            const url = `${req.apiUrl}/experienceLesson/getUserExperienceLessonDetail`;
+            return request({ url, method: 'GET', data });
+        }, 
+/******预约 */
+        getUserAppointmentAllByDate(data){//教练查预约
+            const url = `${req.apiUrl}/coachAppointment/getUserAppointmentAllByDate`;
+            return request({ url, method: 'POST', data });
+        },
+        appointment(data){
+            const url = `${req.apiUrl}/coachAppointment/appointment`;
+            return request({ url, method: 'POST', data });
+        },
+        singIn(data){   //签到
+            const url = `${req.apiUrl}/coachAppointment/singIn`;
+            return request({ url, method: 'POST', data });
+        },
+        getUserSectionList(data){   //可预约的课程
+            const url = `${req.apiUrl}/trainPlan/getUserSectionList`;
+            return request({ url, method: 'POST', data });
+        }, 
+        // getAppointmentAllByDate(data){   //查询预约列表，这个接口需要改
+        //     const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
+        //     return request({ url, method: 'GET', data });
+        // }, 
+
 
         uploadFile(data){
             console.log('上传参数：', data.formData)

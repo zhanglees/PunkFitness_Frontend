@@ -46,7 +46,7 @@
                     <view class="input-list">
                         <mp-cell wx:for="{{inputList[index]}}" wx:key="i" wx:for-item="input" wx:for-index="i" title="{{input.name}}" footer="{{input.unit}}">
                             <image slot="icon" src="{{'/images/inbody/icon-'+index+'-'+i+'.png'}}" class="input-icon"></image>
-                            <input bindinput="inputChange" data-field="{{input.id}}" data-i="{{i}}" class="weui-input" placeholder="" value="{{formData[input.id]}}"/>
+                            <input bindinput="inputChange" type="number" data-field="{{input.id}}" data-i="{{i}}" class="weui-input" placeholder="" value="{{formData[input.id]}}"/>
                         </mp-cell>
                     </view>
                     <view class="btn-wrapper">

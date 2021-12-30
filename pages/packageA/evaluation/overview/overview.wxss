@@ -60,14 +60,20 @@
     background: #fff;
 }
 .detail-item{
-    margin: 20rpx 0;
+    margin: 30rpx 0;
     display: flex;
     justify-content: space-between;
 }
 .detatil-top-right{
-    color: #5d5d5d;
+    color: #5d5d5d;    
+    display: flex;
+    justify-content: flex-end;
 }
-.detail-coach{
-    display: inline-block;
+.detail-coach{    
     margin-right: 20rpx;
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
 }

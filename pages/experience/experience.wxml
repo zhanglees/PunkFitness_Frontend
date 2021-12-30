@@ -46,6 +46,10 @@
             <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
             <image class="qr-img" src="{{imgUrl}}" />
             <view>点击客户微信扫码，便于客户微信收到个人运动相关动态信息</view>
+            <view class="dialog-btn-wrapper">
+                <button class="dialog-btn" bindtap="confirmBind">完成绑定</button>
+                <button class="dialog-btn dialog-btn-cancel" bindtap="cancelBind">暂不绑定</button>
+            </view>
         </view>
     </mp-dialog>
 </view>

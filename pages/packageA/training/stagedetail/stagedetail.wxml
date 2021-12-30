@@ -1,22 +1,64 @@
 <!--pages/packageA/training/stagedetail/stagedetail.wxml   阶段详情查看-->
-<view class="container">
-    <view class="stage-title">{{stageName}}</view>
-    <view class="stage-list">
-        <block wx:for="{{list}}" wx:key="index">
-            <view class="stage-detail-title">
-            {{item.name}}
-            </view>
-            <view class="item-detail">
-                <view class="item-detail-item" wx:for="{{item.list}}" wx:for-item="i" wx:key="i">
-                    {{i}}{{item.goal ? ('： ' + item.goal) : ''}}
-                </view>
-            </view>
+<view class="container stage-detail">
+    <!-- <view class="userinfo">
+    <block wx:if="{{userInfo}}">
+        <view class="userinfo-top">
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.headImg ? userInfo.headImg : avatarUrl}}" mode="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.userName}}</text>
         </block>
-        <view class="stage-fct">
-            <view class="stage-fct-item">阶段频率：<text class="text-gray">{{frequency}} 次/周</text></view>
-            <view class="stage-fct-item">阶段周期：<text class="text-gray">{{week}} 周</text></view>
-            <view class="stage-fct-item">所需课时：<text class="text-gray">{{count}} 节</text></view>
-            <view class="stage-fct-item">备注：<text class="text-gray">{{remarks}}</text></view>
+    </view> -->
+    <block wx-if="{{userTrainingPlan.goalsMethod.length}}">
+    <view class="plan-target-title">健身目标</view>
+    <view class="plan-target-list">
+        <view class="plan-target-list-item" wx:for="{{userTrainingPlan.goalsMethod}}" wx:key="index">
+            {{item}}
         </view>
+    </view>
+    </block>
+    <view class="plan-info">
+        <view class="plan-info-item" wx:for="{{infoList}}" wx:key="index">
+            <view>{{item.name}}</view>
+            <view><text class="plan-info-item-v">{{userTrainingPlan[item.id] || '--'}} </text>{{item.unit}}</view>
+        </view>
+    </view>
+       
+    <view class="stage-item" wx:for="{{stageList}}" wx:key="item">
+        <view class="stage-title">{{item.className}}</view>
+        <view class="stage-list">
+            <view wx:for="{{item.classContents}}" wx:for-index="i" wx:for-item="c" wx:key="i" class="stage-list-item">
+            <block wx:if="{{c.options.length}}">
+                <view class="stage-detail-title">
+                {{c.name}}：
+                </view>
+                <view wx:if="{{c.options.length && c.id!=2}}" class="item-detail">
+                    <view class="item-detail-item" wx:for="{{c.options}}" wx:for-item="j" wx:key="j">
+                        {{j.itemName}}
+                    </view>
+                </view>
+                <block wx:else>
+                <view class="stage-detail-target"  wx:for="{{c.options}}" wx:for-item="j" wx:key="j">
+                    <view>{{j.itemName}} </view><view>{{j.itemValue}}</view>
+                </view>
+                </block>
+            </block>
+            </view>
+            <view class="plan-info">
+                <view class="plan-info-item">
+                    阶段频率
+                    <view>
+                        <text class="plan-info-item-v">{{item.stageFrequency || '--'}}</text> 次/周</view>
+                    </view>
+                <view class="plan-info-item">阶段周期
+                    <view>
+                        <text class="plan-info-item-v">{{item.stagePeriod || '--'}}</text> 周</view>
+                    </view>
+                <view class="plan-info-item">所需课时
+                    <view>
+                        <text class="plan-info-item-v">{{item.classNum || '--'}}</text> 节</view>
+                    </view>
+            </view>
+            <view class="stage-remark">备注：<text>{{item.coachRemarks || '无'}}</text></view>
+        </view>
+        教练：{{coachName}}
     </view>
 </view>

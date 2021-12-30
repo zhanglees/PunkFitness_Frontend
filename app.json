@@ -20,7 +20,6 @@
         "inbody/overview/overview",
         "inbody/report/report",
         "training/plan/plan",
-        "training/record/record",
         "training/class/class",  
         "training/classlist/classlist", 
         "training/edit/edit", 

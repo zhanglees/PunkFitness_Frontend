@@ -8,27 +8,27 @@ Page({
         bodyData: [{
             name: '身高',
             unit: 'cm',
-            value: '178',
+            id: 'height',
             status: ''
         }, {
             name: '体重',
             unit: 'kg',
-            value: '51',
+            id: 'weight',
             status: '0'
         }, {
             name: 'BMI',
             unit: '',
-            value: '11',
+            id: 'bmi',
             status: '1'
         }, {
             name: '体脂率',
             unit: '',
-            value: '20',
+            id: 'bodyFatRatio',
             status: '3'
         }, {
             name: '肌肉量',
             unit: 'kg',
-            value: '40',
+            id: 'muscleMass',
             status: '2'
         }],
         statusList: ['理想', '偏低', '标准', '超高', '极高风险'],
@@ -47,14 +47,15 @@ Page({
             checked: false
         }],
         stageColors: ['#F8A803', '#10B89E', '#E95041', '#1093E9', '#EF7710', '#756DFF', '#F5AB13'],
-        stageArr: ['适应期', '进步期', '巩固期', '第4阶段', '第5阶段'],
+        stageArr: ['适应期', '进步期', '巩固期'],
         stageList: [],
         stageItems: ['训练重点', '训练项目', '训练目标'],
         dialogShow: false,
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
         totalPeriod: '',
         frequencies: '',
-        newIndex: ''   //新增的索引
+        newIndex: '',   //新增的索引
+        error: ''
     },
 
     /**
@@ -62,15 +63,47 @@ Page({
      */
     onLoad: function (options) {
         const coachId = wx.getStorageSync('mp-req-user-id');
-        let {userId, newIndex} = options;
+        const userId = options.userId;
+        const trainingPlanId = (options.trainingPlanId=='null') ? null : options.trainingPlanId;
         this.setData({
             userId,
-            newIndex: parseInt(newIndex),
+            trainingPlanId,
             coachId
         })
-        if(newIndex < 3){
+        this.getLastHealthReport(userId, coachId);
+        if(trainingPlanId){
+            this.getStageDetail(userId, trainingPlanId, coachId);
+        }else{
             this.getStageList();
         }
+    },
+    getLastHealthReport(userId, coachId){
+        app.req.api.getLastHealthReport({
+            coachId,
+            userId
+        }).then(res=>{
+            this.setData({
+                bodyDataData: res.data
+            })
+        });
+    },
+    getStageDetail(userId, trainPlainId, coachId){
+        app.req.api.getUserTrainPlainDetail({userId, trainPlainId, coachId}).then(res=>{
+            console.log('详情返回:', res.data)
+            let data = res.data.classInfos;
+            const newIndex = data.length;
+            data = data.filter((i)=>{return (!i.userTrainItem && i.isShow)})
+            data.forEach(stage=>{
+                stage = this.dataFormate(stage);
+            })
+            const userTrainingPlan = res.data.userTrainingPlan;
+            this.setData({
+                stageList: data,
+                newIndex,
+                ...userTrainingPlan,
+                goalsMethod: userTrainingPlan.goalsMethod ? userTrainingPlan.goalsMethod.split(',') : []
+            })
+        })
     },
     getStageList(){
         app.req.api.getTrainClassByCoachId({
@@ -79,39 +112,46 @@ Page({
             console.log('fanhui:', res.data)
             let data = res.data;
             data.forEach(stage=>{
-                let classContents = stage.classContents;
-                let detail = [];
-                classContents.forEach(item=>{
-                    const trainTarg = item.trainTarg;
-                    if(detail[trainTarg]){
-                        detail[item.trainTarg].options.push({
-                            classContentId: item.classContentId,
-                            itemName: item.itemName,
-                            contentItemValue: '',
-                            checked: false
-                        })
-                    }else{
-                        detail[trainTarg] = {
-                            id: trainTarg,
-                            name: this.data.stageItems[trainTarg],
-                            options: [{
-                                classContentId: item.classContentId,
-                                itemName: item.itemName,
-                                contentItemValue: '',
-                                checked: false
-                            }],
-                            addFlag: false
-                        }
-                    }
-                })
-                stage.detail = detail;
+                stage = this.dataFormate(stage);
             })
             this.setData({
                 stageList: data,
-                newIndex: data.length,
-                newFlag: true
+                newIndex: data.length
             })
         })
+    },
+    /****用来处理后端奇葩的数据格式 */
+    dataFormate(stage){
+        let classContents = stage.classContents;
+        let detail = [];
+        classContents.forEach(item=>{
+            const trainTarg = item.trainTarg;
+            if(detail[trainTarg]){
+                detail[item.trainTarg].options.push({
+                    classContentId: item.classContentId,
+                    itemName: item.itemName,
+                    contentItemValue: item.itemValue || '',
+                    checked: item.userChose || false
+                })
+            }else{
+                detail[trainTarg] = {
+                    id: trainTarg,
+                    name: this.data.stageItems[trainTarg],
+                    options: [{
+                        classContentId: item.classContentId,
+                        itemName: item.itemName,
+                        contentItemValue: item.itemValue || '',
+                        checked:  item.userChose || false
+                    }],
+                    addFlag: false
+                }
+            }
+        })
+        stage.detail = detail;
+        if(stage.userTrainItem){
+            stage = {...stage, ...stage.userTrainItem}
+        }
+        return stage;
     },
     /*****健身目标 选择*/
     tapTarget(e){
@@ -251,33 +291,49 @@ Page({
     },
     /***添加阶段 */
     addStage(e){
-        let stageList = this.data.stageList;
         let newIndex = this.data.newIndex;
-        const base = this.data.stageBase;
-        stageList.push({
-            detail: [{
-                id: 0,
-                name: this.data.stageItems[0],
-                options: [{
-                    classContentId: 'item.classContentId',
-                    itemName: 'item.itemName',
-                    contentItemValue: '',
-                    checked: false
-                }],
-                addFlag: false
-            }], 
-            className: `第${++newIndex}阶段`
-        })
+        //先弹个窗输入阶段名
         this.setData({
-            stageList: stageList,
-            newIndex
+            newStageName: `第${newIndex + 1}阶段`,
+            newStageNameShow: true
         })
+    },
+    confirmNewStage(e){
+        if(e.detail.index === 1){
+            let stageList = this.data.stageList;
+            let newIndex = this.data.newIndex;
+            const _this = this;
+            app.req.api.addTrainClass({
+                className: this.data.newStageName,
+                ownerId: this.data.coachId
+            }).then(res=>{
+                console.log(8888, res.data);
+                if(res.code == 0){
+                    let data = res.data;
+                    data = _this.dataFormate(data);
+                    stageList.push(data);
+                    console.log(8888, stageList);
+                    this.setData({
+                        stageList: stageList,
+                        newStageNameShow: false,
+                        newIndex : newIndex++
+                    })
+
+                }
+            })
+        }else{
+            this.setData({
+                newStageNameShow: false
+            })
+
+        }
     },
     /****删除阶段 */
     delStage(e){
-        const {index} = e.currentTarget.dataset;
+        const {index, classid} = e.currentTarget.dataset;
         this.setData({
             delIndex: index,
+            delId: classid,
             dialogShow: true
         })
     },
@@ -286,11 +342,27 @@ Page({
         if(e.detail.index === 1){
             //确定  删除
             const index = this.data.delIndex;
-            let stageList = this.data.stageList;
-            stageList.splice(index, 1);
-            this.setData({
-                stageList: stageList,
-                dialogShow: false
+            app.req.api.deleteCoachTrainClass({
+                classId: this.data.delId,
+                coachId: this.data.coachId
+            }).then(res=>{
+                if(res.code == 0){
+                    wx.showToast({
+                      title: '删除成功',
+                      icon: 'success'
+                    })
+                    let stageList = this.data.stageList;
+                    stageList.splice(index, 1);
+                    this.setData({
+                        stageList: stageList,
+                        dialogShow: false
+                    })
+                }else{
+                    wx.showToast({
+                      title: '稍后重试',
+                      icon: 'error'
+                    })
+                }
             })
         }else{
             this.setData({
@@ -300,10 +372,9 @@ Page({
     },
     /*****修改阶段名称 */
     changeStageTitle(e){
-        const {index} = e.currentTarget.dataset;
         const value = e.detail.value;
         this.setData({
-            [`stageList[${index}].name`]: value
+            newStageName: value
         })
     },
     inputChange(e){
@@ -315,18 +386,19 @@ Page({
     /*****创建训练方案 */
     createPlan(){
         //整理提交数据  跳转回上一页
-        const {coachId, frequencies, totalPeriod, userId, stageList, targetList} = this.data;
-        const userTrainItems = [];
+        const {coachId, frequencies, totalPeriod, userId, stageList, targetList, trainingPlanId} = this.data;
+        let userTrainItems = [];
         let goalsMethod = [];
-        console.log(8888, stageList)
+        let error = [];
         stageList.forEach((stage, i)=>{
             let userTrainplanClassContents = [];
             const {classId, classNum, stageFrequency, stagePeriod, coachRemarks} = stage;
-            stage.detail.forEach(d=>{
+            stage.detail.forEach((d, i)=>{
                 d.options.forEach(item=>{
                     if(item.checked){
                         userTrainplanClassContents.push({
                             ...item,
+                            trainTarg: i,
                             classId
                         })
                     }
@@ -340,25 +412,49 @@ Page({
                 coachRemarks,                                                             
                 userTrainplanClassContents
             })
-        });
-        targetList.forEach(t=>{
-            if(t.checked){
-                goalsMethod.push(t.name);
+            if(!classNum && userTrainplanClassContents.length){
+                error.push(stage.className)
             }
         });
-        app.req.api.createUserTrainPlan({
-            coachId, 
-            frequencies, 
-            totalPeriod, 
-            userId, 
-            goalsMethod: goalsMethod.join(','),           
-            userTrainItems
-        }).then(res=>{
-            console.log('返回：', res.data)
-            wx.navigateBack({
-              delta: 0,
+        if(error.length){
+            this.setData({
+                error: error[0] + '阶段频率与周期必填！'
             })
-        })
+        }else{
+            userTrainItems = userTrainItems.filter(i=>{return !!i.classNum});
+            if(trainingPlanId){
+                app.req.api.createUserTrainClass({
+                    coachId, 
+                    trainingPlanId,
+                    userId,          
+                    userTrainItems
+                }).then(res=>{
+                    console.log('返回：', res.data)
+                    wx.navigateBack({
+                    delta: 0,
+                    })
+                })
+            }else{
+                targetList.forEach(t=>{
+                    if(t.checked){
+                        goalsMethod.push(t.name);
+                    }
+                });
+                app.req.api.createUserTrainPlan({
+                    coachId, 
+                    frequencies, 
+                    totalPeriod, 
+                    userId, 
+                    goalsMethod: goalsMethod.join(','),           
+                    userTrainItems
+                }).then(res=>{
+                    console.log('返回：', res.data)
+                    wx.navigateBack({
+                    delta: 0,
+                    })
+                })
+            }
+        }
     },
     /**
      * Lifecycle function--Called when page is initially rendered

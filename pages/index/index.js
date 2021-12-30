@@ -44,10 +44,9 @@ Page({
   },
   onLoad() {
     // this.comSwiperHeight();
+    wx.stopPullDownRefresh();
     let userId = wx.getStorageSync('mp-req-user-id');
-    this.setData({
-      userId: userId
-    })
+    this.data.userId = userId;
     this.getAllData(0);
     this.getAllData(1);
   },
@@ -175,7 +174,7 @@ Page({
         const data = res.data;
         _this.setData({
           [`memberList[${current}]`]: data,
-          [`nums[${current}]`]: data ? data.length : 0
+          // [`nums[${current}]`]: data ? data.length : 0
         })
       })
     }else{
@@ -196,10 +195,17 @@ Page({
       }).then(res=>{
         let data = res.data;
         console.log('返回：', res);
-        this.setData({
-          [`memberList[0]`]: data.trainners,
-          [`fliterList[${i}]`]: data.trainnerNums
-        });
+        if(data.trainners){
+          this.setData({
+            [`memberList[0]`]: data.trainners,
+            [`fliterList[${i}].num`]: data.trainnerNums
+          });
+        }else{
+          this.setData({
+            [`memberList[0]`]: [],
+            [`fliterList[${i}].num`]: 0
+          });
+        }
       })
     }else{
       //取消选择 展示全量数据
@@ -235,5 +241,16 @@ Page({
     wx.navigateTo({
       url: '/pages/home/addActvity/addActvity'
     })
+  },
+   /**
+  * 页面相关事件处理函数--监听用户下拉动作
+  */
+  onPullDownRefresh: function () {
+    this.setData({
+      fliterChecked: '',
+      showSearchInput: [false, false],
+      searchText: ['', ''],
+    });
+    this.onLoad();
   }
 })

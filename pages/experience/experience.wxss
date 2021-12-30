@@ -58,3 +58,21 @@
 .weui-dialog__ft, .weui-dialog__hd{
   display: none;
 }
+.dialog-btn-wrapper{
+  width: 100%;
+  text-align: center;
+  margin-top: 30rpx;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+.dialog-btn-wrapper .dialog-btn{
+  width: fit-content;
+  background: var(--base);
+  border-radius: 10rpx;
+  display: inline-block;
+  margin: 0 20rpx;
+  color: #fff;    
+}
+.dialog-btn-wrapper .dialog-btn-cancel{
+  background: #d6d6d6;
+}

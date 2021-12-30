@@ -34,7 +34,13 @@
 .coach, .time{
     font-size: 24rpx;
 }
-
+.list .weui-label .item-title{
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    white-space: nowrap;
+    width: 320rpx;
+    overflow: hidden;
+}
 .no-data{
     font-size: 24rpx;
     color: #ddd;

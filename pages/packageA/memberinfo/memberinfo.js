@@ -25,7 +25,7 @@ Page({
       link: '/pages/packageA/inbody/overview/overview?'
     }, {
       name: '体验课教案',
-      link: '/pages/packageA/training/edit/edit?'
+      link: '/pages/packageA/training/edit/edit?type=experience&'
     }, {
       name: '训练规划',
       link: '/pages/packageA/training/classlist/classlist?type=plan&'
@@ -33,7 +33,7 @@ Page({
       name: '训练记录',
       link: '/pages/packageA/training/classlist/classlist?type=record&'
     }],
-    news: {
+    logs: {
       '#2021': {
         '11.02': [{
           date: '11.02',
@@ -124,6 +124,60 @@ Page({
       id: userId
     });
     this.getMemberInfo();
+    this.getUserLog(userId);
+  },
+  getUserLog(userId){
+    app.req.api.getUserLogById({
+      userId
+    }).then(res=>{
+      let data = res.data;
+      data = [{
+        userLogId: "fe8efc0c-ba62-103a-abe9-f8ebb2ba8d93",  
+        createTime: "2021-12-11 00:00:00",                  
+        controllerPath: "训练计划",                                
+        createCoachId: "string",                             
+        userId: "e930ae3a-e64e-47bd-bfe3-07ac06afcb43",      
+        userName: "ddf"                                        
+      }];
+      let temp = {};
+      data.forEach(i=>{
+        const time = i.createTime ? i.createTime.match(/([0-9]+)-([0-9]+-[0-9]+)\s([0-9]+:[0,9]+)/) : [];
+        if(time.length > 3){
+          console.log('time:', time)
+          const year = time[1], date = time[2], t = time[3];
+          if(temp[year]){
+            let d = temp[year];
+            if(d[date]){
+              d[date].push({
+                date,
+                time: t,
+                content: i.controllerPath,
+                coach: i.userName
+              })
+            }else{
+              d[date] = [{
+                date,
+                time: t,
+                content: i.controllerPath,
+                coach: i.userName
+              }];
+            }
+          }else{
+            temp[year] = {
+              [`${date}`]: [{
+                date,
+                time: t,
+                content: i.controllerPath,
+                coach: i.userName
+              }]
+            }
+          }
+        }
+        this.setData({
+          logs: temp
+        })
+      })
+    })
   },
   getMemberInfo(){
     app.req.api.getUserById({id: this.data.id}).then(res => {

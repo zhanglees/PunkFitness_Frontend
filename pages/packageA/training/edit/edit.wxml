@@ -1,13 +1,13 @@
 <!--pages/packageA/training/edit/edit.wxml 编辑具体课程-->
 <view class="container">
     <view class="page-title">
-        {{id ? (id + '. ') : '私教体验课'}}
+        {{(type!='experience') ? (showOrder + '. ') : '私教体验课'}}
         <block wx:if="{{!editFlag}}">
-            {{id ? (name || '') : ''}}
+            {{(type!='experience') ? (sectionName || '') : ''}}
             <view class="save-btn add-one-btn" bindtap="edit">编辑</view>
         </block>
         <block wx:else>
-            <input wx:if="{{id}}" bindinput="inputNameChange" data-name="name" class="weui-input" placeholder="请输入课程名称" value="{{name}}"/>
+            <input wx:if="{{type!='experience'}}" bindinput="inputNameChange" data-name="sectionName" class="weui-input" placeholder="请输入课程名称" value="{{sectionName}}"/>
             <view class="save-btn add-one-btn" bindtap="saveList">保存</view>
         </block>
     </view>
@@ -19,43 +19,43 @@
                     <block wx:if="{{!editFlag}}">
                     <!--预览状态-->
                     <mp-cell wx:for="{{items}}" wx:key="index" wx:for-item="ia" title="{{ia.name}}" footer="{{action[ia.id]}}"></mp-cell>
-                    <view class="user-video-wrapper video-wrapper" wx:if="{{action.video}}">
-                        <video class="user-video" src="{{action.video}}"></video>
+                    <view class="user-video-wrapper video-wrapper" wx:if="{{action.video || action.videourl}}">
+                        <video class="user-video" bindtap="previewVideo" data-src="{{action.video || action.videourl}}" src="{{action.video || action.videourl}}"></video>
                     </view>
                     </block>
                     <block wx:else>
                     <!--编辑状态-->
                     <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                         <view slot="title" class="weui-label">训练部位</view>
-                        <picker class="physical-item-input" bindchange="bindSelChangeEdit" data-name="part" data-index="{{index}}" data-i="{{i}}" value="{{action.partIndex}}" range="{{trainingPart}}" range-key="name">
-                            <view class="weui-select">{{trainingPart[action.partIndex].name}}</view>
+                        <picker class="physical-item-input" bindchange="bindSelChangeEdit" data-name="trainingArea" data-index="{{index}}" data-i="{{i}}" value="{{action.trainingArea}}" range="{{trainingPart}}" range-key="name">
+                            <view class="weui-select">{{trainingPart[action.trainingArea].name}}</view>
                         </picker>
                     </mp-cell>
                     <view>
                         <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                             <view slot="title" class="weui-label">动作</view>
-                            <picker class="physical-item-input" bindchange="bindSelChangeEdit" data-i="{{i}}" data-name="action" data-index="{{index}}" value="{{action.actionIndex}}" range="{{trainingPart[action.partIndex].actionList}}" disabled="{{!action.part}}">
-                                <view class="weui-select">{{trainingPart[action.partIndex].actionList[action.actionIndex]}}</view>
+                            <picker class="physical-item-input" bindchange="bindSelChangeEdit" data-i="{{i}}" data-name="action" data-index="{{index}}" value="{{action.action}}" range="{{trainingPart[action.trainingArea].actionList}}" disabled="{{!action.trainingArea}}">
+                                <view class="weui-select">{{trainingPart[action.trainingArea].actionList[action.action]}}</view>
                             </picker>
                         </mp-cell>
                         <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                             <view slot="title" class="weui-label">器械</view>
-                            <picker class="physical-item-input" bindchange="bindSelChangeEdit" data-i="{{i}}" data-name="equipment" data-index="{{index}}" value="{{action.equipmentIndex}}" range="{{equipment}}">
-                                <view class="weui-select">{{equipment[action.equipmentIndex]}}</view>
+                            <picker class="physical-item-input" bindchange="bindSelChangeEdit" data-i="{{i}}" data-name="equipment" data-index="{{index}}" value="{{action.equipment}}" range="{{equipment}}">
+                                <view class="weui-select">{{equipment[action.equipment]}}</view>
                             </picker>
                         </mp-cell>    
-                        <mp-cell prop="ounterweight" title="配重">
-                            <input bindinput="inputChangeEdit" data-i="{{i}}" data-index="{{index}}" data-name="ounterweight" class="weui-input" placeholder="" value="{{action.ounterweight}}" />
+                        <mp-cell prop="counterWeight" title="配重">
+                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="counterWeight" class="weui-input" placeholder="" value="{{action.counterWeight}}" />
                         </mp-cell>    
-                        <mp-cell prop="times" title="单组次数">
-                            <input bindinput="inputChangeEdit" data-i="{{i}}" data-index="{{index}}" data-name="times" class="weui-input" placeholder="" value="{{action.times}}"/>
+                        <mp-cell prop="numberSinglegroup" title="单组次数">
+                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input" placeholder="" value="{{action.numberSinglegroup}}"/>
                         </mp-cell>    
                         <mp-cell prop="groups" title="组数">
-                            <input bindinput="inputChangeEdit" data-i="{{i}}" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{action.groups}}"/>
+                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{action.groups}}"/>
                         </mp-cell>
                     </view>
-                    <view class="user-video-wrapper video-wrapper" wx:if="{{action.video}}">
-                        <video class="user-video" src="{{action.video}}"></video>
+                    <view class="user-video-wrapper video-wrapper" wx:if="{{action.video || action.videourl}}">
+                        <video class="user-video" bindtap="previewVideo" data-src="{{action.video || action.videourl}}" src="{{action.video || action.videourl}}"></video>
                         <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="{{i}}">
                             <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
                         </view>
@@ -68,7 +68,7 @@
                     </view>
                     <view class="edit-one">
                         <!-- <view class="add-one-btn add-one-btn-edit" bindtap="editOne" data-index="{{index}}" data-a="{{i}}">编辑</view> -->
-                        <view class="add-one-btn add-one-btn-del" bindtap="delOne" data-index="{{index}}" data-a="{{i}}">删除</view>
+                        <view class="add-one-btn add-one-btn-del" bindtap="delOne" data-index="{{index}}" data-a="{{i}}" data-sectiondetailid="{{action.sectionDetailId}}">删除</view>
                     </view>
                     </block>
                 </view>
@@ -77,34 +77,46 @@
             <view wx:if="{{item.showAdd}}" class="add-one">    
                 <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                     <view slot="title" class="weui-label">训练部位</view>
-                    <picker class="physical-item-input" bindchange="bindSelChange" data-name="part" data-index="{{index}}" value="{{item.detail.partIndex}}" range="{{trainingPart}}" range-key="name">
-                        <view class="weui-select">{{trainingPart[item.detail.partIndex].name}}</view>
+                    <picker class="physical-item-input" bindchange="bindSelChange" data-name="trainingArea" data-index="{{index}}" value="{{item.detail.trainingArea}}" range="{{trainingPart}}" range-key="name">
+                        <view class="weui-select">{{trainingPart[item.detail.trainingArea].name}}</view>
                     </picker>
                 </mp-cell>
                 <view>
                     <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                         <view slot="title" class="weui-label">动作</view>
-                        <picker class="physical-item-input" bindchange="bindSelChange" data-name="action" data-index="{{index}}" value="{{item.detail.actionIndex}}" range="{{trainingPart[item.detail.partIndex].actionList}}" disabled="{{!item.detail.part}}">
-                            <view class="weui-select">{{trainingPart[item.detail.partIndex].actionList[item.detail.actionIndex]}}</view>
+                        <picker class="physical-item-input" bindchange="bindSelChange" data-name="action" data-index="{{index}}" value="{{item.detail.action}}" range="{{trainingPart[item.detail.trainingArea].actionList}}" disabled="{{!item.detail.trainingArea}}">
+                            <view class="weui-select">{{trainingPart[item.detail.trainingArea].actionList[item.detail.action]}}</view>
                         </picker>
                     </mp-cell>
                     <mp-cell ext-class="weui-cell_select weui-cell_select-after">
                         <view slot="title" class="weui-label">器械</view>
-                        <picker class="physical-item-input" bindchange="bindSelChange" data-name="equipment" data-index="{{index}}" value="{{item.detail.equipmentIndex}}" range="{{equipment}}">
-                            <view class="weui-select">{{equipment[item.detail.equipmentIndex]}}</view>
+                        <picker class="physical-item-input" bindchange="bindSelChange" data-name="equipment" data-index="{{index}}" value="{{item.detail.equipmentName}}" range="{{equipment}}">
+                            <view class="weui-select">{{equipment[item.detail.equipment]}}</view>
                         </picker>
                     </mp-cell>    
-                    <mp-cell prop="ounterweight" title="配重">
-                        <input bindinput="inputChange" data-index="{{index}}" data-name="ounterweight" class="weui-input" placeholder="" value="{{item.detail.ounterweight}}" />
+                    <mp-cell prop="counterWeight" title="配重">
+                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="counterWeight" class="weui-input" placeholder="" value="{{item.detail.counterWeight}}" />
                     </mp-cell>    
-                    <mp-cell prop="times" title="单组次数">
-                        <input bindinput="inputChange" data-index="{{index}}" data-name="times" class="weui-input" placeholder="" value="{{item.detail.times}}"/>
+                    <mp-cell prop="numberSinglegroup" title="单组次数">
+                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input" placeholder="" value="{{item.detail.numberSinglegroup}}"/>
                     </mp-cell>    
                     <mp-cell prop="groups" title="组数">
-                        <input bindinput="inputChange" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{item.detail.groups}}"/>
+                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{item.detail.groups}}"/>
                     </mp-cell>
+                    <view class="user-video-wrapper video-wrapper" wx:if="{{item.detail.video}}">
+                        <video class="user-video" bindtap="previewVideo" data-src="{{item.detail.video}}" src="{{item.detail.video}}"></video>
+                        <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="detail">
+                            <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
+                        </view>
+                    </view>
+                    <view class="eva-camera-wrapper video-wrapper" wx:else>
+                        <view class="eva-camera" bindtap="startVideo" data-index="{{index}}" data-i="detail">
+                            <mp-icon type="field" icon="video-call" color="gray" size="{{20}}"></mp-icon>
+                            <view>添加训练视频</view>
+                        </view>
+                    </view>
                     <view class="add-one-bottom">
-                        <view class="add-one-btn" bindtap="saveOne" data-index="{{index}}">保存</view>
+                        <view class="add-one-btn" bindtap="saveOne" data-index="{{index}}">{{type=='edit' ? '保存' : '确定'}}</view>
                         <view class="add-one-btn add-one-btn-cancel" bindtap="cancelOne" data-index="{{index}}">取消</view>
                     </view>
                 </view>

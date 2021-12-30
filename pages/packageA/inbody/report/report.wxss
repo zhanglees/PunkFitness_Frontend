@@ -180,9 +180,13 @@
       width: 300rpx;
       height: 100rpx;
   }
+  .report-res .img-list{
+    justify-content: flex-start;
+  }
   .report-res .img-item{
     height: 160rpx;
     line-height: 28rpx;
+    margin-right: 20rpx;
   }
   .detail-res{
       border-radius: 20rpx;

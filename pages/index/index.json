@@ -3,5 +3,7 @@
     "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
     "experience": "../experience/experience",
     "mp-cell": "weui-miniprogram/cell/cell"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

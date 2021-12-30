@@ -29,7 +29,7 @@ Page({
             coachId,
             type: type
         })
-        this.getStageList();
+        // this.getStageList();
     },
     getStageList(){
         const { userId, coachId } = this.data;
@@ -41,6 +41,7 @@ Page({
             console.log('fanhui list:', res.data);
             let stageList = res.data.userTrainItems;
             this.setData({
+                trainingPlanId: res.data.trainingPlanId,
                 list: stageList
             });
         })
@@ -48,23 +49,29 @@ Page({
     /****添加训练计划 */
     addBtn(e){
         wx.navigateTo({
-          url: '/pages/packageA/training/plan/plan?userId=' + this.data.userId + '&newIndex=' + (this.data.list ? this.data.list.length : 0),
+          url: '/pages/packageA/training/plan/plan?userId=' + this.data.userId + '&trainingPlanId=' + this.data.trainingPlanId,
         })
     },
     /***查看该阶段课程列表 */
-    goClass(e){
-        const {index} = e.currentTarget.dataset;
+    gotoDetail(e){
+        const {index, trainingplanid, classid, coachname, usertrainitemid, classnum} = e.currentTarget.dataset;
+        const url = '/pages/packageA/training/' + (this.data.type == 'plan' ? ('stagedetail/stagedetail?') : ('class/class?userTrainitemId=' + usertrainitemid + '&classNum=' + classnum)) + '&trainingPlanId='  + trainingplanid + '&userId=' + this.data.userId + '&classId=' + classid + '&coachName=' + coachname;
+        //查详情的接口需要传大量的参数，所以先存起来吧
+        // wx.setStorage({
+        //   key: "stageDetail",
+        //   data: this.data.list[index]
+        // });
         wx.navigateTo({
-          url: '/pages/packageA/training/class/class?id=' + index //这边应该传一个id过去
+          url        
         })
     },
     slideButtonTap(e) {
-        const {index, id} = e.currentTarget.dataset;
+        const {index, usertrainitemid} = e.currentTarget.dataset;
         //删除
         this.setData({
             dialogShow: true,
             dialogIndex: index,
-            delId: id
+            delId: usertrainitemid
         })
     },
 /***删除一条阶段 */

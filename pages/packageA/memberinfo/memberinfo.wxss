@@ -91,7 +91,7 @@
   margin-top: 20rpx;
 }
 
-.userserver, .usernews{
+.userserver, .userlogs{
   background: #fff;
   margin-top: 30rpx;
   width: 100%;
@@ -119,10 +119,10 @@
   min-width: 20%;
   text-align: center;
 }
-.usernews-view{
+.userlogs-view{
   margin-bottom: 20rpx;
 }
-.usernews-title{
+.userlogs-title{
   color: var(--base);
   line-height: 2;
 }

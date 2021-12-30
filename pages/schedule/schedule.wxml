@@ -2,29 +2,35 @@
 <view class="container">
     <view class="top-layout">
         <view class="top-title">课程预约列表</view>
-        <calendarWeek bindmydata="mydata"></calendarWeek> 
+        <calendarWeek bindmydata="mydata" id="myCalendar" selDate="{{selDate}}"></calendarWeek> 
     </view>
     <view class="training-list">
         <view wx:for="{{list}}" wx:key="index" class="training-item">
             <view class="training-name">{{item.userName || '--'}}</view>
             <view class="training-item-b">
-                <view class="training-time">{{item.time}}</view>
+                <view class="training-time">{{item.appointmentTime}}</view>
                 <view>
-                    <view wx:if="{{item.status}}" class="status checkin-btn" bindtap="checkin">签课</view>
-                    <view wx:if="{{item.status}}" class="status checkin-btn" bindtap="checkin">取消预约</view>
+                    <block wx:if="{{!item.isComplete}}">
+                    <view class="status checkin-btn" bindtap="checkin" data-appointmentid="{{item.appointmentId}}" data-trainingplanid="{{item.currentCoachTrainPlainId}}" data-userid="{{item.userId}}">签课</view>
+                    <view class="status checkin-btn" bindtap="cancel">取消预约</view>
+                    </block>
                     <view wx:else class="status have-done">已签课</view>
                 </view>
             </view>
         </view>
+        <view wx:if="{{!list.length}}" class="no-data">暂无预约~</view>
     </view>
     <view class="btn-wrapper">
         <view class="btn-gradient" bindtap="goReserve">预约</view>
     </view>
     <mp-dialog title="签课" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}" data-index="{{index}}">
-        <picker-view indicator-style="height: 50rpx;" class="dialog-picker" value="{{checkClass}}" bindchange="bindClassChange">
-            <picker-view-column>
-                <view wx:for="{{classList}}" wx:key="index" class="dialog-picker-item"> {{item.index}}. {{item.title}}</view>
+        <picker-view wx:if="{{classList.length}}" indicator-style="height: 50rpx;" class="dialog-picker" value="{{checkClass}}" bindchange="bindClassChange">
+            <picker-view-column value="{{item.index}}">
+                <view wx:for="{{classList}}" wx:key="index" class="dialog-picker-item"> {{item.showOrder ? (item.showOrder + '.') : ''}} {{item.sectionName}}</view>
             </picker-view-column>
         </picker-view>
+        <view wx:else class="no-data">
+            暂无可签课程，请前往课程计划编辑
+        </view>
     </mp-dialog>
 </view>

@@ -5,10 +5,10 @@ const api = require('./api.js');
 const apiUrlTable = {
   local: 'http://182.92.189.147:443',
   dev: 'http://182.92.189.147:8023',
-  pre: 'https://localhost:8080',
-  release: 'https://localhost:8080',
+  pre: 'https://zhangleixd.com',
+  release: 'https://zhangleixd.com',
 };
-const baseUrl = apiUrlTable.dev;
+const baseUrl = apiUrlTable.pre;
 const apiUrl = baseUrl + '/api';
 /**
  * code换取sessionId

@@ -119,7 +119,6 @@ function login() {
               const newUserId = r2.userId;
               sessionId = newSessionId; // 更新sessionId
               userId = newUserId;
-              console.log(9999999999999, userId)
               // 保存sessionId
               wx.setStorage({
                 key: sessionStorageKey,

@@ -1,12 +1,90 @@
 /* pages/packageA/training/stagedetail/stagedetail.wxss */
-
-.stage-detail-title{
+.stage-detail{
+    background: #4b515f;
+    min-height: 100vh;
+    display: block;
+    padding-top: 40rpx;
+}
+.plan-target-title{
+    color: #fff;
+    text-align: center;
+    font-size: 32rpx;
+    width: 100%;
+}
+.plan-target-list{
+    text-align: center;
+    color: #838790;
+    flex-wrap: nowrap;
+    margin: 20rpx 0 40rpx;
+}
+.plan-target-list-item{
+    width: fit-content;
+    padding: 0 20rpx;
+    background: var(--base);
+    border-radius: 24rpx;
+    height: 48rpx;
+    line-height: 48rpx;
+    color: #fff;
+    margin-right: 20rpx;
+    display: inline-block;
+}
+.plan-info{
+    width: 100%;
+    text-align: center;
+}
+.plan-info-item{
+    display: inline-block;
+    color: #838790;
+    box-sizing: border-box;
+    width: 33%;
+    position: relative;
+}
+.plan-info .plan-info-item:not(:last-child)::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1px;
+    background: #999;
+    height: 50rpx;
+    top: 20rpx;
+}
+.plan-info-item-v{
+    color: #fff;
+}
+.stage-item{
+    background: #414551;
+    color: #fff;
+    padding: 0 20rpx 20rpx;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 40rpx auto;
+}
+.stage-item-detail-title{
     padding-left: 20rpx;
     position: relative;
     height: 60rpx;
     line-height: 60rpx;
     font-weight: bold;
-    margin: 30rpx 0 0 0;
+}
+.stage-item-detail-title::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    background: #008CE9;
+    width: 2px;
+    border-radius: 2px;
+    top: 18rpx;
+    height: 24rpx;
+}
+.stage-list-item{
+    margin-bottom: 20rpx;
+}
+.stage-detail-title{
+    padding-left: 20rpx;
+    position: relative;
+    height: 60rpx;
+    line-height: 60rpx;
+    display: inline-block;
 }
 .stage-detail-title::after{
     content: '';
@@ -18,18 +96,20 @@
     top: 18rpx;
     height: 24rpx;
 }
-.item-detail-item{
-    padding: 0 20rpx;
-    background: #eee;
-    border-radius: 4px;
+.item-detail{
     display: inline-block;
-    margin-right: 20rpx;
-    color: #515151;
+}
+.item-detail-item{
+    /* padding: 0 20rpx; */
+    /* border-radius: 4px; */
+    display: inline-block;
+}
+.item-detail .item-detail-item:not(:last-child)::after{
+    content: '、';
 }
 .stage-title{
     width: 100%;
     box-sizing: border-box;
-    background: #D4EDF9;
     height: 80rpx;
     line-height: 80rpx;
     padding: 0 40rpx 0 60rpx;
@@ -52,15 +132,14 @@
     box-sizing: border-box;
     padding: 0 20rpx 20rpx;
 }
-.stage-fct{
-    margin-top: 40rpx;
-}
-.stage-fct-item{
-    background: #F1F1F1;
-    line-height: 60rpx;
-    padding-left: 20rpx;
+.stage-remark{
     margin: 20rpx 0;
+    border-top: 1px solid #999;
+    padding: 20rpx;
 }
-.text-gray{
-    color: #515151;
+.stage-detail-target{
+    background: #393d48;
+    padding: 20rpx;
+    display: flex;
+    justify-content: space-between;
 }

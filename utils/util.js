@@ -23,6 +23,7 @@ const formatDate = date => {
     return '';
   }
 }
+
 module.exports = {
   formatTime,
   formatDate

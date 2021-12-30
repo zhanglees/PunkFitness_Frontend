@@ -1,4 +1,5 @@
 // pages/packageA/training/class/class.js
+const app = getApp()
 Page({
 
     /**
@@ -10,8 +11,7 @@ Page({
         classes: [],
         count: '',
         slideButtons: [[{
-            text: '复制',
-            extClass: 'test',
+            text: '粘贴',
             src: '' // icon的路径
         }, {
             type: 'warn',
@@ -19,7 +19,8 @@ Page({
             extClass: 'test',
             src: ''// icon的路径
         }], [{
-            text: '粘贴',
+            text: '复制',
+            extClass: 'test',
             src: '' // icon的路径
         }, {
             type: 'warn',
@@ -37,12 +38,48 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const id = options.id;
+        const { userId, userTrainitemId, trainingPlanId, classId, classNum, coachName } = options;
+        const coachId = wx.getStorageSync('mp-req-user-id');
         this.setData({
-            id: id
+            coachId,
+            userId, 
+            classId,
+            userTrainitemId, 
+            trainingPlanId,
+            classNum,
+            coachName
         })
+        // this.getClasses();
     },
 
+    getClasses(){
+        const {userId, userTrainitemId, trainingPlanId, classId, coachId, classNum} = this.data;
+        app.req.api.getUserClassSection({
+            classId,                         
+            trainingPlanId,                   
+            userId,                              
+            userTrainitemId,                     
+            coachId
+        }).then(res=>{
+            const data = res.data;
+            let classList = new Array(parseInt(classNum)).fill({status: 0});
+            // console.log(9999, classList)
+            let classes = [];
+            data.forEach((i, k) => {
+                i.status = i.usertrainSectionId ? (i.completeTime ? 2 : 1) : 0;
+                classList[i.showOrder - 1] = i;
+            });
+            this.setData({
+                classes: classList
+            })
+        })
+        // this.setData({
+        //     name: '适应期',
+        //     coach: '王建祥',
+        //     count: count,
+        //     classes: classList
+        // })
+    },
     slideButtonTap(e) {
         const {type, index} = e.currentTarget.dataset;
         if(e.detail.index === 1){
@@ -53,7 +90,7 @@ Page({
             })
         }else{
             //复制 or 粘贴
-            if(type === 0){
+            if(type != 0){
                 //复制
                 const item = this.data.classes[index];
                 this.setData({
@@ -67,11 +104,27 @@ Page({
                   
             }else if(this.data.copyItem){
                 //粘贴
-                let cItem = this.data.copyItem;
-                cItem = {...cItem, status: 1, time: ''};
-                console.log('slide button tap', cItem)
-                this.setData({
-                    [`classes[${index}]`]: cItem
+                const {coachId, userId, trainingPlanId, userTrainitemId, copyItem} = this.data;
+                console.log(999999, copyItem);
+                // cItem = {...cItem, status: 1, time: ''};
+                app.req.api.copyUserClassSection({
+                    coachId,
+                    sectionName: copyItem.sectionName,                            
+                    showOrder: index+1,                                          
+                    trainingPlanId,           
+                    userId,                
+                    userTrainitemId,       
+                    usertrainSectionId: copyItem.usertrainSectionId
+                }).then(res=>{
+                    if(res.code == 0){
+                        console.log('slide button tap', res.data)
+                        this.setData({
+                            [`classes[${index}]`]: {
+                                ...res.data,
+                                status: 1
+                            }
+                        })
+                    }
                 })
             }else{  
                 wx.showModal({
@@ -86,17 +139,46 @@ Page({
     tapDialogButton(e) {
         if(e.detail.index === 1){
             //删除
+            const {coachId, userId} = this.data;
             let classes = this.data.classes;
             const index = this.data.dialogIndex;
-            classes.splice(index, 1);
-            classes.push({});
-            this.setData({
-                classes: classes,
-                dialogIndex: ''
+            app.req.api.deleteUserClassSection({
+                coachId, 
+                userId, 
+                usertrainSectionId: classes[index].usertrainSectionId,
+                sectionName: classes[index].sectionName
+            }).then(res=>{
+                console.log('shanchu:', res.data)
+                if(res.code == 0){
+                    classes.splice(index, 1);
+                    classes.push({});
+                    this.setData({
+                        classes: classes,
+                        dialogIndex: ''
+                    })
+                }
             })
         }
         this.setData({
             dialogShow: false
+        })
+    },
+    gotoDetail(e){
+        const {index} = e.currentTarget.dataset;
+        const classItem = this.data.classes[index];
+        const {userId, trainingPlanId, userTrainitemId} = this.data;
+        const {status} = classItem;
+        let url = '/pages/packageA/training/edit/edit?';
+        if(status){
+            //已编辑 查详情
+            const {coachId, usertrainSectionId, sectionName} = classItem;
+            url += ('type=edit&showOrder=' + (index+1) + '&coachId=' + coachId + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId);
+        }else{
+            //去新建
+            url += ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId);
+        }
+        wx.navigateTo({
+          url,
         })
     },
     /**
@@ -104,34 +186,11 @@ Page({
      */
     onReady: function () {
     },
-
     /**
      * Lifecycle function--Called when page show
      */
     onShow: function () {
-        const id = this.data.id;
-        const stage = wx.getStorageSync('stageList')[id];
-        const classes = wx.getStorageSync('classee');
-        const count = stage.classes;
-        console.log('getStorageSync', classes)
-        let classList = new Array(count).fill({});
-        classList.map((i, k) => {
-            if(classes[k]){
-                classList[k] = classes[k];
-                classList[k].status = 1;  //已编辑 未完成
-            }
-        });
-        this.setData({
-            name: stage.name,
-            coach: '王建祥',
-            count: count,
-            classes: classList
-        })
-        // this.setData({
-        //     [`classes[${0}]`]: {name:'第一节课', status: 1},
-        //     [`classes[${1}]`]: {name:'第2节课', status: 2, time: '2021/11/11'}
-        // });
-
+        this.getClasses();
     },
 
     /**

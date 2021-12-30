@@ -41,3 +41,10 @@
 .class-item-right .arrow-icon{
     margin-left: 20rpx;
 }
+.class-list .weui-label{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    width: 300rpx;
+}

@@ -161,6 +161,13 @@
     line-height: 80rpx;
     display: inline-block;
 }
+.stage-title-text{    
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 400rpx;
+    word-break: keep-all;
+    white-space: nowrap;
+}
 .stage-title-del{
     color: red;
     font-size: 24rpx;
@@ -170,6 +177,7 @@
     padding: 0 10rpx;
     height: 40rpx;
     border-radius: 10rpx;
+    float: right;
 }
 .stage-title .arrow-icon .weui-icon{
     transform: rotate(90deg);
@@ -323,4 +331,9 @@
     box-sizing: border-box;
     height: 80rpx;
     line-height: 80rpx;
+  }
+  .new-stage-name-input{
+    display: block;
+    margin-top: 20rpx;
+    border-bottom: 1px solid #999;
   }

@@ -4,19 +4,19 @@
     <view class='top_layout'>
         <view class="top-say-sth">添加训练计划，可以更好的定制您的训练</view>
         <view bindtap="addBtn" class="add-plan-btn">
-            + 添加训练规划
+            添加训练规划
         </view>
     </view>
     <view class="list">
         <block wx:if="{{list.length}}">
-        <mp-slideview wx:for="{{list}}" wx:key="index" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" data-id="{{item.userTrainitemId}}" data-index="{{index}}">
-            <mp-cell link url="{{(type == 'plan' ? '/pages/packageA/training/stagedetail/stagedetail?id=' : '/pages/packageA/training/class/class?id=') + index}}" class="item">
+        <mp-slideview wx:for="{{list}}" wx:key="index" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" data-usertrainitemid="{{item.userTrainitemId}}" data-index="{{index}}"  data-trainingplanid="{{item.trainingPlanId}}">
+            <mp-cell link bindtap="gotoDetail" data-usertrainitemid="{{item.userTrainitemId}}" data-index="{{index}}"  data-trainingplanid="{{item.trainingPlanId}}" data-classid="{{item.classId}}" data-coachname="{{item.coachName}}" data-classnum="{{item.classNum}}" class="item">
                 <view slot="title" class="weui-label">
                     <view class="item-title">
                         {{item.className}}
                     </view>
                     <view class="count">
-                        <block wx:if="{{item.classes}}">
+                        <block wx:if="{{item.classNum}}">
                             {{item.completeSections || 0}}/{{item.classNum}}
                         </block>
                         <block wx:else>

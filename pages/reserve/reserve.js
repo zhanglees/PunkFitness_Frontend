@@ -20,6 +20,8 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
+        const coachId = wx.getStorageSync('mp-req-user-id');
+        this.data.coachId = coachId;
 
     },
 /***检索用户 */
@@ -29,11 +31,10 @@ formInputChange(e){
     //请求检索接口
     app.req.api.searchMember({
         "coachId": userId,
-        "condition": value,
-        // "trainerType": current
+        "condition": value
     }).then(res=>{
         const result = res.data;
-        _this.setData({
+        this.setData({
             result: result,
             showResult: true
         })
@@ -101,24 +102,29 @@ goReserve(e, flag){
             showDialog: true
         })
     }else{
-        console.log(88866688)
         const data = {
             userId: this.data.userId,
-            appointmentTime: new Date(this.data.time).getTime()
+            appointmentTime: new Date(this.data.time.replace(/\.|\-/g, '/')).getTime(),
+            coachId: this.data.coachId 
         };
         app.req.api.appointment(data).then(res=>{
-            if(res.data){
+            if(res.code == 0){
+                //确认预约成功后返回前一页
+                // let pages = getCurrentPages(); 
+                // let prevPage = pages[ pages.length - 2 ];
+                // prevPage.setData({
+                //     selDate: this.data.time
+                // });
                 wx.showToast({
                     title: '预约成功',
                     duration: 2000
                 });
-                //确认预约成功后返回前一页
                 wx.navigateBack({
                     delta: 0
                 })
             }else{
                 wx.showToast({
-                    title: '请稍后重试',
+                    title: res.message,
                     icon: 'error',
                     duration: 2000
                 });

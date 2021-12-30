@@ -34,6 +34,7 @@ page{
     width: 100%;
     box-sizing: border-box;
     margin-top: 100rpx;
+    margin-bottom: 60rpx;
 }
 .training-item{
     background: #fff;
@@ -91,7 +92,7 @@ page{
     width: 210rpx;
 }
 .add-one-bottom{
-    display: flex;
+    text-align: right;
     justify-content: space-around;
     padding-bottom: 20rpx;
 }
@@ -102,10 +103,12 @@ page{
     line-height: 40rpx;
     color: #86C4EC;
     padding: 0 20rpx;
+    display: inline-block;
 }
 .add-one-btn-cancel{
     color: gray;
     border-color: gray;
+    margin-left: 20rpx;
 }
 .edit-one{
     text-align: right;
