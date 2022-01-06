@@ -67,14 +67,15 @@ checkbox .wx-checkbox-input {
   border-radius: 50%;
   background: #999;
   position: absolute;
-  right: 5%;
-  top: 5%;
-  height: 20rpx;
-  width: 20rpx;
+  right: -14rpx;
+  top: -11rpx;
+  height: 40rpx;
+  width: 40rpx;
+  text-align: center;
 }
 .del-act-btn .weui-icon{
-  height: 10rpx;
-  width: 10rpx;
+  height: 20rpx;
+  width: 20rpx;
   vertical-align: top;
 }
 .border-gradient{

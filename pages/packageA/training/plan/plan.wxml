@@ -47,14 +47,14 @@
         </view>
         <view class="stage-list">
             <view class="stage-item" wx:for="{{stageList}}" wx:key="index">
-                <view class="stage-title {{item.exp ? 'stage-title-act' : ''}}">
+                <view class="stage-title {{item.exp ? 'stage-title-act' : ''}}" bindtap="expDetail" data-index="{{index}}">
                     <text class="stage-title-block" style="background-color: {{stageColors[index%6]}};"></text>
                     <text bindtap="changeName" class="stage-title-text" data-index="{{index}}">{{item.className}}</text>
                     <!-- <block wx:else> -->
                         <!-- <input bindchange="changeStageTitle" data-index="{{index}}" class="stage-title-input" value="{{item.className}}" /> -->
                         <view wx:if="{{index > 2}}" class="stage-title-del" bindtap="delStage" data-index="{{index}}" data-classid="{{item.classId}}">删除</view>
                     <!-- </block> -->
-                    <mp-icon bindtap="expDetail" data-index="{{index}}" class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
+                    <mp-icon class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
                 </view>
                 <view class="stage-detail {{item.exp ? 'stage-detail-exp' : ''}}" id="stage{{index}}">
                     <block wx:for="{{item.detail}}" wx:for-item="dItem" wx:for-index="dIndex" wx:key="dIndex">
@@ -73,8 +73,9 @@
                         <block wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" >
                         <view wx:if="{{option.checked}}" class="stage-target-item">
                             {{option.itemName}}
-                            <input bindchange="targetValue" type="number" class="weui-input" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" value="{{option.contentItemValue}}" placeholder="" />
-                            <text class="target-unit">{{['kg', '%', 'kg'][i]}}</text>
+                            <!-- <input bindchange="targetValue" type="number" class="weui-input" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" value="{{option.contentItemValue}}" placeholder="" /> -->
+                            <slider class="stage-target-item-slider" bindchange="targetValue" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" activeColor="#4182E9" value="{{option.contentItemValue}}" block-size="12" show-value min="{{i==2 ? 0 : -50}}" max="{{i==1 ? 0 : 50}}" step="0.5" />
+                            <text class="target-unit">{{['kg', ' %', 'kg'][i]}}</text>
                         </view>
                         </block>
                     </view>

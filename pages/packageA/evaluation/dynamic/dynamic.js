@@ -90,7 +90,7 @@ Page({
             assessmentName: i.assessmentName
           });
           i.coachRemark && (remark[j] = i.coachRemark);
-          i.currentUserResource && (userVideo[j] = [i.currentUserResource.resourceUrl]);
+          i.currentUserResource && (userVideo[j] = ['https://'+i.currentUserResource.resourceUrl]);
           i.feedbacks.forEach(feedback => {
             feedback.checked = true;
           });

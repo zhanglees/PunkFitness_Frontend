@@ -21,6 +21,7 @@
         "inbody/report/report",
         "training/plan/plan",
         "training/class/class",  
+        "training/experience/experience",
         "training/classlist/classlist", 
         "training/edit/edit", 
         "training/stagedetail/stagedetail"

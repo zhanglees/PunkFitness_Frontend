@@ -239,7 +239,10 @@
 .stage-detail-list .weui-input{
     border-bottom: 1px solid #ddd;
 }
-
+.stage-target-item-slider{
+    width: 100%;
+    margin: 0 20rpx 0 10rpx;
+}
 .stage-fct-list{
     background: #F1F1F1;
     display: flex;

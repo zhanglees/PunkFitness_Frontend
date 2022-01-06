@@ -84,9 +84,16 @@ page{
     padding-top: 0;
     padding-bottom: 0;
 }
+.training-item .weui-cell .weui-cell__ft{
+    margin-left: 20rpx;
+}
 .weui-input, .weui-label, .weui-select{
     height: 80rpx;
     line-height: 80rpx;
+}
+.input-value{
+    text-align: right;
+    padding-right: 100rpx;
 }
 .training-item .weui-cell__hd{
     width: 210rpx;

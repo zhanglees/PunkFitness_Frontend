@@ -19,9 +19,9 @@
                     <view>拍摄视频</view>
                     <view class="act-video-list">
                         <view class="user-video-wrapper video-wrapper" wx:for="{{userVideo[index]}}" wx:key="index" wx:for-item="video" wx:for-index="i">
-                            <video class="user-video" src="{{video}}"></video>
-                            <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="{{i}}">
-                                <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
+                            <video class="user-video" src="{{video}}" object-fit="cover"></video>
+                            <view class="del-act-btn" catchtap="delAct" data-index="{{index}}" data-i="{{i}}">
+                                <mp-icon type="field" icon="close" color="#fff" size="{{20}}"></mp-icon>
                             </view>
                         </view>
                         <view class="eva-camera-wrapper video-wrapper" wx:if="{{userVideo[index].length<1}}">
@@ -59,7 +59,7 @@
             </view>
             <view class="report-video-list" wx-if="{{userVideo[index].length}}">
                 <view class="report-video-wrapper">
-                    <video wx:for="{{userVideo[index]}}" wx:for-item="video" wx:key="*this" class="user-video" src="{{video}}"></video>
+                    <video wx:for="{{userVideo[index]}}" wx:for-item="video" wx:key="*this" class="user-video" src="{{video}}" object-fit="cover"></video>
                 </view>
             </view>
             <block wx:for="{{item}}" wx:for-item="problem" wx:key="name">

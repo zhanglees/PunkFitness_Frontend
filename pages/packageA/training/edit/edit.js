@@ -18,13 +18,16 @@ Page({
             id: 'equipmentName'
         }, {
             name: '配重',
-            id: 'counterWeight'
+            id: 'counterWeight',
+            unit: 'kg'
         }, {
             name: '单组次数',
-            id: 'numberSinglegroup'
+            id: 'numberSinglegroup',
+            unit: '次'
         }, {
             name: '组数',
-            id: 'groups'
+            id: 'groups',
+            unit: '组'
         }],
         trainingList: [{
             name: '热身训练',

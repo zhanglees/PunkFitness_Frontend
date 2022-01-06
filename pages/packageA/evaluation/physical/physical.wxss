@@ -50,7 +50,30 @@
     margin-left: 20rpx;
 }
 .report-list-item{
-    margin-bottom: 20rpx;
+    margin-bottom: 40rpx;
+}
+.report-list-item .report-item:first-child{
+    font-weight: 500;
+    font-size: 30rpx;
+    line-height: 60rpx;
+    position: relative;
+    padding-left: 30rpx;
+} 
+.report-list-item .report-item:first-child::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 20rpx;
+    width: 20rpx;
+    background: orange;
+    /* border-radius: 50%; */
+    top: 50%;
+    transform: translateY(-10rpx);
+}
+.report-item-value{
+    color: var(--base);
+    font-size: 32rpx;
 }
 .step-btn{
     width: 100%;

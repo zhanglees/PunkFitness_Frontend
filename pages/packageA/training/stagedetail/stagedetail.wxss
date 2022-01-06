@@ -143,3 +143,8 @@
     display: flex;
     justify-content: space-between;
 }
+.stage-detail-target-icon{
+    height: 32rpx;
+    width: 30rpx;
+    vertical-align: middle;
+}

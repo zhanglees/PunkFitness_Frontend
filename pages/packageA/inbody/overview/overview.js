@@ -20,19 +20,18 @@ Page({
      */
     onLoad: function (options) {
         const userid = options.userId;
+        let coachId = wx.getStorageSync('mp-req-user-id');
+        this.data.userId = userid;
+        this.data.coachId = coachId;
         //获取用户体重数据
         // var x_data=["12-05", "12-06", "12-07", "12-08", "12-09", "12-10", "12-11"]
         // var y_data= ["55", "56", "53", "55", "55", "57", "53"]
             //绘制折线图
         // this.OnWxChart(x_data,y_data);
-        this.getReportList(userid);
-        this.setData({
-            userId: userid
-        })
+        this.getReportList(userid, coachId);
     },
-    getReportList(userid){
+    getReportList(userid, coachId){
         //获取用户的报告记录
-      let coachId = wx.getStorageSync('mp-req-user-id');
       app.req.api.getUserHealthCheckAll({
           coachId: coachId,
           userId: userid

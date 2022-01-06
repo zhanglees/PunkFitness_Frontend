@@ -53,4 +53,39 @@
 .btn-wrapper{
     position: fixed;
     bottom: 20rpx;
+    width: 100%;
+    text-align: right;
 }
+.btn-round {
+    border-radius: 120rpx;
+    width: 120rpx;
+    padding: 0;
+    text-align: center;
+    line-height: 120rpx;
+    height: 120rpx;
+    margin-right: 20rpx;    
+    box-shadow: 2px 2px 10px 0px var(--base);
+    position: relative;
+}
+.show-type-dialog{
+    position: absolute;
+    top: -294rpx;
+    right: 27rpx;
+    color: #999;
+    width: 180rpx;
+    box-shadow: 0 0 10px 2px #ddd;
+}
+.show-type-dialog::after{
+    content: "";
+    display: block;
+    width:0;
+    height:0;
+    position: absolute;
+    border-style: solid;
+    border-width: 20rpx;
+    border-color: #fff #fff transparent transparent;
+    transform: rotate(135deg);
+    box-shadow: 6px -6px 10px 0px #ddd;
+    right: 13px;
+    bottom: -19rpx;
+  }

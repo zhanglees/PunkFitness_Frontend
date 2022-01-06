@@ -1,4 +1,5 @@
 <!--pages/packageA/training/stagedetail/stagedetail.wxml   阶段详情查看-->
+<wxs src="/utils/util.wxs" module="utils" />
 <view class="container stage-detail">
     <!-- <view class="userinfo">
     <block wx:if="{{userInfo}}">
@@ -37,7 +38,8 @@
                 </view>
                 <block wx:else>
                 <view class="stage-detail-target"  wx:for="{{c.options}}" wx:for-item="j" wx:key="j">
-                    <view>{{j.itemName}} </view><view>{{j.itemValue}}</view>
+                    <view>{{j.itemName}} </view><view class="stage-detail-target-{{j.itemValueFlag}}">
+                        <image src="/images/training/arrow-{{j.itemValueFlag}}.png"  class="stage-detail-target-icon" />{{j.itemValue}}</view>
                 </view>
                 </block>
             </block>

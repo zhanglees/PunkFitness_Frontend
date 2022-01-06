@@ -1,9 +1,8 @@
 {
   "usingComponents": {
     "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
-    "experience": "../experience/experience",
+    "addmember": "../addmember/addmember",
     "mp-cell": "weui-miniprogram/cell/cell"
   },
-  "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"
 }

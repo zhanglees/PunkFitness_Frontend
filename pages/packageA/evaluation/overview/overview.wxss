@@ -56,7 +56,7 @@
     width: 100%;
     box-sizing: border-box;
     margin-top: 40rpx;
-    padding: 40rpx 64rpx;
+    padding: 30rpx 30rpx;
     background: #fff;
 }
 .detail-item{

@@ -107,6 +107,16 @@ Page({
         classContents.forEach(item=>{
             if(item.userChose){
                 const trainTarg = item.trainTarg;
+                if(trainTarg == 2){
+                    //训练目标手动修改一下值
+                    if(item.itemName.includes('体脂')){
+                        item.itemValue = '减少 ' + (0-(item.itemValue || 0)) + ' %';
+                        item.itemValueFlag = 'down';
+                    }else{
+                        item.itemValueFlag = (item.itemValue < 0) ? 'down' : 'up';
+                        item.itemValue = ((item.itemValue < 0) ? ('减少 ' + (0-item.itemValue)) : ('增加 ' + (item.itemValue || 0))) + ' kg';
+                    }
+                }
                 if(detail[trainTarg]){
                     detail[item.trainTarg].options.push({
                         ...item

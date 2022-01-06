@@ -166,6 +166,7 @@
 }
 .btn-wrapper{
     background: #fff;
+    margin-bottom: 60rpx;
 }
 .step-btn{
     width: 100%;

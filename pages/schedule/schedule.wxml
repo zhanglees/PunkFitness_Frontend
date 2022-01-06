@@ -21,7 +21,13 @@
         <view wx:if="{{!list.length}}" class="no-data">暂无预约~</view>
     </view>
     <view class="btn-wrapper">
-        <view class="btn-gradient" bindtap="goReserve">预约</view>
+        <view class="btn-gradient btn-round" bindtap="typeDialogShow">
+            <mp-icon icon="add" color="white" size="{{20}}"></mp-icon>
+            <view class="show-type-dialog" hidden="{{!showTypeDialog}}">
+                <view class="show-type-item" data-type="0" bindtap="goReserve">体验课预约</view>
+                <view class="show-type-item" data-type="1" bindtap="goReserve">正式课预约</view>
+            </view>
+        </view>
     </view>
     <mp-dialog title="签课" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}" data-index="{{index}}">
         <picker-view wx:if="{{classList.length}}" indicator-style="height: 50rpx;" class="dialog-picker" value="{{checkClass}}" bindchange="bindClassChange">

@@ -9,7 +9,7 @@
                     {{item.userName}}  {{item.phone}}
                 </view>
                 </block>
-                <view wx:else class="no-result">未查询到该用户~</view>
+                <text wx:else class="no-result">未查询到该用户~\n只可为{{['准会员预约体验课', '会员预约正式课'][type]}}</text>
             </view>
         </mp-cell>
         <mp-cell link title="预约时间">

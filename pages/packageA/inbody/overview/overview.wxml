@@ -1,7 +1,7 @@
 <!--pages/packageA/inbody/inbody.wxml-->
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
-    <view class="top__layout" wx:if="{{reportList.length}}">        
+    <view class="top__layout-chart" wx:if="{{reportList.length}}">        
         <view class="right-top">
             <image class="right-top-icon" src="/images/inbody/weight-icon.png" />
             体重记录
@@ -21,22 +21,23 @@
             </view>
         </view> -->
     </view>
-    <view class="act-area">
+    <view class="{{reportList.length ? 'act-area' : 'top__layout'}}">
+        <view class="top-say-sth">添加体测报告，可以更好的定制适合您的训练</view>
         <view class="report-add" bindtap="addReport">
             <view class="add-icon">+</view>
             添加体测报告
         </view>
-        <view class="report-act-right">
+        <!-- <view class="report-act-right"> -->
             <!-- <view class="reserve-btn report-btn">预约下次体测</view> -->
             <!-- <view class="compare-btn report-btn">对比</view> -->
-        </view>
+        <!-- </view> -->
     </view>
     <view class="report-area">
         <ul class="report-list" wx:if="{{reportList.length}}">
             <li wx:for="{{reportList}}" wx:key="index" class="report-item" bindtap="reportDetail" data-id="{{item.userHealthcheckId}}">
                 <view class="report-item-cell">
                     <view class="report-item-title">身体测试报告</view>
-                    <view class="report-item-coach">{{item.userName}} | {{utils.timestampDate(item.createTime)}}</view>
+                    <view class="report-item-coach">{{item.userName}} | {{utils.formatDate(item.createTime)}}</view>
                 </view>
                 <view class="report-item-cell">
                     <view class="report-data">

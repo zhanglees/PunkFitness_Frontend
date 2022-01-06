@@ -176,7 +176,7 @@ Page({
           assessmentName: i.assessmentName
         });
         i.coachRemark && (remark[j] = i.coachRemark);
-        i.currentUserResource && (userImg[j] = [i.currentUserResource.resourceUrl]);
+        i.currentUserResource && (userImg[j] = ['https://' + i.currentUserResource.resourceUrl]);
         i.feedbacks.forEach(feedback => {
           if(feedback.childFeedbacks.length){
             feedback.checked = true;
@@ -446,7 +446,7 @@ Page({
       const context = canvas.getContext('2d')
       const width = res[0].width
       const height = res[0].height
-      console.log('createImg:', width, height)
+      // console.log('createImg:', width, height)
       context.restore();
       const dpr = wx.getSystemInfoSync().pixelRatio
       canvas.width = width * dpr
@@ -471,7 +471,7 @@ Page({
         context.drawImage(img, 0, 0, width, height)
       })
 
-      // 画二维码
+      // 画垂线
       const codePromise = new Promise((resolve, reject) => {
         const code = canvas.createImage()
         code.onload = () => {
@@ -493,7 +493,7 @@ Page({
     })
   },
   toSave(canvas) {
-      console.log(canvas)
+      // console.log('canvas:', canvas)
       const that = this;
       const current = this.data.current;
       wx.canvasToTempFilePath({

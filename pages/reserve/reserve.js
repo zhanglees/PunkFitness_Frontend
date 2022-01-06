@@ -21,8 +21,11 @@ Page({
      */
     onLoad: function (options) {
         const coachId = wx.getStorageSync('mp-req-user-id');
+        const type = options.type;
+        this.setData({
+            type
+        })
         this.data.coachId = coachId;
-
     },
 /***检索用户 */
 formInputChange(e){
@@ -31,7 +34,8 @@ formInputChange(e){
     //请求检索接口
     app.req.api.searchMember({
         "coachId": userId,
-        "condition": value
+        "condition": value,
+        trainerType: this.data.type
     }).then(res=>{
         const result = res.data;
         this.setData({
@@ -64,44 +68,44 @@ onPickerChange(e){
         time: e.detail.value
     })
 },
-tapDialogButton(e) {
-    if(e.detail.index === 1){
-        //确认
-        const _this = this;
-        const id = this.data.userId;
-        app.req.api.transformMember(this.data.userInfo).then(res=>{
-          if(res.data) {
-              //转为正式会员后直接预约
-            _this.goReserve(null, true);
-            _this.setData({
-              showDialog: false
-            })
-          }else{
-            wx.showToast({
-                title: '请稍后重试',
-                icon: 'error',
-                duration: 2000
-            });
-            _this.setData({
-                showDialog: false
-            })
-          }
-          //请求返回之后的结果 失败提示  成功更新按钮状态
-        })
-    }else{
-      this.setData({
-        showDialog: false
-      })
-    }
-},
+// tapDialogButton(e) {
+//     if(e.detail.index === 1){
+//         //确认
+//         const _this = this;
+//         const id = this.data.userId;
+//         app.req.api.transformMember(this.data.userInfo).then(res=>{
+//           if(res.data) {
+//               //转为正式会员后直接预约
+//             _this.goReserve(null, true);
+//             _this.setData({
+//               showDialog: false
+//             })
+//           }else{
+//             wx.showToast({
+//                 title: '请稍后重试',
+//                 icon: 'error',
+//                 duration: 2000
+//             });
+//             _this.setData({
+//                 showDialog: false
+//             })
+//           }
+//           //请求返回之后的结果 失败提示  成功更新按钮状态
+//         })
+//     }else{
+//       this.setData({
+//         showDialog: false
+//       })
+//     }
+// },
 /***确认预约**/
 goReserve(e, flag){
-    if(!flag && this.data.userInfo.coustomLevel != 1){
-        //如果该会员还不能预约则弹窗提示
-        this.setData({
-            showDialog: true
-        })
-    }else{
+    // if(!flag && this.data.userInfo.coustomLevel != 1){
+    //     //如果该会员还不能预约则弹窗提示
+    //     this.setData({
+    //         showDialog: true
+    //     })
+    // }else{
         const data = {
             userId: this.data.userId,
             appointmentTime: new Date(this.data.time.replace(/\.|\-/g, '/')).getTime(),
@@ -130,7 +134,7 @@ goReserve(e, flag){
                 });
             }
         })
-    }
+    // }
 },
     /**
      * Lifecycle function--Called when page is initially rendered

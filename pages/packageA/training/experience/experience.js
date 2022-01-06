@@ -1,57 +1,52 @@
-// pages/packageA/training/class/class.js
+// pages/packageA/training/experience/experience.js
 const app = getApp()
 Page({
-
     /**
      * Page initial data
      */
     data: {
-        name: '',
-        coach: '',
         classes: [],
         count: '',
-        slideButtons: [[{
-            text: '粘贴',
-            src: '' // icon的路径
-        }, {
+        slideButtons: [{
             type: 'warn',
             text: '删除',
             extClass: 'test',
             src: ''// icon的路径
-        }], [{
-            text: '复制',
-            extClass: 'test',
-            src: '' // icon的路径
-        }, {
-            type: 'warn',
-            text: '删除',
-            extClass: 'test',
-            src: ''// icon的路径
-        }]],
+        }],
         dialogShow: false,
         dialogIndex: '',//当前要删除的index
-        dialogButtons: [{ text: '取消' }, { text: '确定' }],
-        copyItem: null
+        dialogButtons: [{ text: '取消' }, { text: '确定' }]
+
     },
 
     /**
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const { userId, userTrainitemId, trainingPlanId, classId, classNum, coachName } = options;
         const coachId = wx.getStorageSync('mp-req-user-id');
-        this.setData({
-            coachId,
-            userId, 
-            classId,
-            userTrainitemId, 
-            trainingPlanId,
-            classNum: classNum=='null' ? 0 : classNum,
-            coachName
-        })
-        // this.getClasses();
+        const { userId } = options;
+        this.data.userId = userId;
+        this.data.coachId = coachId;
+        this.getList(userId, coachId);
     },
-
+    
+    getList(userId, coachId){
+        app.req.api.getUserTrainPlainDetail({
+            trainPlainId: 'exprienceClassPlan',
+            coachId,
+            userId
+        }).then(res=>{
+            console.log(888888, res.data)
+        });
+    },
+    getList2(userId, coachId){
+        app.req.api.getUserExperienceLessonDetail({
+            coachId,
+            userId
+        }).then(res=>{
+            console.log(888, res.data)
+        });
+    },
     getClasses(){
         const {userId, userTrainitemId, trainingPlanId, classId, coachId, classNum} = this.data;
         app.req.api.getUserClassSection({
@@ -88,50 +83,6 @@ Page({
                 dialogShow: true,
                 dialogIndex: index
             })
-        }else{
-            //复制 or 粘贴
-            if(type != 0){
-                //复制
-                const item = this.data.classes[index];
-                this.setData({
-                    copyItem: item
-                })
-                wx.showToast({
-                    title: '复制成功',
-                    icon: 'success',
-                    duration: 1000
-                })
-                  
-            }else if(this.data.copyItem){
-                //粘贴
-                const {coachId, userId, trainingPlanId, userTrainitemId, copyItem} = this.data;
-                console.log(999999, copyItem);
-                // cItem = {...cItem, status: 1, time: ''};
-                app.req.api.copyUserClassSection({
-                    coachId,
-                    sectionName: copyItem.sectionName,                            
-                    showOrder: index+1,                                          
-                    trainingPlanId,           
-                    userId,                
-                    userTrainitemId,       
-                    usertrainSectionId: copyItem.usertrainSectionId
-                }).then(res=>{
-                    if(res.code == 0){
-                        console.log('slide button tap', res.data)
-                        this.setData({
-                            [`classes[${index}]`]: {
-                                ...res.data,
-                                status: 1
-                            }
-                        })
-                    }
-                })
-            }else{  
-                wx.showModal({
-                    showCancel: false,
-                    content: '请先复制课程',
-                });
-            }
         }
         console.log('slide button tap', this.data.classes[index])
     },
@@ -185,12 +136,14 @@ Page({
      * Lifecycle function--Called when page is initially rendered
      */
     onReady: function () {
+
     },
+
     /**
      * Lifecycle function--Called when page show
      */
     onShow: function () {
-        this.getClasses();
+
     },
 
     /**

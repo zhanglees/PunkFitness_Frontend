@@ -18,25 +18,25 @@ Page({
       num: null
     }],
     fliterChecked: '',
-    navigatorList:[
-      {
-        name: '首次体验',
-        link: '/pages/packageA/experience/experience',
-        icon: ''
-      }, {
-        name: '准会员',
-        link: '../experience/experience',
-        icon: ''
-      }, {
-        name: '会员',
-        link: '../experience/experience',
-        icon: ''
-      // }, {
-      //   name: '动作库',
-      //   link: '../experience/experience',
-      //   icon: ''
-      }
-    ],
+    // navigatorList:[
+    //   {
+    //     name: '首次体验',
+    //     link: '/pages/packageA/experience/experience',
+    //     icon: ''
+    //   }, {
+    //     name: '准会员',
+    //     link: '../experience/experience',
+    //     icon: ''
+    //   }, {
+    //     name: '会员',
+    //     link: '../experience/experience',
+    //     icon: ''
+    //   // }, {
+    //   //   name: '动作库',
+    //   //   link: '../experience/experience',
+    //   //   icon: ''
+    //   }
+    // ],
     showSearchInput: [false, false],
     searchText: ['', ''],
     memberList: [],
@@ -44,9 +44,14 @@ Page({
   },
   onLoad() {
     // this.comSwiperHeight();
-    wx.stopPullDownRefresh();
-    let userId = wx.getStorageSync('mp-req-user-id');
-    this.data.userId = userId;
+    this.data.userId = wx.getStorageSync('mp-req-user-id');
+  },
+  onShow(){
+    this.setData({
+      fliterChecked: '',
+      showSearchInput: [false, false],
+      searchText: ['', ''],
+    });
     this.getAllData(0);
     this.getAllData(1);
   },
@@ -241,16 +246,5 @@ Page({
     wx.navigateTo({
       url: '/pages/home/addActvity/addActvity'
     })
-  },
-   /**
-  * 页面相关事件处理函数--监听用户下拉动作
-  */
-  onPullDownRefresh: function () {
-    this.setData({
-      fliterChecked: '',
-      showSearchInput: [false, false],
-      searchText: ['', ''],
-    });
-    this.onLoad();
   }
 })

@@ -18,9 +18,9 @@
                 <view wx:for="{{item.actionList}}" wx:for-index="i" wx:key="index" wx:for-item="action" class="action-item"> 
                     <block wx:if="{{!editFlag}}">
                     <!--预览状态-->
-                    <mp-cell wx:for="{{items}}" wx:key="index" wx:for-item="ia" title="{{ia.name}}" footer="{{action[ia.id]}}"></mp-cell>
+                    <mp-cell wx:for="{{items}}" wx:key="index" wx:for-item="ia" title="{{ia.name}}" footer="{{action[ia.id] + (ia.unit ? ia.unit : '')}}"></mp-cell>
                     <view class="user-video-wrapper video-wrapper" wx:if="{{action.video || action.videourl}}">
-                        <video class="user-video" bindtap="previewVideo" data-src="{{action.video || action.videourl}}" src="{{action.video || action.videourl}}"></video>
+                        <video class="user-video" data-src="{{action.video || action.videourl}}" src="{{action.video || action.videourl}}"></video>
                     </view>
                     </block>
                     <block wx:else>
@@ -44,20 +44,20 @@
                                 <view class="weui-select">{{equipment[action.equipment]}}</view>
                             </picker>
                         </mp-cell>    
-                        <mp-cell prop="counterWeight" title="配重">
-                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="counterWeight" class="weui-input" placeholder="" value="{{action.counterWeight}}" />
+                        <mp-cell prop="counterWeight" footer=" kg" title="配重">
+                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="counterWeight" class="weui-input input-value" placeholder="" value="{{action.counterWeight}}" />
                         </mp-cell>    
-                        <mp-cell prop="numberSinglegroup" title="单组次数">
-                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input" placeholder="" value="{{action.numberSinglegroup}}"/>
+                        <mp-cell prop="numberSinglegroup" footer=" 次" title="单组次数">
+                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input input-value" placeholder="" value="{{action.numberSinglegroup}}"/>
                         </mp-cell>    
-                        <mp-cell prop="groups" title="组数">
-                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{action.groups}}"/>
+                        <mp-cell prop="groups" footer=" 组" title="组数">
+                            <input bindinput="inputChangeEdit" type="number" data-i="{{i}}" data-index="{{index}}" data-name="groups" class="weui-input input-value" placeholder="" value="{{action.groups}}"/>
                         </mp-cell>
                     </view>
                     <view class="user-video-wrapper video-wrapper" wx:if="{{action.video || action.videourl}}">
-                        <video class="user-video" bindtap="previewVideo" data-src="{{action.video || action.videourl}}" src="{{action.video || action.videourl}}"></video>
-                        <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="{{i}}">
-                            <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
+                        <video class="user-video" object-fit="cover" src="{{action.video || action.videourl}}"></video>
+                        <view class="del-act-btn" catchtap="delAct" data-index="{{index}}" data-i="{{i}}">
+                            <mp-icon type="field" icon="close" color="#fff" size="{{20}}"></mp-icon>
                         </view>
                     </view>
                     <view class="eva-camera-wrapper video-wrapper" wx:else>
@@ -94,19 +94,19 @@
                             <view class="weui-select">{{equipment[item.detail.equipment]}}</view>
                         </picker>
                     </mp-cell>    
-                    <mp-cell prop="counterWeight" title="配重">
-                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="counterWeight" class="weui-input" placeholder="" value="{{item.detail.counterWeight}}" />
+                    <mp-cell prop="counterWeight" title="配重" footer=" kg">
+                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="counterWeight" class="weui-input  input-value" placeholder="" value="{{item.detail.counterWeight}}" /> 
                     </mp-cell>    
-                    <mp-cell prop="numberSinglegroup" title="单组次数">
-                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input" placeholder="" value="{{item.detail.numberSinglegroup}}"/>
+                    <mp-cell prop="numberSinglegroup" title="单组次数" footer=" 次">
+                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input  input-value" placeholder="" value="{{item.detail.numberSinglegroup}}"/>
                     </mp-cell>    
-                    <mp-cell prop="groups" title="组数">
-                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="groups" class="weui-input" placeholder="" value="{{item.detail.groups}}"/>
+                    <mp-cell prop="groups" title="组数" footer=" 组">
+                        <input bindinput="inputChange" type="number" data-index="{{index}}" data-name="groups" class="weui-input  input-value" placeholder="" value="{{item.detail.groups}}"/>
                     </mp-cell>
                     <view class="user-video-wrapper video-wrapper" wx:if="{{item.detail.video}}">
-                        <video class="user-video" bindtap="previewVideo" data-src="{{item.detail.video}}" src="{{item.detail.video}}"></video>
-                        <view class="del-act-btn" bindtap="delAct" data-index="{{index}}" data-i="detail">
-                            <mp-icon type="field" icon="close" color="#fff" size="{{10}}"></mp-icon>
+                        <video class="user-video" object-fit="cover" src="{{item.detail.video}}"></video>
+                        <view class="del-act-btn" catchtap="delAct" data-index="{{index}}" data-i="detail">
+                            <mp-icon type="field" icon="close" color="#fff" size="{{20}}"></mp-icon>
                         </view>
                     </view>
                     <view class="eva-camera-wrapper video-wrapper" wx:else>

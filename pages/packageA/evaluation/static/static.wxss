@@ -73,6 +73,9 @@
 .exp-image-act{
     display: inline-block;
     margin: 0 20rpx;
+    color: #fff;
+    /* background: rgba(255,255,255,0.6); */
+    /* border-radius: 50%; */
 }
 .exp-image{
     width: 300rpx;
@@ -173,11 +176,23 @@ swiper{
 .feedback-remark-area{
     height: 150rpx;
 }
-.report-list{
+.report-list-area{
     background: #fff;
     padding: 40rpx;
     width: 100%;
+    position: relative;
+    overflow: hidden;
     box-sizing: border-box;
+}
+.report-list{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow: hidden;
+}
+.report-item{
+    flex: 1;
+    overflow: hidden;
 }
 .report-image-list, .report-problem-list{
     display: flex;
@@ -191,6 +206,9 @@ swiper{
     margin-bottom: 20rpx;
     overflow: hidden;
 }
+.report-image{
+    width: 100%;
+}
 .report-problem{
     border: 1px solid #2D62F4;
     height: 60rpx;
@@ -198,14 +216,21 @@ swiper{
     color: #2D62F4;
     line-height: 60rpx;
     padding: 0 20rpx;
-    margin-right: 20rpx;
     margin-bottom: 20rpx;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .report-list-title{
-    font-size: 30rpx;
+    font-size: 32rpx;
     color: #5d5d5d;
     margin-bottom: 20rpx;
+    font-weight: 500;
 }
 .report-remark{
     margin-bottom: 40rpx;
+}
+.form-btn-confirm{
+    margin-top: 100rpx;
 }

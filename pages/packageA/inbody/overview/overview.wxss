@@ -4,6 +4,25 @@
     color: #333;
   }
 .top__layout{
+    background: #F6F6F6;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 100rpx 0;
+}
+.top__layout .report-add{
+    display: inline-block;
+    border: 1px solid var(--base);
+    border-radius: 30rpx;
+    color: var(--base);
+    padding: 0 20rpx;
+    line-height: 60rpx;
+    font-size: 32rpx;
+    height: 60rpx;
+    margin-top: 40rpx;
+}
+.top__layout-chart{
     background: #3D4257;
     position: relative;
     width: 100%;

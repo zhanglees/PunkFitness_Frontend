@@ -13,7 +13,8 @@ Page({
         dialogShow: false,
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
         checkClass: [0], //选中的课
-        checkAppointment: {}
+        checkAppointment: {},
+        showTypeDialog: false
     },
 
     /**
@@ -39,28 +40,32 @@ Page({
     /****签课 */
     checkin(e){
         const {trainingplanid, userid, appointmentid} = e.currentTarget.dataset;
+        // if(trainingplanid != 'null'){
         //这里要发请求拿回该用户的课程列表
-        app.req.api.getUserSectionList({
-            coachId: this.data.coachId,
-            trainingPlanId: trainingplanid,
-            userId: userid
-        }).then(res=>{
-            let classList = res.data;
-            classList.sort((a, b) => {
-                return a.showOrder - b.showOrder;
-              });
-            this.setData({
-                classList,
-                checkAppointment: {
-                    appointmentId: appointmentid,
-                    userId: userid
-                },
-                dialogShow: true
+            app.req.api.getUserSectionList({
+                coachId: this.data.coachId,
+                trainingPlanId: trainingplanid,
+                userId: userid
+            }).then(res=>{
+                let classList = res.data;
+                classList.sort((a, b) => {
+                    return a.showOrder - b.showOrder;
+                });
+                this.setData({
+                    classList,
+                    checkAppointment: {
+                        appointmentId: appointmentid,
+                        userId: userid
+                    },
+                    dialogShow: true
+                })
             })
-        })
-        this.setData({
-            dialogShow: true
-        })
+        // }else{
+        //     this.setData({
+        //         classList: [],
+        //         dialogShow: true
+        //     })
+        // }
     },
     /****签到选课 */
     bindClassChange(e){
@@ -72,24 +77,31 @@ Page({
     tapDialogButton(e) {
         if(e.detail.index === 1){
             //确定  发请求确定签到   签到成功后更新列表数据
-            const usertrainSectionId = this.data.classList[this.data.checkClass[0]].usertrainSectionId;
-            app.req.api.singIn({
-                ...this.data.checkAppointment,
-                coachId: this.data.coachId,
-                usertrainSectionId
-            }).then(res=>{
-                if(res.code == 0){
-                    wx.showToast({
-                      title: '签到成功',
-                    })
-                    this.getList();
-                }else{
-                    wx.showToast({
-                      title: '签到失败',
-                      icon: 'error'
-                    })
-                }
-            })
+            if(this.data.classList.length){
+                const usertrainSectionId = this.data.classList[this.data.checkClass[0]].usertrainSectionId;
+                app.req.api.singIn({
+                    ...this.data.checkAppointment,
+                    coachId: this.data.coachId,
+                    usertrainSectionId
+                }).then(res=>{
+                    if(res.code == 0){
+                        wx.showToast({
+                          title: '签到成功',
+                        })
+                        this.getList();
+                    }else{
+                        wx.showToast({
+                          title: '签到失败',
+                          icon: 'error'
+                        })
+                    }
+                })
+            }else{
+                //没有课程则去创建
+                wx.navigateTo({
+                  url: '/pages/packageA/training/classlist/classlist?type=record&userId=' + this.data.checkAppointment.userId,
+                })
+            }
         }
         this.setData({
             dialogShow: false
@@ -104,9 +116,15 @@ Page({
     this.getList();
   },
     /****去预约界面 */
+    typeDialogShow(){
+        let showTypeDialog = !this.data.showTypeDialog;
+        this.setData({
+            showTypeDialog,
+        })
+    },
     goReserve(e){
         wx.navigateTo({
-          url: '/pages/reserve/reserve',
+          url: '/pages/reserve/reserve?type=' + e.currentTarget.dataset.type,
         })
     },
     /**

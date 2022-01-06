@@ -214,7 +214,11 @@ function install(req, request) {
         //     const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
         //     return request({ url, method: 'GET', data });
         // }, 
-
+        /*****支付 */
+        payOrder(data){   //
+            const url = `https://zhangleixd.com/wixinPayment/payOrder`;
+            return request({ url, method: 'POST', data });
+        }, 
 
         uploadFile(data){
             console.log('上传参数：', data.formData)

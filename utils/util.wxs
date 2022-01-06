@@ -12,6 +12,7 @@ function formatNumber(n) {
   return n[1] ? n : ('0' + n)
 }
 function timestampDate(time) {
+  console.log('time:', time)
   var t = getDate(time);
   return t ? [t.getFullYear(), t.getMonth() + 1, t.getDate()].map(formatNumber).join('-') : '--'
 }

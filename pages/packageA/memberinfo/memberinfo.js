@@ -25,7 +25,7 @@ Page({
       link: '/pages/packageA/inbody/overview/overview?'
     }, {
       name: '体验课教案',
-      link: '/pages/packageA/training/edit/edit?type=experience&'
+      link: '/pages/packageA/training/experience/experience?'
     }, {
       name: '训练规划',
       link: '/pages/packageA/training/classlist/classlist?type=plan&'

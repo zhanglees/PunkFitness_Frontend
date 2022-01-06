@@ -17,7 +17,7 @@
                 <mp-icon class="arrow-icon" type="field" icon="arrow" color="#333" size="{{10}}"></mp-icon>
             </block>
             <block wx:else>
-                <input type="number" class="physical-item-input" bindinput="bindInputChange" data-i="{{index}}" />{{item.unit}}
+                <input type="number" class="physical-item-input" bindinput="bindInputChange" data-i="{{index}}" cursor-spacing="50" />{{item.unit}}
             </block>
             </view>
         </view>
@@ -34,7 +34,7 @@
                 评估方式：{{item.method || '--'}}
             </view>
             <view class="report-item">
-                具体表现：{{item.performance || '--'}}{{item.unit}}
+                具体表现：<text class="report-item-value">{{item.performance || '--'}}</text> {{item.unit}}
             </view>
         </view>
         <view class="step-btn" wx-if="{{newFlag}}">

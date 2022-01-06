@@ -1,0 +1,28 @@
+<!--pages/packageA/training/experience/experience.wxml-->
+<!-- 体验课列表-->
+<view class="container">
+    <view class='top_layout'>
+        <view class="top-say-sth">添加体验课，开始您的训练</view>
+        <view bindtap="addBtn" class="add-plan-btn">
+            添加体验课
+        </view>
+    </view>
+    <view class="class-list">
+        <block wx:if="{{classes.length}}">
+        <mp-slideview wx:for="{{classes}}" wx:key="index" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" data-index="{{index}}">
+            <mp-cell bindtap="gotoDetail" link="{{item.status != 2}}" data-index="{{index}}" footer="{{item.status ? (item.status == 1 ? '未完成' : ('已完成 '+ item.completeTime)) : ''}}">
+                <view slot="title" class="weui-label">
+                    <text class="class-item-index">{{item.index ? item.index : (index+1)}}</text>
+                    <text class="class-item-title">{{item.sectionName}}</text>
+                </view>
+            </mp-cell>
+        </mp-slideview>
+        </block>
+        <view class="no-data" wx:else>暂无数据~</view>
+    </view>
+
+    <mp-dialog title="确认删除该课程" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+        <view>该操作不可撤销</view>
+    </mp-dialog>
+</view>
+

@@ -1,4 +1,5 @@
 // pages/packageB/mine/buy/buy.js
+const app = getApp()
 Page({
 
     /**
@@ -26,12 +27,41 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-
+        this.data.userId = wx.getStorageSync('mp-req-user-id');
     },
     changeCurrent(e){
         const index = e.currentTarget.dataset.index;
         this.setData({
             current: index
+        })
+        this.payOrder();
+    },
+    payOrder(){
+        app.req.api.payOrder({
+            "amountMoney": 0.01,                                      
+            // "openId": "oP1TP5cTTLZCgTXg-ZWG2d7sjfEA",           
+            "payStatus": 0,                                   
+            "productType": this.data.current,                                          
+            "userId": this.data.userId || 'f15371d7-975b-4ae9-98fb-df54453ef0a5'
+        }).then(res=>{
+            const data = res.data;
+            wx.requestPayment({
+                ...data,
+                "paySign": data.sign,
+                "success":function(res){
+                    console.log('支付成功', res)
+                    wx.showToast({
+                      title: '购买成功',
+                    })
+                    wx.navigateBack({
+                      delta: 0,
+                    })
+                },
+                "fail":function(res){
+                    console.log('支付失败', res)},
+                "complete":function(res){
+                    console.log('支付完成', res)}
+            })
         })
     },
     /**

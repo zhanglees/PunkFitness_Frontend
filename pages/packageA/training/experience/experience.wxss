@@ -1,0 +1,44 @@
+/* pages/packageA/training/experience/experience.wxss */
+.top_layout{
+    background: #F6F6F6;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 100rpx 0;
+}
+.top-say-sth{
+    margin-bottom: 60rpx;
+}
+.add-plan-btn{
+    display: inline-block;
+    border: 1px solid var(--base);
+    border-radius: 30rpx;
+    color: var(--base);
+    padding: 0 20rpx;
+    line-height: 60rpx;
+    font-size: 32rpx;
+    height: 60rpx;
+}
+.class-item-create{
+    color: #999;
+}
+.class-item-index{
+    font-size: 32rpx;
+    display: inline-block;
+    margin-right: 20rpx;
+}
+.class-item-right{
+    flex: 1;
+    text-align: right;
+}
+.class-item-right .arrow-icon{
+    margin-left: 20rpx;
+}
+.class-list .weui-label{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    width: 300rpx;
+}
