@@ -209,6 +209,7 @@ Page({
         let trainingList = this.data.trainingList;
         userTraionSectionDetails && userTraionSectionDetails.forEach(section => {
             let training = trainingList[section.trainingType || 0];
+            section.videourl = 'https://' + section.videourl;
             training.actionList.push({
                 ...section,
                 trainingAreaName: (section.trainingArea!=null) ? this.data.trainingPart[section.trainingArea].name : '',

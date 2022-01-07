@@ -132,6 +132,15 @@ Page({
           url,
         })
     },
+    addBtn(){
+        const {userId, userTrainitemId, classes} = this.data;
+        const index = classes.length + 1;
+        const trainingPlanId = 'exprienceClassPlan';
+        const url = '/pages/packageA/training/edit/edit?' + ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId);
+        wx.navigateTo({
+            url,
+        })
+    },
     /**
      * Lifecycle function--Called when page is initially rendered
      */

@@ -103,6 +103,9 @@
     align-items: center;
     justify-content: space-between;
 }
+.act-area .top-say-sth{
+    display: none;
+}
 .report-add{
     display: flex;
     align-items: center;

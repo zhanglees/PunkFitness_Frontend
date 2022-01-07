@@ -243,6 +243,9 @@
     width: 100%;
     margin: 0 20rpx 0 10rpx;
 }
+.stage-target-item-slider-1{
+    margin-right: 40rpx;
+}
 .stage-fct-list{
     background: #F1F1F1;
     display: flex;

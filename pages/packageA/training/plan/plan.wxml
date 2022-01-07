@@ -74,7 +74,7 @@
                         <view wx:if="{{option.checked}}" class="stage-target-item">
                             {{option.itemName}}
                             <!-- <input bindchange="targetValue" type="number" class="weui-input" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" value="{{option.contentItemValue}}" placeholder="" /> -->
-                            <slider class="stage-target-item-slider" bindchange="targetValue" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" activeColor="#4182E9" value="{{option.contentItemValue}}" block-size="12" show-value min="{{i==2 ? 0 : -50}}" max="{{i==1 ? 0 : 50}}" step="0.5" />
+                            <slider class="stage-target-item-slider stage-target-item-slider-{{i}}" bindchange="targetValue" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" activeColor="#4182E9" value="{{option.contentItemValue}}" block-size="12" show-value min="{{i==2 ? 0 : -50}}" max="{{i==1 ? 0 : 50}}" step="0.5" />
                             <text class="target-unit">{{['kg', ' %', 'kg'][i]}}</text>
                         </view>
                         </block>

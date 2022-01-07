@@ -14,6 +14,9 @@ Page({
         tabList: ['身体成分', '身体测量'],
         current: 0,
         swiperHeight: 160, //动态计算swiper高度
+        authCamera: true,
+        startPhoto: false,
+        photoField: '',
         imgList: [{
             healthReportPath:{
                 id: 'healthReportPath',
@@ -185,9 +188,13 @@ Page({
             }).then(res=>{
                 console.log('查询报告：', res.data)
                 const {userhealthcheckReport, userhealthcheckResource} =  res.data;
+                let formResourceUrl = {};
+                for(var i in userhealthcheckResource){
+                    userhealthcheckResource[i] && (formResourceUrl[i] = 'https://' + userhealthcheckResource[i]);
+                }
                 this.setData({
                     formData: userhealthcheckReport,
-                    formResourceUrl: userhealthcheckResource
+                    formResourceUrl
                 });
             });
         }else{
@@ -235,40 +242,226 @@ Page({
         })
         this.comSwiperHeight();
       },
+    /****添加照片 */
+  startPhoto(){
+    // if(!this.data.authCamera){
+      wx.getSetting({  
+        success: (res) => {  
+            if (res.authSetting["scope.camera"]){  
+                this.setData({  
+                  authCamera:true,  
+                })  
+            } else {  
+              this.setData({  
+                authCamera:false,  
+              });
+              if(res.authSetting["scope.camera"] !== undefined){this.open_permission_setting();}
+              // wx.showToast({  
+              //   title:'请打开相机授权',  
+              //   icon: 'none'  
+              // })  
+            }  
+        }  
+      }); 
+    // }
+    this.setData({
+        startPhoto: true
+    })
+},
+
+handleCameraError:function() {  
+    wx.showToast({  
+      title:'请打开摄像头',  
+      icon: 'none'  
+    })  
+  }, 
+open_permission_setting() {
+    wx.showModal({
+        title: '申请权限',
+        content: '需要使用麦克风和摄像头功能，请前往设置打开权限',
+        success(res) {
+        if (res.confirm) {
+            console.log('用户点击确定')
+            wx.openSetting({
+            success(res) {
+                console.log('成功', res)
+            },
+            fail(err) {
+                console.log('失败', err)
+            }
+            })
+        } else if (res.cancel) {
+            console.log('用户点击取消')
+        }
+        }
+    })
+},
+cancelPhone(){
+    this.setData({
+        startPhoto: false
+    })
+},
     /***拍照 */
     takePhoto(e){
-        const {index, field} = e.currentTarget.dataset;
         const cur = this.data.current;
-        const _this = this;
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['original', 'compressed'],
-            sourceType: ['album', 'camera'],
-            success (res) {
-                // tempFilePath可以作为img标签的src属性显示图片
-                const tempFilePath = res.tempFilePaths[0];
-                app.req.api.uploadFile({
-                    path: tempFilePath,
-                    formData: {
-                        userId: _this.data.userInfo.id
-                    },
-                    success(res){
-                        console.log('图片上传：', res)
-                        _this.setData({
-                            [`formResource.${field}`]: res.data
-                        })
+        const {index, field} = e.currentTarget.dataset;
+        if(cur == 1){
+            this.data.photoField = field;
+            this.startPhoto();
+        }else{
+            const _this = this;
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['original', 'compressed'],
+                sourceType: ['album', 'camera'],
+                success (res) {
+                    // tempFilePath可以作为img标签的src属性显示图片
+                    const tempFilePath = res.tempFilePaths[0];
+                    app.req.api.uploadFile({
+                        path: tempFilePath,
+                        formData: {
+                            userId: _this.data.userInfo.id
+                        },
+                        success(res){
+                            console.log('图片上传：', res)
+                            _this.setData({
+                                [`formResource.${field}`]: res.data
+                            })
+                        }
+                    })
+                    _this.setData({
+                        [`formResourceUrl.${field}`]: tempFilePath
+                    })
+                    if(cur == 0){
+                        _this.comSwiperHeight();
                     }
-                })
-                _this.setData({
-                    [`formResourceUrl.${field}`]: tempFilePath
-                })
-                if(cur == 0){
-                    _this.comSwiperHeight();
                 }
-            }
+            })
+        }
+    },
+    takePhoto2() {
+        const ctx = wx.createCameraContext();
+        const _this = this;
+        const field = this.data.photoField;
+        ctx.takePhoto({
+          quality: 'high',
+          success: (res) => {
+            const file = res.tempImagePath;
+            this.setData({
+                [`formResourceUrl.${field}`]: file,
+                startPhoto: false
+            })
+            this.createImg(file, field);
+          },
+          fail: (res) => {  
+            //拍摄失败  
+            wx.showToast({  
+                title:res,  
+                icon: 'none'  
+            })  
+          },  
+        })
+      },
+
+    cancelPhone(){
+        this.setData({
+            startPhoto: false
         })
     },
 
+  createImg(src, field){
+    const that = this;
+    wx.createSelectorQuery().select('#tmpImg')
+    .fields({ 
+      node: true,
+      size: true 
+    }).exec(function (res) {
+      const canvas = res[0].node
+      const context = canvas.getContext('2d')
+      const width = res[0].width
+      const height = res[0].height
+      // console.log('createImg:', width, height)
+      context.restore();
+      const dpr = wx.getSystemInfoSync().pixelRatio
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      context.scale(dpr, dpr)
+      context.clearRect(0, 0, width , height);
+      context.fillStyle = 'white'
+      context.fillRect(0, 0, width, height)
+      context.save();
+      let path = that.data.formResourceUrl[that.data.photoField];
+      const hbPromise = new Promise((resolve, reject) => {
+        const hb = canvas.createImage()
+        hb.onload = () => {
+          resolve(hb)
+        }
+        hb.onerror = () => {
+          reject(new Error(`fail to fetch image form: ${path}`))
+        }
+        hb.src = src
+      })
+      hbPromise.then(img => {
+        context.drawImage(img, 0, 0, width, height)
+      })
+
+      // 画垂线
+      const codePromise = new Promise((resolve, reject) => {
+        const code = canvas.createImage()
+        code.onload = () => {
+          resolve(code)
+        }
+        code.onerror = () => {
+          reject(new Error(`fail to fetch image form: ${codepath}`))
+        }
+        code.src = '/images/evaluation/static-cover.png';
+      })
+      codePromise.then(img => {
+        context.drawImage(img, 0, 0 , width , height)
+      })
+      context.stroke();
+      context.save();  
+      setTimeout(() => {
+        that.toSave(canvas);
+      }, 1000);
+    })
+  },
+  toSave(canvas) {
+      // console.log('canvas:', canvas)
+      const that = this;
+      wx.canvasToTempFilePath({
+        x : 0,
+        y: 0,
+        canvasId: 'share',
+        canvas: canvas,
+        width: that.data.widths,
+        height: that.data.heights ,
+        destWidth: that.data.widths * wx.getSystemInfoSync().pixelRatio,
+        destHeight: that.data.heights * wx.getSystemInfoSync().pixelRatio,
+        success: function (res) {
+            const tempFilePath = res.tempFilePath;
+            that.setData({
+                [`formResourceUrl.${that.data.photoField}`]: tempFilePath
+            });
+
+            app.req.api.uploadFile({
+                path: tempFilePath,
+                formData: {
+                    userId: that.data.userInfo.id
+                },
+                success(res){
+                    console.log('图片上传：', res)
+                    that.setData({
+                        [`formResource.${that.data.photoField}`]: res.data
+                    })
+                }
+            })
+        },
+          fail: function (error) {
+            console.log(error)
+          }
+      })
+    },
     /***预览图片 */
     previewImg(e){
         const src = e.currentTarget.dataset.src;
@@ -329,7 +522,7 @@ Page({
             userId: userInfo.id,
             ...this.data.formResource
         };
-        console.log(8888, userhealthcheckResource)
+        // console.log(8888, userhealthcheckResource)
         app.req.api.addHealthCheckReport({
             userhealthcheckReport,
             userhealthcheckResource

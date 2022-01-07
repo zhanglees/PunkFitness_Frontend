@@ -43,7 +43,7 @@
       <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">{{item.name}}</li>
     </ul>
   </view>
-  <view class="userlogs">
+  <view class="userlogs" wx:if="{{showLogs}}">
     <view class="member-title">客户动态</view>
     <view class='userlogs-view'> 
       <view wx:for="{{logs}}" wx:key="key" wx:for-index="key"  wx:for-item="value">

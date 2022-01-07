@@ -58,7 +58,11 @@ Page({
                     })
                 },
                 "fail":function(res){
-                    console.log('支付失败', res)},
+                    wx.showToast({
+                      title: '支付失败',
+                      icon: 'error'
+                    })
+                },
                 "complete":function(res){
                     console.log('支付完成', res)}
             })

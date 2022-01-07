@@ -33,76 +33,77 @@ Page({
       name: '训练记录',
       link: '/pages/packageA/training/classlist/classlist?type=record&'
     }],
+    showLogs: false,
     logs: {
-      '#2021': {
-        '11.02': [{
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }], 
-        '10.03': [{
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }]
-      },
-      '#2020': {
-        '11.02': [{
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }, {
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }],
-        '02.11': [{
-          date: '11.02',
-          time: '12:10',
-          content: '训练计划',
-          coach:'王祥'
-        }]
-      }
+      // '#2021': {
+      //   '11.02': [{
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }], 
+      //   '10.03': [{
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }]
+      // },
+      // '#2020': {
+      //   '11.02': [{
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }, {
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }],
+      //   '02.11': [{
+      //     date: '11.02',
+      //     time: '12:10',
+      //     content: '训练计划',
+      //     coach:'王祥'
+      //   }]
+      // }
     }
   },
   // 事件处理函数
@@ -130,15 +131,15 @@ Page({
     app.req.api.getUserLogById({
       userId
     }).then(res=>{
-      let data = res.data;
-      data = [{
-        userLogId: "fe8efc0c-ba62-103a-abe9-f8ebb2ba8d93",  
-        createTime: "2021-12-11 00:00:00",                  
-        controllerPath: "训练计划",                                
-        createCoachId: "string",                             
-        userId: "e930ae3a-e64e-47bd-bfe3-07ac06afcb43",      
-        userName: "ddf"                                        
-      }];
+      let data = res.data || [];
+      // data = [{
+      //   userLogId: "fe8efc0c-ba62-103a-abe9-f8ebb2ba8d93",  
+      //   createTime: "2021-12-11 00:00:00",                  
+      //   controllerPath: "训练计划",                                
+      //   createCoachId: "string",                             
+      //   userId: "e930ae3a-e64e-47bd-bfe3-07ac06afcb43",      
+      //   userName: "ddf"                                        
+      // }];
       let temp = {};
       data.forEach(i=>{
         const time = i.createTime ? i.createTime.match(/([0-9]+)-([0-9]+-[0-9]+)\s([0-9]+:[0,9]+)/) : [];
@@ -174,7 +175,8 @@ Page({
           }
         }
         this.setData({
-          logs: temp
+          logs: temp,
+          showLogs: data.length
         })
       })
     })

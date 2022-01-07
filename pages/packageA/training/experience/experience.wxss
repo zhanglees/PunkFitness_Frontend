@@ -20,6 +20,18 @@
     font-size: 32rpx;
     height: 60rpx;
 }
+.class-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx;
+}
+.class-li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 20rpx 20rpx 20rpx 0;
+}
 .class-item-create{
     color: #999;
 }
