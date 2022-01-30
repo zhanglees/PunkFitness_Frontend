@@ -20,7 +20,7 @@
         </mp-cell>
     </view>
     <view class="btn-wrapper">
-        <view class="reserve-btn" bindtap="goReserve">确认预约</view>
+        <view class="form-btn" bindtap="goReserve">确认预约</view>
     </view>
   <mp-dialog title="准会员无法预约课程，是否转为正式会员？" show="{{showDialog}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
   </mp-dialog>

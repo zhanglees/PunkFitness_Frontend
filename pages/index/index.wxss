@@ -62,7 +62,7 @@
   line-height: 40rpx;
   text-align: center;
   border: 1px solid #999;
-  border-radius: 10rpx;
+  border-radius: var(--base-radius);
   color: #999;
   text-align: center;
   padding: 0 30rpx;
@@ -85,7 +85,7 @@
   border: 1px solid var(--base);
   color: white;
   background: var(--base);
-  border-radius: 10rpx;
+  border-radius: var(--base-radius);
   height: 80rpx;
   line-height: 80rpx;
 }

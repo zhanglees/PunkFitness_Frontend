@@ -29,6 +29,25 @@ Page({
             id: 'groups',
             unit: '组'
         }],
+        itemsShow: [{
+            name: '器械',
+            id: 'equipmentName'
+        }, {
+            name: '配重',
+            id: 'counterWeight',
+            unit: 'kg'
+        }, {
+            name: '单组次数',
+            id: 'numberSinglegroup',
+            unit: '次'
+        }, {
+            name: '组数',
+            id: 'groups',
+            unit: '组'
+        }, {
+            name: '训练部位',
+            id: 'trainingAreaName'
+        }],
         trainingList: [{
             name: '热身训练',
             actionList: [],
@@ -138,52 +157,63 @@ Page({
             actionList: ['自定义']
         }],
         equipment: ['哑铃', '杠铃', '龙门架', '拉力器', '固定训练器械', '弹力带', '壶铃', '自由深蹲架', '360训练架', '瑜伽垫', '徒手', '自定义'],
-        editedIndex: []  //这个数组用来记录被编辑过的动作索引
+        editedIndex: [], //这个数组用来记录被编辑过的动作索引
+        dialogShow: false,
+        dialogIndex: '', //当前要删除的index
+        dialogButtons: [{ text: '取消' }, { text: '确定' }]
     },
-
+    trainingItemExpand(e) {
+        const index = e.currentTarget.dataset.index;
+        // console.log(88888, this.data.trainingList)
+        //展开的同时如果没有动作就调用添加动作
+        if (this.data.trainingList[index].actionList.length == 0) { this.addone(null, index) }
+        this.setData({
+            [`trainingList[${index}].expand`]: !this.data.trainingList[index].expand
+        })
+    },
     /**
      * Lifecycle function--Called when page load
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         const type = options.type;
         const coachId = wx.getStorageSync('mp-req-user-id');
         const { userId } = options;
-        if(type == 'edit') {
+        if (type == 'edit' || type == 'detail') {
             //编辑
-            const { showOrder, usertrainSectionId, sectionName,trainingPlanId, userTrainitemId } = options;
+            const { showOrder, usertrainSectionId, sectionName, trainingPlanId, userTrainitemId } = options;
             this.setData({
                 coachId,
-                userId, 
-                sectionName, 
+                userId,
+                sectionName,
                 usertrainSectionId,
-                trainingPlanId, 
+                trainingPlanId,
                 userTrainitemId,
                 showOrder,
                 type
             })
             this.getClassDetail(coachId, userId, usertrainSectionId, sectionName);
-        }else if(type == 'new'){
+        } else if (type == 'new') {
             //新建
             const { showOrder, userTrainitemId, trainingPlanId } = options;
             this.setData({
                 coachId,
-                userId, 
-                userTrainitemId, 
+                userId,
+                userTrainitemId,
                 trainingPlanId,
                 showOrder,
                 editFlag: true,
                 type
             })
-        }else{
+        } else {
             app.req.api.getUserExperienceLessonDetail({
                 coachId,
                 userId
-            }).then(res=>{
+            }).then(res => {
                 this.setData({
                     ...res.data,
                     trainingList: this.dataFormate(res.data),
                     coachId,
-                    userId, 
+                    userId,
                     editFlag: !res.data.userTraionSectionDetails,
                     type
                 })
@@ -197,42 +227,44 @@ Page({
         //     })
         // }
     },
-    getClassDetail(coachId, userId, usertrainSectionId, sectionName){
-        app.req.api.getUserClassSectionDetail({coachId, userId, usertrainSectionId, sectionName}).then(res=>{
+    getClassDetail(coachId, userId, usertrainSectionId, sectionName) {
+        app.req.api.getUserClassSectionDetail({ coachId, userId, usertrainSectionId, sectionName }).then(res => {
             this.setData({
                 trainingList: this.dataFormate(res.data)
             })
         })
     },
-    dataFormate(data){
+    dataFormate(data) {
         const userTraionSectionDetails = data.userTraionSectionDetails;
         let trainingList = this.data.trainingList;
         userTraionSectionDetails && userTraionSectionDetails.forEach(section => {
             let training = trainingList[section.trainingType || 0];
-            section.videourl = 'https://' + section.videourl;
+            section.videourl && (section.videourl = 'https://' + section.videourl);
             training.actionList.push({
                 ...section,
-                trainingAreaName: (section.trainingArea!=null) ? this.data.trainingPart[section.trainingArea].name : '',
-                actionName: ((section.trainingArea!=null) && (section.action!=null)) ? this.data.trainingPart[section.trainingArea].actionList[section.action] : '',
-                equipmentName: (section.equipment!=null)  ? this.data.equipment[section.equipment] : ''
+                trainingAreaName: (section.trainingArea != null) ? this.data.trainingPart[section.trainingArea].name : '',
+                actionName: ((section.trainingArea != null) && (section.action != null)) ? this.data.trainingPart[section.trainingArea].actionList[section.action] : '',
+                equipmentName: (section.equipment != null) ? this.data.equipment[section.equipment] : ''
             })
+            training.actionList.length && (training.expand = true);
         })
         return trainingList;
     },
-    edit(e){
+    edit(e) {
         this.setData({
             editFlag: true
         })
     },
     /****编辑课程名称 */
-    inputNameChange(e){
+    inputNameChange(e) {
         const value = e.detail.value;
         this.setData({
             sectionName: value
         });
     },
-    addone(e){
-        const index = e.currentTarget.dataset.index;
+    addone(e, i) {
+        const index = e ? e.currentTarget.dataset.index : i;
+        console.log(9999, index)
         this.setData({
             [`trainingList[${index}].showAdd`]: true,
             [`trainingList[${index}].detail`]: {
@@ -245,19 +277,19 @@ Page({
             }
         })
     },
-    bindSelChange(e){
-        const {index, name} = e.currentTarget.dataset;
+    bindSelChange(e) {
+        const { index, name } = e.currentTarget.dataset;
         const valueIndex = e.detail.value;
         let value = '';
-        if(name=='trainingArea'){
+        if (name == 'trainingArea') {
             value = this.data.trainingPart[valueIndex].name;
             this.setData({
                 [`trainingList[${index}].detail.action`]: '',
                 [`trainingList[${index}].detail.actionName`]: ''
             });
-        }else if(name == 'action'){
+        } else if (name == 'action') {
             value = this.data.trainingPart[this.data.trainingList[index].detail.trainingArea].actionList[valueIndex];
-        }else{
+        } else {
             value = this.data.equipment[valueIndex];
         }
         this.setData({
@@ -265,76 +297,76 @@ Page({
             [`trainingList[${index}].detail.${name}Name`]: value
         });
     },
-    inputChange(e){
-        const {index, name} = e.currentTarget.dataset;
+    inputChange(e) {
+        const { index, name } = e.currentTarget.dataset;
         const value = e.detail.value;
         this.setData({
             [`trainingList[${index}].detail.${name}`]: value
         });
     },
-    bindSelChangeEdit(e){
-        const {index, name, i} = e.currentTarget.dataset;
+    bindSelChangeEdit(e) {
+        const { index, name, i } = e.currentTarget.dataset;
         const valueIndex = e.detail.value;
         let value = '';
-        if(name=='trainingArea'){
+        if (name == 'trainingArea') {
             value = this.data.trainingPart[valueIndex].name;
             this.setData({
                 [`trainingList[${index}].actionList[${i}].actionName`]: '',
                 [`trainingList[${index}].actionList[${i}].action`]: ''
             });
-        }else if(name == 'action'){
+        } else if (name == 'action') {
             const trainingArea = this.data.trainingList[index].actionList[i].trainingArea;
             value = this.data.trainingPart[trainingArea].actionList[valueIndex];
-        }else{
+        } else {
             value = this.data.equipment[valueIndex];
         }
-        this.data.editedIndex.push(index+'-'+ i);
+        this.data.editedIndex.push(index + '-' + i);
         this.setData({
             [`trainingList[${index}].actionList[${i}].${name}`]: valueIndex,
             [`trainingList[${index}].actionList[${i}].${name}Name`]: value,
         });
         console.log(9999, this.data.editedIndex)
     },
-    inputChangeEdit(e){
-        const {index, name, i} = e.currentTarget.dataset;
+    inputChangeEdit(e) {
+        const { index, name, i } = e.currentTarget.dataset;
         const value = e.detail.value;
-        this.data.editedIndex.push(index+'-'+ i);
+        this.data.editedIndex.push(index + '-' + i);
         this.setData({
             [`trainingList[${index}].actionList[${i}].${name}`]: value
         });
     },
 
     //开始录制视频
-    startVideo(e){
+    startVideo(e) {
         const _this = this;
-        const {index, i} = e.currentTarget.dataset;
+        const { index, i } = e.currentTarget.dataset;
         wx.chooseVideo({
-          sourceType: ['album','camera'],
-          maxDuration: 60,
-          camera: 'back',
-          success(res) {
-            let key = '';
-            if(i == 'detail'){
-                key = `trainingList[${index}].detail.video`
-            }else{
-                key = `trainingList[${index}].actionList[${i}].video`
+            sourceType: ['album', 'camera'],
+            maxDuration: 60,
+            camera: 'back',
+            success(res) {
+                let key = '';
+                if (i == 'detail') {
+                    key = `trainingList[${index}].detail.video`
+                } else {
+                    key = `trainingList[${index}].actionList[${i}].video`
+                }
+                _this.setData({
+                    [key]: res.tempFilePath
+                });
+                _this.uploadVideo(res.tempFilePath, index, i);
             }
-            _this.setData({
-                [key]: res.tempFilePath
-            });
-            _this.uploadVideo(res.tempFilePath, index, i);
-          }
         })
-      },
-      /**删除某个视频 */
-    delAct(e){
-        const {index, i} = e.currentTarget.dataset;
+    },
+    /**删除某个视频 */
+    delAct(e) {
+        const { index, i } = e.currentTarget.dataset;
         let key = '';
-        if(i == 'detail'){
+        if (i == 'detail') {
             key = `trainingList[${index}].detail`;
-        }else{
+        } else {
             key = `trainingList[${index}].actionList[${i}]`;
-            this.data.editedIndex.push(index+'-'+ i);
+            this.data.editedIndex.push(index + '-' + i);
         }
         this.setData({
             [key + '.video']: '',
@@ -351,23 +383,23 @@ Page({
     //         [`trainingList[${index}].editIndex`]: a
     //     })
     // },
-/****上传视频 */
-    uploadVideo(video, index, i){
+    /****上传视频 */
+    uploadVideo(video, index, i) {
         const _this = this;
-        if(video.length){
+        if (video.length) {
             app.req.api.uploadFile({
-                path: video,  
+                path: video,
                 formData: {
                     userId: this.data.userId
                 },
-                success(res){
+                success(res) {
                     console.log('上传:', index, res)
                     let key = '';
-                    if(i == 'detail'){
+                    if (i == 'detail') {
                         key = `trainingList[${index}].detail`;
-                    }else{
+                    } else {
                         key = `trainingList[${index}].actionList[${i}]`;
-                        _this.data.editedIndex.push(index+'-'+ i);
+                        _this.data.editedIndex.push(index + '-' + i);
                     }
                     _this.setData({
                         [`${key}.videourl`]: res.data
@@ -376,25 +408,39 @@ Page({
             })
         }
     },
-    previewVideo(e){
+    previewVideo(e) {
         const src = e.currentTarget.dataset.src;
         console.log(e.currentTarget.dataset)
-        wx.previewImage({ 
-          current: src, // 当前显示图片的http链接 
-          urls: [src] // 需要预览的图片http链接列表 
-         }) 
+        wx.previewImage({
+            current: src, // 当前显示图片的http链接 
+            urls: [src] // 需要预览的图片http链接列表 
+        })
     },
-    delOne(e){
-        const {index, a, sectiondetailid} = e.currentTarget.dataset;
-        if(this.data.type != 'new'){
+    showDelDialog(e) {
+        this.delObj = e.currentTarget.dataset;
+        this.setData({
+            dialogShow: true
+        })
+    },
+    tapDialogButton(e) {
+        if (e.detail.index === 1) {
+            this.delOne();
+        }
+        this.setData({
+            dialogShow: false
+        })
+    },
+    delOne(e) {
+        const { index, a, sectiondetailid } = this.delObj;
+        if (this.data.type != 'new') {
             //编辑状态的删除就真的提交删除了
-            const {coachId, userId} = this.data;
+            const { coachId, userId } = this.data;
             app.req.api.delUserSectionDetail({
                 coachId,
                 userId,
                 sectionDetailId: sectiondetailid
-            }).then(res=>{
-                if(res.code == 0){
+            }).then(res => {
+                if (res.code == 0) {
                     const training = this.data.trainingList[index];
                     let actionList = training.actionList;
                     actionList.splice(a, 1);;
@@ -403,7 +449,7 @@ Page({
                     })
                 }
             })
-        }else{
+        } else {
             const training = this.data.trainingList[index];
             let actionList = training.actionList;
             actionList.splice(a, 1);;
@@ -413,37 +459,40 @@ Page({
         }
     },
     /***保存一条新增动作 */
-    saveOne(e){
-        const {index} = e.currentTarget.dataset;
-        if(this.data.type != 'new'){
+    saveOne(e) {
+        const { index } = e.currentTarget.dataset;
+        if (this.data.type != 'new') {
             //编辑进来就真的新增一条
-            const {coachId, userId, sectionName, usertrainSectionId} = this.data;
+            const { coachId, userId, sectionName, usertrainSectionId } = this.data;
             app.req.api.adddUserSectionDetail({
                 ...this.data.trainingList[index].detail,
-                coachId, userId, sectionName, usertrainSectionId,
+                coachId,
+                userId,
+                sectionName,
+                usertrainSectionId,
                 trainingType: index
-            }).then(res=>{
-                if(res.code == 0){
+            }).then(res => {
+                if (res.code == 0) {
                     this.saveOneDo(index, res.data);
-                }else{
+                } else {
                     wx.showToast({
-                      title: '请重试',
-                      icon: 'error'
+                        title: '请重试',
+                        icon: 'error'
                     })
                 }
             })
-        }else{
+        } else {
             this.saveOneDo(index);
         }
     },
-    saveOneDo(index, data){
+    saveOneDo(index, data) {
         const training = this.data.trainingList[index];
-        const detail = {...training.detail, ...(data || {})};
+        const detail = {...training.detail, ...(data || {}) };
         const editIndex = training.editIndex;
         let actionList = training.actionList;
-        if(editIndex || (editIndex===0)){
+        if (editIndex || (editIndex === 0)) {
             actionList[editIndex] = detail;
-        }else{
+        } else {
             actionList.push(detail);
         }
         this.setData({
@@ -453,32 +502,32 @@ Page({
         });
         console.log(8888, this.data.trainingList[index].actionList)
     },
-    cancelOne(e){
-        const {index} = e.currentTarget.dataset;
+    cancelOne(e) {
+        const { index } = e.currentTarget.dataset;
         this.setData({
             [`trainingList[${index}].showAdd`]: false,
             [`trainingList[${index}].editIndex`]: ''
         });
     },
     /*****全页面的保存提交 */
-    saveList(){
+    saveList() {
         this.setData({
             editFlag: false
         })
         const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId } = this.data;
-        if(type != 'new'){
+        if (type != 'new') {
             //编辑进来 只修改课程名称
-            if(type == 'edit'){
+            if (type == 'edit') {
                 app.req.api.submitUserClassSection({
-                    coachId,                                         
-                    sectionName,                          
-                    showOrder,                                             
-                    trainingPlanId,          
-                    userId,              
-                    userTrainitemId,    
+                    coachId,
+                    sectionName,
+                    showOrder,
+                    trainingPlanId,
+                    userId,
+                    userTrainitemId,
                     usertrainSectionId: this.data.usertrainSectionId
-                }).then(res=>{
-                    if(res.code == 0){
+                }).then(res => {
+                    if (res.code == 0) {
                         wx.showToast({
                             title: '提交成功',
                         })
@@ -491,48 +540,48 @@ Page({
             //然后挨个去看哪些动作被编辑过了，就调用编辑接口，这个实现实在是糟糕
             let editedIndex = this.data.editedIndex;
             console.log(9999, editedIndex)
-            if(editedIndex.length){
+            if (editedIndex.length) {
                 editedIndex = [...new Set(editedIndex)];
-                editedIndex.forEach(i=>{
+                editedIndex.forEach(i => {
                     const t = i.split('-');
                     let data = this.data.trainingList[t[0]].actionList[t[1]];
                     app.req.api.editUserClassSectionDetail({
                         ...data,
                         trainingType: t[0]
-                    }).then(res=>{
+                    }).then(res => {
                         console.log('保存：', res.data)
                     })
                 })
             }
-            if(type == 'experience'){
+            if (type == 'experience') {
                 wx.navigateBack({
                     delta: 0,
                 })
             }
-        }else{
+        } else {
             let trainingList = this.data.trainingList;
             let userTraionSectionDetails = [];
             trainingList.forEach((training, type) => {
                 training.actionList.forEach(action => {
                     userTraionSectionDetails.push({
-                        ...action,              
-                        sectionName,      
-                        trainingType: type  
+                        ...action,
+                        sectionName,
+                        trainingType: type
                     })
                 })
             })
             console.log('提交：', userTraionSectionDetails)
             app.req.api.addUserTrainClassSection({
                 showOrder,
-                coachId,                                     
-                sectionName: sectionName || `第${showOrder}节训练课`,                               
-                trainingPlanId,                                
-                userId,         
-                userTrainitemId,  
+                coachId,
+                sectionName: sectionName || `第${showOrder}节训练课`,
+                trainingPlanId,
+                userId,
+                userTrainitemId,
                 userTraionSectionDetails
-            }).then(res=>{
+            }).then(res => {
                 console.log('提交返回：', res.data)
-                if(res.code == 0){
+                if (res.code == 0) {
                     wx.navigateBack({
                         delta: 0,
                     })
@@ -543,49 +592,49 @@ Page({
     /**
      * Lifecycle function--Called when page is initially rendered
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page show
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page hide
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page unload
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * Page event handler function--Called when user drop down
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * Called when page reach bottom
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * Called when user click on the top right corner to share
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

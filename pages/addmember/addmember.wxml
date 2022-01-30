@@ -38,7 +38,7 @@
     </mp-form>
 
     <view class="form-bottom" slot="button">
-        <button class="form-btn-confirm" bindtap="submitForm">关联客户</button>
+        <button class="form-btn" bindtap="submitForm">关联客户</button>
         <text>点击客户微信扫码，便于客户微信收到个人运动相关动态信息</text>
     </view>
     <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask>    

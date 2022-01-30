@@ -8,7 +8,7 @@
 }
 .buy-item{
     border: 1px solid var(--base);
-    border-radius: 10rpx;
+    border-radius: var(--base-radius);
     width: 180rpx;
     height: 180rpx;
     text-align: center;

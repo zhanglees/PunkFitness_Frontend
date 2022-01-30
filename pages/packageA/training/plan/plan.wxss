@@ -45,7 +45,7 @@
     font-weight: bold;
 }
 .data-status{
-    border-radius: 4px;
+    border-radius: var(--base-radius);
     height: 40rpx;
     line-height: 40rpx;
     padding: 0 10rpx;
@@ -176,7 +176,7 @@
     border: 1px solid red;
     padding: 0 10rpx;
     height: 40rpx;
-    border-radius: 10rpx;
+    border-radius: var(--base-radius);
     float: right;
 }
 .stage-title .arrow-icon .weui-icon{
@@ -290,7 +290,7 @@
 }
 .stage-remark{
     border: 1px solid #E6E6E6;
-    border-radius: 8rpx;
+    border-radius: var(--base-radius);
     background-color: #F6F6F6;
     margin: 20rpx;
     font-size: 24rpx;

@@ -171,8 +171,8 @@ Page({
         let url = '/pages/packageA/training/edit/edit?';
         if(status){
             //已编辑 查详情
-            const {coachId, usertrainSectionId, sectionName} = classItem;
-            url += ('type=edit&showOrder=' + (index+1) + '&coachId=' + coachId + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId);
+            const { coachId, usertrainSectionId, sectionName } = classItem;
+            url += ('type=' + (status == 1 ? 'edit' : 'detail' )+ '&showOrder=' + (index+1) + '&coachId=' + coachId + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId+ '&status=' + status);
         }else{
             //去新建
             url += ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId);

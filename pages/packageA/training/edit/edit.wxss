@@ -1,161 +1,485 @@
 /* pages/packageA/training/edit/edit.wxss */
-page{
-    background: #eee;
-}
-.container{
+
+.container {
     position: relative;
 }
-.page-title{
-    margin-bottom: 20rpx;
+
+.page-title {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 20rpx;
-    line-height: 80rpx;
-    height: 80rpx;
+    padding: 50rpx 32rpx 32rpx;
+    /* line-height: 80rpx;
+    height: 80rpx; */
     background: #fff;
     font-size: 32rpx;
-    position: fixed;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0px 2px 4px #999;    
+    /* position: fixed;
+    top: 0; */
+    /* z-index: 10; */
+    /* box-shadow: 0px 2px 4px #999;     */
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
 }
-.save-btn{
-    font-size: 24rpx;
+
+.classname {
+    position: relative;
+    padding-left: 50rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    color: #222834;
+    line-height: 44rpx;
+    height: 44rpx;
 }
-.page-title .weui-input{
+
+.classname::before,
+.classname::after {
+    content: '';
+    display: inline-block;
+    width: 28rpx;
+    height: 28rpx;
+    border-radius: 28rpx;
+    position: absolute;
+    left: 0;
+    top: 8rpx;
+}
+
+.classname::before {
+    background: #386DF3;
+}
+
+.classname::after {
+    background: #60D481;
+    left: 14rpx;
+}
+
+.edit-btn {
+    height: 32rpx;
+    width: 32rpx;
+}
+
+.edit-tips {
+    width: 100%;
+    color: #C1C7D6;
+    line-height: 32rpx;
+    height: 32rpx;
+    font-size: 24rpx;
+    margin-top: 8rpx;
+}
+
+.edittitle {
+    font-size: 44rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+}
+
+.save-btn {
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #386DF3;
+}
+
+.page-title .weui-input {
     flex: 1;
     display: inline-block;
     margin-left: 10rpx;
 }
-.training-list{
+
+.training-list {
     width: 100%;
     box-sizing: border-box;
-    margin-top: 100rpx;
+    padding: 0 32rpx;
     margin-bottom: 60rpx;
 }
-.training-item{
+
+
+/* .training-item{
     background: #fff;
     padding: 0 20rpx;
     margin-bottom: 20rpx;
-}
-.training-title{
-    height: 80rpx;
-    line-height: 80rpx;
+}  */
+
+.training-item-edit .training-title {
+    height: 40rpx;
     padding-left: 30rpx;
     position: relative;
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #222834;
+    line-height: 40rpx;
+    margin-bottom: 48rpx;
+    margin-top: 48rpx;
 }
-.training-title::after{
+
+.training-item-edit {
+    height: 128rpx;
+    overflow: hidden;
+    border-bottom: 1px solid #F1F1F3;
+}
+
+.training-item-edit .arrow-down-icon .weui-icon {
+    transform: rotate(90deg);
+    margin-left: 20rpx;
+}
+
+.training-item-edit .training-add {
+    display: none;
+}
+
+.training-item-edit-expand .training-add {
+    display: block;
+}
+
+.training-item-edit-expand .arrow-down-icon .weui-icon {
+    transform: rotate(270deg);
+}
+
+.training-item-edit-expand {
+    height: unset;
+}
+
+.training-title::before {
     content: "";
     height: 10rpx;
     width: 10rpx;
     position: absolute;
     left: 0;
-    top: 35rpx;
+    top: 15rpx;
     background: #FAB44F;
     display: block;
 }
-.training-list .training-item:nth-child(2) .training-title::after{
+
+.training-list .training-item:nth-child(2) .training-title::before {
     background: #42D3C4;
 }
-.training-list .training-item:nth-child(3) .training-title::after{
+
+.training-list .training-item:nth-child(3) .training-title::before {
     background: #799AF0;
 }
-.action-item{
-    background: rgba(128, 128, 128, .1);
-    border-radius: 4px;
-    margin-bottom: 20rpx;    
+
+.action-item {
+    /* background: rgba(128, 128, 128, .1); */
+    border-radius: var(--base-radius);
+    margin-bottom: 20rpx;
     padding-bottom: 20rpx;
 }
-.training-add{
-    color: #86C4EC;
+
+.action-item-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-item-head-left {
+    display: inline-flex;
+}
+
+.action-item-actionname {
+    font-weight: 500;
+    color: #222834;
+    line-height: 40rpx;
+    height: 40rpx;
+    font-size: 32rpx;
+    margin-bottom: 16rpx;
+}
+
+.action-item-trainname {
+    width: 128rpx;
+    height: 48rpx;
+    background: rgba(56, 109, 243, 0.1);
+    border-radius: 12rpx;
+    font-size: 24rpx;
+    font-weight: 400;
+    color: #386DF3;
+    line-height: 48rpx;
+    text-shadow: 0px 1rpx 3rpx rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.action-item-trainname1 {
+    background: rgba(58, 206, 100, 0.1);
+    color: #3ACE64;
+}
+
+.action-item-del {
+    width: 28rpx;
+    height: 28rpx;
+    display: inline-block;
+}
+
+.training-add {
+    /* color: #86C4EC;
     text-align: center;
     line-height: 80rpx;
     height: 80rpx;
     font-size: 24rpx;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd; */
+    font-size: 48rpx;
+    background: #f4f4f7;
+    height: 116rpx;
+    width: 116rpx;
+    line-height: 110rpx;
+    border-radius: 116rpx;
+    color: #707785;
+    position: relative;
+    text-align: center;
+    margin-bottom: 48rpx;
 }
-.training-item .weui-cell__bd{
+
+.training-add::after {
+    content: "添加动作";
+    height: 40rpx;
+    font-size: 28rpx;
+    color: #707784;
+    line-height: 40rpx;
+    position: absolute;
+    top: -56rpx;
+    left: 0;
+}
+
+.training-item .weui-cell__bd {
     height: 80rpx;
 }
-.training-item .weui-cell{
+
+.training-item .weui-cell {
     padding-top: 0;
     padding-bottom: 0;
 }
-.training-item .weui-cell .weui-cell__ft{
+
+.training-item .weui-cell .weui-cell__ft {
     margin-left: 20rpx;
 }
-.weui-input, .weui-label, .weui-select{
+
+.weui-input,
+.weui-label,
+.weui-select {
     height: 80rpx;
     line-height: 80rpx;
 }
-.input-value{
+
+.input-value {
     text-align: right;
     padding-right: 100rpx;
 }
-.training-item .weui-cell__hd{
+
+.training-item .weui-cell__hd {
     width: 210rpx;
 }
-.add-one-bottom{
-    text-align: right;
+
+.add-one-bottom {
+    text-align: center;
     justify-content: space-around;
     padding-bottom: 20rpx;
+    margin-top: 48rpx;
 }
-.add-one-btn{
-    border: 1px solid #86C4EC;
-    border-radius: 20rpx;
-    height: 40rpx;
-    line-height: 40rpx;
-    color: #86C4EC;
-    padding: 0 20rpx;
+
+.add-one-btn {
+    line-height: 88rpx;
+    height: 88rpx;
+    padding: 0 128rpx;
     display: inline-block;
+    background: #386DF3;
+    border-radius: 27px;
+    font-weight: 500;
+    color: #FFFFFF;
+    border-radius: 54rpx;
 }
-.add-one-btn-cancel{
-    color: gray;
-    border-color: gray;
-    margin-left: 20rpx;
+
+.add-one-btn-cancel {
+    color: #707784;
+    margin-right: 50rpx;
+    background: #F4F4F7;
 }
-.edit-one{
+
+.edit-one {
     text-align: right;
     height: 80rpx;
     box-sizing: border-box;
     padding: 20rpx 20rpx 0;
     font-size: 24rpx;
 }
-.add-one-btn-edit{
+
+.add-one-btn-edit {
     width: fit-content;
     display: inline-block;
     margin-right: 20rpx;
 }
-.action-list{
+
+.action-list {
     padding-bottom: 20rpx;
 }
-.add-one-btn-del{
+
+.add-one-btn-del {
     color: #DF8172;
     border-color: #DF8172;
     width: fit-content;
     display: inline-block;
 }
 
-.user-video{
-    width: 200rpx;
-    height: 200rpx;
+.user-video {
+    width: 280rpx;
+    height: 156rpx;
 }
-.video-wrapper{
+
+.video-wrapper {
     position: relative;
-    border: 1px dashed #ddd;
-    border-radius: 2px;
-    height: 200rpx;
-    width: 200rpx;
+    height: 156rpx;
+    width: 280rpx;
     box-sizing: border-box;
-    margin-left: 30rpx;
-    margin-right: 20rpx;
+    background: #D8D8D8;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(30, 34, 58, 0.04);
+    margin-right: 24rpx;
 }
-.eva-camera{
+
+.eva-camera {
     text-align: center;
     font-size: 20rpx;
     padding-top: 60rpx;
     color: #999;
+}
+
+.class-info-list {
+    background: #F7F7F9;
+    font-size: 28rpx;
+    color: #222834;
+    padding: 16rpx 24rpx;
+    box-sizing: border-box;
+    margin-top: 32rpx;
+}
+
+.class-info-li {
+    display: inline-block;
+    margin: 8rpx 0;
+    min-width: 180rpx;
+    position: relative;
+}
+
+.class-info-li-name {
+    color: #707784;
+}
+
+.class-info-li:not(:nth-child(3)):not(:nth-child(5)):after {
+    content: '';
+    position: absolute;
+    right: 16rpx;
+    top: 12rpx;
+    width: 1px;
+    height: 20rpx;
+    background: #DADAE3;
+}
+
+.sectionname-edit {
+    width: 100%;
+    text-align: left;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.edit-input {
+    width: 343px;
+    height: 52px;
+    background: #F4F4F7;
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding-left: 32rpx;
+    margin: 16rpx auto 0;
+}
+
+.edit-label {
+    font-weight: 400;
+    color: #707784;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.action-edit-item {
+    width: 48%;
+    display: inline-block;
+    margin-bottom: 48rpx;
+    position: relative;
+}
+
+.action-edit-item-input {
+    height: 104rpx;
+    /* width: 320rpx; */
+    background: #F4F4F7;
+    border-radius: 12rpx;
+    text-align: left;
+    padding-left: 32rpx;
+    box-sizing: border-box;
+    padding-right: 104rpx;
+}
+
+.action-edit-item-unit {
+    position: absolute;
+    right: 0;
+    bottom: 34rpx;
+    width: 106rpx;
+    color: #222834;
+    line-height: 36rpx;
+    height: 36rpx;
+    text-align: center;
+    border-left: 1px solid #D1D4DB;
+}
+
+.action-edit-item-input .weui-select {
+    font-size: 28rpx;
+    color: #222834;
+    line-height: 104rpx;
+    padding-left: 0;
+}
+
+.training-item-edit .action-item {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 56rpx;
+}
+
+.action-edit-item-label {
+    font-size: 28rpx;
+    color: #707784;
+    line-height: 40rpx;
+    margin-bottom: 16rpx;
+}
+
+.action-edit-video-wrapper {
+    width: 100%;
+    height: 386rpx;
+    background: #F4F4F7;
+    border-radius: 12rpx;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+.action-edit-video-wrapper .user-video {
+    width: 100%;
+    height: 100%;
+    border-radius: 12rpx;
+}
+
+.action-edit-video-wrapper .eva-camera {
+    color: #BCC0C7;
+    padding-top: 104rpx;
+}
+
+.action-edit-video-wrapper .eva-camera .eva-camera-image {
+    width: 96rpx;
+    height: 74rpx;
+}
+
+.action-edit-del {
+    position: absolute;
+    bottom: -56rpx;
+    right: 40rpx;
+}
+
+.del-act-btn {
+    right: 20rpx;
+    top: 20rpx;
 }

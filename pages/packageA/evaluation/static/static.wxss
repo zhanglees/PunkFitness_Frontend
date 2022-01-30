@@ -212,7 +212,7 @@ swiper{
 .report-problem{
     border: 1px solid #2D62F4;
     height: 60rpx;
-    border-radius: 4px;
+    border-radius: var(--base-radius);
     color: #2D62F4;
     line-height: 60rpx;
     padding: 0 20rpx;

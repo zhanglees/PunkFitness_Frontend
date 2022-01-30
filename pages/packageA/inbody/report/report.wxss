@@ -110,7 +110,7 @@
 }
 .img-item{
     border: 1px dashed #ddd;
-    border-radius: 4px;
+    border-radius: var(--base-radius);
     height: 120rpx;
     width: 120rpx;
     display: inline-block;
@@ -123,7 +123,7 @@
 .img-item .img-item-img{
     width: 120rpx;
     height: 120rpx;
-    border-radius: 4px;
+    border-radius: var(--base-radius);
 }
 .report-res .img-item-img{
     border-radius: 0;
@@ -138,7 +138,7 @@
     text-align: center;
     height: 100rpx;
     line-height: 100rpx;
-    border-radius: 10px;
+    border-radius: var(--base-radius);
     margin: 0 auto;
     color: var(--base);
 }
@@ -177,7 +177,7 @@
     border: 1px solid #ddd;
     padding: 20rpx;
     margin-bottom: 20rpx;
-    border-radius: 4px;
+    border-radius: var(--base-radius);
   }
   .file-item-img{
       width: 300rpx;
@@ -221,7 +221,7 @@
   .report-res-detail-item2{
       width: 160rpx;
       border: 1px solid #86C4EC;
-      border-radius: 5px;
+      border-radius: var(--base-radius);
       color: #86C4EC;
       display: flex;
       flex-direction: column;

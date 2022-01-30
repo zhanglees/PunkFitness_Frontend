@@ -307,12 +307,10 @@ Page({
                 className: this.data.newStageName,
                 ownerId: this.data.coachId
             }).then(res=>{
-                console.log(8888, res.data);
                 if(res.code == 0){
                     let data = res.data;
                     data = _this.dataFormate(data);
                     stageList.push(data);
-                    console.log(8888, stageList);
                     this.setData({
                         stageList: stageList,
                         newStageNameShow: false,
@@ -373,9 +371,10 @@ Page({
     /*****修改阶段名称 */
     changeStageTitle(e){
         const value = e.detail.value;
-        this.setData({
-            newStageName: value
-        })
+        this.data.newStageName = value;
+        // this.setData({
+        //     newStageName: value
+        // })
     },
     inputChange(e){
         const {field} = e.currentTarget.dataset

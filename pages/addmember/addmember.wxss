@@ -33,7 +33,7 @@
 }
 .form-textarea .weui-textarea{
   border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 4px;
+  border-radius: var(--base-radius);
   padding: 20rpx;
   box-sizing: border-box;
 }
@@ -68,7 +68,7 @@
 .dialog-btn-wrapper .dialog-btn{
   width: fit-content;
   background: var(--base);
-  border-radius: 10rpx;
+  border-radius: var(--base-radius);
   display: inline-block;
   margin: 0 20rpx;
   color: #fff;    

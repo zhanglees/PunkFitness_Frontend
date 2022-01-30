@@ -9,7 +9,7 @@ page{
 }
 .form{
     background: #fff;
-    border-radius: 10rpx;
+    border-radius: var(--base-radius);
     width: 100%;
     box-sizing: border-box;
 }
@@ -21,15 +21,11 @@ page{
     box-sizing: border-box;
     position: relative;
     padding: 0 20%;
-    margin-top: 80rpx;
-}
-.reserve-btn{
-    background: var(--base);
-    border-radius: 30rpx;
-    height: 60rpx;
-    line-height: 60rpx;
-    color: #fff;
+    margin-top: var(--base-margintop);
     text-align: center;
+}
+.btn-wrapper .form-btn{
+    width: 90%;
 }
 .form .weui-cell:first-child::after{
     content: '';
@@ -46,7 +42,7 @@ page{
     padding: 20rpx;
     position: absolute;
     right: 30rpx;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 var(--base-radius) var(--base-radius);
     border-top: 0;
     left: 250rpx;
     right: 30rpx;

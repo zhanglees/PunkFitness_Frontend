@@ -52,7 +52,7 @@
                     <text bindtap="changeName" class="stage-title-text" data-index="{{index}}">{{item.className}}</text>
                     <!-- <block wx:else> -->
                         <!-- <input bindchange="changeStageTitle" data-index="{{index}}" class="stage-title-input" value="{{item.className}}" /> -->
-                        <view wx:if="{{index > 2}}" class="stage-title-del" bindtap="delStage" data-index="{{index}}" data-classid="{{item.classId}}">删除</view>
+                        <view wx:if="{{item.ownerId != 'system'}}" class="stage-title-del" bindtap="delStage" data-index="{{index}}" data-classid="{{item.classId}}">删除</view>
                     <!-- </block> -->
                     <mp-icon class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
                 </view>
@@ -110,9 +110,9 @@
     <mp-dialog title="确定删除该阶段吗？" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>
 
-    <mp-dialog title="" show="{{newStageNameShow}}" buttons="{{false}}"  bindbuttontap="confirmNewStage" buttons="{{dialogButtons}}">    
+    <mp-dialog title="" show="{{newStageNameShow}}" buttons="{{dialogButtons}}" bindbuttontap="confirmNewStage">    
         <view style="color:#000;">请输入阶段名称</view>
-        <input class="new-stage-name-input" value="{{newStageName}}" bindchange="changeStageTitle" />
+        <input class="new-stage-name-input" focus="{{true}}" value="{{newStageName}}" bindinput="changeStageTitle" />
     </mp-dialog>
 </view>
 

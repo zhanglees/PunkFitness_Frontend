@@ -15,7 +15,7 @@
     padding: 20rpx;
 }
 .training-item{
-    border-radius: 5px;
+    border-radius: var(--base-radius);
     border: 1px solid var(--base-light);
     box-sizing: border-box;
     padding: 20rpx;
@@ -34,7 +34,7 @@
 }
 .checkin-btn{
     border: 1px solid var(--base);
-    border-radius: 14rpx;
+    border-radius: var(--base-radius);
     padding: 0 10rpx;
     color: var(--base);
     margin-left: 20rpx;

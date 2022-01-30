@@ -31,7 +31,7 @@
 .userinfo-detail-b{
   background-color: var(--base-bg);
   border: 1px solid var(--base);
-  border-radius: 10rpx;
+  border-radius: var(--base-radius);
   padding: 0 10rpx;
   line-height: 36rpx;
   font-size: 24rpx;
@@ -75,14 +75,14 @@
 .userinfo-tags-item{
   display: inline-block;
   border: 1px solid var(--base);
-  border-radius: 8rpx;
+  border-radius: var(--base-radius);
   background-color: var(--base-bg);
   padding: 0 10rpx;
   margin-right: 20rpx;
 }
 .userinfo-remarks{
   border: 1px solid var(--base);
-  border-radius: 8rpx;
+  border-radius: var(--base-radius);
   background-color: var(--base-bg);
   font-size: 24rpx;
   padding: 10rpx;
@@ -112,7 +112,7 @@
   display: inline-block;
   border: 1px solid var(--base);
   color: var(--base);
-  border-radius: 8rpx;
+  border-radius: var(--base-radius);
   padding: 10rpx 20rpx;
   margin-right: 20rpx;
   margin-top: 15rpx;
