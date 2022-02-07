@@ -59,19 +59,19 @@
                         <view class="action-edit-item">
                             <view class="action-edit-item-label">训练部位</view>
                             <picker class="physical-item-input action-edit-item-input" placeholder="请选择" bindchange="bindSelChangeEdit" data-name="trainingArea" data-index="{{index}}" data-i="{{i}}" value="{{action.trainingArea}}" range="{{trainingPart}}" range-key="name">
-                                <view class="weui-select">{{trainingPart[action.trainingArea].name}}</view>
+                                <view class="weui-select {{!trainingPart[action.trainingArea].name ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].name || '请选择'}}</view>
                             </picker>
                         </view>
                         <view class="action-edit-item">
                             <view slot="title" class="action-edit-item-label">动作</view>
                             <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-i="{{i}}" data-name="action" data-index="{{index}}" value="{{action.action}}" range="{{trainingPart[action.trainingArea].actionList}}" disabled="{{!action.trainingArea}}">
-                                <view class="weui-select">{{trainingPart[action.trainingArea].actionList[action.action]}}</view>
+                                <view class="weui-select {{!trainingPart[action.trainingArea].actionList[action.action] ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].actionList[action.action] || '请选择'}}</view>
                             </picker>
                         </view>
                         <view class="action-edit-item">
                             <view slot="title" class="action-edit-item-label">器械</view>
                             <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-i="{{i}}" data-name="equipment" data-index="{{index}}" value="{{action.equipment}}" range="{{equipment}}">
-                                <view class="weui-select">{{equipment[action.equipment]}}</view>
+                                <view class="weui-select {{!equipment[action.equipment] ? 'select-placeholder' : ''}}">{{equipment[action.equipment] || '请选择'}}</view>
                             </picker>
                         </view>
                         <view class="action-edit-item" prop="counterWeight" footer=" kg" title="配重">
@@ -122,19 +122,19 @@
                     <view class="action-edit-item">
                         <view class="action-edit-item-label">训练部位</view>
                         <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChange" data-name="trainingArea" data-index="{{index}}" value="{{item.detail.trainingArea}}" range="{{trainingPart}}" range-key="name">
-                            <view class="weui-select">{{trainingPart[item.detail.trainingArea].name}}</view>
+                            <view class="weui-select {{!trainingPart[item.detail.trainingArea].name ? 'select-placeholder' : ''}}">{{trainingPart[item.detail.trainingArea].name || '请选择'}}</view>
                         </picker>
                     </view>
                     <view class="action-edit-item">
                         <view class="action-edit-item-label">动作</view>
                         <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChange" data-name="action" data-index="{{index}}" value="{{item.detail.action}}" range="{{trainingPart[item.detail.trainingArea].actionList}}" disabled="{{!item.detail.trainingArea}}">
-                            <view class="weui-select">{{trainingPart[item.detail.trainingArea].actionList[item.detail.action]}}</view>
+                            <view class="weui-select {{!trainingPart[item.detail.trainingArea].actionList[item.detail.action] ? 'select-placeholder' : ''}}">{{trainingPart[item.detail.trainingArea].actionList[item.detail.action] || '请选择'}}</view>
                         </picker>
                     </view>
                     <view class="action-edit-item">
                         <view class="action-edit-item-label">器械</view>
                         <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChange" data-name="equipment" data-index="{{index}}" value="{{item.detail.equipmentName}}" range="{{equipment}}">
-                            <view class="weui-select">{{equipment[item.detail.equipment]}}</view>
+                            <view class="weui-select {{!equipment[item.detail.equipment] ? 'select-placeholder' : ''}}">{{equipment[item.detail.equipment] || '请选择'}}</view>
                         </picker>
                     </view>
 

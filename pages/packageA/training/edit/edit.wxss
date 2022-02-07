@@ -462,6 +462,7 @@
     border-radius: 12rpx;
     overflow: visible;
     box-sizing: border-box;
+    margin-right: 0;
 }
 
 .action-edit-video-wrapper .user-video {
@@ -500,4 +501,8 @@
 .gotop-image {
     width: 208rpx;
     height: 208rpx;
+}
+
+.action-edit-item-input .select-placeholder {
+    color: #8b8b8b;
 }
