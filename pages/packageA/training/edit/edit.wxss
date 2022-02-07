@@ -463,6 +463,7 @@
     overflow: visible;
     box-sizing: border-box;
     margin-right: 0;
+    border: none;
 }
 
 .action-edit-video-wrapper .user-video {
@@ -473,7 +474,7 @@
 
 .action-edit-video-wrapper .eva-camera {
     color: #BCC0C7;
-    padding-top: 104rpx;
+    padding-top: 124rpx;
 }
 
 .action-edit-video-wrapper .eva-camera .eva-camera-image {
