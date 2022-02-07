@@ -160,7 +160,8 @@ Page({
         editedIndex: [], //这个数组用来记录被编辑过的动作索引
         dialogShow: false,
         dialogIndex: '', //当前要删除的index
-        dialogButtons: [{ text: '取消' }, { text: '确定' }]
+        dialogButtons: [{ text: '取消' }, { text: '确定' }],
+        floorStatus: false
     },
     trainingItemExpand(e) {
         const index = e.currentTarget.dataset.index;
@@ -509,11 +510,18 @@ Page({
             [`trainingList[${index}].editIndex`]: ''
         });
     },
+    goTop() {
+        if (wx.pageScrollTo) {
+            wx.pageScrollTo({
+                scrollTop: 0
+            })
+        }
+    },
     /*****全页面的保存提交 */
     saveList() {
-        this.setData({
-            editFlag: false
-        })
+        // this.setData({
+        //     editFlag: false
+        // })
         const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId } = this.data;
         if (type != 'new') {
             //编辑进来 只修改课程名称
@@ -588,6 +596,11 @@ Page({
                 }
             })
         }
+    },
+    onPageScroll: function(e) {
+        this.setData({
+            floorStatus: (e.scrollTop > 100)
+        })
     },
     /**
      * Lifecycle function--Called when page is initially rendered

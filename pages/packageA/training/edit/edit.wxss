@@ -177,7 +177,7 @@
     font-weight: 500;
     color: #222834;
     line-height: 40rpx;
-    height: 40rpx;
+    /* height: 40rpx; */
     font-size: 32rpx;
     margin-bottom: 16rpx;
 }
@@ -198,6 +198,11 @@
 .action-item-trainname1 {
     background: rgba(58, 206, 100, 0.1);
     color: #3ACE64;
+}
+
+.action-item-trainname2 {
+    background: rgba(255, 165, 0, 0.1);
+    color: orange;
 }
 
 .action-item-del {
@@ -428,6 +433,8 @@
     color: #222834;
     line-height: 104rpx;
     padding-left: 0;
+    word-break: keep-all;
+    white-space: nowrap;
 }
 
 .training-item-edit .action-item {
@@ -482,4 +489,15 @@
 .del-act-btn {
     right: 20rpx;
     top: 20rpx;
+}
+
+.gotop-image-wrapper {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+.gotop-image {
+    width: 208rpx;
+    height: 208rpx;
 }

@@ -20,17 +20,17 @@ Page({
     /**
      * Lifecycle function--Called when page load
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         //日历初始化的时候就会调用接口请求数据，所以页面load完之后不用再请求一遍
         const coachId = wx.getStorageSync('mp-req-user-id');
         this.data.coachId = coachId;
     },
-    getList(){
+    getList() {
         console.log('日期： ', this.data.selDate.replace(/\.|\-/g, '/'))
         app.req.api.getUserAppointmentAllByDate({
             appointmentTime: new Date(this.data.selDate.replace(/\.|\-/g, '/')).getTime(),
             coachId: this.data.coachId
-        }).then(res=>{
+        }).then(res => {
             const list = res.data;
             this.setData({
                 list: list
@@ -38,15 +38,15 @@ Page({
         })
     },
     /****签课 */
-    checkin(e){
-        const {trainingplanid, userid, appointmentid} = e.currentTarget.dataset;
+    checkin(e) {
+        const { trainingplanid, userid, appointmentid, type } = e.currentTarget.dataset;
         // if(trainingplanid != 'null'){
         //这里要发请求拿回该用户的课程列表
-            app.req.api.getUserSectionList({
+        app.req.api.getUserSectionList({
                 coachId: this.data.coachId,
-                trainingPlanId: trainingplanid,
+                trainingPlanId: (type == 1) ? trainingplanid : 'exprienceClassPla',
                 userId: userid
-            }).then(res=>{
+            }).then(res => {
                 let classList = res.data;
                 classList.sort((a, b) => {
                     return a.showOrder - b.showOrder;
@@ -55,51 +55,52 @@ Page({
                     classList,
                     checkAppointment: {
                         appointmentId: appointmentid,
-                        userId: userid
+                        userId: userid,
+                        type
                     },
                     dialogShow: true
                 })
             })
-        // }else{
-        //     this.setData({
-        //         classList: [],
-        //         dialogShow: true
-        //     })
-        // }
+            // }else{
+            //     this.setData({
+            //         classList: [],
+            //         dialogShow: true
+            //     })
+            // }
     },
     /****签到选课 */
-    bindClassChange(e){
+    bindClassChange(e) {
         const value = e.detail.value;
         this.setData({
             checkClass: value
         })
-    }, 
+    },
     tapDialogButton(e) {
-        if(e.detail.index === 1){
+        if (e.detail.index === 1) {
             //确定  发请求确定签到   签到成功后更新列表数据
-            if(this.data.classList.length){
+            if (this.data.classList.length) {
                 const usertrainSectionId = this.data.classList[this.data.checkClass[0]].usertrainSectionId;
                 app.req.api.singIn({
                     ...this.data.checkAppointment,
                     coachId: this.data.coachId,
                     usertrainSectionId
-                }).then(res=>{
-                    if(res.code == 0){
+                }).then(res => {
+                    if (res.code == 0) {
                         wx.showToast({
-                          title: '签到成功',
+                            title: '签到成功',
                         })
                         this.getList();
-                    }else{
+                    } else {
                         wx.showToast({
-                          title: '签到失败',
-                          icon: 'error'
+                            title: '签到失败',
+                            icon: 'error'
                         })
                     }
                 })
-            }else{
+            } else {
                 //没有课程则去创建
                 wx.navigateTo({
-                  url: '/pages/packageA/training/classlist/classlist?type=record&userId=' + this.data.checkAppointment.userId,
+                    url: '/pages/packageA/training/' + ['experience/experience?userId=', 'classlist/classlist?type=record&userId='][this.data.checkAppointment.type] + this.data.checkAppointment.userId,
                 })
             }
         }
@@ -107,72 +108,72 @@ Page({
             dialogShow: false
         })
     },
-//日历点击事件
-  mydata(e) { 
-    let date = e.detail.data;
-    this.data.selDate = date,
-    console.log(date);
-    //去拿着日期请求当天的预约列表
-    this.getList();
-  },
+    //日历点击事件
+    mydata(e) {
+        let date = e.detail.data;
+        this.data.selDate = date,
+            console.log(date);
+        //去拿着日期请求当天的预约列表
+        this.getList();
+    },
     /****去预约界面 */
-    typeDialogShow(){
+    typeDialogShow() {
         let showTypeDialog = !this.data.showTypeDialog;
         this.setData({
             showTypeDialog,
         })
     },
-    goReserve(e){
+    goReserve(e) {
         wx.navigateTo({
-          url: '/pages/reserve/reserve?type=' + e.currentTarget.dataset.type,
+            url: '/pages/reserve/reserve?type=' + e.currentTarget.dataset.type,
         })
     },
     /**
      * Lifecycle function--Called when page is initially rendered
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page show
      */
-    onShow: function () {
+    onShow: function() {
         this.getList();
     },
 
     /**
      * Lifecycle function--Called when page hide
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page unload
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * Page event handler function--Called when user drop down
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * Called when page reach bottom
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * Called when user click on the top right corner to share
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

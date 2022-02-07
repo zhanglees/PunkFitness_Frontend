@@ -6,8 +6,10 @@
             <view class="classname">
                 {{(type!='experience') ? (showOrder + '. '+ sectionName) : '私教体验课'}}
             </view>
-            <image class="edit-btn" bindtap="edit" wx:if="{{type != 'detail'}}" src="../../../../images/icons/icon-edit.png" />
-            <view class="edit-tips">课程标题可编辑，课程序列号不可编辑</view>
+            <block wx:if="{{type != 'detail'}}">
+                <image class="edit-btn" bindtap="edit" src="../../../../images/icons/icon-edit.png" />
+                <view class="edit-tips">课程标题可编辑，课程序列号不可编辑</view>
+            </block>
         </block>
         <block wx:else>
             <view class="edittitle">编辑课程</view>
@@ -195,6 +197,9 @@
                 <view wx:else class="training-add" bindtap="addone" data-index="{{index}}">+</view>
             </block>
         </view>
+    </view>
+    <view catchtap="goTop" class="gotop-image-wrapper" hidden="{{!floorStatus}}">
+        <image class="gotop-image" src="../../../../images/training/gotop@2x.png" />
     </view>
     <mp-dialog title="确认删除该动作" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>

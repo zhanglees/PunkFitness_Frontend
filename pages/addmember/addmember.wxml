@@ -1,13 +1,13 @@
 <!--addmember.wxml-->
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container page-form">
-    <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+    <mp-toptips msg="{{error}}" type="error" show="{{error}}" ext-class="show-error"></mp-toptips>
     <mp-form id="form" rules="{{rules}}" models="{{formData}}" class="addmember-form">
         <mp-cell prop="name" title="姓名">
-            <input bindinput="formInputChange" data-field="userName" class="weui-input" placeholder="请输入姓名"/>
+            <input bindinput="formInputChange" data-field="userName" class="weui-input" placeholder="请输入姓名" />
         </mp-cell>
         <mp-cell prop="phone" title="手机号">
-            <input bindinput="formInputChange" data-field="phone" class="weui-input" placeholder="请输入手机号"/>
+            <input bindinput="formInputChange" data-field="phone" class="weui-input" placeholder="请输入手机号" />
         </mp-cell>
         <mp-cell ext-class="weui-cell_select weui-cell_select-after">
             <view slot="title" class="weui-label">性别</view>
@@ -23,8 +23,8 @@
 
         <mp-cell ext-class="weui-cell-nosplit" title="客户标签"></mp-cell>
         <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="form-checkbox">
-        <checkbox-group id="tags" name="tags" bindchange="tagsChange">
-            <label wx:for="{{tagsItems}}" wx:key="index" class="form-checkbox-item">
+            <checkbox-group id="tags" name="tags" bindchange="tagsChange">
+                <label wx:for="{{tagsItems}}" wx:key="index" class="form-checkbox-item">
                 <checkbox value="{{item}}" checked="{{utils.indexOf(formData.customerTag, item) != -1 }}" />
                 {{item}}
                 </label>
@@ -33,7 +33,7 @@
 
         <mp-cell ext-class="weui-cell-nosplit" title="备注"></mp-cell>
         <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="form-textarea weui-cell-nosplit">
-        <textarea class="weui-textarea" placeholder="请输入备注" bindinput="formInputChange" data-field="remarks" value="{{formData.remarks}}" />
+            <textarea class="weui-textarea" placeholder="请输入备注" bindinput="formInputChange" data-field="remarks" value="{{formData.remarks}}" />
         </mp-cell>
     </mp-form>
 
@@ -41,7 +41,7 @@
         <button class="form-btn" bindtap="submitForm">关联客户</button>
         <text>点击客户微信扫码，便于客户微信收到个人运动相关动态信息</text>
     </view>
-    <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask>    
+    <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask>
         <view class="qr-view">
             <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
             <image class="qr-img" src="{{imgUrl}}" />

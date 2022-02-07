@@ -2,7 +2,7 @@
 <view class="container">
     <view class="top-layout">
         <view class="top-title">课程预约列表</view>
-        <calendarWeek bindmydata="mydata" id="myCalendar" selDate="{{selDate}}"></calendarWeek> 
+        <calendarWeek bindmydata="mydata" id="myCalendar" selDate="{{selDate}}"></calendarWeek>
     </view>
     <view class="training-list">
         <view wx:for="{{list}}" wx:key="index" class="training-item">
@@ -11,8 +11,8 @@
                 <view class="training-time">{{item.appointmentTime}}</view>
                 <view>
                     <block wx:if="{{!item.isComplete}}">
-                    <view class="status checkin-btn" bindtap="checkin" data-appointmentid="{{item.appointmentId}}" data-trainingplanid="{{item.currentCoachTrainPlainId}}" data-userid="{{item.userId}}">签课</view>
-                    <view class="status checkin-btn" bindtap="cancel">取消预约</view>
+                        <view class="status checkin-btn" bindtap="checkin" data-type="{{item.isExperience}}" data-appointmentid="{{item.appointmentId}}" data-trainingplanid="{{item.currentCoachTrainPlainId}}" data-userid="{{item.userId}}">签课</view>
+                        <view class="status checkin-btn" bindtap="cancel">取消预约</view>
                     </block>
                     <view wx:else class="status have-done">已签课</view>
                 </view>
