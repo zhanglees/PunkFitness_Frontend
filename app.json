@@ -1,68 +1,69 @@
 {
-  "entryPagePath": "pages/index/index", 
-  "pages":[
-    "pages/index/index",
-    "pages/mine/mine",
-    "pages/schedule/schedule",
-    "pages/reserve/reserve"
-  ],
-	"subpackages": [
-    {
-      "root": "pages/packageA",
-      "pages": [
-        "questionnaire/overview/overview",
-        "questionnaire/healthy/healthy",
-        "memberinfo/memberinfo",
-        "evaluation/dynamic/dynamic",
-        "evaluation/static/static",
-        "evaluation/overview/overview",
-        "evaluation/physical/physical",
-        "inbody/overview/overview",
-        "inbody/report/report",
-        "training/plan/plan",
-        "training/class/class",  
-        "training/experience/experience",
-        "training/classlist/classlist", 
-        "training/edit/edit", 
-        "training/stagedetail/stagedetail"
-      ]}, {
-      "root": "pages/packageB",
-      "pages": [
-        "mine/setting/setting",
-        "mine/buy/buy",
-        "mine/cash/cash"
-      ]}
-  ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Link健身",
-    "navigationBarTextStyle":"black"
-  },
-  "tabBar": {
-    "color": "#515151",
-    "selectedColor": "#4182E9",
-    "borderStyle": "white",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "iconPath": "images/tb/tb-icon1-g.png",
-      "selectedIconPath": "images/tb/tb-icon1.png",
-      "text": "客户"
+    "entryPagePath": "pages/index/index",
+    "pages": [
+        "pages/index/index",
+        "pages/mine/mine",
+        "pages/schedule/schedule",
+        "pages/reserve/reserve"
+    ],
+    "subpackages": [{
+        "root": "pages/packageA",
+        "pages": [
+            "questionnaire/overview/overview",
+            "questionnaire/healthy/healthy",
+            "memberinfo/memberinfo",
+            "evaluation/dynamic/dynamic",
+            "evaluation/static/static",
+            "evaluation/overview/overview",
+            "evaluation/physical/physical",
+            "inbody/overview/overview",
+            "inbody/report/report",
+            "training/plan/plan",
+            "training/class/class",
+            "training/experience/experience",
+            "training/classlist/classlist",
+            "training/edit/edit",
+            "training/lesson/lesson",
+            "training/stagedetail/stagedetail"
+        ]
     }, {
-      "pagePath": "pages/schedule/schedule",
-      "iconPath": "images/tb/tb-icon2-g.png",
-      "selectedIconPath": "images/tb/tb-icon2.png",
-      "text": "预约"
-    }, {
-      "pagePath": "pages/mine/mine",
-      "iconPath": "images/tb/tb-icon3-g.png",
-      "selectedIconPath": "images/tb/tb-icon3.png",
-      "text": "我的"
-    }]
-  },
-  "useExtendedLib": {
-    "weui": true
-  },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json"
+        "root": "pages/packageB",
+        "pages": [
+            "mine/setting/setting",
+            "mine/buy/buy",
+            "mine/cash/cash"
+        ]
+    }],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "Link健身",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#515151",
+        "selectedColor": "#4182E9",
+        "borderStyle": "white",
+        "list": [{
+            "pagePath": "pages/index/index",
+            "iconPath": "images/tb/tb-icon1-g.png",
+            "selectedIconPath": "images/tb/tb-icon1.png",
+            "text": "客户"
+        }, {
+            "pagePath": "pages/schedule/schedule",
+            "iconPath": "images/tb/tb-icon2-g.png",
+            "selectedIconPath": "images/tb/tb-icon2.png",
+            "text": "预约"
+        }, {
+            "pagePath": "pages/mine/mine",
+            "iconPath": "images/tb/tb-icon3-g.png",
+            "selectedIconPath": "images/tb/tb-icon3.png",
+            "text": "我的"
+        }]
+    },
+    "useExtendedLib": {
+        "weui": true
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
 }

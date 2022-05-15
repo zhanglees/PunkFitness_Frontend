@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "mp-icon": "weui-miniprogram/icon/icon",
+        "mp-dialog": "weui-miniprogram/dialog/dialog",
+        "mp-cell": "weui-miniprogram/cell/cell"
+    },
+    "navigationBarTitleText": "编辑课程"
+}

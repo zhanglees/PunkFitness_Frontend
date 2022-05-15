@@ -1,0 +1,451 @@
+/* pages/packageA/training/lesson/lesson.wxss */
+
+.container {
+    position: relative;
+}
+
+.page-title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 50rpx 32rpx 32rpx;
+    /* line-height: 80rpx;
+    height: 80rpx; */
+    background: #fff;
+    font-size: 32rpx;
+    /* position: fixed;
+    top: 0; */
+    /* z-index: 10; */
+    /* box-shadow: 0px 2px 4px #999;     */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.sectionname-edit {
+    width: 100%;
+    text-align: left;
+    margin-top: 32rpx;
+    box-sizing: border-box;
+}
+
+.edit-input {
+    width: 343px;
+    height: 52px;
+    background: #F4F4F7;
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding-left: 32rpx;
+    margin: 16rpx auto 0;
+}
+
+.edit-label {
+    font-weight: 400;
+    color: #707784;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.classname {
+    position: relative;
+    padding-left: 50rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    color: #222834;
+    line-height: 44rpx;
+    height: 44rpx;
+}
+
+.classname::before,
+.classname::after {
+    content: '';
+    display: inline-block;
+    width: 28rpx;
+    height: 28rpx;
+    border-radius: 28rpx;
+    position: absolute;
+    left: 0;
+    top: 8rpx;
+}
+
+.classname::before {
+    background: #386DF3;
+}
+
+.classname::after {
+    background: #60D481;
+    left: 14rpx;
+}
+
+.edit-btn {
+    height: 32rpx;
+    width: 32rpx;
+}
+
+.edit-tips {
+    width: 100%;
+    color: #C1C7D6;
+    line-height: 32rpx;
+    height: 32rpx;
+    font-size: 24rpx;
+    margin-top: 8rpx;
+}
+
+.edittitle {
+    font-size: 44rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+}
+
+.save-btn {
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #386DF3;
+}
+
+.page-title .weui-input {
+    flex: 1;
+    display: inline-block;
+}
+
+.lesson-content {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 32rpx 0;
+}
+
+.lesson-content-view::before {
+    content: '';
+    width: 1px;
+    border-right: 1px dashed #BCC0C7;
+    top: 36rpx;
+    bottom: 36rpx;
+    left: 44rpx;
+    display: block;
+    position: absolute;
+}
+
+.lesson-item {
+    color: #222834;
+    font-size: 32rpx;
+    margin-bottom: 64rpx;
+}
+
+.lesson-item-c {
+    display: block;
+}
+
+.lesson-item-title {
+    color: #707784;
+    padding-left: 32rpx;
+    position: relative;
+}
+
+.lesson-content-edit .lesson-item-title {
+    color: #222834;
+}
+
+.lesson-item-title::before {
+    content: '';
+    display: block;
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: 50%;
+    background: #F48038;
+    z-index: 1;
+    position: absolute;
+    border: 8rpx solid #fff;
+    left: 0;
+    top: 8rpx;
+}
+
+.lesson-content .lesson-item:nth-child(1) .lesson-item-title::before {
+    background: #F48038;
+}
+
+.lesson-content .lesson-item:nth-child(2) .lesson-item-title::before {
+    background: #386DF3;
+}
+
+.lesson-content .lesson-item:nth-child(3) .lesson-item-title::before {
+    background: #23C451;
+}
+
+.action-item-head {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24rpx;
+    margin-left: 32rpx;
+}
+
+.action-item-head-left {
+    display: inline-flex;
+}
+
+.option-list {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.option-item {
+    height: 88rpx;
+    line-height: 88rpx;
+    padding: 0 32rpx;
+    background: #F4F4F7;
+    border-radius: 44rpx;
+    font-size: 28rpx;
+    color: #707784;
+    margin-right: 32rpx;
+    margin-top: 32rpx;
+    display: inline-block;
+}
+
+.option-sel {
+    background: #386DF3;
+    color: #FFFFFF;
+}
+
+.option-list .option-item:last-child {
+    margin-right: 0;
+}
+
+.action-item-actionname {
+    font-weight: 500;
+    color: #222834;
+    line-height: 40rpx;
+    /* height: 40rpx; */
+    font-size: 32rpx;
+    margin-bottom: 16rpx;
+}
+
+.action-item-trainname {
+    background: rgba(56, 109, 243, 0.1);
+    font-size: 24rpx;
+    text-align: center;
+    width: 96rpx;
+    height: 44rpx;
+    line-height: 44rpx;
+    color: #386DF3;
+    border-radius: 4rpx;
+}
+
+.action-item-trainname1 {
+    background: rgba(58, 206, 100, 0.1);
+    color: #3ACE64;
+}
+
+.action-item-trainname2 {
+    background: rgba(255, 165, 0, 0.1);
+    color: orange;
+}
+
+.user-video {
+    width: 280rpx;
+    height: 156rpx;
+}
+
+.video-wrapper {
+    position: relative;
+    height: 156rpx;
+    width: 280rpx;
+    box-sizing: border-box;
+    background: #D8D8D8;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(30, 34, 58, 0.04);
+    margin-right: 24rpx;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.class-info-list {
+    background: #F7F7F9;
+    font-size: 28rpx;
+    color: #222834;
+    padding: 16rpx 24rpx;
+    box-sizing: border-box;
+    margin-top: 32rpx;
+    margin-left: 32rpx;
+}
+
+.class-info-li {
+    display: inline-block;
+    margin: 8rpx 0;
+    min-width: 180rpx;
+    position: relative;
+}
+
+.class-info-li-name {
+    color: #707784;
+}
+
+.class-info-li:not(:nth-child(3)):not(:nth-child(5)):after {
+    content: '';
+    position: absolute;
+    right: 16rpx;
+    top: 12rpx;
+    width: 1px;
+    height: 20rpx;
+    background: #DADAE3;
+}
+
+.action-item-e-del {
+    width: 56rpx;
+    height: 56rpx;
+    float: right;
+}
+
+.action-edit-item {
+    width: 48%;
+    display: inline-block;
+    margin-bottom: 48rpx;
+    position: relative;
+}
+
+.action-edit-item-input {
+    height: 104rpx;
+    /* width: 320rpx; */
+    background: #F4F4F7;
+    border-radius: 12rpx;
+    text-align: left;
+    padding-left: 32rpx;
+    box-sizing: border-box;
+    padding-right: 104rpx;
+}
+
+.action-edit-item-unit {
+    position: absolute;
+    right: 0;
+    bottom: 34rpx;
+    width: 106rpx;
+    color: #222834;
+    line-height: 36rpx;
+    height: 36rpx;
+    text-align: center;
+    border-left: 1px solid #D1D4DB;
+}
+
+.action-edit-item-input .weui-select {
+    font-size: 28rpx;
+    color: #222834;
+    line-height: 104rpx;
+    padding-left: 0;
+    word-break: keep-all;
+    white-space: nowrap;
+}
+
+.lesson-item-edit .action-item {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 56rpx;
+}
+
+.action-edit-item-label {
+    font-size: 28rpx;
+    color: #707784;
+    line-height: 40rpx;
+    margin-bottom: 16rpx;
+}
+
+.action-edit-video-wrapper {
+    width: 100%;
+    height: 386rpx;
+    background: #F4F4F7;
+    border-radius: 12rpx;
+    overflow: visible;
+    box-sizing: border-box;
+    margin-right: 0;
+    border: none;
+}
+
+.action-edit-video-wrapper .user-video {
+    width: 100%;
+    height: 100%;
+    border-radius: 12rpx;
+}
+
+.action-edit-video-wrapper .eva-camera {
+    color: #BCC0C7;
+    padding-top: 124rpx;
+    text-align: center;
+}
+
+.action-edit-video-wrapper .eva-camera .eva-camera-image {
+    width: 96rpx;
+    height: 74rpx;
+}
+
+.lesson-item-edit .arrow-down-icon .weui-icon {
+    transform: rotate(90deg);
+    margin-left: 20rpx;
+}
+
+.lesson-item-edit .lesson-add {
+    display: none;
+}
+
+.lesson-item-edit-expand .lesson-add {
+    display: block;
+}
+
+.lesson-item-edit-expand .arrow-down-icon .weui-icon {
+    transform: rotate(270deg);
+}
+
+.lesson-item-edit-expand {
+    height: unset;
+}
+
+.action-item-e-title {
+    font-size: 28rpx;
+    font-weight: 500;
+    color: #222834;
+    line-height: 36rpx;
+    margin: 32rpx 0 24rpx;
+}
+
+.action-item-e-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lesson-add {
+    font-size: 48rpx;
+    background: #f4f4f7;
+    height: 116rpx;
+    width: 116rpx;
+    line-height: 110rpx;
+    border-radius: 116rpx;
+    color: #707785;
+    position: relative;
+    text-align: center;
+    margin-bottom: 48rpx;
+    margin-top: 107rpx;
+}
+
+.lesson-add::after {
+    content: "添加动作";
+    height: 40rpx;
+    font-size: 28rpx;
+    color: #707784;
+    line-height: 40rpx;
+    position: absolute;
+    top: -56rpx;
+    left: 0;
+}
+
+.lesson-item-edit .lesson-add {
+    display: none;
+}
+
+.lesson-item-edit-expand .lesson-add {
+    display: block;
+}

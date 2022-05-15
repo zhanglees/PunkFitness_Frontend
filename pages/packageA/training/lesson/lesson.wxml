@@ -1,0 +1,136 @@
+<!--pages/packageA/training/lesson/lesson.wxml-->
+<view class="container">
+    <!-----header  课程名称  编辑删除-->
+    <view class="page-title">
+        <block wx:if="{{!editFlag}}">
+            <view class="classname">
+                {{(type!='experience') ? (showOrder + '. '+ sectionName) : '私教体验课'}}
+            </view>
+            <block wx:if="{{type != 'detail'}}">
+                <image class="edit-btn" bindtap="edit" src="../../../../images/icons/icon-edit.png" />
+                <view class="edit-tips">课程标题可编辑，课程序列号不可编辑</view>
+            </block>
+        </block>
+        <block wx:else>
+            <view class="edittitle">编辑课程</view>
+            <view class="save-btn" bindtap="saveList">保存</view>
+        </block>
+        <view class="sectionname-edit" wx:if="{{editFlag}}">
+            <label class="edit-label">课程名称</label>
+            <input bindinput="inputNameChange" data-name="sectionName" class="weui-input edit-input" placeholder="请输入课程名称" value="{{sectionName}}" />
+        </view>
+    </view>
+    <!------课程内容编辑状态-->
+    <view class="lesson-content lesson-content-edit" wx:if="{{editFlag}}">
+        <view class="lesson-item lesson-item-edit">
+            <view class="lesson-item-title">热身方式</view>
+            <view class="warm-list option-list">
+                <view class="warm-item option-item{{warmSel == item ? ' option-sel' : ''}}" wx:for="{{warmList}}" wx:key="index" bindtap="selOption" data-name="warmSel" data-value="{{item}}">
+                    {{item}}
+                </view>
+            </view>
+        </view>
+        <view class="lesson-item lesson-item-edit {{expand?'lesson-item-edit-expand':''}} ">
+            <view class="lesson-item-title" bindtap="trainingItemExpand">
+                正式训练
+                <mp-icon class="arrow-down-icon" type="field" icon="arrow" color="#333" size="{{10}}"></mp-icon>
+            </view>
+            <view wx:for="{{actionList}}" wx:key="action" wx:for-item="action" class="action-item-e">
+                <view class="action-item-e-title">
+                    动作{{index+1}}
+                    <image src="/images/icons/action-delete.png" class="action-item-e-del" bindtap="delAct" data-index="{{index}}" wx:if="actionList.length>1" />
+                </view>
+                <view class="action-item-e-content">
+                    <view class="action-edit-item">
+                        <view class="action-edit-item-label">训练部位</view>
+                        <picker class="physical-item-input action-edit-item-input" placeholder="请选择" bindchange="bindSelChangeEdit" data-name="trainingArea" data-index="{{index}}" value="{{action.trainingArea}}" range="{{trainingPart}}" range-key="name">
+                            <view class="weui-select {{!trainingPart[action.trainingArea].name ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].name || '请选择'}}</view>
+                        </picker>
+                    </view>
+                    <view class="action-edit-item">
+                        <view slot="title" class="action-edit-item-label">动作</view>
+                        <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="action" data-index="{{index}}" value="{{action.action}}" range="{{trainingPart[action.trainingArea].actionList}}" disabled="{{!action.trainingArea}}">
+                            <view class="weui-select {{!trainingPart[action.trainingArea].actionList[action.action] ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].actionList[action.action] || '请选择'}}</view>
+                        </picker>
+                    </view>
+                    <view class="action-edit-item">
+                        <view slot="title" class="action-edit-item-label">器械</view>
+                        <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="equipment" data-index="{{index}}" value="{{action.equipment}}" range="{{equipment}}">
+                            <view class="weui-select {{!equipment[action.equipment] ? 'select-placeholder' : ''}}">{{equipment[action.equipment] || '请选择'}}</view>
+                        </picker>
+                    </view>
+                    <view class="action-edit-item" prop="counterWeight" footer=" kg" title="配重">
+                        <view class="action-edit-item-label">配重</view>
+                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="counterWeight" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.counterWeight}}" />
+                        <view class="action-edit-item-unit">kg</view>
+                    </view>
+                    <view class="action-edit-item">
+                        <view class="action-edit-item-label">单组次数</view>
+                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.numberSinglegroup}}" />
+                        <view class="action-edit-item-unit">次</view>
+                    </view>
+                    <view class="action-edit-item">
+                        <view class="action-edit-item-label">组数</view>
+                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="groups" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.groups}}" />
+                        <view class="action-edit-item-unit">组</view>
+                    </view>
+                </view>
+                <view class="user-video-wrapper video-wrapper action-edit-video-wrapper" wx:if="{{action.video || action.videourl}}">
+                    <video class="user-video" object-fit="cover" src="{{action.video || action.videourl}}"></video>
+                    <view class="del-act-btn" catchtap="delVideo" data-index="{{index}}">
+                        <mp-icon type="field" icon="close" color="#fff" size="{{20}}"></mp-icon>
+                    </view>
+                </view>
+                <view class="eva-camera-wrapper video-wrapper action-edit-video-wrapper" wx:else>
+                    <view class="eva-camera" bindtap="startVideo" data-index="{{index}}">
+                        <image class="eva-camera-image" src="../../../../images/icons/video-up.png" />
+                        <view>添加训练视频</view>
+                    </view>
+                </view>
+            </view>
+
+            <view class="lesson-add" bindtap="addone">+</view>
+        </view>
+        <view class="lesson-item lesson-item-edit">
+            <view class="lesson-item-title">放松方式</view>
+            <view class="relax-list option-list">
+                <view class="relax-item option-item{{relaxSel == item ? ' option-sel' : ''}}" wx:for="{{relaxList}}" wx:key="index" bindtap="selOption" data-name="relaxSel" data-value="{{item}}">
+                    {{item}}
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!------课程内容查看状态-->
+    <view class="lesson-content lesson-content-view" wx:else>
+        <view class="lesson-item">
+            <view class="lesson-item-title">热身方式：</view>
+            <view>{{lesson.warm}}</view>
+        </view>
+        <view class="lesson-item lesson-item-c">
+            <view class="lesson-item-title">正式训练：</view>
+            <view class="action-item" wx:for="{{lesson.actionList}}" wx:for-index="i" wx:key="action" wx:for-item="action">
+                <view class="action-item-head">
+                    <view class="action-item-head-left">
+                        <view class="user-video-wrapper video-wrapper" wx:if="{{action.videourl}}">
+                            <video class="user-video" data-src="{{action.videourl}}" src="{{action.videourl}}" object-fit="cover"></video>
+                        </view>
+                        <view class="action-item-head-c">
+                            <view class="action-item-actionname">{{action.actionName}}</view>
+                            <view class="action-item-trainname action-item-trainname{{i}}">动作{{i+1}}</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="class-info-list">
+                    <view wx:for="{{itemsShow}}" class="class-info-li" wx:key="index" wx:for-item="ia">
+                        <text class="class-info-li-name">{{ia.name}}：</text>{{(action[ia.id]||'--') + (ia.unit ? ia.unit : '')}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="lesson-item">
+            <view class="lesson-item-title">放松方式：</view>
+            <view>{{lesson.relax}}</view>
+        </view>
+    </view>
+</view>
