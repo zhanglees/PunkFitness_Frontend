@@ -17,7 +17,7 @@
         </block>
         <view class="sectionname-edit" wx:if="{{editFlag}}">
             <label class="edit-label">课程名称</label>
-            <input bindinput="inputNameChange" data-name="sectionName" class="weui-input edit-input" placeholder="请输入课程名称" value="{{sectionName}}" />
+            <input bindinput="inputNameChange" class="weui-input edit-input" placeholder="请输入课程名称" value="{{sectionName}}" />
         </view>
     </view>
     <!------课程内容编辑状态-->
@@ -25,7 +25,7 @@
         <view class="lesson-item lesson-item-edit">
             <view class="lesson-item-title">热身方式</view>
             <view class="warm-list option-list">
-                <view class="warm-item option-item{{warmSel == item ? ' option-sel' : ''}}" wx:for="{{warmList}}" wx:key="index" bindtap="selOption" data-name="warmSel" data-value="{{item}}">
+                <view class="warm-item option-item{{warmUp == item ? ' option-sel' : ''}}" wx:for="{{warmList}}" wx:key="index" bindtap="selOption" data-name="warmUp" data-value="{{item}}">
                     {{item}}
                 </view>
             </view>
@@ -38,7 +38,7 @@
             <view wx:for="{{actionList}}" wx:key="action" wx:for-item="action" class="action-item-e">
                 <view class="action-item-e-title">
                     动作{{index+1}}
-                    <image src="/images/icons/action-delete.png" class="action-item-e-del" bindtap="delAct" data-index="{{index}}" wx:if="actionList.length>1" />
+                    <image src="/images/icons/action-delete.png" class="action-item-e-del" bindtap="showDelDialog" data-index="{{index}}" data-sectiondetailid="{{action.sectionDetailId}}" wx:if="{{actionList.length>1}}" />
                 </view>
                 <view class="action-item-e-content">
                     <view class="action-edit-item">
@@ -76,7 +76,10 @@
                     </view>
                 </view>
                 <view class="user-video-wrapper video-wrapper action-edit-video-wrapper" wx:if="{{action.video || action.videourl}}">
-                    <video class="user-video" object-fit="cover" src="{{action.video || action.videourl}}"></video>
+                    <view class="video-wrapper-inner">
+                        <image class="user-video-bg" object-fit="cover" src="{{action.videoImg || action.thumbnailImage}}" />
+                        <video class="user-video" object-fit="contain" src="{{action.video || action.videourl}}" style="{{action.videoStyle}}" data-index="{{index}}" bindloadedmetadata="videometa" ></video>
+                    </view>
                     <view class="del-act-btn" catchtap="delVideo" data-index="{{index}}">
                         <mp-icon type="field" icon="close" color="#fff" size="{{20}}"></mp-icon>
                     </view>
@@ -94,7 +97,7 @@
         <view class="lesson-item lesson-item-edit">
             <view class="lesson-item-title">放松方式</view>
             <view class="relax-list option-list">
-                <view class="relax-item option-item{{relaxSel == item ? ' option-sel' : ''}}" wx:for="{{relaxList}}" wx:key="index" bindtap="selOption" data-name="relaxSel" data-value="{{item}}">
+                <view class="relax-item option-item{{relax == item ? ' option-sel' : ''}}" wx:for="{{relaxList}}" wx:key="index" bindtap="selOption" data-name="relax" data-value="{{item}}">
                     {{item}}
                 </view>
             </view>
@@ -105,11 +108,11 @@
     <view class="lesson-content lesson-content-view" wx:else>
         <view class="lesson-item">
             <view class="lesson-item-title">热身方式：</view>
-            <view>{{lesson.warm}}</view>
+            <view>{{warmUp || '--'}}</view>
         </view>
         <view class="lesson-item lesson-item-c">
             <view class="lesson-item-title">正式训练：</view>
-            <view class="action-item" wx:for="{{lesson.actionList}}" wx:for-index="i" wx:key="action" wx:for-item="action">
+            <view class="action-item" wx:for="{{actionList}}" wx:for-index="i" wx:key="action" wx:for-item="action">
                 <view class="action-item-head">
                     <view class="action-item-head-left">
                         <view class="user-video-wrapper video-wrapper" wx:if="{{action.videourl}}">
@@ -130,7 +133,9 @@
         </view>
         <view class="lesson-item">
             <view class="lesson-item-title">放松方式：</view>
-            <view>{{lesson.relax}}</view>
+            <view>{{relax || '--'}}</view>
         </view>
     </view>
+    <mp-dialog title="确认删除该动作" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+    </mp-dialog>
 </view>

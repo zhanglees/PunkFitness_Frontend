@@ -1,16 +1,18 @@
-// pages/packageA/training/lesson/lesson.js
+// pages/packageA/training/edit/edit.js
+const app = getApp()
 Page({
 
     /**
-     * 页面的初始数据
+     * Page initial data
      */
     data: {
-        editFlag: true, //false, //是否为编辑状态
+        editFlag: false, //false, //是否为编辑状态
         canEdit: true, //是否可编辑  已完成课程不可编辑
-        warmList: ['跑步热身', '椭圆仪热身', '单车热身', '自主体能热身'],
-        warmSel: '',
-        relaxList: ['主动拉伸', '被动拉伸', '肌肉松解', '筋膜枪'],
-        relaxSel: '',
+        type: 'new',  //新建or修改
+        warmList: ['跑步热身', '椭圆仪热身', '单车热身', '自主体能热身', '教练教学热身'],
+        warmUp: '',
+        relaxList: ['主动拉伸', '被动拉伸', '肌肉松解', '筋膜枪松解', 'PNF对抗拉伸'],
+        relax: '',
         itemsShow: [{ //课程详情展示内容
             name: '器械',
             id: 'equipmentName'
@@ -30,7 +32,6 @@ Page({
             name: '训练部位',
             id: 'trainingAreaName'
         }],
-        lesson: {}, //课程详情
         actionList: [],
         expand: false,
         trainingPart: [{
@@ -104,55 +105,101 @@ Page({
             actionList: ['自定义']
         }],
         equipment: ['哑铃', '杠铃', '龙门架', '拉力器', '固定训练器械', '弹力带', '壶铃', '自由深蹲架', '360训练架', '瑜伽垫', '徒手', '自定义'],
+        dialogShow: false,
+        dialogButtons: [{ text: '取消' }, { text: '确定' }],
+        editedIndex: [], //这个数组用来记录被编辑过的动作索引
+        newAction: [],  //编辑时新增动作
     },
-
     /**
-     * 生命周期函数--监听页面加载
+     * Lifecycle function--Called when page load
      */
     onLoad: function(options) {
-        this.getLessonDetail();
+        const coachId = wx.getStorageSync('mp-req-user-id');
+        const { userId, type } = options;
+        if (type == 'edit' || type == 'detail') {
+            //编辑
+            const { showOrder, usertrainSectionId, sectionName, trainingPlanId, userTrainitemId } = options;
+            this.setData({
+                coachId,
+                userId,
+                sectionName,
+                usertrainSectionId,
+                trainingPlanId,
+                userTrainitemId,
+                showOrder,
+                type
+            })
+            this.getLessonDetail(coachId, userId, usertrainSectionId, sectionName);
+        } else if (type == 'new') {
+            //新建
+            const { showOrder, userTrainitemId, trainingPlanId } = options;
+            this.setData({
+                coachId,
+                userId,
+                userTrainitemId,
+                trainingPlanId,
+                showOrder,
+                editFlag: true,
+                type
+            })
+        } else {
+            app.req.api.getUserExperienceLessonDetail({
+                coachId,
+                userId
+            }).then(res => {
+                this.setData({
+                    ...res.data,
+                    trainingList: this.dataFormate(res.data),
+                    coachId,
+                    userId,
+                    editFlag: !res.data.userTraionSectionDetails,
+                    type
+                })
+            })
+        }
     },
-    getLessonDetail() {
+    getLessonDetail(coachId, userId, usertrainSectionId, sectionName) {
+        app.req.api.getUserClassSectionDetail({ coachId, userId, usertrainSectionId, sectionName }).then(res => {
+            const data = res.data;
+            const { warmUp, relax } = data;
+            const actionList = data.userTraionSectionDetails.map(i=>{
+                i.thumbnailImage && (!i.thumbnailImage.includes('https://')) && (i.thumbnailImage = 'https://' + i.thumbnailImage);
+                i.videourl && (!i.videourl.includes('https://')) && (i.videourl = 'https://' + i.videourl);
+                return i;
+            })
+            this.setData({
+                warmUp, 
+                relax,
+                actionList,
+                expand: actionList.length > 0
+            })
+        })
+    },
+    videometa(e) {
+        //视频的高
+        var height = e.detail.height;
+        //视频的宽
+        var width = e.detail.width;
+        const ratio = width/height;
+        const index = e.currentTarget.dataset.index;
+        var query = wx.createSelectorQuery(); 
+        if(ratio > 1){
+            query.select('.action-edit-video-wrapper').boundingClientRect(rect=>{
+                const wrapperWidth = rect.width;
+                this.setData({
+                    [`actionList[${index}].videoStyle`]: `width:100%;height:${wrapperWidth/ratio}px;`
+                })
+            }).exec()
+        }else{
+            this.setData({
+                [`actionList[${index}].videoStyle`]: `width:${ratio*388}rpx;height:100%;`
+            })
+        }
+    },
+
+    edit(e) {
         this.setData({
-            lesson: {
-                warm: '跑步热身',
-                relax: '被动拉伸',
-                actionList: [{
-                    action: 2,
-                    actionName: "阿诺德推胸（肩伸90℃）",
-                    coachId: "f15371d7-975b-4ae9-98fb-df54453ef0a5",
-                    counterWeight: 23,
-                    equipment: 0,
-                    equipmentName: "哑铃",
-                    groups: 3,
-                    numberSinglegroup: 2,
-                    sectionDetailId: "0acacd8a-027e-486a-b6bb-81acfd70b7c5",
-                    sectionName: "sfdafds",
-                    trainingArea: 0,
-                    trainingAreaName: "胸大肌",
-                    trainingType: 0,
-                    userId: "14c6962a-fb31-4ad5-ae72-6fcb74054a53",
-                    usertrainSectionId: "ec404a18-5148-4376-bfc3-a7146f0585ec",
-                    videourl: "https://www.zhangleixd.com/static/14c6962a-fb31-4ad5-ae72-6fcb74054a53/face/d17429da-b9e3-4121-a2ec-16d630e82e72.mp4"
-                }, {
-                    action: 0,
-                    actionName: "颈前引体向上",
-                    coachId: "f15371d7-975b-4ae9-98fb-df54453ef0a5",
-                    counterWeight: 4,
-                    equipment: 0,
-                    equipmentName: "哑铃",
-                    groups: 4,
-                    numberSinglegroup: null,
-                    sectionDetailId: "e82f3d65-d761-4e93-a4d8-f5c43810f24f",
-                    sectionName: "sfdafds",
-                    trainingArea: 2,
-                    trainingAreaName: "背阔肌",
-                    trainingType: 0,
-                    userId: "14c6962a-fb31-4ad5-ae72-6fcb74054a53",
-                    usertrainSectionId: "ec404a18-5148-4376-bfc3-a7146f0585ec",
-                    videourl: "https://www.zhangleixd.com/static/14c6962a-fb31-4ad5-ae72-6fcb74054a53/face/82bfb94c-c44b-463d-990d-af5bf53d786e.mp4"
-                }]
-            }
+            editFlag: true
         })
     },
     selOption(e) {
@@ -167,11 +214,6 @@ Page({
         if (this.data.actionList.length == 0) { this.addone() }
         this.setData({
             expand: !this.data.expand
-        })
-    },
-    edit(e) {
-        this.setData({
-            editFlag: true
         })
     },
     /****编辑课程名称 */
@@ -192,8 +234,9 @@ Page({
             numberSinglegroup: '',
             groups: '',
             videourl: '',
-            video: '', //上传临时文件地址
-            videoImg: ''
+            video: '', //上传临时文件地址  之所以要俩个 是因为它上传之后返回的及要上传的不是完整地址
+            videoImg: '',
+            thumbnailImage: ''
         });
         this.setData({
             actionList: list
@@ -215,7 +258,7 @@ Page({
         } else {
             value = this.data.equipment[valueIndex];
         }
-        // this.data.editedIndex.push(index + '-' + i);
+        this.data.editedIndex.push(index);
         this.setData({
             [`actionList[${index}].${name}`]: valueIndex,
             [`actionList[${index}].${name}Name`]: value,
@@ -224,11 +267,12 @@ Page({
     inputChangeEdit(e) {
         const { index, name } = e.currentTarget.dataset;
         const value = e.detail.value;
-        // this.data.editedIndex.push(index + '-' + i);
+        this.data.editedIndex.push(index);
         this.setData({
             [`actionList[${index}].${name}`]: value
         });
     },
+
     //开始录制视频
     startVideo(e) {
         const _this = this;
@@ -236,29 +280,20 @@ Page({
         wx.chooseMedia({
             count: 1,
             sourceType: ['album', 'camera'],
+            mediaType: ['video'],
             maxDuration: 60,
             camera: 'back',
             success(res) {
-                const videoPath = res.tempFilePath,
-                    videoImgPath = res.thumbTempFilePath;
-
+                const data = res.tempFiles[0];
+                const videoPath = data.tempFilePath,
+                    videoImgPath = data.thumbTempFilePath;
                 _this.setData({
-                    [`actionList[${index}].videourl`]: videoPath,
+                    [`actionList[${index}].video`]: videoPath,
                     [`actionList[${index}].videoImg`]: videoImgPath
                 });
                 _this.uploadVideo(videoPath, index, 'videourl');
-                _this.uploadVideo(videoImgPath, index, 'videoImg');
+                _this.uploadVideo(videoImgPath, index, 'thumbnailImage');
             }
-        })
-    },
-    /**删除某个动作 */
-    delAct(e) {
-        const { index } = e.currentTarget.dataset;
-        let list = this.data.actionList;
-        list.splice(index, 1);
-        console.log(index, list)
-        this.setData({
-            actionList: list
         })
     },
     /****上传视频、缩略图 */
@@ -272,6 +307,7 @@ Page({
                 },
                 success(res) {
                     console.log('上传:', index, res)
+                    _this.data.editedIndex.push(index);
                     _this.setData({
                         [`actionList[${index}].${type}`]: res.data
                     })
@@ -283,56 +319,198 @@ Page({
     delVideo(e) {
         const { index } = e.currentTarget.dataset;
         let key = `actionList[${index}]`;
+        this.data.editedIndex.push(index);
         this.setData({
-            // [key + '.video']: '',
+            [key + '.video']: '',
             [key + '.videourl']: '',
             [key + '.videoImg']: '',
+            [key + '.thumbnailImage']: '',
         })
     },
+    showDelDialog(e) {
+        this.data.delObj = e.currentTarget.dataset;
+        this.setData({
+            dialogShow: true
+        })
+    },
+    tapDialogButton(e) {
+        if (e.detail.index === 1) {
+            this.delOne();
+        }
+        this.setData({
+            dialogShow: false
+        })
+    },
+    //删除一个动作
+    delOne(e) {
+        const { index, sectiondetailid } = this.data.delObj;
+        console.log(index, sectiondetailid)
+        const actionList = this.data.actionList;
+        if (this.data.type != 'new') {
+            //编辑状态的删除就真的提交删除了
+            const { coachId, userId } = this.data;
+            app.req.api.delUserSectionDetail({
+                coachId,
+                userId,
+                sectionDetailId: sectiondetailid
+            }).then(res => {
+                if (res.code == 0) {
+                    actionList.splice(index, 1);;
+                    this.setData({
+                        actionList: actionList,
+                    })
+                }
+            })
+        } else {
+            actionList.splice(index, 1);;
+            this.setData({
+                actionList: actionList,
+            })
+        }
+    },
+    /*****全页面的保存提交 */
+    saveList() {
+        const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId, usertrainSectionId, warmUp, relax } = this.data;
+        let actionList = this.data.actionList.filter(i=>i.actionName);//动作数组不能为空值 这里用动作名判断
+        if(!actionList.length){
+            wx.showToast({
+                title: '至少添加一个动作',
+                icon: 'none'
+            });
+        }
+        if (type != 'new') {
+            //编辑进来 只修改课程名称 热身 放松
+            if (type == 'edit') {
+                app.req.api.submitUserClassSection({
+                    coachId,
+                    sectionName,
+                    showOrder,
+                    trainingPlanId,
+                    userId,
+                    userTrainitemId,
+                    usertrainSectionId,
+                    warmUp, 
+                    relax
+                }).then(res => {
+                    if (res.code == 0) {
+                        wx.showToast({
+                            title: '提交成功',
+                        })
+                        wx.navigateBack({
+                            delta: 0,
+                        })
+                    }
+                })
+            }
+            //然后遍历动作数组
+            const len = actionList.length;
+            actionList.forEach((item, i)=>{
+                if(item.sectionDetailId){
+                    //有id就调修改
+                    app.req.api.editUserClassSectionDetail(item).then(res => {
+                        console.log('保存：', res.data)
+                        if(i == len){
+                            wx.navigateBack({
+                                delta: 0,
+                            })
+                        }
+                    })
+                }else{
+                    //没id就调新增
+                    app.req.api.adddUserSectionDetail({
+                        ...item,
+                        coachId,
+                        userId,
+                        sectionName,
+                        usertrainSectionId,
+                        trainingType: 1
+                    }).then(res => {
+                        console.log('新增动作：', res.data)
+                        if(i == len){
+                            wx.navigateBack({
+                                delta: 0,
+                            })
+                        }
+                    })
+                }
+            })
+            if (type == 'experience') {
+                wx.navigateBack({
+                    delta: 0,
+                })
+            }
+        } else {
+            let userTraionSectionDetails = [];
+            actionList.forEach(action => {
+                userTraionSectionDetails.push({
+                    ...action,
+                    sectionName,
+                    trainingType: 1
+                })
+            })
+            app.req.api.addUserTrainClassSection({
+                showOrder,
+                coachId,
+                sectionName: sectionName || `第${showOrder}节训练课`,
+                trainingPlanId,
+                userId,
+                userTrainitemId,
+                userTraionSectionDetails,
+                warmUp: this.data.warmUp,
+                relax: this.data.relax,
+            }).then(res => {
+                if (res.code == 0) {
+                    wx.navigateBack({
+                        delta: 0,
+                    })
+                }
+            })
+        }
+    },
     /**
-     * 生命周期函数--监听页面初次渲染完成
+     * Lifecycle function--Called when page is initially rendered
      */
     onReady: function() {
 
     },
 
     /**
-     * 生命周期函数--监听页面显示
+     * Lifecycle function--Called when page show
      */
     onShow: function() {
 
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
+     * Lifecycle function--Called when page hide
      */
     onHide: function() {
 
     },
 
     /**
-     * 生命周期函数--监听页面卸载
+     * Lifecycle function--Called when page unload
      */
     onUnload: function() {
 
     },
 
     /**
-     * 页面相关事件处理函数--监听用户下拉动作
+     * Page event handler function--Called when user drop down
      */
     onPullDownRefresh: function() {
 
     },
 
     /**
-     * 页面上拉触底事件的处理函数
+     * Called when page reach bottom
      */
     onReachBottom: function() {
 
     },
 
     /**
-     * 用户点击右上角分享
+     * Called when user click on the top right corner to share
      */
     onShareAppMessage: function() {
 

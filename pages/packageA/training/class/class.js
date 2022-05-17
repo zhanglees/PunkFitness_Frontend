@@ -62,7 +62,6 @@ Page({
             coachId
         }).then(res=>{
             const data = res.data;
-            console.log(9999, classNum)
             let classList = new Array(parseInt(classNum)).fill({status: 0});
             let classes = [];
             data.forEach((i, k) => {
@@ -168,7 +167,8 @@ Page({
         const classItem = this.data.classes[index];
         const {userId, trainingPlanId, userTrainitemId} = this.data;
         const {status} = classItem;
-        let url = '/pages/packageA/training/edit/edit?';
+        let url = '/pages/packageA/training/lesson/lesson?';
+        // let url = '/pages/packageA/training/edit/edit?';
         if(status){
             //已编辑 查详情
             const { coachId, usertrainSectionId, sectionName } = classItem;
