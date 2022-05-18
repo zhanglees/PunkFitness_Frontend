@@ -110,19 +110,27 @@
 }
 .userserver-li{
   display: inline-block;
-  border: 1px solid var(--base);
-  color: var(--base);
-  border-radius: var(--base-radius);
-  padding: 10rpx 20rpx;
-  margin-right: 20rpx;
-  margin-top: 15rpx;
-  min-width: 20%;
+  margin-top: 36rpx;
+  width: 140rpx;
+  width: 33%;
   text-align: center;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #222834;
+  line-height: 36rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .userlogs-view{
   margin-bottom: 20rpx;
 }
 .userlogs-title{
   color: var(--base);
   line-height: 2;
+}
+.userserver-li-image{
+  width: 104rpx;
+  height: 114rpx;
 }
