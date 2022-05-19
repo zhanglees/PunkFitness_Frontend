@@ -5,13 +5,20 @@
                 <text wx:if="{{index == 0}}">{{key}}</text>
             </view>
             <view class='centerView'>
-                <view class="'leftLine' + {{index != 0 ? '' : ' noLeftLine'}}"></view>
+                <!-- <view class="'leftLine' + {{index != 0 ? '' : ' noLeftLine'}}"></view> -->
                 <view class="outRoundVIew"></view>
             </view>
             <view class='rightContent'>
-                <text class='outTime'>{{item.time}}</text>
-                <text wx:if="{{item.content!=''}}" class='outTitle'>{{item.content}}</text>
-                <text class="coach">{{item.coach}}</text>
+                <view class="rightContent-left">
+                    <text wx:if="{{item.content!=''}}" class='outTitle'>{{item.content}}</text>
+                </view>
+                <view class="rightContent-right">
+                    <text class='outTime'>{{item.time}}</text>
+                    <view class="coach-info">
+                        <image class="avatar" src="{{item.avatar || '/images/avatar.png'}}" mode="cover" />
+                        <text class="coach">{{item.coach}}</text>
+                    </view>
+                </view>
             </view>
         </view>
     </block>

@@ -142,9 +142,8 @@ Page({
             // }];
             let temp = {};
             data.forEach(i => {
-                const time = i.createTime ? i.createTime.match(/([0-9]+)-([0-9]+-[0-9]+)\s([0-9]+:[0,9]+)/) : [];
+                const time = i.createTime ? i.createTime.match(/([0-9]+)-([0-9]+-[0-9]+)\s([0-9]+:[0-9]+)/) : [];
                 if (time.length > 3) {
-                    console.log('time:', time)
                     const year = time[1],
                         date = time[2],
                         t = time[3];
@@ -195,7 +194,7 @@ Page({
                 userInfo: userInfo,
                 userInfoGet: res.data
             });
-            console.log(886668, this.data.userInfoGet);
+            // console.log(886668, this.data.userInfoGet);
         })
     },
 

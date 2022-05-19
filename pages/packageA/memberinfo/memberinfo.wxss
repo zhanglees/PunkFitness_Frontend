@@ -29,14 +29,15 @@
   position: relative;
 }
 .userinfo-detail-b{
-  background-color: var(--base-bg);
+  /* background-color: var(--base-bg);
   border: 1px solid var(--base);
-  border-radius: var(--base-radius);
+  border-radius: var(--base-radius); */
   padding: 0 10rpx;
   line-height: 36rpx;
   font-size: 24rpx;
   text-align: center;
   width: fit-content;
+  color: #707784;
 }
 .userinfo-nickname, .userinfo-birthday{
   margin-right: 20rpx;
@@ -81,14 +82,13 @@
   margin-right: 20rpx;
 }
 .userinfo-remarks{
-  border: 1px solid var(--base);
-  border-radius: var(--base-radius);
-  background-color: var(--base-bg);
   font-size: 24rpx;
   padding: 10rpx;
   max-height: 180rpx;
   overflow: scroll;
   margin-top: 20rpx;
+  background: #F7F7F9;
+  border-radius: 6rpx;
 }
 
 .userserver, .userlogs{
@@ -133,4 +133,21 @@
 .userserver-li-image{
   width: 104rpx;
   height: 114rpx;
+}
+
+.usernews{
+  padding: 48rpx 30rpx;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  background: #f0f2f5;
+}
+.usernews-view{
+  margin-bottom: 20rpx;
+}
+.usernews-title{
+  color: var(--base);
+  line-height: 32rpx;
+  position: relative;
+  top: 20rpx;
 }

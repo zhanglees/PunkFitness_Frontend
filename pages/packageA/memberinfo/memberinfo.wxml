@@ -28,9 +28,9 @@
         <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn btn-gradient" bindtap="changeLevel">
           转为正式会员
         </view>
-        <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
+        <!-- <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
           关联客户微信
-        </view>
+        </view> -->
       </view>
     </block>
     <block wx:else>
