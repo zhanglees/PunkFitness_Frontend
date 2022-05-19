@@ -49,19 +49,19 @@ Page({
             id: 'trainingAreaName'
         }],
         trainingList: [{
-            //     name: '热身训练',
-            //     actionList: [],
-            //     showAdd: false,
-            //     editIndex: '',
-            //     detail: {
-            //         trainingAreaName: '',
-            //         actionName: '',
-            //         equipmentName: '',
-            //         counterWeight: '',
-            //         numberSinglegroup: '',
-            //         groups: ''
-            //     }
-            // }, {
+                name: '热身训练',
+                actionList: [],
+                showAdd: false,
+                editIndex: '',
+                detail: {
+                    trainingAreaName: '',
+                    actionName: '',
+                    equipmentName: '',
+                    counterWeight: '',
+                    numberSinglegroup: '',
+                    groups: ''
+                }
+            }, {
             name: '正式训练',
             actionList: [],
             showAdd: false,
@@ -73,18 +73,18 @@ Page({
                 numberSinglegroup: '',
                 groups: ''
             }
-            // }, {
-            //     name: '放松整理',
-            //     actionList: [],
-            //     showAdd: false,
-            //     detail: {
-            //         trainingAreaName: '',
-            //         actionName: '',
-            //         equipmentName: '',
-            //         counterWeight: '',
-            //         numberSinglegroup: '',
-            //         groups: ''
-            //     }
+            }, {
+                name: '放松整理',
+                actionList: [],
+                showAdd: false,
+                detail: {
+                    trainingAreaName: '',
+                    actionName: '',
+                    equipmentName: '',
+                    counterWeight: '',
+                    numberSinglegroup: '',
+                    groups: ''
+                }
         }],
         trainingPart: [{
             name: '胸大肌',

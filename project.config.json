@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+=======
+  "description": "Project configuration file, more information: https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+>>>>>>> 11cea5ceb58ba735455c15ef319911d5c784fbc2
   "packOptions": {
     "ignore": [
       {
@@ -52,9 +56,17 @@
   "libVersion": "2.19.4",
   "appid": "wx07c8de022f1d7e42",
   "projectname": "Link%E5%81%A5%E8%BA%AB",
+<<<<<<< HEAD
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   }
+=======
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 4
+  },
+  "condition": {}
+>>>>>>> 11cea5ceb58ba735455c15ef319911d5c784fbc2
 }

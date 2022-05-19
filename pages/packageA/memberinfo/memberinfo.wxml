@@ -28,9 +28,9 @@
         <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn btn-gradient" bindtap="changeLevel">
           转为正式会员
         </view>
-        <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
+        <!-- <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
           关联客户微信
-        </view>
+        </view> -->
       </view>
     </block>
     <block wx:else>
@@ -40,7 +40,9 @@
   <view class="userserver">
     <view class="member-title">客户服务</view>
     <ul class="userserver-list">
-      <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">{{item.name}}</li>
+      <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">
+        <image class="userserver-li-image" src="/images/main/menu{{index}}.png" mode="cover"></image>
+        {{item.name}}</li>
     </ul>
   </view>
   <view class="userlogs" wx:if="{{showLogs}}">

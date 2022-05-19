@@ -120,7 +120,7 @@
     width: 1px;
     border-right: 1px dashed #BCC0C7;
     top: 36rpx;
-    bottom: 36rpx;
+    bottom: 77rpx;
     left: 44rpx;
     display: block;
     position: absolute;
@@ -132,10 +132,13 @@
     margin-bottom: 64rpx;
 }
 
-.lesson-item-c {
+.lesson-content-view .lesson-item {
+    display: flex;
+    justify-content: space-between;
+}
+.lesson-content-view .lesson-item-c{
     display: block;
 }
-
 .lesson-item-title {
     color: #707784;
     padding-left: 32rpx;
@@ -251,7 +254,7 @@
     width: 280rpx;
     box-sizing: border-box;
     background: #D8D8D8;
-    border-radius: 12px;
+    border-radius: 12rpx;
     overflow: hidden;
     border: 1px solid rgba(30, 34, 58, 0.04);
     margin-right: 24rpx;
@@ -274,6 +277,7 @@
     margin: 8rpx 0;
     min-width: 180rpx;
     position: relative;
+    padding-right: 16px;
 }
 
 .class-info-li-name {
@@ -352,7 +356,9 @@
     line-height: 40rpx;
     margin-bottom: 16rpx;
 }
-
+.action-view-video-wrapper{
+    text-align: center;
+}
 .action-edit-video-wrapper {
     width: 100%;
     height: 386rpx;
@@ -362,14 +368,31 @@
     box-sizing: border-box;
     margin-right: 0;
     border: none;
+    text-align: center;
 }
-
-.action-edit-video-wrapper .user-video {
+.user-video-wrapper .user-video{
     width: 100%;
     height: 100%;
+}
+.action-edit-video-wrapper .video-wrapper-inner {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
     border-radius: 12rpx;
+    overflow: hidden;
 }
 
+.user-video-wrapper .user-video-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    filter: blur(8px);
+    border-radius: 12rpx;
+    transform: rotate(0deg);
+    z-index: -1;
+}
 .action-edit-video-wrapper .eva-camera {
     color: #BCC0C7;
     padding-top: 124rpx;
@@ -442,10 +465,24 @@
     left: 0;
 }
 
-.lesson-item-edit .lesson-add {
+.lesson-item-edit .lesson-add, .lesson-item-edit .action-item-e {
     display: none;
 }
 
-.lesson-item-edit-expand .lesson-add {
+.lesson-item-edit-expand .lesson-add, .lesson-item-edit-expand .action-item-e {
     display: block;
+}
+#canvas{
+    position: absolute;
+    bottom: -10000;
+}
+.video-shadow{
+    height: 0;
+}
+.user-video-play{
+    width: 64rpx;
+    height: 64rpx;
+    position: absolute;
+    top: 46rpx;
+    left: 108rpx;
 }

@@ -37,8 +37,8 @@ Page({
             birthday: '',
             customerTag: ''
         },
-        imgUrl: '', //后端返回的绑定二维码
-        qrShow: false,
+        // imgUrl: '', //后端返回的绑定二维码
+        // qrShow: false,
         waitTimes: 0, //超时变量
         timeList: [], //定时器列表
     },
@@ -85,26 +85,29 @@ Page({
             } else {
                 //提交表单，拿返回的二维码弹窗显示，轮询客户扫码结果，客户扫码后跳转会员详情页
                 console.log('传参：', this.data.formData)
-                    // wx.showToast({
-                    //     title: '保存成功'
-                    // });  
+                wx.showToast({
+                    title: '保存成功'
+                });  
                 let data = this.data.formData;
                 let userId = wx.getStorageSync('mp-req-user-id');
                 // data.age = new Date().getFullYear() - data.birthday.split('-')[0];
                 app.req.api.userRegister({
-                        teacherId: userId,
-                        ...data
-                    })
+                    teacherId: userId,
+                    ...data
+                })
                     .then((res) => {
                         console.log('返回：', res);
                         if (res.code == 0) {
                             const id = res.data.id;
                             _this.setData({
-                                    imgUrl: '/images/member/qr.png',
-                                    qrShow: true,
-                                    userid: id
-                                })
-                                // _this.startWaiting();
+                                // imgUrl: '/images/member/qr.png',
+                                // qrShow: true,
+                                userid: id
+                            })
+                            wx.redirectTo({
+                                url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
+                            })
+                            // _this.startWaiting();
                         } else {
                             this.setData({
                                 error: res.message
@@ -132,9 +135,9 @@ Page({
         if (newWait >= maxWait) { //超时了
             console.log(new Date(), '轮询超时')
         } else { //未超时
-            var time = setTimeout(function() { _this.qrStatusUpdate(_this) }, 2000)
+            var time = setTimeout(function () { _this.qrStatusUpdate(_this) }, 2000)
             _this.data.timeList.push(time) // 存储定时器
-                //这里发送请求判断绑定结果，如果绑定成功则进入拿到数据流程
+            //这里发送请求判断绑定结果，如果绑定成功则进入拿到数据流程
             console.log(new Date(), '第', newWait, '次轮询中...')
             if (newWait === 1) { //拿到数据，轮询终止
                 console.log(new Date(), '拿到了所需数据！轮询停止')
@@ -151,28 +154,28 @@ Page({
     },
     startWaiting() {
         const _this = this;
-        setTimeout(function() { _this.qrStatusUpdate(_this) }, 2000)
+        setTimeout(function () { _this.qrStatusUpdate(_this) }, 2000)
     },
     stopWaiting() {
         for (var i = 0; i < this.data.timeList.length; i++) {
             clearTimeout(this.data.timeList[i]); //清除了所有定时器
         }
     },
-    confirmBind() {
-        //展示一个列表选择
-        wx.redirectTo({
-            url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
-        })
-    },
-    cancelBind() {
-        wx.redirectTo({
-            url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
-        })
-    },
-    onHide: function() {
+    // confirmBind() {
+    //     //展示一个列表选择
+    //     wx.redirectTo({
+    //         url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
+    //     })
+    // },
+    // cancelBind() {
+    //     wx.redirectTo({
+    //         url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
+    //     })
+    // },
+    onHide: function () {
         this.stopWaiting();
     },
-    onUnload: function() {
+    onUnload: function () {
         this.stopWaiting();
     }
 })
