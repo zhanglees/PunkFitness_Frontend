@@ -78,7 +78,7 @@
                 <view class="user-video-wrapper video-wrapper action-edit-video-wrapper" wx:if="{{action.video || action.videourl}}">
                     <view class="video-wrapper-inner">
                         <image class="user-video-bg" object-fit="cover" src="{{action.videoImg || action.thumbnailImage}}" />
-                        <video class="user-video" object-fit="contain" src="{{action.video || action.videourl}}" style="{{action.videoStyle}}" data-index="{{index}}" bindloadedmetadata="videometa" ></video>
+                        <video class="user-video" object-fit="contain" src="{{action.video || action.videourl}}" style="{{action.videoStyle}}" data-index="{{index}}" data-type="edit" bindloadedmetadata="videometa" ></video>
                     </view>
                     <view class="del-act-btn" catchtap="delVideo" data-index="{{index}}">
                         <mp-icon type="field" icon="close" color="#fff" size="{{20}}"></mp-icon>
@@ -115,8 +115,11 @@
             <view class="action-item" wx:for="{{actionList}}" wx:for-index="i" wx:key="action" wx:for-item="action">
                 <view class="action-item-head">
                     <view class="action-item-head-left">
-                        <view class="user-video-wrapper video-wrapper" wx:if="{{action.videourl}}">
-                            <video class="user-video" data-src="{{action.videourl}}" src="{{action.videourl}}" object-fit="cover"></video>
+                        <view class="user-video-wrapper video-wrapper action-view-video-wrapper" wx:if="{{action.videourl}}" bindtap="playVideo" data-index="{{i}}">
+                            <image class="user-video" object-fit="contain" src="{{action.videoImg || action.thumbnailImage}}" style="{{action.videoStyle}}" data-index="{{i}}" data-type="view" bindload="videometa" />
+                            <image class="user-video-bg" object-fit="cover" src="{{action.videoImg || action.thumbnailImage}}"/>
+                            <image class="user-video-play" src="/images/icons/v-play.png" />
+                            <!-- <video class="user-video" data-src="{{action.videourl}}" src="{{action.videourl}}" object-fit="contain" style="{{action.videoStyle}}" data-index="{{i}}" data-type="view" bindloadedmetadata="videometa"></video> -->
                         </view>
                         <view class="action-item-head-c">
                             <view class="action-item-actionname">{{action.actionName}}</view>
@@ -136,6 +139,8 @@
             <view>{{relax || '--'}}</view>
         </view>
     </view>
+    <video src="{{viewVideoUrl}}" id="viewVideo" bindfullscreenchange="leaveVideo" class="video-shadow"></video>
     <mp-dialog title="确认删除该动作" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>
+    <canvas id="canvas" type="2d" height="343" width="193"></canvas>
 </view>

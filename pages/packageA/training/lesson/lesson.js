@@ -109,6 +109,7 @@ Page({
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
         editedIndex: [], //这个数组用来记录被编辑过的动作索引
         newAction: [],  //编辑时新增动作
+        viewVideoUrl: ''
     },
     /**
      * Lifecycle function--Called when page load
@@ -158,6 +159,23 @@ Page({
             })
         }
     },
+    playVideo(e){
+        const index = e.currentTarget.dataset.index;
+        const that = this;
+        this.setData({
+            viewVideoUrl: this.data.actionList[index].videourl || this.data.actionList[index].video
+        });
+        this.videoContext.requestFullScreen()
+        setTimeout(()=>{
+            that.videoContext.play()
+        }, 500)
+    },
+    leaveVideo(){
+        this.videoContext.pause();
+        this.setData({
+            viewVideoUrl: null
+        });
+    },
     getLessonDetail(coachId, userId, usertrainSectionId, sectionName) {
         app.req.api.getUserClassSectionDetail({ coachId, userId, usertrainSectionId, sectionName }).then(res => {
             const data = res.data;
@@ -173,7 +191,190 @@ Page({
                 actionList,
                 expand: actionList.length > 0
             })
+            // this.getGussImage("https://www.zhangleixd.com/static/09cc20bc-3e3e-46bd-bcb2-d7a85bbf68be/face/8b593620-e590-4503-939b-46ecc18cb397.jpg")
         })
+    },
+    getGussImage(imgurl){
+        wx.createSelectorQuery().select('#canvas')
+        .fields({ 
+          node: true,
+          size: true 
+        }).exec(function (res) {
+            const canvas = res[0].node
+            const ctx = canvas.getContext('2d');
+            const width = res[0].width
+            const height = res[0].height
+            ctx.restore();
+            const dpr = wx.getSystemInfoSync().pixelRatio
+            canvas.width = width * dpr
+            canvas.height = height * dpr
+            let img = canvas.createImage();
+            img.src = imgurl;
+            img.onload = function () {
+                canvas.height = img.height;
+                canvas.width = img.width;
+                //将图像绘制到canvas上面
+
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                //从画布获取一半图像
+
+                var data = ctx.getImageData(0, 0, img.width, img.height);
+                //将图像数据进行高斯模糊 data.data是一个数组，每四个值代表一个像素点的rgba的值，data.width data.height 分别代表图像数据的宽高
+
+                var emptyData = gaussBlur(data);
+
+                //将模糊的图像数据再渲染到画布上面
+
+                ctx.putImageData(emptyData, 0, 0);
+
+            };
+        });
+
+        function gaussBlur(imgData) {
+
+            var pixes = imgData.data;
+
+            var width = imgData.width;
+
+            var height = imgData.height;
+
+            var gaussMatrix = [],
+
+            gaussSum = 0,
+
+            x, y,
+
+            r, g, b, a,
+
+            i, j, k, len;
+
+            var radius = 50;
+
+            var sigma = 50;
+
+            a = 1 / (Math.sqrt(2 * Math.PI) * sigma);
+
+            b = -1 / (2 * sigma * sigma);
+
+            //生成高斯矩阵
+
+            for (i = 0, x = -radius; x <= radius; x++, i++) {
+
+                g = a * Math.exp(b * x * x);
+
+                gaussMatrix[i] = g;
+
+                gaussSum += g;
+
+            }
+
+            //归一化, 保证高斯矩阵的值在[0,1]之间
+
+            for (i = 0, len = gaussMatrix.length; i < len; i++) {
+
+                gaussMatrix[i] /= gaussSum;
+
+            }
+
+            //x 方向一维高斯运算
+
+            for (y = 0; y < height; y++) {
+
+                for (x = 0; x < width; x++) {
+
+                    r = g = b = a = 0;
+
+                    gaussSum = 0;
+
+                    for (j = -radius; j <= radius; j++) {
+
+                        k = x + j;
+
+                        if (k >= 0 && k < width) {//确保 k 没超出 x 的范围
+
+                        //r,g,b,a 四个一组
+
+                            i = (y * width + k) * 4;
+
+                            r += pixes[i] * gaussMatrix[j + radius];
+
+                            g += pixes[i + 1] * gaussMatrix[j + radius];
+
+                            b += pixes[i + 2] * gaussMatrix[j + radius];
+
+                            // a += pixes[i + 3] * gaussMatrix[j];
+
+                            gaussSum += gaussMatrix[j + radius];
+
+                        }
+
+                    }
+
+                    i = (y * width + x) * 4;
+
+                    // 除以 gaussSum 是为了消除处于边缘的像素, 高斯运算不足的问题
+
+                    // console.log(gaussSum)
+
+                    pixes[i] = r / gaussSum;
+
+                    pixes[i + 1] = g / gaussSum;
+
+                    pixes[i + 2] = b / gaussSum;
+
+                // pixes[i + 3] = a ;
+
+                }
+
+            }
+
+            //y 方向一维高斯运算
+
+            for (x = 0; x < width; x++) {
+
+                for (y = 0; y < height; y++) {
+
+                    r = g = b = a = 0;
+
+                    gaussSum = 0;
+
+                    for (j = -radius; j <= radius; j++) {
+
+                        k = y + j;
+
+                        if (k >= 0 && k < height) {//确保 k 没超出 y 的范围
+
+                            i = (k * width + x) * 4;
+
+                            r += pixes[i] * gaussMatrix[j + radius];
+
+                            g += pixes[i + 1] * gaussMatrix[j + radius];
+
+                            b += pixes[i + 2] * gaussMatrix[j + radius];
+
+                            // a += pixes[i + 3] * gaussMatrix[j];
+
+                            gaussSum += gaussMatrix[j + radius];
+
+                        }
+
+                    }
+
+                    i = (y * width + x) * 4;
+
+                    pixes[i] = r / gaussSum;
+
+                    pixes[i + 1] = g / gaussSum;
+
+                    pixes[i + 2] = b / gaussSum;
+
+                }
+
+            }
+            return imgData;
+        }
+
     },
     videometa(e) {
         //视频的高
@@ -181,10 +382,10 @@ Page({
         //视频的宽
         var width = e.detail.width;
         const ratio = width/height;
-        const index = e.currentTarget.dataset.index;
+        const {index, type} = e.currentTarget.dataset;
         var query = wx.createSelectorQuery(); 
         if(ratio > 1){
-            query.select('.action-edit-video-wrapper').boundingClientRect(rect=>{
+            query.select(`.action-${type}-video-wrapper`).boundingClientRect(rect=>{
                 const wrapperWidth = rect.width;
                 this.setData({
                     [`actionList[${index}].videoStyle`]: `width:100%;height:${wrapperWidth/ratio}px;`
@@ -192,7 +393,7 @@ Page({
             }).exec()
         }else{
             this.setData({
-                [`actionList[${index}].videoStyle`]: `width:${ratio*388}rpx;height:100%;`
+                [`actionList[${index}].videoStyle`]: `width:${ratio*(type=="edit" ? 388 : 156)}rpx;height:100%;`
             })
         }
     },
@@ -471,7 +672,8 @@ Page({
      * Lifecycle function--Called when page is initially rendered
      */
     onReady: function() {
-
+        this.videoContext = wx.createVideoContext('viewVideo');
+        
     },
 
     /**

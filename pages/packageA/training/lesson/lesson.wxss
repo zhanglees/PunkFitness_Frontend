@@ -254,7 +254,7 @@
     width: 280rpx;
     box-sizing: border-box;
     background: #D8D8D8;
-    border-radius: 12px;
+    border-radius: 12rpx;
     overflow: hidden;
     border: 1px solid rgba(30, 34, 58, 0.04);
     margin-right: 24rpx;
@@ -356,7 +356,9 @@
     line-height: 40rpx;
     margin-bottom: 16rpx;
 }
-
+.action-view-video-wrapper{
+    text-align: center;
+}
 .action-edit-video-wrapper {
     width: 100%;
     height: 386rpx;
@@ -368,7 +370,7 @@
     border: none;
     text-align: center;
 }
-.action-edit-video-wrapper .user-video{
+.user-video-wrapper .user-video{
     width: 100%;
     height: 100%;
 }
@@ -380,7 +382,7 @@
     overflow: hidden;
 }
 
-.action-edit-video-wrapper .user-video-bg {
+.user-video-wrapper .user-video-bg {
     position: absolute;
     left: 0;
     top: 0;
@@ -389,6 +391,7 @@
     filter: blur(8px);
     border-radius: 12rpx;
     transform: rotate(0deg);
+    z-index: -1;
 }
 .action-edit-video-wrapper .eva-camera {
     color: #BCC0C7;
@@ -468,4 +471,18 @@
 
 .lesson-item-edit-expand .lesson-add, .lesson-item-edit-expand .action-item-e {
     display: block;
+}
+#canvas{
+    position: absolute;
+    bottom: -10000;
+}
+.video-shadow{
+    height: 0;
+}
+.user-video-play{
+    width: 64rpx;
+    height: 64rpx;
+    position: absolute;
+    top: 46rpx;
+    left: 108rpx;
 }
