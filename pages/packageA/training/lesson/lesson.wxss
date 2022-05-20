@@ -81,7 +81,11 @@
     height: 32rpx;
     width: 32rpx;
 }
-
+.right-btn{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
 .edit-tips {
     width: 100%;
     color: #C1C7D6;
@@ -101,6 +105,12 @@
     font-size: 32rpx;
     font-weight: 500;
     color: #386DF3;
+}
+.checkin-btn{
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #386DF3;
+    margin-right: 40rpx;
 }
 
 .page-title .weui-input {
@@ -472,10 +482,10 @@
 .lesson-item-edit-expand .lesson-add, .lesson-item-edit-expand .action-item-e {
     display: block;
 }
-#canvas{
+/* #canvas{
     position: absolute;
     bottom: -10000;
-}
+} */
 .video-shadow{
     height: 0;
 }

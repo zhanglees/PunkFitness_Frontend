@@ -30,11 +30,16 @@
         </view>
     </view>
     <mp-dialog title="签课" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}" data-index="{{index}}">
-        <picker-view wx:if="{{classList.length}}" indicator-style="height: 50rpx;" class="dialog-picker" value="{{checkClass}}" bindchange="bindClassChange">
+        <view wx:if="{{classList.length}}" class="dialog-class-list">
+            <view wx:for="{{classList}}" wx:key="index" class="dialog-picker-item" bindtap="gotoClass" data-index="{{index}}"> 
+                {{item.showOrder ? (item.showOrder + '.') : ''}} {{item.sectionName}}
+            </view>
+        </view>
+        <!-- <picker-view wx:if="{{classList.length}}" indicator-style="height: 50rpx;" class="dialog-picker" value="{{checkClass}}" bindchange="bindClassChange">
             <picker-view-column value="{{item.index}}">
                 <view wx:for="{{classList}}" wx:key="index" class="dialog-picker-item"> {{item.showOrder ? (item.showOrder + '.') : ''}} {{item.sectionName}}</view>
             </picker-view-column>
-        </picker-view>
+        </picker-view> -->
         <view wx:else class="no-data">
             暂无可签课程，请前往课程计划编辑
         </view>

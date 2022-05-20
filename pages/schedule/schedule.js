@@ -128,6 +128,16 @@ Page({
             url: '/pages/reserve/reserve?type=' + e.currentTarget.dataset.type,
         })
     },
+    gotoClass(e){
+        const classInfo = this.data.classList[e.currentTarget.dataset.index];
+        const {userId, trainingPlanId, userTrainitemId, coachId, usertrainSectionId, sectionName, showOrder} = classInfo;
+        const appointmentId = this.data.checkAppointment.appointmentId;
+        // console.log(888888, userId, trainingPlanId, userTrainitemId, coachId, usertrainSectionId, sectionName)
+        let url = `/pages/packageA/training/lesson/lesson?type=edit&showOrder=${showOrder}&userId=${userId}&usertrainSectionId=${usertrainSectionId}&sectionName=${sectionName}&trainingPlanId=${trainingPlanId}&userTrainitemId=${userTrainitemId}&appointmentId=${appointmentId}`;
+        wx.navigateTo({
+          url,
+        })
+    },
     /**
      * Lifecycle function--Called when page is initially rendered
      */
@@ -139,6 +149,9 @@ Page({
      * Lifecycle function--Called when page show
      */
     onShow: function() {
+        this.setData({
+            dialogShow: false,
+        })
         this.getList();
     },
 

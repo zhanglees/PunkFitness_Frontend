@@ -7,7 +7,10 @@
                 {{(type!='experience') ? (showOrder + '. '+ sectionName) : '私教体验课'}}
             </view>
             <block wx:if="{{type != 'detail'}}">
-                <image class="edit-btn" bindtap="edit" src="../../../../images/icons/icon-edit.png" />
+                <view class="right-btn">
+                    <view class="checkin-btn" bindtap="checkin">签课</view>
+                    <image class="edit-btn" bindtap="edit" src="../../../../images/icons/icon-edit.png" />
+                </view>
                 <view class="edit-tips">课程标题可编辑，课程序列号不可编辑</view>
             </block>
         </block>
@@ -25,7 +28,7 @@
         <view class="lesson-item lesson-item-edit">
             <view class="lesson-item-title">热身方式</view>
             <view class="warm-list option-list">
-                <view class="warm-item option-item{{warmUp == item ? ' option-sel' : ''}}" wx:for="{{warmList}}" wx:key="index" bindtap="selOption" data-name="warmUp" data-value="{{item}}">
+                <view class="warm-item option-item{{warmUp == item ? ' option-sel' : ''}}" wx:for="{{warmList}}" wx:key="item" bindtap="selOption" data-name="warmUp" data-value="{{item}}">
                     {{item}}
                 </view>
             </view>
@@ -97,7 +100,7 @@
         <view class="lesson-item lesson-item-edit">
             <view class="lesson-item-title">放松方式</view>
             <view class="relax-list option-list">
-                <view class="relax-item option-item{{relax == item ? ' option-sel' : ''}}" wx:for="{{relaxList}}" wx:key="index" bindtap="selOption" data-name="relax" data-value="{{item}}">
+                <view class="relax-item option-item{{relax == item ? ' option-sel' : ''}}" wx:for="{{relaxList}}" wx:key="item" bindtap="selOption" data-name="relax" data-value="{{item}}">
                     {{item}}
                 </view>
             </view>
@@ -112,7 +115,7 @@
         </view>
         <view class="lesson-item lesson-item-c">
             <view class="lesson-item-title">正式训练：</view>
-            <view class="action-item" wx:for="{{actionList}}" wx:for-index="i" wx:key="action" wx:for-item="action">
+            <view class="action-item" wx:for="{{actionList}}" wx:for-index="i" wx:key="sectionDetailId" wx:for-item="action">
                 <view class="action-item-head">
                     <view class="action-item-head-left">
                         <view class="user-video-wrapper video-wrapper action-view-video-wrapper" wx:if="{{action.videourl}}" bindtap="playVideo" data-index="{{i}}">
@@ -128,7 +131,7 @@
                     </view>
                 </view>
                 <view class="class-info-list">
-                    <view wx:for="{{itemsShow}}" class="class-info-li" wx:key="index" wx:for-item="ia">
+                    <view wx:for="{{itemsShow}}" class="class-info-li" wx:key="ia" wx:for-item="ia">
                         <text class="class-info-li-name">{{ia.name}}：</text>{{(action[ia.id]||'--') + (ia.unit ? ia.unit : '')}}
                     </view>
                 </view>
@@ -142,5 +145,5 @@
     <video src="{{viewVideoUrl}}" id="viewVideo" bindfullscreenchange="leaveVideo" class="video-shadow"></video>
     <mp-dialog title="确认删除该动作" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>
-    <canvas id="canvas" type="2d" height="343" width="193"></canvas>
+    <!-- <canvas id="canvas" type="2d" height="343" width="193"></canvas> -->
 </view>
