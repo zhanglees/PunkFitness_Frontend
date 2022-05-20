@@ -8,7 +8,7 @@
             </view>
             <block wx:if="{{type != 'detail'}}">
                 <view class="right-btn">
-                    <view class="checkin-btn" bindtap="checkin">签课</view>
+                    <view class="checkin-btn" bindtap="checkin" wx:if="{{appointmentId}}">签课</view>
                     <image class="edit-btn" bindtap="edit" src="../../../../images/icons/icon-edit.png" />
                 </view>
                 <view class="edit-tips">课程标题可编辑，课程序列号不可编辑</view>

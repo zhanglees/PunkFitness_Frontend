@@ -134,7 +134,8 @@ Page({
             this.getLessonDetail(coachId, userId, usertrainSectionId, sectionName);
         } else if (type == 'new') {
             //新建
-            const { showOrder, userTrainitemId, trainingPlanId } = options;
+            const { showOrder, userTrainitemId, trainingPlanId, appointmentId } = options;
+            this.addone();
             this.setData({
                 coachId,
                 userId,
@@ -142,7 +143,9 @@ Page({
                 trainingPlanId,
                 showOrder,
                 editFlag: true,
-                type
+                expand: true,
+                type,
+                appointmentId
             })
         } else {
             app.req.api.getUserExperienceLessonDetail({
@@ -390,13 +393,15 @@ Page({
     },
     /*****全页面的保存提交 */
     saveList() {
-        const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId, usertrainSectionId, warmUp, relax } = this.data;
+        const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId, usertrainSectionId, warmUp, relax, appointmentId } = this.data;
         let actionList = this.data.actionList.filter(i=>i.actionName);//动作数组不能为空值 这里用动作名判断
+        console.log('保存：actionList', actionList, actionList.length)
         if(!actionList.length){
             wx.showToast({
                 title: '至少添加一个动作',
                 icon: 'none'
             });
+            return false;
         }
         if (type != 'new') {
             //编辑进来 只修改课程名称 热身 放松
@@ -412,30 +417,33 @@ Page({
                     warmUp, 
                     relax
                 }).then(res => {
-                    if (res.code == 0) {
-                        wx.showToast({
-                            title: '提交成功',
-                        })
-                        wx.navigateBack({
-                            delta: 0,
-                        })
-                    }
+                    // if (res.code == 0) {
+                        // wx.showToast({
+                        //     title: '提交成功',
+                        // })
+                        // wx.navigateBack({
+                        //     delta: 0,
+                        // })
+                    // }
                 })
             }
             //然后遍历动作数组
-            const len = actionList.length;
+            const len = actionList.length-1;
             actionList.forEach((item, i)=>{
                 if(item.sectionDetailId){
                     //有id就调修改
                     app.req.api.editUserClassSectionDetail(item).then(res => {
-                        console.log('保存：', res.data)
                         if(i == len){
+                            !appointmentId ? 
                             wx.navigateBack({
                                 delta: 0,
+                            }) : this.setData({
+                                editFlag: false
                             })
                         }
                     })
                 }else{
+                    // console.log('新增动作：', i, len)
                     //没id就调新增
                     app.req.api.adddUserSectionDetail({
                         ...item,
@@ -445,10 +453,13 @@ Page({
                         usertrainSectionId,
                         trainingType: 1
                     }).then(res => {
-                        console.log('新增动作：', res.data)
                         if(i == len){
+                            // console.log('新增动作：', !appointmentId)
+                            !appointmentId ? 
                             wx.navigateBack({
                                 delta: 0,
+                            }) : this.setData({
+                                editFlag: false
                             })
                         }
                     })
@@ -479,9 +490,17 @@ Page({
                 warmUp: this.data.warmUp,
                 relax: this.data.relax,
             }).then(res => {
+                console.log('新增：', appointmentId)
                 if (res.code == 0) {
+                    this.setData({
+                        usertrainSectionId: res.data.usertrainSectionId,
+                        type: 'edit'
+                    });
+                    !appointmentId ? 
                     wx.navigateBack({
                         delta: 0,
+                    }) : this.setData({
+                        editFlag: false
                     })
                 }
             })
@@ -500,9 +519,17 @@ Page({
                 wx.showToast({
                     title: '签到成功',
                 })
+                let pages = getCurrentPages();
+                let delta = 0;
+                for (let i = pages.length - 1; i >= 0; i--){
+                    if(pages[i].route === 'pages/schedule/schedule'){
+                        break;
+                    }
+                    delta += 1;
+                }
                 setTimeout(()=>{
                     wx.navigateBack({
-                        delta: 0,
+                        delta
                     })}, 1000);
             } else {
                 wx.showToast({

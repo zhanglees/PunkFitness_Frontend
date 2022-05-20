@@ -58,6 +58,7 @@ Page({
                         userId: userid,
                         type
                     },
+                    dialogButtons: classList.length ? false : [{ text: '取消' }, { text: '确定' }],
                     dialogShow: true
                 })
             })
@@ -98,10 +99,7 @@ Page({
                     }
                 })
             } else {
-                //没有课程则去创建
-                wx.navigateTo({
-                    url: '/pages/packageA/training/' + ['experience/experience?userId=', 'classlist/classlist?type=record&userId='][this.data.checkAppointment.type] + this.data.checkAppointment.userId,
-                })
+                this.gotoTraining();
             }
         }
         this.setData({
@@ -128,12 +126,19 @@ Page({
             url: '/pages/reserve/reserve?type=' + e.currentTarget.dataset.type,
         })
     },
+    gotoTraining(){
+        //没有课程则去创建
+        const appointmentId = this.data.checkAppointment.appointmentId;
+        wx.navigateTo({
+            url: '/pages/packageA/training/' + ['experience/experience?userId=', 'classlist/classlist?type=record&userId='][this.data.checkAppointment.type] + this.data.checkAppointment.userId + '&appointmentId=' + (appointmentId || ''),
+        })
+    },
     gotoClass(e){
         const classInfo = this.data.classList[e.currentTarget.dataset.index];
-        const {userId, trainingPlanId, userTrainitemId, coachId, usertrainSectionId, sectionName, showOrder} = classInfo;
+        const {userId, trainingPlanId, userTrainitemId, usertrainSectionId, sectionName, showOrder} = classInfo;
         const appointmentId = this.data.checkAppointment.appointmentId;
         // console.log(888888, userId, trainingPlanId, userTrainitemId, coachId, usertrainSectionId, sectionName)
-        let url = `/pages/packageA/training/lesson/lesson?type=edit&showOrder=${showOrder}&userId=${userId}&usertrainSectionId=${usertrainSectionId}&sectionName=${sectionName}&trainingPlanId=${trainingPlanId}&userTrainitemId=${userTrainitemId}&appointmentId=${appointmentId}`;
+        let url = `/pages/packageA/training/lesson/lesson?type=edit&showOrder=${showOrder}&userId=${userId}&usertrainSectionId=${usertrainSectionId}&sectionName=${sectionName}&trainingPlanId=${trainingPlanId}&userTrainitemId=${userTrainitemId}&appointmentId=${appointmentId || ''}`;
         wx.navigateTo({
           url,
         })

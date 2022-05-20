@@ -29,7 +29,7 @@
             </view>
         </view>
     </view>
-    <mp-dialog title="签课" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}" data-index="{{index}}">
+    <mp-dialog class="{{classList.length ? 'dialog-checkin' : ''}}" title="签课" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}" data-index="{{index}}">
         <view wx:if="{{classList.length}}" class="dialog-class-list">
             <view wx:for="{{classList}}" wx:key="index" class="dialog-picker-item" bindtap="gotoClass" data-index="{{index}}"> 
                 {{item.showOrder ? (item.showOrder + '.') : ''}} {{item.sectionName}}
@@ -41,7 +41,7 @@
             </picker-view-column>
         </picker-view> -->
         <view wx:else class="no-data">
-            暂无可签课程，请前往课程计划编辑
+            暂无可签课程，请前往<view class="no-data-link" bindtap="gotoTraining">课程计划</view>编辑
         </view>
     </mp-dialog>
 </view>

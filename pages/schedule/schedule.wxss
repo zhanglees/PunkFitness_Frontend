@@ -74,6 +74,7 @@
     color: #999;
     width: 180rpx;
     box-shadow: 0 0 10px 2px #ddd;
+    background: #fff;
 }
 .show-type-dialog::after{
     content: "";
@@ -88,4 +89,13 @@
     box-shadow: 6px -6px 10px 0px #ddd;
     right: 13px;
     bottom: -19rpx;
+  }
+  .no-data-link{
+    display: inline-block;
+    color: #386DF3;
+    font-size: 28rpx;
+    margin: 0 8rpx;
+  }
+  .dialog-checkin .weui-dialog__ft{
+      display: none;
   }

@@ -38,7 +38,7 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const { userId, userTrainitemId, trainingPlanId, classId, classNum, coachName } = options;
+        const { userId, userTrainitemId, trainingPlanId, classId, classNum, coachName, appointmentId } = options;
         const coachId = wx.getStorageSync('mp-req-user-id');
         this.setData({
             coachId,
@@ -47,7 +47,8 @@ Page({
             userTrainitemId, 
             trainingPlanId,
             classNum: classNum=='null' ? 0 : classNum,
-            coachName
+            coachName,
+            appointmentId
         })
         // this.getClasses();
     },
@@ -165,18 +166,19 @@ Page({
     gotoDetail(e){
         const {index} = e.currentTarget.dataset;
         const classItem = this.data.classes[index];
-        const {userId, trainingPlanId, userTrainitemId} = this.data;
+        const {userId, trainingPlanId, userTrainitemId, appointmentId} = this.data;
         const {status} = classItem;
         let url = '/pages/packageA/training/lesson/lesson?';
         // let url = '/pages/packageA/training/edit/edit?';
         if(status){
             //已编辑 查详情
             const { coachId, usertrainSectionId, sectionName } = classItem;
-            url += ('type=' + (status == 1 ? 'edit' : 'detail' )+ '&showOrder=' + (index+1) + '&coachId=' + coachId + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId+ '&status=' + status);
+            url += ('type=' + (status == 1 ? 'edit' : 'detail' )+ '&showOrder=' + (index+1) + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId+ '&status=' + status);
         }else{
             //去新建
-            url += ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId);
+            url += ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId + '&appointmentId=' + (appointmentId || ''));
         }
+        // console.log(8888, url)
         wx.navigateTo({
           url,
         })

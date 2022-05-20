@@ -22,11 +22,12 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        const { userId, type } = options;   //用来区分是训练规划还是训练记录,记录则每条跳转到该阶段对应的课程，规划则每条跳转到该阶段的详情
+        const { userId, type, appointmentId } = options;   //用来区分是训练规划还是训练记录,记录则每条跳转到该阶段对应的课程，规划则每条跳转到该阶段的详情
         const coachId = wx.getStorageSync('mp-req-user-id');
         this.setData({
             userId,
             coachId,
+            appointmentId,
             type: type
         })
         // this.getStageList();
@@ -54,8 +55,9 @@ Page({
     },
     /***查看该阶段课程列表 */
     gotoDetail(e){
+        const appointmentId = this.data.appointmentId;
         const {index, trainingplanid, classid, coachname, usertrainitemid, classnum} = e.currentTarget.dataset;
-        const url = '/pages/packageA/training/' + (this.data.type == 'plan' ? ('stagedetail/stagedetail?') : ('class/class?userTrainitemId=' + usertrainitemid + '&classNum=' + classnum)) + '&trainingPlanId='  + trainingplanid + '&userId=' + this.data.userId + '&classId=' + classid + '&coachName=' + coachname;
+        const url = '/pages/packageA/training/' + (this.data.type == 'plan' ? ('stagedetail/stagedetail?') : ('class/class?userTrainitemId=' + usertrainitemid + '&classNum=' + classnum + '&appointmentId='+(appointmentId || ''))) + '&trainingPlanId='  + trainingplanid + '&userId=' + this.data.userId + '&classId=' + classid + '&coachName=' + coachname;
         //查详情的接口需要传大量的参数，所以先存起来吧
         // wx.setStorage({
         //   key: "stageDetail",

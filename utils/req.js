@@ -24,7 +24,6 @@ function code2sessionId(code) {
         code,
       },
       success(r1) {
-        console.log(888888888888888, r1)
         if (r1.data && r1.data.code === 0) {
           res(r1.data.data);
         } else {
