@@ -116,7 +116,8 @@ Page({
      */
     onLoad: function(options) {
         const coachId = wx.getStorageSync('mp-req-user-id');
-        const { userId, type } = options;
+        const { userId, type, isExprience } = options;
+        console.log(8888, isExprience)
         if (type == 'edit' || type == 'detail') {
             //编辑
             const { showOrder, usertrainSectionId, sectionName, trainingPlanId, userTrainitemId, appointmentId } = options;
@@ -128,8 +129,9 @@ Page({
                 trainingPlanId,
                 userTrainitemId,
                 showOrder,
-                appointmentId,
-                type
+                appointmentId : appointmentId || '',
+                type,
+                isExprience : isExprience || false
             })
             this.getLessonDetail(coachId, userId, usertrainSectionId, sectionName);
         } else if (type == 'new') {
@@ -147,21 +149,7 @@ Page({
                 type,
                 appointmentId
             })
-        } else {
-            app.req.api.getUserExperienceLessonDetail({
-                coachId,
-                userId
-            }).then(res => {
-                this.setData({
-                    ...res.data,
-                    trainingList: this.dataFormate(res.data),
-                    coachId,
-                    userId,
-                    editFlag: !res.data.userTraionSectionDetails,
-                    type
-                })
-            })
-        }
+        } 
     },
     playVideo(e){
         const index = e.currentTarget.dataset.index;
@@ -393,9 +381,9 @@ Page({
     },
     /*****全页面的保存提交 */
     saveList() {
-        const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId, usertrainSectionId, warmUp, relax, appointmentId } = this.data;
+        const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId, usertrainSectionId, warmUp, relax, appointmentId, isExprience } = this.data;
         let actionList = this.data.actionList.filter(i=>i.actionName);//动作数组不能为空值 这里用动作名判断
-        console.log('保存：actionList', actionList, actionList.length)
+        console.log('保存：actionList', isExprience, actionList, actionList.length)
         if(!actionList.length){
             wx.showToast({
                 title: '至少添加一个动作',
@@ -465,11 +453,6 @@ Page({
                     })
                 }
             })
-            if (type == 'experience') {
-                wx.navigateBack({
-                    delta: 0,
-                })
-            }
         } else {
             let userTraionSectionDetails = [];
             actionList.forEach(action => {
@@ -479,31 +462,58 @@ Page({
                     trainingType: 1
                 })
             })
-            app.req.api.addUserTrainClassSection({
-                showOrder,
-                coachId,
-                sectionName: sectionName || `第${showOrder}节训练课`,
-                trainingPlanId,
-                userId,
-                userTrainitemId,
-                userTraionSectionDetails,
-                warmUp: this.data.warmUp,
-                relax: this.data.relax,
-            }).then(res => {
-                console.log('新增：', appointmentId)
-                if (res.code == 0) {
-                    this.setData({
-                        usertrainSectionId: res.data.usertrainSectionId,
-                        type: 'edit'
-                    });
-                    !appointmentId ? 
-                    wx.navigateBack({
-                        delta: 0,
-                    }) : this.setData({
-                        editFlag: false
-                    })
-                }
-            })
+            if(!isExprience){
+                app.req.api.addUserTrainClassSection({
+                    showOrder,
+                    coachId,
+                    sectionName: sectionName || `第${showOrder}节训练课`,
+                    trainingPlanId,
+                    userId,
+                    userTrainitemId,
+                    userTraionSectionDetails,
+                    warmUp: this.data.warmUp,
+                    relax: this.data.relax,
+                }).then(res => {
+                    console.log('新增：', appointmentId)
+                    if (res.code == 0) {
+                        this.setData({
+                            usertrainSectionId: res.data.usertrainSectionId,
+                            type: 'edit'
+                        });
+                        !appointmentId ? 
+                        wx.navigateBack({
+                            delta: 0,
+                        }) : this.setData({
+                            editFlag: false
+                        })
+                    }
+                })
+            }else{
+                app.req.api.addUserExperiencleClassSection({
+                    showOrder,
+                    coachId,
+                    sectionName: sectionName || `第${showOrder}节体验课`,
+                    trainingPlanId,
+                    userId,
+                    userTraionSectionDetails,
+                    warmUp: this.data.warmUp,
+                    relax: this.data.relax,
+                }).then(res => {
+                    console.log('新增：', appointmentId)
+                    if (res.code == 0) {
+                        this.setData({
+                            usertrainSectionId: res.data.usertrainSectionId,
+                            type: 'edit'
+                        });
+                        !appointmentId ? 
+                        wx.navigateBack({
+                            delta: 0,
+                        }) : this.setData({
+                            editFlag: false
+                        })
+                    }
+                })
+            }
         }
     },
     /*****签课 */

@@ -1,5 +1,6 @@
 <!--pages/packageA/training/experience/experience.wxml-->
 <!-- 体验课列表-->
+<wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
     <view class='top_layout'>
         <view class="top-say-sth">添加体验课，开始您的训练</view>
@@ -10,9 +11,9 @@
     <view class="class-list">
         <block wx:if="{{classes.length}}">
         <mp-slideview wx:for="{{classes}}" wx:key="index" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" data-index="{{index}}">
-            <mp-cell bindtap="gotoDetail" link="{{item.status != 2}}" data-index="{{index}}" footer="{{item.status ? (item.status == 1 ? '未完成' : ('已完成 '+ item.completeTime)) : ''}}">
+            <mp-cell bindtap="gotoDetail" link="{{!item.completeTime}}" data-index="{{index}}" footer="{{item.completeTime ? ('已完成 '+ utils.formatDate(item.completeTime)) : '未完成'}}">
                 <view slot="title" class="weui-label">
-                    <text class="class-item-index">{{item.index ? item.index : (index+1)}}</text>
+                    <text class="class-item-index">{{item.showOrder || (index+1)}}</text>
                     <text class="class-item-title">{{item.sectionName}}</text>
                 </view>
             </mp-cell>

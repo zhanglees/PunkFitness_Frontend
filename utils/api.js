@@ -193,6 +193,14 @@ function install(req, request) {
             const url = `${req.apiUrl}/experienceLesson/getUserExperienceLessonDetail`;
             return request({ url, method: 'GET', data });
         }, 
+        getUserExperienceLessonList(data){
+            const url = `${req.apiUrl}/experienceLesson/getUserExperienceLessonList`;
+            return request({ url, method: 'GET', data });
+        },
+        addUserExperiencleClassSection(data){   //添加体验课
+            const url = `${req.apiUrl}/experienceLesson/addUserExperiencleClassSection`;
+            return request({ url, method: 'POST', data });
+        }, 
 /******预约 */
         getUserAppointmentAllByDate(data){//教练查预约
             const url = `${req.apiUrl}/coachAppointment/getUserAppointmentAllByDate`;

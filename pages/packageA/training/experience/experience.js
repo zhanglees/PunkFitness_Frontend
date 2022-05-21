@@ -27,64 +27,29 @@ Page({
         const { userId } = options;
         this.data.userId = userId;
         this.data.coachId = coachId;
-        this.getList(userId, coachId);
     },
     
-    getList(userId, coachId){
-        app.req.api.getUserTrainPlainDetail({
-            trainPlainId: 'exprienceClassPlan',
+    getList(){
+        const {userId, coachId} = this.data;
+        app.req.api.getUserExperienceLessonList({
             coachId,
             userId
-        }).then(res=>{
-            console.log(888888, res.data)
-        });
-    },
-    getList2(userId, coachId){
-        app.req.api.getUserExperienceLessonDetail({
-            coachId,
-            userId
-        }).then(res=>{
-            console.log(888, res.data)
-        });
-    },
-    getClasses(){
-        const {userId, userTrainitemId, trainingPlanId, classId, coachId, classNum} = this.data;
-        app.req.api.getUserClassSection({
-            classId,                         
-            trainingPlanId,                   
-            userId,                              
-            userTrainitemId,                     
-            coachId
         }).then(res=>{
             const data = res.data;
-            console.log(9999, classNum)
-            let classList = new Array(parseInt(classNum)).fill({status: 0});
-            let classes = [];
-            data.forEach((i, k) => {
-                i.status = i.usertrainSectionId ? (i.completeTime ? 2 : 1) : 0;
-                classList[i.showOrder - 1] = i;
-            });
             this.setData({
-                classes: classList
+                classes: res.data
             })
-        })
-        // this.setData({
-        //     name: '适应期',
-        //     coach: '王建祥',
-        //     count: count,
-        //     classes: classList
-        // })
+        });
     },
     slideButtonTap(e) {
         const {type, index} = e.currentTarget.dataset;
-        if(e.detail.index === 1){
+        if(e.detail.index === 0){
             //删除
             this.setData({
                 dialogShow: true,
                 dialogIndex: index
             })
         }
-        console.log('slide button tap', this.data.classes[index])
     },
 
     tapDialogButton(e) {
@@ -101,10 +66,8 @@ Page({
             }).then(res=>{
                 console.log('shanchu:', res.data)
                 if(res.code == 0){
-                    classes.splice(index, 1);
-                    classes.push({});
+                    this.getList();
                     this.setData({
-                        classes: classes,
                         dialogIndex: ''
                     })
                 }
@@ -117,27 +80,20 @@ Page({
     gotoDetail(e){
         const {index} = e.currentTarget.dataset;
         const classItem = this.data.classes[index];
-        const {userId, trainingPlanId, userTrainitemId} = this.data;
-        const {status} = classItem;
+        const {userId, trainingPlanId, userTrainitemId} = classItem;
         let url = '/pages/packageA/training/lesson/lesson?';
-        // let url = '/pages/packageA/training/edit/edit?';
-        if(status){
-            //已编辑 查详情
-            const {coachId, usertrainSectionId, sectionName} = classItem;
-            url += ('type=edit&showOrder=' + (index+1) + '&coachId=' + coachId + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId);
-        }else{
-            //去新建
-            url += ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId);
-        }
+        //已编辑 查详情
+        const {coachId, usertrainSectionId, sectionName} = classItem;
+        url += ('type=edit&isExprience=1&showOrder=' + (index+1) + '&coachId=' + coachId + '&userId=' + userId + '&usertrainSectionId=' + usertrainSectionId+ '&sectionName=' + sectionName+ '&trainingPlanId=' + trainingPlanId + '&userTrainitemId=' + userTrainitemId);
         wx.navigateTo({
           url,
         })
     },
     addBtn(){
-        const {userId, userTrainitemId, classes} = this.data;
+        const {userId, classes} = this.data;
         const index = classes.length + 1;
         const trainingPlanId = 'exprienceClassPlan';
-        const url = '/pages/packageA/training/edit/edit?' + ('type=new&showOrder=' + (index+1)+ '&trainingPlanId=' + trainingPlanId + '&userId=' + userId + '&userTrainitemId=' + userTrainitemId);
+        const url = '/pages/packageA/training/lesson/lesson?' + ('type=new&isExprience=1&showOrder=' + index + '&trainingPlanId=' + trainingPlanId + '&userId=' + userId);
         wx.navigateTo({
             url,
         })
@@ -153,7 +109,7 @@ Page({
      * Lifecycle function--Called when page show
      */
     onShow: function () {
-
+        this.getList();
     },
 
     /**
