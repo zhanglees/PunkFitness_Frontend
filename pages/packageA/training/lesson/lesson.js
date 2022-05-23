@@ -8,7 +8,7 @@ Page({
     data: {
         editFlag: false, //false, //是否为编辑状态
         canEdit: true, //是否可编辑  已完成课程不可编辑
-        type: 'new',  //新建or修改
+        type: 'new', //新建or修改
         warmList: ['跑步热身', '椭圆仪热身', '单车热身', '自主体能热身', '教练教学热身'],
         warmUp: '',
         relaxList: ['主动拉伸', '被动拉伸', '肌肉松解', '筋膜枪松解', 'PNF对抗拉伸'],
@@ -108,7 +108,7 @@ Page({
         dialogShow: false,
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
         editedIndex: [], //这个数组用来记录被编辑过的动作索引
-        newAction: [],  //编辑时新增动作
+        newAction: [], //编辑时新增动作
         viewVideoUrl: ''
     },
     /**
@@ -117,7 +117,7 @@ Page({
     onLoad: function(options) {
         const coachId = wx.getStorageSync('mp-req-user-id');
         const { userId, type, isExprience } = options;
-        console.log(8888, isExprience)
+        // console.log(8888, isExprience)
         if (type == 'edit' || type == 'detail') {
             //编辑
             const { showOrder, usertrainSectionId, sectionName, trainingPlanId, userTrainitemId, appointmentId } = options;
@@ -129,9 +129,9 @@ Page({
                 trainingPlanId,
                 userTrainitemId,
                 showOrder,
-                appointmentId : appointmentId || '',
+                appointmentId: appointmentId || '',
                 type,
-                isExprience : isExprience || false
+                isExprience: isExprience || false
             })
             this.getLessonDetail(coachId, userId, usertrainSectionId, sectionName);
         } else if (type == 'new') {
@@ -147,22 +147,23 @@ Page({
                 editFlag: true,
                 expand: true,
                 type,
-                appointmentId
+                appointmentId,
+                isExprience: isExprience || false
             })
-        } 
+        }
     },
-    playVideo(e){
+    playVideo(e) {
         const index = e.currentTarget.dataset.index;
         const that = this;
         this.setData({
             viewVideoUrl: this.data.actionList[index].videourl || this.data.actionList[index].video
         });
         this.videoContext.requestFullScreen()
-        setTimeout(()=>{
+        setTimeout(() => {
             that.videoContext.play()
         }, 500)
     },
-    leaveVideo(){
+    leaveVideo() {
         this.videoContext.pause();
         this.setData({
             viewVideoUrl: null
@@ -172,18 +173,18 @@ Page({
         app.req.api.getUserClassSectionDetail({ coachId, userId, usertrainSectionId, sectionName }).then(res => {
             const data = res.data;
             const { warmUp, relax } = data;
-            const actionList = data.userTraionSectionDetails.map(i=>{
+            const actionList = data.userTraionSectionDetails.map(i => {
                 i.thumbnailImage && (!i.thumbnailImage.includes('https://')) && (i.thumbnailImage = 'https://' + i.thumbnailImage);
                 i.videourl && (!i.videourl.includes('https://')) && (i.videourl = 'https://' + i.videourl);
                 return i;
             })
             this.setData({
-                warmUp, 
-                relax,
-                actionList,
-                expand: actionList.length > 0
-            })
-            // this.getGussImage("https://www.zhangleixd.com/static/09cc20bc-3e3e-46bd-bcb2-d7a85bbf68be/face/8b593620-e590-4503-939b-46ecc18cb397.jpg")
+                    warmUp,
+                    relax,
+                    actionList,
+                    expand: actionList.length > 0
+                })
+                // this.getGussImage("https://www.zhangleixd.com/static/09cc20bc-3e3e-46bd-bcb2-d7a85bbf68be/face/8b593620-e590-4503-939b-46ecc18cb397.jpg")
         })
     },
     videometa(e) {
@@ -191,17 +192,17 @@ Page({
         var height = e.detail.height;
         //视频的宽
         var width = e.detail.width;
-        const ratio = width/height;
-        const {index, type} = e.currentTarget.dataset;
-        var query = wx.createSelectorQuery(); 
-        if(ratio > 1){
-            query.select(`.action-${type}-video-wrapper`).boundingClientRect(rect=>{
+        const ratio = width / height;
+        const { index, type } = e.currentTarget.dataset;
+        var query = wx.createSelectorQuery();
+        if (ratio > 1) {
+            query.select(`.action-${type}-video-wrapper`).boundingClientRect(rect => {
                 const wrapperWidth = rect.width;
                 this.setData({
                     [`actionList[${index}].videoStyle`]: `width:100%;height:${wrapperWidth/ratio}px;`
                 })
             }).exec()
-        }else{
+        } else {
             this.setData({
                 [`actionList[${index}].videoStyle`]: `width:${ratio*(type=="edit" ? 388 : 156)}rpx;height:100%;`
             })
@@ -382,9 +383,9 @@ Page({
     /*****全页面的保存提交 */
     saveList() {
         const { type, showOrder, sectionName, coachId, userId, trainingPlanId, userTrainitemId, usertrainSectionId, warmUp, relax, appointmentId, isExprience } = this.data;
-        let actionList = this.data.actionList.filter(i=>i.actionName);//动作数组不能为空值 这里用动作名判断
+        let actionList = this.data.actionList.filter(i => i.actionName); //动作数组不能为空值 这里用动作名判断
         console.log('保存：actionList', isExprience, actionList, actionList.length)
-        if(!actionList.length){
+        if (!actionList.length) {
             wx.showToast({
                 title: '至少添加一个动作',
                 icon: 'none'
@@ -402,35 +403,35 @@ Page({
                     userId,
                     userTrainitemId,
                     usertrainSectionId,
-                    warmUp, 
+                    warmUp,
                     relax
                 }).then(res => {
                     // if (res.code == 0) {
-                        // wx.showToast({
-                        //     title: '提交成功',
-                        // })
-                        // wx.navigateBack({
-                        //     delta: 0,
-                        // })
+                    // wx.showToast({
+                    //     title: '提交成功',
+                    // })
+                    // wx.navigateBack({
+                    //     delta: 0,
+                    // })
                     // }
                 })
             }
             //然后遍历动作数组
-            const len = actionList.length-1;
-            actionList.forEach((item, i)=>{
-                if(item.sectionDetailId){
+            const len = actionList.length - 1;
+            actionList.forEach((item, i) => {
+                if (item.sectionDetailId) {
                     //有id就调修改
                     app.req.api.editUserClassSectionDetail(item).then(res => {
-                        if(i == len){
-                            !appointmentId ? 
-                            wx.navigateBack({
-                                delta: 0,
-                            }) : this.setData({
-                                editFlag: false
-                            })
+                        if (i == len) {
+                            !appointmentId ?
+                                wx.navigateBack({
+                                    delta: 0,
+                                }) : this.setData({
+                                    editFlag: false
+                                })
                         }
                     })
-                }else{
+                } else {
                     // console.log('新增动作：', i, len)
                     //没id就调新增
                     app.req.api.adddUserSectionDetail({
@@ -441,14 +442,14 @@ Page({
                         usertrainSectionId,
                         trainingType: 1
                     }).then(res => {
-                        if(i == len){
+                        if (i == len) {
                             // console.log('新增动作：', !appointmentId)
-                            !appointmentId ? 
-                            wx.navigateBack({
-                                delta: 0,
-                            }) : this.setData({
-                                editFlag: false
-                            })
+                            !appointmentId ?
+                                wx.navigateBack({
+                                    delta: 0,
+                                }) : this.setData({
+                                    editFlag: false
+                                })
                         }
                     })
                 }
@@ -456,13 +457,14 @@ Page({
         } else {
             let userTraionSectionDetails = [];
             actionList.forEach(action => {
-                userTraionSectionDetails.push({
-                    ...action,
-                    sectionName,
-                    trainingType: 1
+                    userTraionSectionDetails.push({
+                        ...action,
+                        sectionName,
+                        trainingType: 1
+                    })
                 })
-            })
-            if(!isExprience){
+                // console.log(88888, isExprience)
+            if (!isExprience) {
                 app.req.api.addUserTrainClassSection({
                     showOrder,
                     coachId,
@@ -480,15 +482,15 @@ Page({
                             usertrainSectionId: res.data.usertrainSectionId,
                             type: 'edit'
                         });
-                        !appointmentId ? 
-                        wx.navigateBack({
-                            delta: 0,
-                        }) : this.setData({
-                            editFlag: false
-                        })
+                        !appointmentId ?
+                            wx.navigateBack({
+                                delta: 0,
+                            }) : this.setData({
+                                editFlag: false
+                            })
                     }
                 })
-            }else{
+            } else {
                 app.req.api.addUserExperiencleClassSection({
                     showOrder,
                     coachId,
@@ -505,20 +507,20 @@ Page({
                             usertrainSectionId: res.data.usertrainSectionId,
                             type: 'edit'
                         });
-                        !appointmentId ? 
-                        wx.navigateBack({
-                            delta: 0,
-                        }) : this.setData({
-                            editFlag: false
-                        })
+                        !appointmentId ?
+                            wx.navigateBack({
+                                delta: 0,
+                            }) : this.setData({
+                                editFlag: false
+                            })
                     }
                 })
             }
         }
     },
     /*****签课 */
-    checkin(){
-        const {appointmentId, coachId, userId, usertrainSectionId} = this.data;
+    checkin() {
+        const { appointmentId, coachId, userId, usertrainSectionId } = this.data;
         app.req.api.singIn({
             appointmentId,
             coachId,
@@ -531,16 +533,17 @@ Page({
                 })
                 let pages = getCurrentPages();
                 let delta = 0;
-                for (let i = pages.length - 1; i >= 0; i--){
-                    if(pages[i].route === 'pages/schedule/schedule'){
+                for (let i = pages.length - 1; i >= 0; i--) {
+                    if (pages[i].route === 'pages/schedule/schedule') {
                         break;
                     }
                     delta += 1;
                 }
-                setTimeout(()=>{
+                setTimeout(() => {
                     wx.navigateBack({
                         delta
-                    })}, 1000);
+                    })
+                }, 1000);
             } else {
                 wx.showToast({
                     title: '签到失败',
@@ -554,7 +557,7 @@ Page({
      */
     onReady: function() {
         this.videoContext = wx.createVideoContext('viewVideo');
-        
+
     },
 
     /**

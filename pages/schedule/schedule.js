@@ -44,7 +44,7 @@ Page({
         //这里要发请求拿回该用户的课程列表
         app.req.api.getUserSectionList({
                 coachId: this.data.coachId,
-                trainingPlanId: (type == 1) ? trainingplanid : 'exprienceClassPla',
+                trainingPlanId: (type == 1) ? 'exprienceClassPla' : trainingplanid,
                 userId: userid
             }).then(res => {
                 let classList = res.data;
@@ -126,21 +126,21 @@ Page({
             url: '/pages/reserve/reserve?type=' + e.currentTarget.dataset.type,
         })
     },
-    gotoTraining(){
+    gotoTraining() {
         //没有课程则去创建
         const appointmentId = this.data.checkAppointment.appointmentId;
         wx.navigateTo({
             url: '/pages/packageA/training/' + ['experience/experience?userId=', 'classlist/classlist?type=record&userId='][this.data.checkAppointment.type] + this.data.checkAppointment.userId + '&appointmentId=' + (appointmentId || ''),
         })
     },
-    gotoClass(e){
+    gotoClass(e) {
         const classInfo = this.data.classList[e.currentTarget.dataset.index];
-        const {userId, trainingPlanId, userTrainitemId, usertrainSectionId, sectionName, showOrder} = classInfo;
+        const { userId, trainingPlanId, userTrainitemId, usertrainSectionId, sectionName, showOrder } = classInfo;
         const appointmentId = this.data.checkAppointment.appointmentId;
         // console.log(888888, userId, trainingPlanId, userTrainitemId, coachId, usertrainSectionId, sectionName)
         let url = `/pages/packageA/training/lesson/lesson?type=edit&showOrder=${showOrder}&userId=${userId}&usertrainSectionId=${usertrainSectionId}&sectionName=${sectionName}&trainingPlanId=${trainingPlanId}&userTrainitemId=${userTrainitemId}&appointmentId=${appointmentId || ''}`;
         wx.navigateTo({
-          url,
+            url,
         })
     },
     /**
