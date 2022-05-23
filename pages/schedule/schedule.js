@@ -44,7 +44,7 @@ Page({
         //这里要发请求拿回该用户的课程列表
         app.req.api.getUserSectionList({
                 coachId: this.data.coachId,
-                trainingPlanId: (type == 1) ? 'exprienceClassPla' : trainingplanid,
+                trainingPlanId: (type == 0) ? 'exprienceClassPlan' : trainingplanid,
                 userId: userid
             }).then(res => {
                 let classList = res.data;
