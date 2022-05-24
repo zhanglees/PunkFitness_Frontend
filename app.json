@@ -4,7 +4,8 @@
         "pages/index/index",
         "pages/mine/mine",
         "pages/schedule/schedule",
-        "pages/reserve/reserve"
+        "pages/reserve/reserve",
+        "pages/addmember/addmember"
     ],
     "subpackages": [{
         "root": "pages/packageA",

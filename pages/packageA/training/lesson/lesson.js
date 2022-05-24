@@ -156,7 +156,8 @@ Page({
         const index = e.currentTarget.dataset.index;
         const that = this;
         this.setData({
-            viewVideoUrl: this.data.actionList[index].videourl || this.data.actionList[index].video
+            viewVideoUrl: this.data.actionList[index].videourl || this.data.actionList[index].video,
+            viewVideoDirection: this.data.actionList[index].videoRatio > 1 ? '90' : '0'
         });
         this.videoContext.requestFullScreen()
         setTimeout(() => {
@@ -193,22 +194,28 @@ Page({
         //视频的宽
         var width = e.detail.width;
         const ratio = width / height;
-        const { index, type } = e.currentTarget.dataset;
-        var query = wx.createSelectorQuery();
-        if (ratio > 1) {
-            query.select(`.action-${type}-video-wrapper`).boundingClientRect(rect => {
-                const wrapperWidth = rect.width;
-                this.setData({
-                    [`actionList[${index}].videoStyle`]: `width:100%;height:${wrapperWidth/ratio}px;`
-                })
-            }).exec()
-        } else {
+        const { index } = e.currentTarget.dataset;
+        // var query = wx.createSelectorQuery();
+        if (ratio <= 1) {
             this.setData({
-                [`actionList[${index}].videoStyle`]: `width:${ratio*(type=="edit" ? 388 : 156)}rpx;height:100%;`
-            })
+                    [`actionList[${index}].videoStyle`]: `width:${ratio*(388)}rpx;height:100%;`
+                })
+                // } else {  
+                //     query.select(`.action-${type}-video-wrapper`).boundingClientRect(rect => {
+                //         const wrapperWidth = rect.width;
+                //         this.setData({
+                //             [`actionList[${index}].videoStyle`]: `width:100%;height:${wrapperWidth/ratio}px;`
+                //         })
+                //     }).exec()
         }
     },
-
+    imageLoad(e) {
+        const { height, width } = e.detail;
+        const { index } = e.currentTarget.dataset;
+        this.setData({
+            [`actionList[${index}].videoRatio`]: width / height
+        })
+    },
     edit(e) {
         this.setData({
             editFlag: true

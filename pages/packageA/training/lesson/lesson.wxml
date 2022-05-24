@@ -120,7 +120,7 @@
                     <view class="action-item-head-left">
                         <view class="user-video-wrapper video-wrapper action-view-video-wrapper" wx:if="{{action.videourl}}" bindtap="playVideo" data-index="{{i}}">
                             <image class="user-video-bg" object-fit="cover" src="{{action.videoImg || action.thumbnailImage}}" />
-                            <image class="user-video" object-fit="contain" src="{{action.videoImg || action.thumbnailImage}}" mode="aspectFit" />
+                            <image class="user-video" object-fit="contain" src="{{action.videoImg || action.thumbnailImage}}" mode="aspectFit" data-index="{{i}}" bindload="imageLoad" />
                             <image class="user-video-play" src="/images/icons/v-play.png" />
                             <!-- <video class="user-video" data-src="{{action.videourl}}" src="{{action.videourl}}" object-fit="contain" style="{{action.videoStyle}}" data-index="{{i}}" data-type="view" bindloadedmetadata="videometa"></video> -->
                         </view>
@@ -142,7 +142,7 @@
             <view>{{relax || '--'}}</view>
         </view>
     </view>
-    <video src="{{viewVideoUrl}}" id="viewVideo" bindfullscreenchange="leaveVideo" class="video-shadow"></video>
+    <video src="{{viewVideoUrl}}" id="viewVideo" direction="{{viewVideoDirection}}" bindfullscreenchange="leaveVideo" class="video-shadow"></video>
     <mp-dialog title="确认删除该动作" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>
     <!-- <canvas id="canvas" type="2d" height="343" width="193"></canvas> -->

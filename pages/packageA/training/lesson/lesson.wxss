@@ -81,11 +81,13 @@
     height: 32rpx;
     width: 32rpx;
 }
-.right-btn{
+
+.right-btn {
     display: flex;
     justify-content: left;
     align-items: center;
 }
+
 .edit-tips {
     width: 100%;
     color: #C1C7D6;
@@ -106,7 +108,8 @@
     font-weight: 500;
     color: #386DF3;
 }
-.checkin-btn{
+
+.checkin-btn {
     font-size: 32rpx;
     font-weight: 500;
     color: #386DF3;
@@ -146,9 +149,11 @@
     display: flex;
     justify-content: space-between;
 }
-.lesson-content-view .lesson-item-c{
+
+.lesson-content-view .lesson-item-c {
     display: block;
 }
+
 .lesson-item-title {
     color: #707784;
     padding-left: 32rpx;
@@ -366,30 +371,37 @@
     line-height: 40rpx;
     margin-bottom: 16rpx;
 }
-.action-view-video-wrapper{
+
+.action-view-video-wrapper {
     text-align: center;
 }
+
 .action-edit-video-wrapper {
     width: 100%;
     height: 386rpx;
     background: #F4F4F7;
-    border-radius: 12rpx;
+    border-radius: 20rpx;
+    transform: rotate(0deg);
     overflow: visible;
     box-sizing: border-box;
     margin-right: 0;
     border: none;
     text-align: center;
+    position: relative;
 }
-.user-video-wrapper .user-video{
+
+.user-video-wrapper .user-video {
     width: 100%;
     height: 100%;
 }
+
 .action-edit-video-wrapper .video-wrapper-inner {
     width: 100%;
     height: 100%;
+    border-radius: 20rpx;
     transform: rotate(0deg);
-    border-radius: 12rpx;
     overflow: hidden;
+    position: relative;
 }
 
 .user-video-wrapper .user-video-bg {
@@ -399,10 +411,11 @@
     height: 100%;
     width: 100%;
     filter: blur(8px);
-    border-radius: 12rpx;
+    border-radius: 20rpx;
     transform: rotate(0deg);
     z-index: -1;
 }
+
 .action-edit-video-wrapper .eva-camera {
     color: #BCC0C7;
     padding-top: 124rpx;
@@ -475,21 +488,27 @@
     left: 0;
 }
 
-.lesson-item-edit .lesson-add, .lesson-item-edit .action-item-e {
+.lesson-item-edit .lesson-add,
+.lesson-item-edit .action-item-e {
     display: none;
 }
 
-.lesson-item-edit-expand .lesson-add, .lesson-item-edit-expand .action-item-e {
+.lesson-item-edit-expand .lesson-add,
+.lesson-item-edit-expand .action-item-e {
     display: block;
 }
+
+
 /* #canvas{
     position: absolute;
     bottom: -10000;
 } */
-.video-shadow{
+
+.video-shadow {
     height: 0;
 }
-.user-video-play{
+
+.user-video-play {
     width: 64rpx;
     height: 64rpx;
     position: absolute;
