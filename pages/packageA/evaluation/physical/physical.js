@@ -168,6 +168,9 @@ Page({
         title: '提交成功',
         duration: 2000
       });
+      // this.setData({
+      //   pageBackgroundColor:'#ffffff'
+      // })
       // wx.setNavigationBarTitle({
       //   title: '健康体适能',
       // })  
