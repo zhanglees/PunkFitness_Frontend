@@ -128,14 +128,11 @@ Page({
                         userId: that.data.id
                     },
                     success(res) {
-                        console.log('图片上传：', res)
                         app.req.api.modifyUserInfoById({
-                            id: that.data.id,
+                            ...that.data.formData,
                             headImg: res.data
                         }).then(res => {
-                            that.setData({
-                                [`formData.headImg`]: avatar
-                            })
+                            that.getUserInfo()
                         })
                     }
                 })
@@ -211,10 +208,10 @@ Page({
     buttontap(e) {
         if (e.detail.index === 1) {
             const changeItem = this.data.changeItem;
-            app.req.api.modifyUserInfoById({
-                id: this.data.id,
-                [changeItem.id]: changeItem.value
-            }).then(res => {
+            console.log(88888, changeItem)
+            const data = this.data.formData;
+            data[changeItem.id] = changeItem.value;
+            app.req.api.modifyUserInfoById(data).then(res => {
                 this.setData({
                     show: false
                 })

@@ -45,8 +45,8 @@
     <mp-half-screen-dialog extClass="change-dialog" bindbuttontap="buttontap" show="{{show}}" title="{{changeItem.name}}" buttons="{{buttons}}">
         <view slot="desc">
             <view wx:if="{{changeItem.id == 'sex'}}">
-                <picker-view indicator-class="dialog-picker-item-act" class="dialog-picker" value="{{changeItem.value}}" bindchange="sexChange">
-                    <picker-view-column value="{{changeItem.value}}">
+                <picker-view indicator-class="dialog-picker-item-act" class="dialog-picker" value="{{[changeItem.value]}}" bindchange="sexChange">
+                    <picker-view-column>
                         <view wx:for="{{genders}}" wx:key="index" class="dialog-picker-item">{{item}}</view>
                     </picker-view-column>
                 </picker-view>
