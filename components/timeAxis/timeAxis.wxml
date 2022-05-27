@@ -1,13 +1,13 @@
 <view class='timeAsix'>
-    <block wx:for="{{axisArr}}" wx:key="key" wx:for-index="key"  wx:for-item="value">
+    <block wx:for="{{axisArr}}" wx:key="key" wx:for-index="key" wx:for-item="value">
         <view class="itemTimeZ" wx:for="{{value}}" wx:key="index">
             <view class="leftContent">
                 <text wx:if="{{index == 0}}">{{key}}</text>
             </view>
-            <view class='centerView'>
-                <!-- <view class="'leftLine' + {{index != 0 ? '' : ' noLeftLine'}}"></view> -->
-                <view class="outRoundVIew"></view>
-            </view>
+            <!-- <view class='centerView'> -->
+            <!-- <view class="'leftLine' + {{index != 0 ? '' : ' noLeftLine'}}"></view> -->
+            <!-- <view class="outRoundVIew"></view>
+            </view> -->
             <view class='rightContent'>
                 <view class="rightContent-left">
                     <text wx:if="{{item.content!=''}}" class='outTitle'>{{item.content}}</text>

@@ -185,7 +185,10 @@ Page({
     getMemberInfo() {
         app.req.api.getUserById({ id: this.data.id }).then(res => {
             console.log('返回：', res.data);
-            let userInfo = {...res.data };
+            let userInfo = res.data;
+            if (!userInfo.headImg.includes('https://')) {
+                userInfo.headImg = 'https://' + userInfo.headImg
+            }
             const birthday = new Date(userInfo.birthday);
             userInfo.birthday = util.formatDate(birthday);
             userInfo.age = new Date().getFullYear() - birthday.getFullYear();
