@@ -145,7 +145,7 @@ Page({
                 const time = i.createTime ? i.createTime.match(/([0-9]+)-([0-9]+-[0-9]+)\s([0-9]+:[0-9]+)/) : [];
                 if (time.length > 3) {
                     const year = time[1],
-                        date = time[2],
+                        date = time[2].replace('-', '/'),
                         t = time[3];
                     if (temp[year]) {
                         let d = temp[year];

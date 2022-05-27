@@ -8,12 +8,12 @@
             <!-- <view class="'leftLine' + {{index != 0 ? '' : ' noLeftLine'}}"></view> -->
             <!-- <view class="outRoundVIew"></view>
             </view> -->
-            <view class='rightContent'>
-                <view class="rightContent-left">
+            <view class='rightContent {{(index == value.length-1) ? "last-one" : ""}}'>
+                <view class="rightContent-top">
                     <text wx:if="{{item.content!=''}}" class='outTitle'>{{item.content}}</text>
-                </view>
-                <view class="rightContent-right">
                     <text class='outTime'>{{item.time}}</text>
+                </view>
+                <view class="rightContent-bottom">
                     <view class="coach-info">
                         <image class="avatar" src="{{item.avatar || '/images/avatar.png'}}" mode="cover" />
                         <text class="coach">{{item.coach}}</text>
