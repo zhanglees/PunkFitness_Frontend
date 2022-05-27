@@ -2,6 +2,7 @@
     "entryPagePath": "pages/index/index",
     "pages": [
         "pages/index/index",
+        "pages/login/login",
         "pages/mine/mine",
         "pages/schedule/schedule",
         "pages/reserve/reserve",

@@ -154,10 +154,18 @@ Page({
      * Lifecycle function--Called when page show
      */
     onShow: function() {
+        const userInfo = wx.getStorageSync('userInfo');
         this.setData({
+            userInfo,
             dialogShow: false,
         })
-        this.getList();
+        if (userInfo && userInfo.phone) {
+            this.getList();
+        } else {
+            this.setData({
+                list: []
+            })
+        }
     },
 
     /**

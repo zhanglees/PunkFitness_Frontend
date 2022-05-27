@@ -1,6 +1,9 @@
 {
-  "usingComponents": {
-    "mp-cell": "weui-miniprogram/cell/cell"
-  },
-  "navigationBarTitleText": "资料设置"
+    "usingComponents": {
+        "mp-cell": "weui-miniprogram/cell/cell",
+        "mp-icon": "weui-miniprogram/icon/icon",
+        "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
+        "datePicker": "/components/datePicker/datePicker"
+    },
+    "navigationBarTitleText": "账号信息"
 }
