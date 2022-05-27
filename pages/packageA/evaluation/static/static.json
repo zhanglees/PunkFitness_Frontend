@@ -4,5 +4,7 @@
         "mp-cell": "weui-miniprogram/cell/cell"
     },
     "backgroundColor": "#eeeeee",
-    "navigationBarTitleText": "静态评估"
+    "navigationBarTitleText": "静态评估",
+    "navigationBarBackgroundColor": "#363D56",
+    "navigationBarTextStyle": "white"
 }

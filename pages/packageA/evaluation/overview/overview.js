@@ -49,14 +49,29 @@ Page({
       wx.navigateTo({
           url: `/pages/packageA/evaluation/${url}/${url}?userId=${this.data.userId}`
       })
+
   },
   //点击查看详情
   gotoDetail(e){
     const {createtime, coachid} = e.currentTarget.dataset;
     const url = ['static', 'dynamic', 'physical'][this.data.type];
       wx.navigateTo({
-          url: `/pages/packageA/evaluation/${url}/${url}?userId=${this.data.userId}&createTime=${createtime}&coachId=${coachid}`
+          url: `/pages/packageA/evaluation/${url}/${url}?userId=${this.data.userId}&createTime=${createtime}&coachId=${coachid}&color=${'#363D56'}`
       })
+      wx:if(url=='physical'){
+        wx.setNavigationBarTitle({
+          title: '',
+        })
+    
+        wx.setNavigationBarColor({
+          backgroundColor: "#363D56",
+          frontColor: "#ffffff",
+        })
+        this.setData({
+          showReport: true,
+          pageBackgroundColor:'#363D56'
+        })
+      }
   },
   onShow(){
     //请求数据

@@ -43,9 +43,10 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    const { userId, createTime, coachId } = options;
+    const { userId, createTime, coachId,color } = options;
     this.setData({
-      userId
+      userId,
+      pageBackgroundColor:color
     });
     if (createTime && coachId) {
       this.setData({
