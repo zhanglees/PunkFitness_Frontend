@@ -41,7 +41,7 @@
     <view class="member-title">客户服务</view>
     <ul class="userserver-list">
       <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">
-        <image class="userserver-li-image" src="/images/main/menu{{index}}.png" mode="cover"></image>
+        <image class="userserver-li-image" src="/images/main/menu{{index}}@3x.png" mode="cover"></image>
         {{item.name}}</li>
     </ul>
   </view>

@@ -85,9 +85,9 @@ Page({
             } else {
                 //提交表单，拿返回的二维码弹窗显示，轮询客户扫码结果，客户扫码后跳转会员详情页
                 console.log('传参：', this.data.formData)
-                wx.showToast({
-                    title: '保存成功'
-                });  
+                // wx.showToast({
+                //     title: '保存成功'
+                // });  
                 let data = this.data.formData;
                 let userId = wx.getStorageSync('mp-req-user-id');
                 // data.age = new Date().getFullYear() - data.birthday.split('-')[0];
@@ -104,6 +104,9 @@ Page({
                                 // qrShow: true,
                                 userid: id
                             })
+                            wx.showToast({
+                                title: '保存成功'
+                            });  
                             wx.redirectTo({
                                 url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
                             })
