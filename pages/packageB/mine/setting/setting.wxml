@@ -1,36 +1,74 @@
 <!--pages/packageB/mine/setting/setting.wxml-->
+<wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
-    <view class="userinfo-avatar">
+    <!-- <view class="userinfo-avatar">
         <image wx:if="{{myAvatar[0]}}" class="head-portrait" src="{{myAvatar}}" bindtap='changeAvatar'></image>
         <open-data wx:elif="{{canIUseOpenData}}" type="userAvatarUrl"></open-data>
         <image wx:elif="{{!hasUserInfo && canIUseGetUserProfile}}" bindtap="bindViewTap" class="head-portrait" src="/images/avatar.png" mode="cover" bindtap="getUserProfile"></image>
-    </view>
+    </view> -->
     <view class="form">
-        <mp-cell title="性别">
+        <mp-cell wx:for="{{info}}" wx:key="index" title="{{item.name}}" link bindtap="{{item.id=='headImg' ? 'changeAvatar' : 'changeInfo'}}" data-index="{{index}}">
+            <image wx:if="{{item.id=='headImg'}}" src="{{formData.headImg || '/images/avatar.png'}}" class="userinfo-avatar-img" />
+            <block wx:elif="{{formData[item.id] != null}}">
+                <text wx:if="{{item.id == 'sex'}}">{{genders[formData.sex]}}</text>
+                <text wx:elif="{{item.id == 'birthday'}}">{{utils.timestampDate(formData.birthday)}}</text>
+                <text wx:else>{{formData[item.id]}}{{item.unit || ''}}</text>
+            </block>
+            <text wx:else class="v-placeholder">{{item.placeholder}}</text>
+        </mp-cell>
+        <!-- <mp-cell title="头像" link>
+            <image src="{{userInfo.headImg || '/images/avatar.png'}}" class="userinfo-avatar-img"></image>
+        </mp-cell>
+        <mp-cell title="性别" link>
             <picker data-field="sex" bindchange="valueChange" value="{{formData.sex}}" range="{{genders}}">
                 <view class="weui-input">{{genders[formData.sex] || '请选择'}}</view>
             </picker>
         </mp-cell>
-        <mp-cell prop="phone" title="电话">
+        <mp-cell prop="phone" title="电话" link>
             <view class="phone-wrapper">
-                <input bindinput="valueChange" data-field="phone" value="{{formData.phone}}" class="weui-input" placeholder="请输入手机号"/>
-                <button class="get-phone" wx:if="{{!formData.phone}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> / 点击获取手机号</button>
-            </view>
+                <input bindinput="valueChange" data-field="phone" value="{{formData.phone}}" class="weui-input" placeholder="请输入手机号" /> -->
+        <!-- <button class="get-phone" wx:if="{{!formData.phone}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> / 点击获取手机号</button> -->
+        <!-- </view>
         </mp-cell>
-        <mp-cell prop="birthday" title="生日" ext-class="">
+        <mp-cell prop="birthday" title="生日" ext-class="" link>
             <picker data-field="birthday" mode="date" value="{{formData.birthday}}" start="1930-01-01" end="2021-09-01" bindchange="valueChange">
                 <view class="weui-input">{{formData.birthday || '请选择'}}</view>
             </picker>
         </mp-cell>
-        <mp-cell prop="height" title="身高" footer="cm">
+        <mp-cell prop="height" title="身高" footer="cm" link>
             <slider bindchange="valueChange" data-field="height" activeColor="#4182E9" value="{{formData.height}}" block-size="12" show-value min="90" max="250" />
         </mp-cell>
-        <mp-cell prop="weight" title="体重" footer="kg">
+        <mp-cell prop="weight" title="体重" footer="kg" link>
             <slider bindchange="valueChange" data-field="weight" activeColor="#4182E9" value="{{formData.weight}}" block-size="12" show-value min="10" max="150" />
-        </mp-cell>
+        </mp-cell> -->
     </view>
-    <view class="footer">
-        <view class="btn-gradient" bindtap="submit">保存</view>
+    <mp-half-screen-dialog extClass="change-dialog" bindbuttontap="buttontap" show="{{show}}" title="{{changeItem.name}}" buttons="{{buttons}}">
+        <view slot="desc">
+            <view wx:if="{{changeItem.id == 'sex'}}">
+                <picker-view indicator-class="dialog-picker-item-act" class="dialog-picker" value="{{[changeItem.value]}}" bindchange="sexChange">
+                    <picker-view-column>
+                        <view wx:for="{{genders}}" wx:key="index" class="dialog-picker-item">{{item}}</view>
+                    </picker-view-column>
+                </picker-view>
+            </view>
+            <view wx:elif="{{changeItem.id == 'birthday'}}">
+                <datePicker id="datePicker" class="date-picker" dateItem="2020-07-09" bind:bindChangeEvent="dateChange">
+                </datePicker>
+            </view>
+            <view class="input-wrapper" wx:else>
+                <input type="number" bindinput="valueChange" value="{{changeItem.value}}" class="change-input" placeholder="请输入" />
+                <view class="input-right">
+                    <text class="input-right-u" wx:if="{{changeItem.unit}}">{{changeItem.unit}}</text>
+                    <view class="close-icon" catchtap="resetInput" hidden="{{!showinputClose}}">
+                        <image src="/images/icons/close-icon.png" class="close-icon-i" />
+                    </view>
+                </view>
+            </view>
+        </view>
+    </mp-half-screen-dialog>
+    <view class=" footer ">
+        <!-- <view class="btn-gradient " bindtap="submit ">保存</view> -->
+        <view class="btn-logout " bindtap="logout">退出登录</view>
     </view>
 
 </view>

@@ -47,13 +47,23 @@ Page({
         this.data.userId = wx.getStorageSync('mp-req-user-id');
     },
     onShow() {
+        const userInfo = wx.getStorageSync('userInfo');
         this.setData({
+            userInfo,
             fliterChecked: '',
             showSearchInput: [false, false],
             searchText: ['', ''],
         });
-        this.getAllData(0);
-        this.getAllData(1);
+        if (userInfo && userInfo.phone) {
+            this.getAllData(0);
+            this.getAllData(1);
+        } else {
+            this.setData({
+                memberList: [],
+                nums: [],
+                current: 0,
+            })
+        }
     },
     getAllData(type) {
         // const data = [{age: null,
@@ -105,11 +115,18 @@ Page({
         }).exec();
     },
     tabChange(e) {
-        const curr = e.currentTarget.dataset.id;
-        this.setData({
-            current: curr
-        })
-        this.comSwiperHeight();
+        if (this.data.userInfo && this.data.userInfo.phone) {
+            const curr = e.currentTarget.dataset.id;
+            this.setData({
+                current: curr
+            })
+            this.comSwiperHeight();
+        } else {
+            //未登录跳转登录
+            wx.redirectTo({
+                url: '/pages/login/login?back=/pages/index/index',
+            })
+        }
     },
     // 事件处理函数
     bindAct(e) {

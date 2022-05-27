@@ -1,0 +1,29 @@
+<!-- <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}"> -->
+
+<!-- 日期模态框 -->
+<!-- <view class="date-picker-bg"></view> -->
+<view class="date-picker-view">
+    <view class="model_picker">
+        <view class="cont_model">
+            <picker-view indicator-class="indicator-style-view" style="width: 100%; height: 500rpx;" value="{{timeValue}}" catchchange="bindChangeEvent">
+                <!-- 年 -->
+                <picker-view-column wx:if="{{years.length > 0}}">
+                    <view class="{{timeValue[0]==index?'pickerSelected':''}}" wx:for="{{years}}" wx:key="item" style="line-height: 88rpx;">{{item}}</view>
+                </picker-view-column>
+                <!-- 月 -->
+                <picker-view-column wx:if="{{months.length > 0}}">
+                    <view class="{{timeValue[1]==index?'pickerSelected':''}}" wx:for="{{months}}" wx:key="item" style="line-height: 88rpx">{{item}}</view>
+                </picker-view-column>
+                <!-- 日 -->
+                <picker-view-column wx:if="{{days.length > 0}}">
+                    <view class="{{timeValue[2]==index?'pickerSelected':''}}" wx:for="{{days}}" wx:key="item" style="line-height: 88rpx">{{item}}</view>
+                </picker-view-column>
+            </picker-view>
+        </view>
+        <!-- <view class="button_model">
+                <text catchtap='cancelBtn'>取消</text>
+                <text catchtap='confirmBtn'>确定</text>
+            </view> -->
+    </view>
+</view>
+<!-- </view> -->
