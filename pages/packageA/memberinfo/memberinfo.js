@@ -186,13 +186,17 @@ Page({
         app.req.api.getUserById({ id: this.data.id }).then(res => {
             console.log('返回：', res.data);
             let userInfo = res.data;
-            if (!userInfo.headImg.includes('https://')) {
-                userInfo.headImg = 'https://' + userInfo.headImg
+            if (userInfo) {
+                if (userInfo.headImg && !userInfo.headImg.includes('https://')) {
+                    userInfo.headImg = 'https://' + userInfo.headImg
+                }
+                const birthday = new Date(userInfo.birthday);
+                userInfo.birthday = util.formatDate(birthday);
+                userInfo.age = new Date().getFullYear() - birthday.getFullYear();
+                userInfo.customerTag && (userInfo.customerTag = userInfo.customerTag.split(','));
+            } else {
+                userInfo = {}
             }
-            const birthday = new Date(userInfo.birthday);
-            userInfo.birthday = util.formatDate(birthday);
-            userInfo.age = new Date().getFullYear() - birthday.getFullYear();
-            userInfo.customerTag && (userInfo.customerTag = userInfo.customerTag.split(','));
             this.setData({
                 userInfo: userInfo,
                 userInfoGet: res.data
