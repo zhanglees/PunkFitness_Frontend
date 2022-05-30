@@ -3,10 +3,10 @@
 <view class="container page-form">
     <mp-toptips msg="{{error}}" type="error" show="{{error}}" ext-class="show-error"></mp-toptips>
     <mp-form id="form" rules="{{rules}}" models="{{formData}}" class="addmember-form">
-        <mp-cell prop="name" title="姓名">
+        <mp-cell prop="name" title="姓名" class="required-cell">
             <input bindinput="formInputChange" data-field="userName" class="weui-input" placeholder="请输入姓名" />
         </mp-cell>
-        <mp-cell prop="phone" title="手机号">
+        <mp-cell prop="phone" title="手机号" class="required-cell">
             <input bindinput="formInputChange" data-field="phone" class="weui-input" placeholder="请输入手机号" />
         </mp-cell>
         <mp-cell ext-class="weui-cell_select weui-cell_select-after">
