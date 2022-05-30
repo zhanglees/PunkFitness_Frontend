@@ -94,11 +94,9 @@ view.model_picker {
 .indicator-style-view {
     height: 88rpx;
     /* background-color: #0288d112; */
-    border-top: 1px solid #F1F1F3;
-    border-bottom: 1px solid #F1F1F3;
-    color: #386DF3;
 }
 
 .pickerSelected {
     color: #386DF3;
+    border-bottom: 1px solid #F1F1F3;
 }
