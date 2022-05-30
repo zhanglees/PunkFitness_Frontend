@@ -3,7 +3,7 @@
 <view class="container">
     <view class="member-title-container content">
         <view class="member-title">加入会员</view>
-        <view class="member-content">Link健身，让您的健身专业具象化呈现给</view>
+        <view class="member-content">Link健身，让您的健身专业具象化呈现给您的会员</view>
     </view>
     <view class="buy-list">
         <view wx:for="{{buyList}}" wx:key="index" bindtap="changeCurrent" data-index="{{index}}"
@@ -14,7 +14,7 @@
                 '多省￥':'￥' }}{{item.priceDifference}}</view>
             <view class="buy-item-price">
                 <!-- <image src="/images/member/money-icon.png" class="price-icon"></image> -->
-                <text style="display: inline-block; height: 32rpx; font-size: 20rpx; padding: 0;">￥</text>
+                <text style="display: inline-block; height: 32rpx; font-size: 36rpx; padding: 0;">￥</text>
                 <text>{{item.price}}</text>
             </view>
         </view>

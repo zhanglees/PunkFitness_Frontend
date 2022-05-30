@@ -5,5 +5,6 @@
         "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
         "datePicker": "/components/datePicker/datePicker"
     },
-    "navigationBarTitleText": "账号信息"
+    "navigationBarTitleText": "账号信息",
+    "navigationBarBackgroundColor": "#FAFAFC"
 }

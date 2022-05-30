@@ -25,7 +25,8 @@
         </view> -->
     </view>
     <view class="action-list">
-        <mp-cell wx:for="{{actionList}}" wx:key="index" link title="{{item.title}}" url="{{item.link}}"></mp-cell>
+        <mp-cell wx:for="{{actionList}}" wx:key="index" link title="{{item.title}}" url="{{item.link}}">
+        </mp-cell>
     </view>
     <view class="footer">
         服务热线：13121555597

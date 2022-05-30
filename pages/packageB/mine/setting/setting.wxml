@@ -7,7 +7,7 @@
         <image wx:elif="{{!hasUserInfo && canIUseGetUserProfile}}" bindtap="bindViewTap" class="head-portrait" src="/images/avatar.png" mode="cover" bindtap="getUserProfile"></image>
     </view> -->
     <view class="form">
-        <mp-cell wx:for="{{info}}" wx:key="index" title="{{item.name}}" link bindtap="{{item.id=='headImg' ? 'changeAvatar' : 'changeInfo'}}" data-index="{{index}}">
+        <mp-cell wx:for="{{info}}" wx:key="index" title="{{item.name}}"  link bindtap="{{item.id=='headImg' ? 'changeAvatar' : 'changeInfo'}}" data-index="{{index}}">
             <image wx:if="{{item.id=='headImg'}}" src="{{formData.headImg || '/images/avatar.png'}}" class="userinfo-avatar-img" />
             <block wx:elif="{{formData[item.id] != null}}">
                 <text wx:if="{{item.id == 'sex'}}">{{genders[formData.sex]}}</text>
@@ -42,7 +42,7 @@
             <slider bindchange="valueChange" data-field="weight" activeColor="#4182E9" value="{{formData.weight}}" block-size="12" show-value min="10" max="150" />
         </mp-cell> -->
     </view>
-    <mp-half-screen-dialog extClass="change-dialog" bindbuttontap="buttontap" show="{{show}}" title="{{changeItem.name}}" buttons="{{buttons}}">
+    <mp-half-screen-dialog closabled="{{false}}" extClass="change-dialog" bindbuttontap="buttontap" show="{{show}}" title="{{changeItem.name}}" buttons="{{buttons}}">
         <view slot="desc">
             <view wx:if="{{changeItem.id == 'sex'}}">
                 <picker-view indicator-class="dialog-picker-item-act" class="dialog-picker" value="{{[changeItem.value]}}" bindchange="sexChange">

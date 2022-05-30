@@ -102,7 +102,7 @@
     bottom: 0;
     right: 40rpx;
     height: 1px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #F1F1F3;
     color: rgba(0, 0, 0, 0.1);
     z-index: 2;
 }
