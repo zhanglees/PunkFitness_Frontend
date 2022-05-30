@@ -89,6 +89,7 @@
 }
 
 .action-list .weui-cell {
+    position: relative;
     height: 84rpx;
     font-size: 28rpx;
     color: #222834;
@@ -111,4 +112,14 @@
     font-size: 24rpx;
     color: #BCC0C7;
     line-height: 32rpx;
+}
+.img-icon{
+    position: absolute;
+    right: 0;
+    top: -9rpx;
+    height: 20rpx;
+    width: 20rpx;
+}
+.weui-cell_access .weui-cell__ft::after{
+    content: none;
 }

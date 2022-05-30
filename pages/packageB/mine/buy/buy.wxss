@@ -145,6 +145,7 @@
     text-decoration: line-through;
     font-family: Roboto-Bold;
     font-size: 28rpx;
+    opacity: 0.45;
 }
 
 .new-user-style {

@@ -151,7 +151,7 @@ page {
 .input-right {
     position: absolute;
     right: 32rpx;
-    top: 32rpx;
+    top: 35rpx;
     font-size: 28rpx;
     color: #707784;
 }
@@ -208,8 +208,14 @@ page {
     width: 20rpx;
 }
 
+.weui-cell_access .weui-cell__ft::after {
+    content: none;
+}
 
-/* .weui-cell_access .weui-cell__ft::after {
-    -webkit-mask-image: url(../../../../images/avatar.png);
-    mask-image:  url(../../../../images/avatar.png);
-} */
+.img-icon {
+    position: absolute;
+    right: 0;
+    top: -9rpx;
+    height: 20rpx;
+    width: 20rpx;
+}
