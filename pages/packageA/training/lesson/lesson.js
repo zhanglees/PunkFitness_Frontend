@@ -363,9 +363,9 @@ Page({
     //删除一个动作
     delOne(e) {
         const { index, sectiondetailid } = this.data.delObj;
-        console.log(index, sectiondetailid)
+        // console.log(index, sectiondetailid)
         const actionList = this.data.actionList;
-        if (this.data.type != 'new') {
+        if (sectiondetailid) {
             //编辑状态的删除就真的提交删除了
             const { coachId, userId } = this.data;
             app.req.api.delUserSectionDetail({

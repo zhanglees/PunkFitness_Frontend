@@ -29,7 +29,7 @@ Page({
     /**
      * Lifecycle function--Called when page load
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         this.data.userId = wx.getStorageSync('mp-req-user-id');
     },
     changeCurrent(e) {
@@ -37,11 +37,11 @@ Page({
         this.setData({
             current: index
         })
-        this.payOrder();
     },
     payOrder() {
+        const price = this.data.buyList[this.data.current].price;
         app.req.api.payOrder({
-            "amountMoney": 0.01,
+            "amountMoney": price, //0.01,
             // "openId": "oP1TP5cTTLZCgTXg-ZWG2d7sjfEA",           
             "payStatus": 0,
             "productType": this.data.current,
@@ -51,7 +51,7 @@ Page({
             wx.requestPayment({
                 ...data,
                 "paySign": data.sign,
-                "success": function (res) {
+                "success": function(res) {
                     console.log('支付成功', res)
                     wx.showToast({
                         title: '购买成功',
@@ -60,13 +60,13 @@ Page({
                         delta: 0,
                     })
                 },
-                "fail": function (res) {
+                "fail": function(res) {
                     wx.showToast({
                         title: '支付失败',
                         icon: 'error'
                     })
                 },
-                "complete": function (res) {
+                "complete": function(res) {
                     console.log('支付完成', res)
                 }
             })
@@ -75,49 +75,49 @@ Page({
     /**
      * Lifecycle function--Called when page is initially rendered
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page show
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page hide
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * Lifecycle function--Called when page unload
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * Page event handler function--Called when user drop down
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * Called when page reach bottom
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * Called when user click on the top right corner to share
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

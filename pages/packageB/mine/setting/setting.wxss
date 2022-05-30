@@ -2,7 +2,6 @@
 
 page {
     background-color: #FAFAFC;
-
 }
 
 .container {
@@ -199,15 +198,17 @@ page {
     text-align: center;
 }
 
-
 .weui-half-screen-dialog__ft .weui-btn:nth-last-child(n+2)+.weui-btn {
     margin: 0;
     margin-left: 16rpx;
 }
-.weui-cell__icon{
+
+.weui-cell__icon {
     height: 20rpx;
     width: 20rpx;
 }
+
+
 /* .weui-cell_access .weui-cell__ft::after {
     -webkit-mask-image: url(../../../../images/avatar.png);
     mask-image:  url(../../../../images/avatar.png);
