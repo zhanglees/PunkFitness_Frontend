@@ -503,6 +503,7 @@ Page({
         wx.canvasToTempFilePath({
             x: 0,
             y: 0,
+            fileType: 'jpg',
             canvasId: 'share',
             canvas: canvas,
             width: that.data.widths,
