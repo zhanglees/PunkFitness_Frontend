@@ -14,7 +14,11 @@
                 <text wx:elif="{{item.id == 'birthday'}}">{{utils.timestampDate(formData.birthday)}}</text>
                 <text wx:else>{{formData[item.id]}}{{item.unit || ''}}</text>
             </block>
+          
             <text wx:else class="v-placeholder">{{item.placeholder}}</text>
+            <view slot="footer">
+                <image class="img-icon" src="/images/icons/arrow.png"></image>
+            </view>
         </mp-cell>
         <!-- <mp-cell title="头像" link>
             <image src="{{userInfo.headImg || '/images/avatar.png'}}" class="userinfo-avatar-img"></image>
