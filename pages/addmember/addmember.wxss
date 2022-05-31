@@ -95,3 +95,12 @@
 .dialog-btn-wrapper .dialog-btn-cancel {
     background: #d6d6d6;
 }
+
+.required-cell .weui-label::after {
+    content: '*';
+    color: red;
+    font-size: 28rpx;
+    vertical-align: middle;
+    margin-left: 16rpx;
+    display: inline-block;
+}
