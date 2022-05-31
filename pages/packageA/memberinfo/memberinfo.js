@@ -121,13 +121,14 @@ Page({
     onLoad(options) {
         const userId = options.id; //会员id
         // const memberInfo = wx.getStorageSync("memberInfo");
-        this.setData({
-            id: userId
-        });
+        this.data.id = userId;
         this.getMemberInfo();
-        this.getUserLog(userId);
     },
-    getUserLog(userId) {
+    onShow() {
+        this.getUserLog();
+    },
+    getUserLog() {
+        const userId = this.data.id;
         app.req.api.getUserLogById({
             userId
         }).then(res => {
