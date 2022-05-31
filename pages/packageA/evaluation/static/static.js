@@ -184,6 +184,7 @@ Page({
           }
         });
         feedbackList.push(i.feedbacks);
+        console.log('--------------',feedbackList);
       });
       this.setData({
         tabList,
@@ -191,6 +192,7 @@ Page({
         remark,
         feedbackList
       })
+      console.log('tabList',tabList);
     })
   },
   comSwiperHeight(){
@@ -285,6 +287,7 @@ Page({
         })
         this.createImg(file);
         // this.comSwiperHeight();
+        console.log('userImg',userImg);
       },
       fail: (res) => {  
         //拍摄失败  
