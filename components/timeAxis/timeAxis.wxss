@@ -58,7 +58,7 @@
     background: #89A0EE;
     z-index: 1;
     top: 58rpx;
-    left: -46rpx;
+    left: -48rpx;
 }
 
 .rightContent::before {
@@ -71,7 +71,7 @@
     opacity: 0.25;
     z-index: 1;
     top: 82rpx;
-    left: -41rpx;
+    left: -42rpx;
 }
 
 .rightContent.last-one::before {
