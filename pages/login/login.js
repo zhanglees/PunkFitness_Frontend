@@ -126,8 +126,8 @@ Page({
                                 id: userInfo.id,
                                 userName: userInfo.nickName
                             }).then(res => {
-                                const data = res.data;
-                                wx.setStorageSync('userInfo', {..._this.data.userInfo, ...data });
+                                const { phone, userName, wxid, headImg } = res.data;
+                                wx.setStorageSync('userInfo', {..._this.data.userInfo, phone, userName, wxid, headImg });
 
                                 if (_this.data.backUrl.includes('mine')) {
                                     wx.switchTab({
