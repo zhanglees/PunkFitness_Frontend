@@ -4,18 +4,6 @@ App({
     onLaunch() {
         // 这里是不是应该先登录一下呢
         this.overShare();
-        wx.loadFontFace({
-            global: true,
-            family: 'Roboto-Medium',
-            source: 'url("https://www.zhangleixd.com/static/imgs/Roboto-Medium-12.ttf")',
-            success: console.log
-        })
-        wx.loadFontFace({
-            global: true,
-            family: 'Roboto-Bold',
-            source: 'url("https://www.zhangleixd.com/static/imgs/Roboto-Bold-3.ttf")',
-            success: console.log
-        })
     },
     /**
      * 开启朋友圈分享功能
