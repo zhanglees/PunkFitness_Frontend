@@ -24,7 +24,7 @@
             </view>
         </view> -->
     </view>
-    <view class="action-list">
+    <view class="action-list" wx:if="{{userInfo.phone}}">
         <mp-cell wx:for="{{actionList}}" wx:key="index" link title="{{item.title}}" url="{{item.link}}">
             <view slot="footer">
                 <image class="img-icon" src="/images/icons/arrow.png"></image>
