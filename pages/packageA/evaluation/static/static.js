@@ -241,30 +241,30 @@ Page({
                 }
             }
         });
-<<<<<<< HEAD
-        feedbackList.push(i.feedbacks);
-        console.log('--------------',feedbackList);
-      });
-      this.setData({
-        tabList,
-        userImg,
-        remark,
-        feedbackList
-      })
-      console.log('tabList',tabList);
-    })
-  },
-  comSwiperHeight(){
-    var query = wx.createSelectorQuery();
-    const _this = this;
-    query.select(`#swiperItem${this.data.current}`).boundingClientRect(function (rect) {
-        _this.setData({
-            swiperHeight: rect.height
-=======
+// <<<<<<< HEAD
+//         feedbackList.push(i.feedbacks);
+//         console.log('--------------',feedbackList);
+//       });
+//       this.setData({
+//         tabList,
+//         userImg,
+//         remark,
+//         feedbackList
+//       })
+//       console.log('tabList',tabList);
+//     })
+//   },
+//   comSwiperHeight(){
+//     var query = wx.createSelectorQuery();
+//     const _this = this;
+//     query.select(`#swiperItem${this.data.current}`).boundingClientRect(function (rect) {
+//         _this.setData({
+//             swiperHeight: rect.height
+// =======
         // }
         this.setData({
             startPhoto: true
->>>>>>> af4d5d537f9fd1b7145ec89c9bb11c9557f53dab
+// >>>>>>> af4d5d537f9fd1b7145ec89c9bb11c9557f53dab
         })
     },
     open_permission_setting() {
@@ -292,90 +292,90 @@ Page({
         this.setData({
             startPhoto: false
         })
-<<<<<<< HEAD
-        this.createImg(file);
-        // this.comSwiperHeight();
-        console.log('userImg',userImg);
-      },
-      fail: (res) => {  
-        //拍摄失败  
-        wx.showToast({  
-            title:res,  
-            icon: 'none'  
-        })  
-      },  
-    })
-  },
-  handleCameraError:function() {  
-    wx.showToast({  
-      title:'请打开摄像头',  
-      icon: 'none'  
-    })  
-  }, 
-  openSetting(){
-      // 打开相机授权。。。
-  },
-  /***预览图片 */
-  previewPhoto(e){
-    const src = e.currentTarget.dataset.src;
-    wx.previewImage({ 
-      current: src, // 当前显示图片的http链接 
-      urls: [src] // 需要预览的图片http链接列表 
-     }) 
-  },
-  /**删除某个用户图片 */
-  // delAct(e){
-  //   const {index, i} = e.currentTarget.dataset;
-  //   let imgArr = this.data.userImg[index];
-  //   imgArr.splice(i, 1);
-  //   this.setData({
-  //     [`userImg[${index}]`]: imgArr
-  //   })
-  // },
-  /***选择问题反馈的身体部位 */
-  setChoice(e){
-    const index = e.currentTarget.dataset.index;
-    const curr = this.data.current;
-    this.setData({
-        [`feedbackList[${curr}][${index}].checked`]: !this.data.feedbackList[curr][index].checked
-    })
-    this.comSwiperHeight();
-  },
-  radioChange(e){
-    const {index} = e.currentTarget.dataset;
-    const curr = this.data.current;
-    const value = e.detail.value;
-    this.setData({
-        [`feedbackList[${curr}][${index}].result`]: value
-    })
-  },
-  remarkChange(e){
-      console.log(888,e.detail.value)
-    this.setData({
-        [`remark[${this.data.current}]`]: e.detail.value 
-    })
-  },
-  nextStep(){
-    this.setData({
-        current: 1
-    });
-  },
-  /***生成报告 */
-  generateReport(){
-    //在这里把图片上传一下
-    const _this = this;
-    this.data.userImg.forEach((img, index) => {
-      if(img.length){
-        app.req.api.uploadFile({
-          path: img[0],  //因为需求改为只有一张图片，所以写死0
-          formData: {
-            userId: this.data.userId
-          },
-          success(res){
-            console.log('上传:', index, res)
-            _this.setData({
-              [`imgIds[${index}]`]: res.data
-=======
+// <<<<<<< HEAD
+//         this.createImg(file);
+//         // this.comSwiperHeight();
+//         console.log('userImg',userImg);
+//       },
+//       fail: (res) => {  
+//         //拍摄失败  
+//         wx.showToast({  
+//             title:res,  
+//             icon: 'none'  
+//         })  
+//       },  
+//     })
+//   },
+//   handleCameraError:function() {  
+//     wx.showToast({  
+//       title:'请打开摄像头',  
+//       icon: 'none'  
+//     })  
+//   }, 
+//   openSetting(){
+//       // 打开相机授权。。。
+//   },
+//   /***预览图片 */
+//   previewPhoto(e){
+//     const src = e.currentTarget.dataset.src;
+//     wx.previewImage({ 
+//       current: src, // 当前显示图片的http链接 
+//       urls: [src] // 需要预览的图片http链接列表 
+//      }) 
+//   },
+//   /**删除某个用户图片 */
+//   // delAct(e){
+//   //   const {index, i} = e.currentTarget.dataset;
+//   //   let imgArr = this.data.userImg[index];
+//   //   imgArr.splice(i, 1);
+//   //   this.setData({
+//   //     [`userImg[${index}]`]: imgArr
+//   //   })
+//   // },
+//   /***选择问题反馈的身体部位 */
+//   setChoice(e){
+//     const index = e.currentTarget.dataset.index;
+//     const curr = this.data.current;
+//     this.setData({
+//         [`feedbackList[${curr}][${index}].checked`]: !this.data.feedbackList[curr][index].checked
+//     })
+//     this.comSwiperHeight();
+//   },
+//   radioChange(e){
+//     const {index} = e.currentTarget.dataset;
+//     const curr = this.data.current;
+//     const value = e.detail.value;
+//     this.setData({
+//         [`feedbackList[${curr}][${index}].result`]: value
+//     })
+//   },
+//   remarkChange(e){
+//       console.log(888,e.detail.value)
+//     this.setData({
+//         [`remark[${this.data.current}]`]: e.detail.value 
+//     })
+//   },
+//   nextStep(){
+//     this.setData({
+//         current: 1
+//     });
+//   },
+//   /***生成报告 */
+//   generateReport(){
+//     //在这里把图片上传一下
+//     const _this = this;
+//     this.data.userImg.forEach((img, index) => {
+//       if(img.length){
+//         app.req.api.uploadFile({
+//           path: img[0],  //因为需求改为只有一张图片，所以写死0
+//           formData: {
+//             userId: this.data.userId
+//           },
+//           success(res){
+//             console.log('上传:', index, res)
+//             _this.setData({
+//               [`imgIds[${index}]`]: res.data
+// =======
     },
     /****拍照 */
     takePhoto() {
@@ -499,7 +499,7 @@ Page({
             this.data.remark[i] && remarks.push({
                 assessmentId,
                 remark: this.data.remark[i]
->>>>>>> af4d5d537f9fd1b7145ec89c9bb11c9557f53dab
+// >>>>>>> af4d5d537f9fd1b7145ec89c9bb11c9557f53dab
             })
             if (resources[i]) {
                 userAssessmentResources.push({
