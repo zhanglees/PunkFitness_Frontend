@@ -4,7 +4,7 @@
     <view class="page-title">
         <block wx:if="{{!editFlag}}">
             <view class="classname">
-                {{showOrder + '. '+ sectionName}}{{isExprience ? ' -私教体验课':''}}
+                <image src="/images/icons/yuandian.svg" class="title-icon" />{{showOrder + '. '+ sectionName}}{{isExprience ? ' -私教体验课':''}}
             </view>
             <block wx:if="{{type != 'detail'}}">
                 <view class="right-btn">
