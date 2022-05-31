@@ -1,7 +1,7 @@
 const sessionStorageKey = 'mp-req-session-id',
     userStorageKey = 'mp-req-user-id';
 let sessionId = wx.getStorageSync(sessionStorageKey);
-let userId = wx.getStorageSync(userStorageKey);
+// let userId = wx.getStorageSync(userStorageKey);
 const loginQueue = [];
 let isLoginning = false;
 
@@ -119,18 +119,18 @@ function login() {
                     req.code2sessionId(r1.code)
                         .then((r2) => {
                             const newSessionId = r2.session_key;
-                            const newUserId = r2.userId;
+                            // const newUserId = r2.userId;
                             sessionId = newSessionId; // 更新sessionId
-                            userId = newUserId;
+                            // userId = newUserId;
                             // 保存sessionId
                             wx.setStorage({
                                 key: sessionStorageKey,
                                 data: newSessionId,
                             });
-                            wx.setStorage({
-                                key: userStorageKey,
-                                data: newUserId,
-                            });
+                            // wx.setStorage({
+                            //     key: userStorageKey,
+                            //     data: newUserId,
+                            // });
                             res(r2);
                         })
                         .catch(rej);
