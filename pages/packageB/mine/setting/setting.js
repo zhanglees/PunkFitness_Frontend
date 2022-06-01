@@ -82,9 +82,9 @@ Page({
             id
         }).then(res => {
             let data = res.data;
-            if (data && data.headImg && !data.headImg.includes('https://')) {
-                data.headImg = 'https://' + data.headImg
-            }
+            // if (data && data.headImg && !data.headImg.includes('https://')) {
+            //     data.headImg = 'https://' + data.headImg
+            // }
             this.setData({
                 formData: data
             })

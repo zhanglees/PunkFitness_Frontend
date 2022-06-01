@@ -49,19 +49,19 @@ Page({
             id: 'trainingAreaName'
         }],
         trainingList: [{
-                name: '热身训练',
-                actionList: [],
-                showAdd: false,
-                editIndex: '',
-                detail: {
-                    trainingAreaName: '',
-                    actionName: '',
-                    equipmentName: '',
-                    counterWeight: '',
-                    numberSinglegroup: '',
-                    groups: ''
-                }
-            }, {
+            name: '热身训练',
+            actionList: [],
+            showAdd: false,
+            editIndex: '',
+            detail: {
+                trainingAreaName: '',
+                actionName: '',
+                equipmentName: '',
+                counterWeight: '',
+                numberSinglegroup: '',
+                groups: ''
+            }
+        }, {
             name: '正式训练',
             actionList: [],
             showAdd: false,
@@ -73,22 +73,22 @@ Page({
                 numberSinglegroup: '',
                 groups: ''
             }
-            }, {
-                name: '放松整理',
-                actionList: [],
-                showAdd: false,
-                detail: {
-                    trainingAreaName: '',
-                    actionName: '',
-                    equipmentName: '',
-                    counterWeight: '',
-                    numberSinglegroup: '',
-                    groups: ''
-                }
+        }, {
+            name: '放松整理',
+            actionList: [],
+            showAdd: false,
+            detail: {
+                trainingAreaName: '',
+                actionName: '',
+                equipmentName: '',
+                counterWeight: '',
+                numberSinglegroup: '',
+                groups: ''
+            }
         }],
         trainingPart: [{
             name: '胸大肌',
-            actionList: ['平板推胸', '上斜推胸', '阿诺德推胸（肩伸90℃）', '仰卧飞鸟', '坐姿飞鸟', '站姿夹胸', '坐姿推胸', '俯卧撑', '俯身反向飞鸟', '自定义']
+            actionList: ['平板推胸', '上斜推胸', '阿诺德推胸（肩伸90°）', '仰卧飞鸟', '坐姿飞鸟', '站姿夹胸', '坐姿推胸', '俯卧撑', '俯身反向飞鸟', '自定义']
         }, {
             name: '三角肌',
             actionList: ['站姿飞鸟', '俯身飞鸟', '坐姿飞鸟', '站姿颈前推肩', '站姿颈后推肩', '坐姿推肩', '坐姿颈后推肩', '站姿提拉', '俯身外展', '俯身提拉', '自定义']
@@ -240,7 +240,7 @@ Page({
         let trainingList = this.data.trainingList;
         userTraionSectionDetails && userTraionSectionDetails.forEach(section => {
             let training = trainingList[section.trainingType || 0];
-            section.videourl && (section.videourl = 'https://' + section.videourl);
+            // section.videourl && (section.videourl = 'https://' + section.videourl);
             training.actionList.push({
                 ...section,
                 trainingAreaName: (section.trainingArea != null) ? this.data.trainingPart[section.trainingArea].name : '',

@@ -36,7 +36,7 @@ Page({
         expand: false,
         trainingPart: [{
             name: '胸大肌',
-            actionList: ['平板推胸', '上斜推胸', '阿诺德推胸（肩伸90℃）', '仰卧飞鸟', '坐姿飞鸟', '站姿夹胸', '坐姿推胸', '俯卧撑', '俯身反向飞鸟', '自定义']
+            actionList: ['平板推胸', '上斜推胸', '阿诺德推胸（肩伸90°）', '仰卧飞鸟', '坐姿飞鸟', '站姿夹胸', '坐姿推胸', '俯卧撑', '俯身反向飞鸟', '自定义']
         }, {
             name: '三角肌',
             actionList: ['站姿飞鸟', '俯身飞鸟', '坐姿飞鸟', '站姿颈前推肩', '站姿颈后推肩', '坐姿推肩', '坐姿颈后推肩', '站姿提拉', '俯身外展', '俯身提拉', '自定义']
@@ -175,8 +175,8 @@ Page({
             const data = res.data;
             const { warmUp, relax } = data;
             const actionList = data.userTraionSectionDetails.map(i => {
-                i.thumbnailImage && (!i.thumbnailImage.includes('https://')) && (i.thumbnailImage = 'https://' + i.thumbnailImage);
-                i.videourl && (!i.videourl.includes('https://')) && (i.videourl = 'https://' + i.videourl);
+                // i.thumbnailImage && (!i.thumbnailImage.includes('https://')) && (i.thumbnailImage = 'https://' + i.thumbnailImage);
+                // i.videourl && (!i.videourl.includes('https://')) && (i.videourl = 'https://' + i.videourl);
                 return i;
             })
             this.setData({

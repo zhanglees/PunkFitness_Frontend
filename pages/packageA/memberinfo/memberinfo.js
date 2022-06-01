@@ -190,9 +190,9 @@ Page({
             console.log('返回：', res.data);
             let userInfo = res.data;
             if (userInfo) {
-                if (userInfo.headImg && !userInfo.headImg.includes('https://')) {
-                    userInfo.headImg = 'https://' + userInfo.headImg
-                }
+                // if (userInfo.headImg && !userInfo.headImg.includes('https://')) {
+                //     userInfo.headImg = 'https://' + userInfo.headImg
+                // }
                 if (userInfo.birthday) {
                     const birthday = new Date(userInfo.birthday);
                     userInfo.birthday = util.formatDate(birthday);
