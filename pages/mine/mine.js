@@ -23,17 +23,22 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function(options) {
-        // this.data.userId = wx.getStorageSync('mp-req-user-id');
-        // if (wx.getUserProfile) {
-        //     this.setData({
-        //         canIUseGetUserProfile: true
-        //     })
-        // }
-        // app.req.api.getMyInfo()
-        //   .then((res) => {
-        //     console.log(res);
-        //   })
-        //   .catch(app.req.err.show);
+        wx.loadFontFace({
+                global: true,
+                family: 'Roboto-Bold',
+                source: 'url("https://www.zhangleixd.com/static/imgs/Roboto-Bold-3.ttf")'
+            })
+            // this.data.userId = wx.getStorageSync('mp-req-user-id');
+            // if (wx.getUserProfile) {
+            //     this.setData({
+            //         canIUseGetUserProfile: true
+            //     })
+            // }
+            // app.req.api.getMyInfo()
+            //   .then((res) => {
+            //     console.log(res);
+            //   })
+            //   .catch(app.req.err.show);
 
     },
     getUserInfo() {

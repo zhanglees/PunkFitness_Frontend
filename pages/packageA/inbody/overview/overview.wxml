@@ -1,14 +1,13 @@
 <!--pages/packageA/inbody/inbody.wxml-->
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
-    <view class="top__layout-chart" wx:if="{{reportList.length}}">        
+    <view class="top__layout-chart" wx:if="{{reportList.length}}">
         <view class="right-top">
-            <image class="right-top-icon" src="/images/inbody/weight-icon.png" />
-            体重记录
+            <image class="right-top-icon" src="/images/inbody/weight-icon.png" /> 体重记录
         </view>
         <view class="canvas-wrapper">
             <view class="canvas-title">{{dataTitle}}</view>
-            <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas"  bindtouchstart="touchcanvas"></canvas>
+            <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandlerr"></canvas>
         </view>
         <!-- <view class="right-user">
             <view class="user-info">
@@ -28,8 +27,8 @@
             添加体测报告
         </view>
         <!-- <view class="report-act-right"> -->
-            <!-- <view class="reserve-btn report-btn">预约下次体测</view> -->
-            <!-- <view class="compare-btn report-btn">对比</view> -->
+        <!-- <view class="reserve-btn report-btn">预约下次体测</view> -->
+        <!-- <view class="compare-btn report-btn">对比</view> -->
         <!-- </view> -->
     </view>
     <view class="report-area">

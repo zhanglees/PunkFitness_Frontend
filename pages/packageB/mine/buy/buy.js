@@ -30,6 +30,12 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function(options) {
+        wx.loadFontFace({
+            global: true,
+            family: 'Roboto-Bold',
+            source: 'url("https://www.zhangleixd.com/static/imgs/Roboto-Bold-3.ttf")',
+            success: console.log
+        })
         this.data.userId = wx.getStorageSync('mp-req-user-id');
     },
     changeCurrent(e) {

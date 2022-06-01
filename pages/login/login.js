@@ -71,8 +71,9 @@ Page({
             wx.hideLoading();
             if (res.code == 0) {
                 const userInfo = res.data;
-                console.log('用户信息：', userInfo)
                 wx.setStorageSync('userInfo', userInfo);
+                wx.setStorageSync('mp-req-user-id', userInfo.id);
+                console.log('用户信息：', userInfo, 'id:', userInfo.id)
                 this.data.userInfo = userInfo;
                 if (!userInfo.headImg) {
                     this.showGetInfo();
@@ -126,8 +127,8 @@ Page({
                                 id: userInfo.id,
                                 userName: userInfo.nickName
                             }).then(res => {
-                                const data = res.data;
-                                wx.setStorageSync('userInfo', {..._this.data.userInfo, ...data });
+                                const { phone, userName, wxid, headImg } = res.data;
+                                wx.setStorageSync('userInfo', {..._this.data.userInfo, phone, userName, wxid, headImg });
 
                                 if (_this.data.backUrl.includes('mine')) {
                                     wx.switchTab({
