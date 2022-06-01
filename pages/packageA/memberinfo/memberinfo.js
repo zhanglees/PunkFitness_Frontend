@@ -9,7 +9,6 @@ Page({
         coverImage: '',
         avatarUrl: '/images/avatar.png',
         userInfo: {},
-        userInfoGet: {},
         qrShow: false,
         imgUrl: '', //后端返回的绑定二维码
         dialogShow: false,
@@ -194,16 +193,17 @@ Page({
                 if (userInfo.headImg && !userInfo.headImg.includes('https://')) {
                     userInfo.headImg = 'https://' + userInfo.headImg
                 }
-                const birthday = new Date(userInfo.birthday);
-                userInfo.birthday = util.formatDate(birthday);
-                userInfo.age = new Date().getFullYear() - birthday.getFullYear();
+                if (userInfo.birthday) {
+                    const birthday = new Date(userInfo.birthday);
+                    userInfo.birthday = util.formatDate(birthday);
+                    userInfo.age = new Date().getFullYear() - birthday.getFullYear();
+                }
                 userInfo.customerTag && (userInfo.customerTag = userInfo.customerTag.split(','));
             } else {
                 userInfo = {}
             }
             this.setData({
                 userInfo: userInfo,
-                userInfoGet: res.data
             });
             // console.log(886668, this.data.userInfoGet);
         })
@@ -229,7 +229,7 @@ Page({
             //确认
             const _this = this;
             const id = this.data.id;
-            app.req.api.transformMember(this.data.userInfoGet).then(res => {
+            app.req.api.transformMember({ id }).then(res => {
                 if (res.data) {
                     _this.getMemberInfo();
                     _this.setData({

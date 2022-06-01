@@ -20,7 +20,7 @@
                         </view>
                     </view>
                     <view class="userinfo-tags">
-                        <text class="userinfo-tags-item">年龄 <text class="userinfo-number">{{userInfo.age}}</text> <text class="text-gray"> 岁 </text></text>
+                        <text class="userinfo-tags-item" wx:if="{{userInfo.age}}">年龄 <text class="userinfo-number">{{userInfo.age}}</text> <text class="text-gray"> 岁 </text></text>
                         <!-- <text class="userinfo-tags-item">身高 <text class="userinfo-number">{{userInfo.height}}</text> <text class="text-gray"> cm </text></text> -->
                         <!-- <text class="userinfo-tags-item">体重 <text class="userinfo-number">{{userInfo.weight}}</text> <text class="text-gray"> kg </text></text> -->
                     </view>
