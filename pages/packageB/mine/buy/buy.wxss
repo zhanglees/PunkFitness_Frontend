@@ -1,7 +1,10 @@
 /* pages/packageB/mine/buy/buy.wxss */
+.container{
+    padding: 0 40rpx;
+}
 .buy-list {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
     /* padding: 40rpx; */
@@ -38,7 +41,7 @@
     font-family: PingFangSC-Regular, PingFang SC;
     color: #707784 !important;
     line-height: 32rpx;
-    margin-bottom: 28rpx;
+    margin-bottom: 20rpx;
 }
 
 .buy-item-price {
@@ -63,7 +66,7 @@
 }
 
 .buy-list .buy-item_act .buy-original-price {
-    color: #222834;
+    color: #222834 !important;
 }
 
 /* .buy-list .buy-item_act .buy-item-title {
@@ -73,7 +76,7 @@
 .content {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 40rpx;
+    /* padding: 0 40rpx; */
 }
 
 .content-title {
@@ -100,19 +103,20 @@
 }
 
 .now-activate-btn {
-    position: fixed;
+    /* position: fixed; */
+    margin-top: 48rpx;
     padding: 0;
-    width: 654rpx !important;
+    width: 100% !important;
     background: linear-gradient(90deg, #4F5873 0%, #363D56 100%);
     border-radius: 12rpx;
     font-size: 36rpx;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #FBD49A;
-    bottom: 158rpx;
+    /* bottom: 158rpx; */
     box-sizing: border-box;
     height: 112rrpx;
-    line-height:112rpx;
+    line-height: 112rpx;
 
 }
 
@@ -139,19 +143,34 @@
     /* font-family: PingFangSC-Regular, PingFang SC; */
 }
 
-.buy-continuity {
-    font-weight: bold;
-    color: #222834;
+.delete-style {
     text-decoration: line-through;
-    font-family: Roboto-Bold;
-    font-size: 28rpx;
-    opacity: 0.45;
+    color: rgb(34, 40, 52, 0.55);
+    z-index: 9;
+    /* opacity: 0.55; */
 }
+
+ .buy-continuity {
+    font-family: Roboto-Bold;
+    font-weight: bold;
+    color: #707784 !important;
+    font-size: 24rpx;
+    /* opacity:1 !important; */
+}
+
+.buy-item_act .buy-continuity {
+    font-family: Roboto-Bold;
+    font-weight: bold;
+    color: #222834 !important;
+    font-size: 28rpx;
+    /* opacity:1 !important; */
+}
+
 
 .new-user-style {
     position: absolute;
     left: 21%;
-    top: -16rpx;
+    top: -18rpx;
     width: 116rpx;
     line-height: 32rpx;
     background-color: #386DF3;
@@ -166,4 +185,11 @@
 button {
     width: 654rpx;
     height: 112rpx;
+}
+
+.mark-money {
+    display: inline-block;
+    height: 32rpx;
+    font-size: 36rpx;
+    padding: 0;
 }

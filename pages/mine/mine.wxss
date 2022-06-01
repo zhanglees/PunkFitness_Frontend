@@ -99,9 +99,9 @@
 .action-list .weui-cell::after {
     content: " ";
     position: absolute;
-    left: 40rpx;
+    left: 38rpx;
     bottom: 0;
-    right: 40rpx;
+    right: 44rpx;
     height: 1px;
     border-top: 1px solid #F1F1F3;
     color: rgba(0, 0, 0, 0.1);
@@ -116,7 +116,7 @@
 .img-icon{
     position: absolute;
     right: 0;
-    top: -9rpx;
+    top: -8.5rpx;
     height: 20rpx;
     width: 20rpx;
 }
