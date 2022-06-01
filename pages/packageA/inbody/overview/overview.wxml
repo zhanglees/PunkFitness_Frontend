@@ -1,7 +1,7 @@
 <!--pages/packageA/inbody/inbody.wxml-->
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
-    <view class="top__layout-chart" wx:if="{{reportList.length}}">
+    <view class="top__layout-chart" wx:if="{{showChart}}">
         <view class="right-top">
             <image class="right-top-icon" src="/images/inbody/weight-icon.png" /> 体重记录
         </view>

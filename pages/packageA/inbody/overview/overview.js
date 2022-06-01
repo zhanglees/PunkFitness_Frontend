@@ -12,7 +12,8 @@ Page({
         textcolor1: '#014f8e',
         textcolor2: '#bfbfbf',
         dataTitle: '',
-        reportList: []
+        reportList: [],
+        showChart: false
     },
 
     /**
@@ -28,7 +29,6 @@ Page({
         // var y_data= ["55", "56", "53", "55", "55", "57", "53"]
         //绘制折线图
         // this.OnWxChart(x_data,y_data);
-        this.OnWxChart();
         // lineChart.addEventListener('renderComplete', () => {
         //     console.log('renderComplete')
         // });
@@ -52,12 +52,19 @@ Page({
                         y_data.push(i.weight);
                     }
                 });
-                startDate = x_data[0];
-                endDate = x_data[x_data.length - 1];
-                this.updateData(x_data, y_data);
+                // this.updateData(x_data, y_data);
                 this.setData({
-                    dataTitle: startDate + ' ~ ' + endDate,
-                    reportList: data
+                    reportList: data,
+                    showChart: y_data.length > 0
+                }, () => {
+                    if (y_data.length) {
+                        startDate = x_data[0];
+                        endDate = x_data[x_data.length - 1];
+                        this.OnWxChart(x_data, y_data);
+                        this.setData({
+                            dataTitle: startDate + ' ~ ' + endDate,
+                        })
+                    }
                 })
             }
         })
@@ -85,7 +92,7 @@ Page({
             series: series
         });
     },
-    OnWxChart: function() {
+    OnWxChart: function(x_data, y_data) {
         var windowWidth = 320;
         try {
             var res = wx.getSystemInfoSync();
@@ -96,7 +103,7 @@ Page({
         lineChart = new wxCharts({
             canvasId: 'lineCanvas', //输入wxml中canvas的id
             type: 'line',
-            categories: ["12-05"], //模拟的x轴横坐标参数
+            categories: x_data, //模拟的x轴横坐标参数
             background: '#3D4257',
             animation: true, //是否开启动画
             legend: false,
@@ -105,7 +112,7 @@ Page({
 
             series: [{
                 name: "体重",
-                data: ["45"],
+                data: y_data,
                 format: function(val, name) {
                     return val + '';
                 }

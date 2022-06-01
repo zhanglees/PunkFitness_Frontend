@@ -1,66 +1,66 @@
 <!--memberinfo.wxml-->
 <view class="container">
-  <view class='top_layout'>
-    <!-- <image src='{{coverImage}}' mode='aspectFill'></image> -->
-    <view class="userinfo">
-    <block wx:if="{{userInfo}}">
-      <view class="userinfo-top">
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.headImg ? userInfo.headImg : avatarUrl}}" mode="cover"></image>
-        <view class="userinfo-right">
-          <view class="userinfo-detail-n">
-            <text class="userinfo-nickname">{{userInfo.userName}}</text>
-            <text class="userinfo-mobile">{{userInfo.phone}}</text>
-          </view>
-          <view class="userinfo-detail-b">
-            <text class="userinfo-birthday">{{userInfo.birthday}}</text>
-            <text class="userinfo-age">{{userInfo.age}}岁</text>
-          </view>
-        </view>
-      </view>
-      <view class="userinfo-tags" wx:if="{{userInfo.customerTag.length}}">
-        <text class="userinfo-tags-item" wx:for="{{userInfo.customerTag}}" wx:key="i">{{item}}</text>
-      </view>
+    <view class='top_layout'>
+        <!-- <image src='{{coverImage}}' mode='aspectFill'></image> -->
+        <view class="userinfo">
+            <block wx:if="{{userInfo}}">
+                <view class="userinfo-top">
+                    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.headImg ? userInfo.headImg : avatarUrl}}" mode="cover"></image>
+                    <view class="userinfo-right">
+                        <view class="userinfo-detail-n">
+                            <text class="userinfo-nickname">{{userInfo.userName}}</text>
+                            <text class="userinfo-mobile">{{userInfo.phone}}</text>
+                        </view>
+                        <view class="userinfo-detail-b" wx:if="{{userInfo.birthday}}">
+                            <text class="userinfo-birthday">{{userInfo.birthday}}</text>
+                            <text class="userinfo-age">{{userInfo.age}}岁</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="userinfo-tags" wx:if="{{userInfo.customerTag.length}}">
+                    <text class="userinfo-tags-item" wx:for="{{userInfo.customerTag}}" wx:key="i">{{item}}</text>
+                </view>
 
-      <view class="userinfo-remarks" wx:if="{{userInfo.remarks}}">
-        <text class="userinfo-remarks-c">备注：{{userInfo.remarks}}</text>
-      </view>
-      <view class="userinfo-btn-wrapper">
-        <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn btn-gradient" bindtap="changeLevel">
-          转为正式会员
-        </view>
-        <!-- <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
+                <view class="userinfo-remarks" wx:if="{{userInfo.remarks}}">
+                    <text class="userinfo-remarks-c">备注：{{userInfo.remarks}}</text>
+                </view>
+                <view class="userinfo-btn-wrapper">
+                    <view wx:if="{{userInfo.coustomLevel != 1}}" class="userinfo-btn btn-gradient" bindtap="changeLevel">
+                        转为正式会员
+                    </view>
+                    <!-- <view wx:if="{{!userInfo.wxid}}" class="userinfo-btn btn-gradient" bindtap="getQr">
           关联客户微信
         </view> -->
-      </view>
-    </block>
-    <block wx:else>
-    </block>
-    </view> 
-  </view>
-  <view class="userserver">
-    <view class="member-title">客户服务</view>
-    <ul class="userserver-list">
-      <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">
-        <image class="userserver-li-image" src="/images/main/menu{{index}}@3x.png" mode="cover"></image>
-        {{item.name}}</li>
-    </ul>
-  </view>
-  <view class="userlogs" wx:if="{{showLogs}}">
-    <view class="member-title">客户动态</view>
-    <view class='userlogs-view'> 
-      <view wx:for="{{logs}}" wx:key="key" wx:for-index="key"  wx:for-item="value">
-        <view class="userlogs-title">#{{key}}</view>
-        <timeAxis axisArr="{{value}}"></timeAxis>
-      </view>
+                </view>
+            </block>
+            <block wx:else>
+            </block>
+        </view>
     </view>
-  </view>
-  <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask class="qr-dialog">    
-      <view class="qr-view">
-          <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
-          <image class="qr-img" src="{{imgUrl}}" />
-          <view>点击客户微信扫码，便于客户收到个人运动相关动态信息</view>
-      </view>
-  </mp-dialog>
-  <mp-dialog title="确定转为正式会员" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
-  </mp-dialog>
+    <view class="userserver">
+        <view class="member-title">客户服务</view>
+        <ul class="userserver-list">
+            <li class="userserver-li" wx:for="{{serverList}}" wx:key="name" data-link="{{item.link}}" bindtap="gotoServer">
+                <image class="userserver-li-image" src="/images/main/menu{{index}}@3x.png" mode="cover"></image>
+                {{item.name}}</li>
+        </ul>
+    </view>
+    <view class="userlogs" wx:if="{{showLogs}}">
+        <view class="member-title">客户动态</view>
+        <view class='userlogs-view'>
+            <view wx:for="{{logs}}" wx:key="key" wx:for-index="key" wx:for-item="value">
+                <view class="userlogs-title">#{{key}}</view>
+                <timeAxis axisArr="{{value}}"></timeAxis>
+            </view>
+        </view>
+    </view>
+    <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask class="qr-dialog">
+        <view class="qr-view">
+            <!-- <image src="data:image/png;base64,{{imgUrl}}"/> -->
+            <image class="qr-img" src="{{imgUrl}}" />
+            <view>点击客户微信扫码，便于客户收到个人运动相关动态信息</view>
+        </view>
+    </mp-dialog>
+    <mp-dialog title="确定转为正式会员" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+    </mp-dialog>
 </view>
