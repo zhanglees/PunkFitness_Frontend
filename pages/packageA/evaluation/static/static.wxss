@@ -1,7 +1,6 @@
 .container {
     background-color: #eee;
     box-sizing: border-box;
-
 }
 
 .top_layout {
@@ -171,7 +170,11 @@ swiper {
 }
 
 .feedback-checkbox {
-    margin-bottom: 10rpx;
+    margin-bottom: 20rpx;
+    width: 100%;
+    display: block;
+    height: 68rpx;
+    line-height: 68rpx;
 }
 
 .feedback-radios {
@@ -216,6 +219,7 @@ swiper {
     box-sizing: border-box;
 }
 
+
 /* .report-list {
     display: flex;
     flex-wrap: nowrap;
@@ -226,17 +230,17 @@ swiper {
 .report-item {
     flex: 1;
     overflow: hidden;
-
 }
 
 .report-image-list
-
 /* .report-problem-list */
-    {
+
+{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
+
 
 /* .report-image-wrapper {
     width: 300rpx;
@@ -245,6 +249,7 @@ swiper {
     margin-bottom: 20rpx;
     overflow: hidden;
 } */
+
 
 /* .report-image {
     position: relative;
@@ -268,6 +273,7 @@ swiper {
     overflow: hidden;
 }
 
+
 /* 
 .report-list-title {
    
@@ -278,6 +284,8 @@ swiper {
  
 
 } */
+
+
 /* .report-list-title-img{
     position: absolute;
     left: 50%;
@@ -307,7 +315,6 @@ swiper {
     margin-bottom: 32rpx;
 }
 
-
 ul {
     display: flex;
 }
@@ -327,6 +334,7 @@ ul {
     border-left: 1px solid #F1F1F3;
 }
 
+
 /* .img-container{
     flex: 1;
   }
@@ -340,7 +348,6 @@ ul {
     width: 100%;
     position: relative;
     text-align: center;
-
 }
 
 .test-style {
@@ -375,7 +382,6 @@ text {
     border-bottom: 1px solid #F1F1F3;
     /* border-right: 1px solid #F1F1F3;
     border-left: 1px solid #F1F1F3; */
-
 }
 
 .text-top {
@@ -395,10 +401,12 @@ text {
     /* margin-right: 7rpx; */
     border-right: 1px solid #F1F1F3;
 }
+
 .right-style {
     /* margin-left: 7rpx; */
     border-left: 1px solid #F1F1F3;
 }
-.text-color{
+
+.text-color {
     color: #000;
 }

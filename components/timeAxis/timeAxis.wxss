@@ -74,7 +74,7 @@
     left: -42rpx;
 }
 
-.rightContent.last-one::before {
+.timeAsix .itemTimeZ:last-child .rightContent::before {
     display: none;
 }
 

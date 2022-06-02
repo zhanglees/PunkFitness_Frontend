@@ -2,8 +2,8 @@
 <wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
     <view class="type-tab">
-        <view wx:for="{{tabList}}" wx:key="id" bindtap="tabChange" data-id="{{item.id}}"  class="'tab-item' {{item.id == type ? 'tab-item-act' : ''}}">
-        {{item.name}}
+        <view wx:for="{{tabList}}" wx:key="id" bindtap="tabChange" data-id="{{item.id}}" class="'tab-item' {{item.id == type ? 'tab-item-act' : ''}}">
+            {{item.name}}
         </view>
     </view>
     <view class='top_layout'>
@@ -14,13 +14,18 @@
     </view>
     <view class="detail">
         <block wx:if="{{evaluation.length}}">
-        <view class="detail-item" wx:for="{{evaluation}}" wx:key="index" wx:for-item="li" bindtap="gotoDetail" data-createtime="{{li.createTime}}" data-coachid="{{li.coachId}}">
-            <text>{{['静态评估', '动态评估', '健康体适能'][li.assessmentType]}}</text>
-            <view class="detatil-top-right">
-                <text class="detail-coach">{{li.coachName}}</text>
-                <text class="detatil-time">{{utils.formatDate(li.createTime)}}</text>
-            </view>
-        </view>
+            <ul class="detail-ul" wx:if="{{evaluation.length}}">
+                <li class="detail-li" wx:for="{{evaluation}}" wx:key="index" bindtap="gotoDetail" data-createtime="{{item.createTime}}" data-coachid="{{item.coachId}}">
+                    <image src="/images/icons/icon-assessment{{item.assessmentType}}.png" class="li-btn" />
+                    <view class="detail-li-right">
+                        <view class="detail-li-title">
+                            {{['静态评估', '动态评估', '健康体适能'][item.assessmentType]}}
+                            <view class="detail-li-coach">由{{item.coachName}}创建</view>
+                        </view>
+                        <view class="detail-li-coach">{{utils.formatDate(item.createTime)}}</view>
+                    </view>
+                </li>
+            </ul>
         </block>
 
         <view class="no-data" wx:else>暂无数据~</view>

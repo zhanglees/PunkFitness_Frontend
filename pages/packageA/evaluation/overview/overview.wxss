@@ -1,25 +1,29 @@
-.container{
+.container {
     background-color: #eee;
     color: #333;
-  }
-.type-tab{
+}
+
+.type-tab {
     padding: 20rpx 40rpx 0;
     text-align: left;
     background: #fff;
     width: 100%;
     box-sizing: border-box;
 }
-.tab-item{
+
+.tab-item {
     display: inline-block;
     margin-right: 40rpx;
     line-height: 2;
     height: 60rpx;
 }
-.tab-item-act{
+
+.tab-item-act {
     color: var(--base);
     position: relative;
 }
-.tab-item-act::after{
+
+.tab-item-act::after {
     position: absolute;
     width: 100%;
     height: 2px;
@@ -30,7 +34,8 @@
     content: '';
     background-color: var(--base);
 }
-.top_layout{
+
+.top_layout {
     background: #fff;
     text-align: center;
     width: 100%;
@@ -39,10 +44,12 @@
     padding: 60rpx 0 20rpx;
     /* border-top: 1px solid var(--base); */
 }
-.top-say-sth{
+
+.top-say-sth {
     margin-bottom: 40rpx;
 }
-.goto-btn{
+
+.goto-btn {
     display: inline-block;
     border: 1px solid var(--base);
     border-radius: 30rpx;
@@ -52,28 +59,62 @@
     font-size: 32rpx;
     height: 60rpx;
 }
-.detail{
+
+.detail {
     width: 100%;
     box-sizing: border-box;
     margin-top: 40rpx;
     padding: 30rpx 30rpx;
     background: #fff;
 }
-.detail-item{
-    margin: 30rpx 0;
+
+.detail-ul {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin-bottom: 8rpx;
+}
+
+.detail-li {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 132rpx;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.li-btn {
+    width: 76rpx;
+    height: 76rpx;
+    margin-bottom: 24rpx;
+}
+
+.detail-li-right {
+    color: #222834;
+    flex: 1;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-left: 24rpx;
+    font-size: 28rpx;
+    border-bottom: 1px solid #F1F1F3;
+    padding-bottom: 24rpx;
 }
-.detatil-top-right{
-    color: #5d5d5d;    
-    display: flex;
-    justify-content: flex-end;
+
+.detail-li-coach {
+    font-size: 24rpx;
+    color: #BCC0C7;
 }
-.detail-coach{    
-    margin-right: 20rpx;
-    width: 50%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    word-break: keep-all;
-    white-space: nowrap;
+
+.detail-li-a {
+    color: #999;
+}
+
+.detail-li-title {
+    font-size: 28rpx;
+    color: #222834;
+    text-align: left;
 }

@@ -1,8 +1,8 @@
 {
-  "usingComponents": {
-    "mp-icon": "weui-miniprogram/icon/icon"
-  },
-  "backgroundColor": "#eeeeee",
-  "navigationBarTitleText": "健康体适能"
+    "usingComponents": {
+        "mp-icon": "weui-miniprogram/icon/icon"
+    },
+    "backgroundColor": "#363D56",
+    "navigationBarTitleText": "健康体适能"
 
 }

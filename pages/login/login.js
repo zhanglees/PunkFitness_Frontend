@@ -78,15 +78,9 @@ Page({
                 if (!userInfo.headImg) {
                     this.showGetInfo();
                 } else {
-                    if (_this.data.backUrl.includes('mine')) {
-                        wx.switchTab({
-                            url: _this.data.backUrl,
-                        })
-                    } else {
-                        wx.redirectTo({
-                            url: _this.data.backUrl,
-                        })
-                    }
+                    wx.switchTab({
+                        url: _this.data.backUrl,
+                    })
                 }
             } else {
                 wx.showModal({
@@ -129,29 +123,17 @@ Page({
                             }).then(res => {
                                 const { phone, userName, wxid, headImg } = res.data;
                                 wx.setStorageSync('userInfo', {..._this.data.userInfo, phone, userName, wxid, headImg });
-
-                                if (_this.data.backUrl.includes('mine')) {
-                                    wx.switchTab({
-                                        url: _this.data.backUrl,
-                                    })
-                                } else {
-                                    wx.redirectTo({
-                                        url: _this.data.backUrl,
-                                    })
-                                }
+                                wx.switchTab({
+                                    url: _this.data.backUrl,
+                                })
                             })
                         },
                         fail: e => {
                             // 用户拒绝授权
-                            if (_this.data.backUrl.includes('mine')) {
-                                wx.switchTab({
-                                    url: _this.data.backUrl,
-                                })
-                            } else {
-                                wx.redirectTo({
-                                    url: _this.data.backUrl,
-                                })
-                            }
+                            wx.switchTab({
+                                url: _this.data.backUrl,
+                            })
+
                         },
                         complete: e => {
                             // 接口调用结束（调用成功、失败都会执行）
