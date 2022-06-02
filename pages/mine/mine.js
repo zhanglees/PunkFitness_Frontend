@@ -10,6 +10,7 @@ Page({
         hasUserInfo: false,
         withdraw: 6888,
         memberTime: '2021-12-30',
+        showBuy: true,
         actionList: [{
             title: '会员购买',
             link: '/pages/packageB/mine/buy/buy'
@@ -23,6 +24,16 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function(options) {
+        const _this = this;
+        wx.getSystemInfo({
+            success: function(res) {
+                if (res.platform == "ios") {
+                    _this.setData({
+                        showBuy: false,
+                    })
+                }
+            }
+        })
         wx.loadFontFace({
                 global: true,
                 family: 'Roboto-Bold',

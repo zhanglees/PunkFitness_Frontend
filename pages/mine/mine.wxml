@@ -25,11 +25,13 @@
         </view> -->
     </view>
     <view class="action-list" wx:if="{{userInfo.phone}}">
-        <mp-cell wx:for="{{actionList}}" wx:key="index" link title="{{item.title}}" url="{{item.link}}">
-            <view slot="footer">
-                <image class="img-icon" src="/images/icons/arrow.png"></image>
-            </view>
-        </mp-cell>
+        <block wx:for="{{actionList}}" wx:key="index">
+            <mp-cell wx:if="{{(index != 0) || showBuy}}" link title="{{item.title}}" url="{{item.link}}">
+                <view slot="footer">
+                    <image class="img-icon" src="/images/icons/arrow.png"></image>
+                </view>
+            </mp-cell>
+        </block>
     </view>
     <view class="footer">
         服务热线：13121555597
