@@ -11,7 +11,7 @@
     padding: 0 0 10rpx 40rpx;
     text-align: left;
     color: #fff;
-    font-size: 36rpx;
+    font-size: 32rpx;
   }
   
   .date-choose-swiper {
@@ -38,6 +38,7 @@
   .day {
     width: 14.286%;
     flex-basis: 14.286%;
+    font-family: Roboto-Regular;
   }
   
   .week {
@@ -71,4 +72,8 @@
   .day text.reds {
     color: #fff;
   }
+  .data-text {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium;
+}
   
