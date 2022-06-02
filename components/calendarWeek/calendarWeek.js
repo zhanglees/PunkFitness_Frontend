@@ -33,7 +33,8 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    goInit(){
+
+    goInit() {
       var d = new Date(this.data.selDate);
       this.initDate(-5, 2, d); // 日历组件程序  -4左表示过去4周  右1表示过去一周 
     },
@@ -164,8 +165,8 @@ Component({
       var dDateFormat = this.data.dateList[currentIndex].days[3].ids.split(',');
       this.setData({
         swiperCurrent: currentIndex,
-        dateMonth: dDateFormat[1] + '月',
-        dateYear: dDateFormat[0] + "年"
+        dateMonth: dDateFormat[1],
+        dateYear: dDateFormat[0]
       })
     },
     // 获得日期字符串
@@ -181,7 +182,7 @@ Component({
 
     // 点击日历某日
     chooseDate(e) {
-      var {id, dayweek} = e.currentTarget.dataset;
+      var { id, dayweek } = e.currentTarget.dataset;
       this.setData({
         dateCurrentStr: id,
         dayCurrentStr: this.data.dateListArray[dayweek]
