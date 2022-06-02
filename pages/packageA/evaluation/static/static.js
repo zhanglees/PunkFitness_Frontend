@@ -448,7 +448,7 @@ Page({
         })
     },
     remarkChange(e) {
-        console.log(888, e.detail.value)
+        // console.log(888, e.detail.value)
         this.setData({
             [`remark[${this.data.current}]`]: e.detail.value
         })

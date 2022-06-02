@@ -242,6 +242,7 @@ Page({
     },
     /****下一步 */
     nextStep(e) {
+        console.log(8888888, cur)
         const cur = this.data.current;
         // const data = this.getData();
         //数据最后生成报告之后一起提交

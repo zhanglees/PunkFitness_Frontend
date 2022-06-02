@@ -7,15 +7,13 @@
                 评估时间：<text class="evaluation-time">{{date}}</text>
             </view>
             <view class="top-tab">
-                <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}"
-                    class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
+                <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
                     {{item.assessmentName}}
                 </view>
             </view>
         </view>
         <!-- <swiper indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{160*(userImg[current].length==5? 3 : utils.tofixed(1+userImg[current].length/2, 0))}}px"> -->
-        <swiper indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange"
-            style="height:{{swiperHeight}}px">
+        <swiper indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
             <swiper-item wx:for="{{tabList}}" wx:key="index">
                 <view class="swiper-item" id="swiperItem{{index}}">
                     <view class="act-area">
@@ -52,15 +50,12 @@
                         <view class="feedback-title">问题反馈</view>
                         <checkbox-group class="feedback-list">
                             <view wx:for="{{feedbackList[index]}}" wx:key="index" class="feedback-item">
-                                <label class="form-checkbox-item" data-index="{{index}}" class="feedback-checkbox"
-                                    bindtap="setChoice">
+                                <label class="form-checkbox-item" data-index="{{index}}" class="feedback-checkbox" bindtap="setChoice">
                                     <checkbox value="{{index}}" checked="{{item.checked}}" />
                                     {{item.feedbackItem}}
                                 </label>
-                                <radio-group wx:if="{{item.checked}}" class="feedback-radios" data-index="{{index}}"
-                                    bindchange="radioChange">
-                                    <label wx:for="{{item.childFeedbacks}}" wx:key="index" wx:for-item="option"
-                                        wx:for-index="i" class="feedback-radio-item">
+                                <radio-group wx:if="{{item.checked}}" class="feedback-radios" data-index="{{index}}" bindchange="radioChange">
+                                    <label wx:for="{{item.childFeedbacks}}" wx:key="index" wx:for-item="option" wx:for-index="i" class="feedback-radio-item">
                                         <radio value="{{i}}" />
                                         {{option.feedbackItem}}
                                     </label>
@@ -68,7 +63,10 @@
                             </view>
                         </checkbox-group>
                         <view class="feedback-remark">教练备注：</view>
-                        <textarea class="feedback-remark-area" placeholder="请输入备注" bindinput="remarkChange" />
+                        <view class="feedback-remark-wrapper">
+                            <textarea class="feedback-remark-area" placeholder="请输入备注" bindinput="remarkChange" maxlength="50" />
+                            <text class="remark-area-tip">{{remark[index].length || 0}}/50</text>
+                        </view>
                         <view>
                             <button class="form-btn-confirm" bindtap="nextStep" wx:if="{{index==0}}">下一步</button>
                             <button class="form-btn-confirm" bindtap="generateReport" wx:else>生成报告</button>
@@ -127,41 +125,33 @@
         <ul>
             <li class="left-container " style="margin-right: 7rpx;">
                 <!-- <view class="img-container" > -->
-                <image class="img-item img-container" style=" margin-bottom: -9rpx;" src="{{userImg[0]}}"
-                    mode="scaleToFill" wx:if="{{userImg[0] || userImg[1]}}">
+                <image class="img-item img-container" style=" margin-bottom: -9rpx;" src="{{userImg[0]}}" mode="scaleToFill" wx:if="{{(userImg[0]&&userImg[0].length) || (userImg[1]&&userImg[1].length)}}">
                     <text class="test-style {{userImg[0]? '' : 'text-color'}}">{{tabList[0].assessmentName}}</text>
                 </image>
                 <view wx:else style="text-align: center;">{{tabList[0].assessmentName}}</view>
                 <!-- </view> -->
-                <view class="text-container left-style" wx:for="{{feedbackList[0]}}" wx:key="index"
-                    style="border-right: 1px soild #f1f1f3; " wx:if="{{item.checked}}">
+                <view class="text-container left-style" wx:for="{{feedbackList[0]}}" wx:key="index" style="border-right: 1px soild #f1f1f3; " wx:if="{{item.checked}}">
                     <text class="text-top">{{item.feedbackItem}}</text>
                     <text class="text-bottom">{{item.childFeedbacks[0].feedbackItem ||'--'}}</text>
                 </view>
-                <view class="text-container left-style"
-                    style="border-right: 1px soild #f1f1f3; border-bottom: 1px soild #f1f1f3; margin-bottom: 160rpx;"
-                    wx:if="{{remark[0]}}">
+                <view class="text-container left-style" style="border-right: 1px soild #f1f1f3; border-bottom: 1px soild #f1f1f3; margin-bottom: 160rpx;" wx:if="{{remark[0]}}">
                     <text class="text-top">教练备注</text>
                     <text class="text-bottom">{{remark[0] ||'--'}}</text>
                 </view>
             </li>
             <li class="left-container " style="margin-left: 7rpx;">
                 <!-- <view class="img-container"> -->
-                <image class="img-item  img-container" src="{{userImg[1]}}" style=" margin-bottom: -9rpx;"
-                    wx:if="{{userImg[0] ||userImg[1]}}">
+                <image class="img-item  img-container" src="{{userImg[1]}}" style=" margin-bottom: -9rpx;" wx:if="{{(userImg[0]&&userImg[0].length) || (userImg[1]&&userImg[1].length)}}">
                     <text class="test-style {{userImg[1]? '' : 'text-color'}}">{{tabList[1].assessmentName}}</text>
                 </image>
                 <view wx:else style="text-align: center;">{{tabList[1].assessmentName}}</view>
                 <!-- </view> -->
-                <view class="text-container right-style" wx:for="{{feedbackList[0]}}" wx:key="index"
-                    style="border-left: 1px soild #f1f1f3; " wx:if="{{item.checked}}">
+                <view class="text-container right-style" wx:for="{{feedbackList[0]}}" wx:key="index" style="border-left: 1px soild #f1f1f3; " wx:if="{{item.checked}}">
                     <text class="text-top">{{item.feedbackItem}}</text>
                     <text class="text-bottom">{{item.childFeedbacks[0].feedbackItem ||'--'}}</text>
 
                 </view>
-                <view class="text-container right-style"
-                    style="border-right: 1px soild #f1f1f3; border-bottom: 1px soild #f1f1f3; margin-bottom: 160rpx;"
-                    wx:if="{{remark[1]}}">
+                <view class="text-container right-style" style="border-right: 1px soild #f1f1f3; border-bottom: 1px soild #f1f1f3; margin-bottom: 160rpx;" wx:if="{{remark[1]}}">
                     <text class="text-top">教练备注</text>
                     <text class="text-bottom">{{remark[1] ||'--'}}</text>
                 </view>

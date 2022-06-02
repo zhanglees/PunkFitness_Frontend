@@ -226,6 +226,10 @@ function install(req, request) {
             const url = `${req.apiUrl}/trainPlan/getUserSectionList`;
             return request({ url, method: 'POST', data });
         },
+        cancelAppointment(data) { //可预约的课程
+            const url = `${req.apiUrl}/coachAppointment/cancelAppointment`;
+            return request({ url, method: 'POST', data });
+        },
         // getAppointmentAllByDate(data){   //查询预约列表，这个接口需要改
         //     const url = `${req.apiUrl}/userAppointment/getAppointmentAllByDate`;
         //     return request({ url, method: 'GET', data });

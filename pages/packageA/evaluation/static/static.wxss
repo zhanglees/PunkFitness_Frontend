@@ -203,11 +203,23 @@ swiper {
 
 .feedback-remark {
     margin-top: 20rpx;
-    margin-bottom: 40rpx;
+    margin-bottom: 20rpx;
 }
 
-.feedback-remark-area {
+.feedback-remark-wrapper {
+    border: 1px solid #E6E6E6;
+    border-radius: var(--base-radius);
+    background-color: #F6F6F6;
+    font-size: 24rpx;
+    padding: 10rpx;
     height: 150rpx;
+    position: relative;
+}
+
+.remark-area-tip {
+    position: absolute;
+    right: 16rpx;
+    bottom: 16rpx;
 }
 
 .report-list-area {
@@ -395,6 +407,8 @@ text {
     font-weight: 500;
     color: #222834;
     margin-bottom: 32rpx;
+    word-break: break-all;
+    white-space: normal;
 }
 
 .left-style {

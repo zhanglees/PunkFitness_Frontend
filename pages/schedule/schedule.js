@@ -69,6 +69,19 @@ Page({
             //     })
             // }
     },
+    cancel(e) {
+        const appointmentId = e.currentTarget.dataset.appointmentid;
+        app.req.api.cancelAppointment({
+            appointmentId
+        }).then(res => {
+            if (res.code == 0) {
+                wx.showToast({
+                    title: '签到成功',
+                })
+                this.getList();
+            }
+        })
+    },
     /****签到选课 */
     bindClassChange(e) {
         const value = e.detail.value;

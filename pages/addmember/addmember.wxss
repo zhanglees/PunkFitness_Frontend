@@ -46,6 +46,16 @@
     box-sizing: border-box;
 }
 
+.form-textarea {
+    position: relative;
+}
+
+.remark-area-tip {
+    position: absolute;
+    right: 16rpx;
+    bottom: 48rpx;
+}
+
 .form-checkbox .form-checkbox-item {
     margin-right: 50rpx;
 }

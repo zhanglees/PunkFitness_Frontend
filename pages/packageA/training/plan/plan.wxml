@@ -22,13 +22,13 @@
                 </view>
             </block>
             <block wx:else>
-            <view class="target-item{{item.checked ? ' target-item-act' : ''}}" bindtap="tapTarget" wx:for="{{targetList}}" wx:key="index" data-index="{{index}}">
-                {{item.name}}
-            </view>
-            <input wx:if="{{addTargetFlag}}" bindchange="addTarget" class="weui-input" placeholder="" />
-            <view wx:else class="target-item" bindtap="tapAddTarget">
-            + 其他
-            </view>
+                <view class="target-item{{item.checked ? ' target-item-act' : ''}}" bindtap="tapTarget" wx:for="{{targetList}}" wx:key="index" data-index="{{index}}">
+                    {{item.name}}
+                </view>
+                <input wx:if="{{addTargetFlag}}" bindchange="addTarget" class="weui-input" placeholder="" />
+                <view wx:else class="target-item" bindtap="tapAddTarget">
+                    + 其他
+                </view>
             </block>
         </view>
         <view class="plan-info">
@@ -51,34 +51,35 @@
                     <text class="stage-title-block" style="background-color: {{stageColors[index%6]}};"></text>
                     <text bindtap="changeName" class="stage-title-text" data-index="{{index}}">{{item.className}}</text>
                     <!-- <block wx:else> -->
-                        <!-- <input bindchange="changeStageTitle" data-index="{{index}}" class="stage-title-input" value="{{item.className}}" /> -->
-                        <view wx:if="{{item.ownerId != 'system'}}" class="stage-title-del" bindtap="delStage" data-index="{{index}}" data-classid="{{item.classId}}">删除</view>
+                    <!-- <input bindchange="changeStageTitle" data-index="{{index}}" class="stage-title-input" value="{{item.className}}" /> -->
+                    <view wx:if="{{item.ownerId != 'system'}}" class="stage-title-del" bindtap="delStage" data-index="{{index}}" data-classid="{{item.classId}}">删除</view>
                     <!-- </block> -->
                     <mp-icon class="arrow-icon" type="field" icon="arrow" color="#999" size="{{10}}"></mp-icon>
                 </view>
                 <view class="stage-detail {{item.exp ? 'stage-detail-exp' : ''}}" id="stage{{index}}">
                     <block wx:for="{{item.detail}}" wx:for-item="dItem" wx:for-index="dIndex" wx:key="dIndex">
-                    <view class="stage-detail-title">{{dItem.name}}</view>
-                    <view wx:if="{{dItem.name!='训练目标'}}" class="stage-detail-list">
-                        <view wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" class="stage-detail-item {{option.checked ? 'stage-detail-item-checked' : ''}}" bindtap="checkedOne" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}">
-                            {{option.itemName}}
+                        <view class="stage-detail-title">{{dItem.name}}</view>
+                        <view wx:if="{{dItem.name!='训练目标'}}" class="stage-detail-list">
+                            <view wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" class="stage-detail-item {{option.checked ? 'stage-detail-item-checked' : ''}}" bindtap="checkedOne" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}">
+                                {{option.itemName}}
+                            </view>
+                            <input wx:if="{{dItem.addFlag}}" bindchange="addOption" class="weui-input" data-index="{{index}}" data-d="{{dIndex}}" placeholder="" />
+                            <view wx:else class="stage-detail-item option-customize" bindtap="tapAddOption" data-index="{{index}}" data-d="{{dIndex}}">+自定义</view>
                         </view>
-                        <input wx:if="{{dItem.addFlag}}" bindchange="addOption" class="weui-input" data-index="{{index}}" data-d="{{dIndex}}" placeholder="" />
-                        <view wx:else class="stage-detail-item option-customize" bindtap="tapAddOption" data-index="{{index}}" data-d="{{dIndex}}">+自定义</view>
-                    </view>
-                    <view wx:else class="stage-detail-list">
-                        <view wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" class="stage-detail-item {{option.checked ? 'stage-detail-item-checked' : ''}}" bindtap="checkedOne" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}">
-                            {{option.itemName}}
+                        <view wx:else class="stage-detail-list">
+                            <view wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" class="stage-detail-item {{option.checked ? 'stage-detail-item-checked' : ''}}" bindtap="checkedOne" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}">
+                                {{option.itemName}}
+                            </view>
+                            <block wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i">
+                                <view wx:if="{{option.checked}}" class="stage-target-item">
+                                    {{option.itemName}}
+                                    <!-- <input bindchange="targetValue" type="number" class="weui-input" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" value="{{option.contentItemValue}}" placeholder="" /> -->
+                                    <slider class="stage-target-item-slider stage-target-item-slider-{{i}}" bindchange="targetValue" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" activeColor="#4182E9" value="{{option.contentItemValue}}" block-size="12" show-value min="{{i==2 ? 0 : -50}}"
+                                        max="{{i==1 ? 0 : 50}}" step="0.5" />
+                                    <text class="target-unit">{{['kg', ' %', 'kg'][i]}}</text>
+                                </view>
+                            </block>
                         </view>
-                        <block wx:for="{{dItem.options}}" wx:key="i" wx:for-item="option" wx:for-index="i" >
-                        <view wx:if="{{option.checked}}" class="stage-target-item">
-                            {{option.itemName}}
-                            <!-- <input bindchange="targetValue" type="number" class="weui-input" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" value="{{option.contentItemValue}}" placeholder="" /> -->
-                            <slider class="stage-target-item-slider stage-target-item-slider-{{i}}" bindchange="targetValue" data-i="{{i}}" data-d="{{dIndex}}" data-index="{{index}}" activeColor="#4182E9" value="{{option.contentItemValue}}" block-size="12" show-value min="{{i==2 ? 0 : -50}}" max="{{i==1 ? 0 : 50}}" step="0.5" />
-                            <text class="target-unit">{{['kg', ' %', 'kg'][i]}}</text>
-                        </view>
-                        </block>
-                    </view>
                     </block>
                     <view class="stage-fct-list">
                         <view class="stage-fct-item">
@@ -92,15 +93,17 @@
                         </view> -->
                     </view>
                     <view class="stage-classes">
-                        所需课时{{item.classNum ? item.classNum : '   '}}节
+                        所需课时{{item.classNum ? item.classNum : ' '}}节
                     </view>
                     <view class="stage-remark">
-                        <textarea class="stage-remark-area" placeholder="备注" bindinput="remarkChange" data-index="{{index}}" />
+                        <textarea class="stage-remark-area" placeholder="备注" bindinput="remarkChange" data-index="{{index}}" maxlength="50">
+                        </textarea>
+                        <text class="stage-remark-area-tip">{{stageList[index].coachRemarks.length || 0}}/50</text>
                     </view>
                 </view>
             </view>
             <view class="stage-item-add" bindtap="addStage">
-            +  添加阶段
+                + 添加阶段
             </view>
         </view>
     </view>
@@ -110,9 +113,8 @@
     <mp-dialog title="确定删除该阶段吗？" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>
 
-    <mp-dialog title="" show="{{newStageNameShow}}" buttons="{{dialogButtons}}" bindbuttontap="confirmNewStage">    
+    <mp-dialog title="" show="{{newStageNameShow}}" buttons="{{dialogButtons}}" bindbuttontap="confirmNewStage">
         <view style="color:#000;">请输入阶段名称</view>
         <input class="new-stage-name-input" focus="{{true}}" value="{{newStageName}}" bindinput="changeStageTitle" />
     </mp-dialog>
 </view>
-

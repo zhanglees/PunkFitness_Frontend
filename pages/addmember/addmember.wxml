@@ -33,7 +33,8 @@
 
         <mp-cell ext-class="weui-cell-nosplit" title="备注"></mp-cell>
         <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="form-textarea weui-cell-nosplit">
-            <textarea class="weui-textarea" placeholder="请输入备注" bindinput="formInputChange" data-field="remarks" value="{{formData.remarks}}" />
+            <textarea class="weui-textarea" placeholder="请输入备注" bindinput="formInputChange" data-field="remarks" value="{{formData.remarks}}" maxlength="50" />
+            <text class="remark-area-tip">{{formData.remarks.length || 0}}/50</text>
         </mp-cell>
     </mp-form>
 
