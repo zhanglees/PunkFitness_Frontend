@@ -1,22 +1,25 @@
 <!--pages/schedule/schedule.wxml-->
+<wxs src="/utils/util.wxs" module="utils" />
 <view class="container">
     <view class="top-layout">
-        <view class="top-title">课程预约列表</view>
         <calendarWeek bindmydata="mydata" id="myCalendar" selDate="{{selDate}}"></calendarWeek>
     </view>
     <view class="training-list">
         <view wx:for="{{list}}" wx:key="index" class="training-item">
-            <view class="training-name">{{item.userName || '--'}}</view>
             <view class="training-item-b">
-                <view class="training-time">{{item.appointmentTime}}</view>
-                <view>
-                    <block wx:if="{{!item.isComplete}}">
-                        <view class="status checkin-btn" bindtap="checkin" data-type="{{item.isExperience}}" data-appointmentid="{{item.appointmentId}}" data-trainingplanid="{{item.currentCoachTrainPlainId}}" data-userid="{{item.userId}}">签课</view>
-                        <view class="status checkin-btn" bindtap="cancel" data-appointmentid="{{item.appointmentId}}">取消预约</view>
-                    </block>
-                    <view wx:else class="status have-done">已签课</view>
-                </view>
+                <view class="training-name">{{item.userName || '--'}}</view>
+                <view class="training-time">{{utils.formatHMS(item.appointmentTime)}}</view>
             </view>
+            <view>
+                <block wx:if="{{!item.isComplete}}">
+                    <view class="status checkin-btn" bindtap="checkin" data-type="{{item.isExperience}}" data-appointmentid="{{item.appointmentId}}" data-trainingplanid="{{item.currentCoachTrainPlainId}}" data-userid="{{item.userId}}">签课</view>
+                    <view class="status checkin-btn" bindtap="cancel" data-appointmentid="{{item.appointmentId}}">取消预约</view>
+                </block>
+                <!-- <view wx:else class="status have-done">已签课</view> -->
+            </view>
+            <view wx:if="{{item.isComplete}}" class="training-status have-done">已上课</view>
+            <view wx:else class="training-status">待上课</view>
+            <!-- <view wx:else class="training-status have-cancel">已取消</view> -->
         </view>
         <view wx:if="{{!list.length}}" class="no-data">暂无预约~</view>
     </view>

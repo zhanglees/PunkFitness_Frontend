@@ -40,11 +40,22 @@ Page({
         showSearchInput: [false, false],
         searchText: ['', ''],
         memberList: [],
-        userInfo: {}
+        userInfo: {},
+        resShow: false
     },
     onLoad() {
         // this.comSwiperHeight();
         this.data.userId = wx.getStorageSync('mp-req-user-id');
+        const _this = this;
+        wx.getSystemInfo({
+            success: function(res) {
+                if (res.platform == "ios") {
+                    _this.setData({
+                        isiOS: true,
+                    })
+                }
+            }
+        })
     },
     onShow() {
         const userInfo = wx.getStorageSync('userInfo');
@@ -53,6 +64,8 @@ Page({
             fliterChecked: '',
             showSearchInput: [false, false],
             searchText: ['', ''],
+            resShow: false,
+            current: this.data.current == 2 ? 0 : this.data.current
         });
         if (userInfo && userInfo.phone) {
             this.getAllData(0);
@@ -262,6 +275,28 @@ Page({
     bindCreateActiviy: function(event) {
         wx.navigateTo({
             url: '/pages/home/addActvity/addActvity'
+        })
+    },
+    showAddRes() {
+        this.setData({
+            resShow: true
+        })
+    },
+    gotoBuy() {
+        if (this.data.isiOS) {
+            this.setData({
+                resShow: false
+            })
+        } else {
+            wx.navigateTo({
+                url: '/pages/packageB/mine/buy/buy',
+            })
+
+        }
+    },
+    cancelBuy() {
+        this.setData({
+            resShow: false
         })
     }
 })

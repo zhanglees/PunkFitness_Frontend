@@ -5,9 +5,9 @@ let date = new Date();
 let years = [];
 let months = [];
 let days = [];
-let hours = [];
-let minutes = [];
-for (let i = date.getFullYear() - 4; i <= (date.getFullYear() + 1); i++) {
+// let hours = [];
+// let minutes = [];
+for (let i = date.getFullYear() - 60; i <= date.getFullYear(); i++) {
     years.push(i + "年")
 }
 for (let i = 1; i <= 12; i++) {
@@ -26,12 +26,12 @@ for (let i = 1; i <= 31; i++) {
     }
 
 }
-for (let i = 0; i <= 23; i++) {
-    hours.push(i + "")
-}
-for (let i = 0; i <= 59; i++) {
-    minutes.push(i + "")
-}
+// for (let i = 0; i <= 23; i++) {
+//     hours.push(i + "")
+// }
+// for (let i = 0; i <= 59; i++) {
+//     minutes.push(i + "")
+// }
 
 
 Component({
@@ -69,10 +69,6 @@ Component({
         //   type: Array,
         //   value: "分钟"
         // }
-        dateItem: {
-            type: String,
-            value: "日期"
-        },
     },
 
     data: {
@@ -80,15 +76,15 @@ Component({
         endDate: "",
         userName: "",
         farmerId: "",
-        timeValue: [2, 3, 4],
+        timeValue: [years.length - 20, 0, 0],
         changeFlag: false,
-        value: [0, 1, 1],
+        value: [years.length - 20, 0, 0],
         openFlag: true, //1日期控件显示  2控件滚动选择 底部页面不滚动
         years: years, //时间可选范围模态框数据
         months: months,
         days: days,
-        hours: hours,
-        minutes: minutes,
+        // hours: hours,
+        // minutes: minutes,
         year: '', //时间值
         month: '',
         day: '',

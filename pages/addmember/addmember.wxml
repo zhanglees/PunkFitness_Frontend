@@ -1,6 +1,6 @@
 <!--addmember.wxml-->
 <wxs src="/utils/util.wxs" module="utils" />
-<view class="container page-form">
+<view class="addmember-page-form">
     <mp-toptips msg="{{error}}" type="error" show="{{error}}" ext-class="show-error"></mp-toptips>
     <mp-form id="form" rules="{{rules}}" models="{{formData}}" class="addmember-form">
         <mp-cell prop="name" title="姓名" class="required-cell">
@@ -16,7 +16,7 @@
             </picker>
         </mp-cell>
         <mp-cell prop="birthday" title="生日" ext-class="">
-            <picker data-field="birthday" mode="date" value="{{formData.birthday}}" start="1930-01-01" end="2021-09-01" bindchange="bindBirthdayChange">
+            <picker data-field="birthday" mode="date" value="{{formData.birthday}}" start="1960-01-01" end="2021-09-01" bindchange="bindBirthdayChange">
                 <view class="weui-input">{{formData.birthday}}</view>
             </picker>
         </mp-cell>
@@ -43,6 +43,17 @@
         <button class="form-btn" bindtap="submitForm">保存</button>
         <!-- <text>点击客户微信扫码，便于客户微信收到个人运动相关动态信息</text> -->
     </view>
+    <mp-dialog show="{{resShow}}" buttons="{{false}}" mask>
+        <view class="result-view">
+            <image class="logo-img" src='/images/vip.png'></image>
+            <view class="result-head">您名下的免费权益已达上限</view>
+            <view class='res-tip'>开通会员体验更好的服务</view>
+            <view class="dialog-btn-wrapper">
+                <button class="dialog-btn" bindtap="gotoBuy">{{isiOS ? 'iOS暂不支持' : '立即开通'}}</button>
+                <button class="dialog-btn dialog-btn-cancel" bindtap="cancelBuy">暂不开通</button>
+            </view>
+        </view>
+    </mp-dialog>
     <!-- <mp-dialog title="" show="{{qrShow}}" buttons="{{false}}" mask>
         <view class="qr-view">
             <image src="data:image/png;base64,{{imgUrl}}"/>

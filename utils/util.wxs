@@ -16,9 +16,13 @@ function timestampDate(time) {
   var t = getDate(time);
   return t ? [t.getFullYear(), t.getMonth() + 1, t.getDate()].map(formatNumber).join('-') : '--'
 }
+function formatHMS(date){
+  return date ? date.match(getRegExp('[0-9]+:[0-9]+')) : '--';
+}
 module.exports = {
     indexOf: defineIndexOf,
     tofixed: tofixed,
     formatDate: formatDate,
-    timestampDate: timestampDate
+    timestampDate: timestampDate,
+    formatHMS:formatHMS,
 }

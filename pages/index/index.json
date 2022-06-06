@@ -1,8 +1,9 @@
 {
-  "usingComponents": {
-    "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
-    "addmember": "../addmember/addmember",
-    "mp-cell": "weui-miniprogram/cell/cell"
-  },
-  "backgroundTextStyle": "dark"
+    "usingComponents": {
+        "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
+        "addmember": "../addmember/addmember",
+        "mp-dialog": "weui-miniprogram/dialog/dialog",
+        "mp-cell": "weui-miniprogram/cell/cell"
+    },
+    "backgroundTextStyle": "dark"
 }

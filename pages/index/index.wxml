@@ -9,54 +9,66 @@
     </view>
 </view> -->
 <view class="container">
-  <view class="top_layout">
+    <view class="top_layout">
         <view class="top-tab">
             <view wx:for="{{tabList}}" wx:key="index" bindtap="tabChange" data-id="{{index}}" class="'tab-item' {{index == current ? 'tab-item-act' : ''}}">
-            {{item}}{{nums[index] ? '（ ' + nums[index] + ' ）' : ''}}
+                {{item}}{{nums[index] ? '（ ' + nums[index] + ' ）' : ''}}
             </view>
         </view>
     </view>
     <swiper class="content-swiper" indicator-dots="{{false}}" autoplay="{{false}}" current="{{current}}" bindchange="swiperChange" style="height:{{swiperHeight}}px">
         <swiper-item wx:for="{{tabList}}" wx:key="index">
             <view class="swiper-item" id="swiperItem{{index}}">
-              <block wx:if="{{index !== 2}}">
-              <view class="weui-search-bar {{showSearchInput[index] ? 'weui-search-bar_focusing' : ''}}">
-                <view class="weui-search-bar__form">
-                  <view class="weui-search-bar__box">
-                    <icon class="weui-icon-search" size="12" type="search" role="img"></icon>
-                    <input class="weui-search-bar__input" bindinput="searchInputChange" placeholder="搜索" type="text" value="{{searchText[index]}}" selection-end="-1" selection-start="-1" cursor="-1">搜索</input>
-                    <text bindtap="clearInput" class="weui-icon-clear"></text>
-                  </view>
-                  <label bindtap="showInput" class="weui-search-bar__label searchbar--weui-search-bar__label">
+                <block wx:if="{{index !== 2}}">
+                    <view class="weui-search-bar {{showSearchInput[index] ? 'weui-search-bar_focusing' : ''}}">
+                        <view class="weui-search-bar__form">
+                            <view class="weui-search-bar__box">
+                                <icon class="weui-icon-search" size="12" type="search" role="img"></icon>
+                                <input class="weui-search-bar__input" bindinput="searchInputChange" placeholder="搜索" type="text" value="{{searchText[index]}}" selection-end="-1" selection-start="-1" cursor="-1">搜索</input>
+                                <text bindtap="clearInput" class="weui-icon-clear"></text>
+                            </view>
+                            <label bindtap="showInput" class="weui-search-bar__label searchbar--weui-search-bar__label">
                     <icon class="weui-icon-search" size="12" type="search" role="img"></icon>
                     <text class="weui-search-bar__text">搜索</text>
                   </label>
-                </view>
-              </view>
-              <view class="filter-list" wx:if="{{index == 0 && !showSearchInput[index]}}">
-                <view wx:for="{{fliterList}}" wx:key="index" wx:for-index="i" bindtap="filterTap" data-index="{{i}}" class="filter-item {{i===fliterChecked ? 'filter-item__act' : ''}}">
-                  {{item.name}}<view>（ {{item.num || '--'}} ）</view>
-                </view>
-              </view>
-              <view class="member-list" wx:if="{{memberList[index].length}}">
-                <mp-cell wx:for="{{memberList[index]}}" wx:key="m" wx:for-item="member" wx:for-index="m" link url="{{'/pages/packageA/training/classlist/classlist?type=record&userId=' + member.id}}" class="item" footer="课时计划">
-                <view slot="title" class="weui-label" catchtap="memberDetail" data-index="{{member.id}}">
-                    <view class="member-name">
-                      {{member.userName}}
-                      <image src="/images/member/wx{{member.wxid ? '1' : ''}}.png"  class="member-icon" />
+                        </view>
                     </view>
-                    <view class="member-class" wx:if="{{index == 0}}">
-                      课时： {{member.trainClassNumbers ? ((member.singInNum || 0) + '/' + member.trainClassNumbers) : '--'}}
+                    <view class="filter-list" wx:if="{{index == 0 && !showSearchInput[index]}}">
+                        <view wx:for="{{fliterList}}" wx:key="index" wx:for-index="i" bindtap="filterTap" data-index="{{i}}" class="filter-item {{i===fliterChecked ? 'filter-item__act' : ''}}">
+                            {{item.name}}
+                            <view>（ {{item.num || '--'}} ）</view>
+                        </view>
                     </view>
-                </view>
-                </mp-cell>
-              </view>
-              <view class="no-member" wx:else>
-                暂无数据~
-              </view>
-              </block>
-              <addmember wx:else></addmember>
+                    <view class="member-list" wx:if="{{memberList[index].length}}">
+                        <mp-cell wx:for="{{memberList[index]}}" wx:key="m" wx:for-item="member" wx:for-index="m" link url="{{'/pages/packageA/training/classlist/classlist?type=record&userId=' + member.id}}" class="item" footer="课时计划">
+                            <view slot="title" class="weui-label" catchtap="memberDetail" data-index="{{member.id}}">
+                                <view class="member-name">
+                                    {{member.userName}}
+                                    <image src="/images/member/wx{{member.wxid ? '1' : ''}}.png" class="member-icon" />
+                                </view>
+                                <view class="member-class" wx:if="{{index == 0}}">
+                                    课时： {{member.trainClassNumbers ? ((member.singInNum || 0) + '/' + member.trainClassNumbers) : '--'}}
+                                </view>
+                            </view>
+                        </mp-cell>
+                    </view>
+                    <view class="no-member" wx:else>
+                        暂无数据~
+                    </view>
+                </block>
+                <addmember wx:else bind:showAddRes="showAddRes"></addmember>
             </view>
         </swiper-item>
     </swiper>
+    <mp-dialog show="{{resShow}}" buttons="{{false}}" mask>
+        <view class="result-view">
+            <image class="logo-img" src='/images/vip.png'></image>
+            <view class="result-head">您名下的免费权益已达上限</view>
+            <view class='res-tip'>开通会员体验更好的服务</view>
+            <view class="dialog-btn-wrapper">
+                <button class="dialog-btn" bindtap="gotoBuy">{{isiOS ? 'iOS暂不支持' : '立即开通'}}</button>
+                <button class="dialog-btn dialog-btn-cancel" bindtap="cancelBuy">暂不开通</button>
+            </view>
+        </view>
+    </mp-dialog>
 </view>

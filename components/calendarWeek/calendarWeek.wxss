@@ -1,80 +1,87 @@
-/* components/calendarWeek/calendarWeek.wxss */ 
+/* components/calendarWeek/calendarWeek.wxss */
+
 .date-choose {
     background: transparent;
     overflow: hidden;
     height: auto;
-  }
-  
-  .data-month {
+}
+
+.data-month {
     width: 100%;
     align-items: center;
-    padding: 0 0 10rpx 40rpx;
+    padding: 28rpx 0 10rpx 32rpx;
     text-align: left;
-    color: #fff;
     font-size: 32rpx;
-    font-family: Roboto-Regular
-  }
-  
-  .date-choose-swiper {
+    font-family: Roboto-Regular;
+    font-weight: 500;
+    color: #386DF3;
+}
+
+.date-choose-swiper {
     flex-grow: 1;
-    height: 120rpx;
-  }
-  
-  .swiper-item {
+    height: 90rpx;
+}
+
+.swiper-item {
     display: flex;
     flex-direction: column;
-  }
-  
-  .weekday,
-  .dateday {
+}
+
+.weekday,
+.dateday {
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     flex-wrap: wrap;
     flex-grow: 1;
-  }
-  
-  .week,
-  .day {
+}
+
+.week,
+.day {
     width: 14.286%;
     flex-basis: 14.286%;
     font-family: Roboto-Regular;
-  }
-  
-  .week {
-    color: #85B6EE;
+}
+
+.week {
     font-size: 24rpx;
-  }
-  
-  .weekday .week,.day text {
+    color: #BCC0C7;
+    line-height: 34px;
+}
+
+.day text {
     position: relative;
-    color: #85B6EE;
-  }
-  
+    color: #707784;
+}
+
 .day .active::before {
     /* 圈圈 */
     content: "";
     position: absolute;
-    width: 76rpx;
-    height: 76rpx;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 10%;
-    background: #4E97E7;
     z-index: -1;
-  }
-  
-  .day text.active, .weekday .active {
+    height: 56rpx;
+    width: 56rpx;
+    border-radius: 56rpx;
+    background: #386DF3;
+}
+
+.day text.active {
     color: #fff;
-  }
-  
-  .day text.reds {
-    color: #fff;
-  }
-  .data-text {
+}
+
+.weekday .active {
+    color: #707784;
+}
+
+.day text.reds:not(.active) {
+    color: #386DF3;
+}
+
+.data-text {
     font-size: 32rpx;
     font-family: PingFangSC-Medium;
 }
-  
