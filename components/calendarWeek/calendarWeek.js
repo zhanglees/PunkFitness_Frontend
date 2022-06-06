@@ -23,6 +23,11 @@ Component({
     dateListArray: ['日', '一', '二', '三', '四', '五', '六'],
   },
   ready: function () {
+    wx.loadFontFace({
+      family: 'Roboto-Regular',
+      source: 'url("https://www.zhangleixd.com/static/imgs/Roboto-Regular-14.ttf")',
+      success: console.log
+  })
     var today = utils.formatTime2(new Date());
     this.setData({
       today,

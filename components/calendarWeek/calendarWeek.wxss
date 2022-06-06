@@ -12,6 +12,7 @@
     text-align: left;
     color: #fff;
     font-size: 32rpx;
+    font-family: Roboto-Regular
   }
   
   .date-choose-swiper {
