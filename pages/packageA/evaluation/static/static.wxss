@@ -327,33 +327,21 @@ swiper {
     margin-bottom: 32rpx;
 }
 
-ul {
+.list {
     display: flex;
-}
-
-.left-container {
-    display: block;
-    flex: 1;
     width: 100%;
-    padding-right: 7rpx;
-}
-
-.right-container {
-    display: block;
-    flex: 1;
-    width: 100%;
-    padding-left: 7rpx;
-    border-left: 1px solid #F1F1F3;
-}
-
-
-/* .img-container{
-    flex: 1;
+    justify-content: space-between;
+    margin-bottom: 48rpx;
   }
-  
-  .words-container{
-    flex: 1;
-  } */
+  .li-container{
+    width: calc(50% - 7rpx);
+    display: flex;
+    flex-direction: column;
+  }
+  .li-container-title{
+    text-align: center;
+    margin-top: 32rpx;
+  }
 
 .img-container {
     box-sizing: border-box;
@@ -388,12 +376,9 @@ text {
 
 .text-container {
     display: block;
-    padding-left: 32rpx;
+    padding: 0 32rpx;
     font-size: 24rpx;
-    /* background-color: #F1F1F3; */
     border-bottom: 1px solid #F1F1F3;
-    /* border-right: 1px solid #F1F1F3;
-    border-left: 1px solid #F1F1F3; */
 }
 
 .text-top {

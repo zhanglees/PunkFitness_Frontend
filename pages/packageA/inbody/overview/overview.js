@@ -47,7 +47,7 @@ Page({
                 let startDate, endDate;
                 data.forEach((i, k) => {
                     if (i.weight && i.createTime) {
-                        const date = util.formatDate(new Date(i.createTime.replace(/\.|\-/g, '/')));
+                        const date = util.formatDateStr(i.createTime);
                         x_data.push(date);
                         y_data.push(i.weight);
                     }
@@ -62,7 +62,7 @@ Page({
                         endDate = x_data[x_data.length - 1];
                         this.OnWxChart(x_data, y_data);
                         this.setData({
-                            dataTitle: startDate + ' ~ ' + endDate,
+                            dataTitle: startDate + ' - ' + endDate,
                         })
                     }
                 })
@@ -107,12 +107,13 @@ Page({
             background: '#3D4257',
             animation: true, //是否开启动画
             legend: false,
-            dataLabel: true,
+            dataLabel: false,
             dataPointShape: true,
 
             series: [{
                 name: "体重",
                 data: y_data,
+                color: '#5586EB',
                 format: function(val, name) {
                     return val + '';
                 }
@@ -129,7 +130,10 @@ Page({
                 disableGrid: true,
                 titleFontColor: '#eee',
                 fontColor: '#eee',
-                gridColor: '#3D4257'
+                gridColor: '#3D4257',
+                format: function(val) {
+                    return val + 'kg';
+                }
             },
             width: windowWidth,
             height: 200,

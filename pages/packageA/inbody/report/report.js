@@ -195,13 +195,13 @@ Page({
             }).then(res => {
                 console.log('查询报告：', res.data)
                 const { userhealthcheckReport, userhealthcheckResource } = res.data;
-                let formResourceUrl = {};
-                for (var i in userhealthcheckResource) {
-                    userhealthcheckResource[i] && (formResourceUrl[i] = 'https://' + userhealthcheckResource[i]);
-                }
+                // let formResourceUrl = {};
+                // for (var i in userhealthcheckResource) {
+                //     userhealthcheckResource[i] && (formResourceUrl[i] = 'https://' + userhealthcheckResource[i]);
+                // }
                 this.setData({
                     formData: userhealthcheckReport,
-                    formResourceUrl
+                    formResourceUrl: userhealthcheckResource
                 });
             });
         } else {
@@ -439,6 +439,7 @@ Page({
         wx.canvasToTempFilePath({
             x: 0,
             y: 0,
+            fileType: 'jpg',
             canvasId: 'share',
             canvas: canvas,
             width: that.data.widths,

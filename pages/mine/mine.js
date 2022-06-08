@@ -25,15 +25,15 @@ Page({
      */
     onLoad: function(options) {
         const _this = this;
-        wx.getSystemInfo({
-            success: function(res) {
-                if (res.platform == "ios") {
-                    _this.setData({
-                        showBuy: false,
-                    })
-                }
-            }
-        })
+        // wx.getSystemInfo({
+        //     success: function(res) {
+        //         if (res.platform == "ios") {
+        //             _this.setData({
+        //                 showBuy: false,
+        //             })
+        //         }
+        //     }
+        // })
         wx.loadFontFace({
                 global: true,
                 family: 'Roboto-Bold',

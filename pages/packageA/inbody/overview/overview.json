@@ -3,5 +3,6 @@
     "mp-icon": "weui-miniprogram/icon/icon"
   },
   "navigationBarTitleText": "体测报告",
-  "navigationBarBackgroundColor": "#3D4257"
+  "navigationBarBackgroundColor": "#3D4257",
+  "navigationBarTextStyle": "white"
 }

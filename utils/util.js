@@ -18,13 +18,17 @@ const formatDate = date => {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    return `${[year, month, day].map(formatNumber).join('-')}`
+    return `${[year, month, day].map(formatNumber).join('/')}`
   }else{
     return '';
   }
 }
 
+const formatDateStr = date => {
+  return date ? date.match(/[0-9]+-[0-9]+-[0-9]+/)[0].replace(/-/g, '/') : '--';
+}
 module.exports = {
   formatTime,
-  formatDate
+  formatDate,
+  formatDateStr
 }

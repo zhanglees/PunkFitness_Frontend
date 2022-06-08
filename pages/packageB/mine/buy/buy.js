@@ -8,14 +8,17 @@ Page({
     data: {
         buyList: [{
             title: '连续包月',
+            iOSTitle: '会员月卡',
             price: '9',
             priceDifference: 30
         }, {
             title: '连续包季',
+            iOSTitle: '会员季卡',
             price: '80',
             priceDifference: 30
         }, {
             title: '连续包年',
+            iOSTitle: '会员年卡',
             price: '299',
             priceDifference: 30
         }],
@@ -23,7 +26,8 @@ Page({
         detail: [{
             title: '会员服务内容',
             list: ['不限量客户档案管理;', '不限量管理会员数量;', '不限制推广返现的提现金额。']
-        }]
+        }],
+        isiOS: false,
     },
 
     /**
@@ -37,6 +41,16 @@ Page({
             success: console.log
         })
         this.data.userId = wx.getStorageSync('mp-req-user-id');
+        const _this = this;
+        wx.getSystemInfo({
+            success: function(res) {
+                if (res.platform == "ios") {
+                    _this.setData({
+                        isiOS: true,
+                    })
+                }
+            }
+        })
     },
     changeCurrent(e) {
         const index = e.currentTarget.dataset.index;

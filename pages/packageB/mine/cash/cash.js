@@ -170,7 +170,7 @@ Page({
       },
     tapDialogButton(e) {
         const _this = this;
-        console.log(8888, e.currentTarget)
+        // console.log(8888, e.currentTarget)
         // if(e.detail.index === 1){
             if( !this.data.authAlbum ){
                 this.getSetting();

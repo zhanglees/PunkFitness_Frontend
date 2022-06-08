@@ -8,10 +8,10 @@
     <view class="buy-list">
         <view wx:for="{{buyList}}" wx:key="index" bindtap="changeCurrent" data-index="{{index}}"
             class="buy-item {{current == index ? 'buy-item_act' : ''}}">
-            <view wx:if="{{item.title == '连续包月'}}" class="new-user-style">新用户立减</view>
-            <view class="buy-item-title">{{item.title}}</view>
-            <view class="{{ item.title == '连续包月' ?'delete-style' :''}}">
-                <view class="buy-original-price {{item.title == '连续包月' ? 'buy-continuity' : ''}}">{{item.title != '连续包月'
+            <view wx:if="{{index == 0}}" class="new-user-style">新用户立减</view>
+            <view class="buy-item-title">{{isiOS ? item.iOSTitle : item.title}}</view>
+            <view class="{{ index == 0 ?'delete-style' :''}}">
+                <view class="buy-original-price {{index == 0 ? 'buy-continuity' : ''}}">{{index != 0
                     ? '多省￥':'￥' }}{{item.priceDifference}}</view>
             </view>
             <view class="buy-item-price">

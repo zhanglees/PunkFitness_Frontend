@@ -208,7 +208,7 @@ Page({
     buttontap(e) {
         if (e.detail.index === 1) {
             const changeItem = this.data.changeItem;
-            console.log(88888, changeItem)
+            // console.log(88888, changeItem)
             const data = this.data.formData;
             data[changeItem.id] = changeItem.value;
             app.req.api.modifyUserInfoById(data).then(res => {

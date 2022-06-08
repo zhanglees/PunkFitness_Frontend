@@ -109,7 +109,22 @@ Page({
         dialogButtons: [{ text: '取消' }, { text: '确定' }],
         editedIndex: [], //这个数组用来记录被编辑过的动作索引
         newAction: [], //编辑时新增动作
-        viewVideoUrl: ''
+        viewVideoUrl: '',
+        showChangeDialog: false,
+        showinputClose: false,
+        showChangeButtons: [{
+                type: 'default',
+                className: 'dialog-btn-cancel',
+                text: '取消',
+                value: 0
+            },
+            {
+                type: 'primary',
+                className: 'dialog-btn-confirm',
+                text: '确认',
+                value: 1
+            }
+        ]
     },
     /**
      * Lifecycle function--Called when page load
@@ -261,26 +276,33 @@ Page({
             actionList: list
         })
     },
+    //确定修改数据
     bindSelChangeEdit(e) {
-        const { index, name } = e.currentTarget.dataset;
-        const valueIndex = e.detail.value;
-        let value = '';
+        // const { index, name } = e.currentTarget.dataset;
+        // const valueIndex = e.detail.value;
+        const { index, name, value, customizeValue } = this.data.changeItem;
+        let valueName = '';
         if (name == 'trainingArea') {
-            value = this.data.trainingPart[valueIndex].name;
+            valueName = this.data.trainingPart[value].name;
             this.setData({
-                [`actionList[${index}]`]: '',
-                [`actionList[${index}]`]: ''
+                [`actionList[${index}].action`]: '',
+                [`actionList[${index}].actionName`]: ''
             });
         } else if (name == 'action') {
             const trainingArea = this.data.actionList[index].trainingArea;
-            value = this.data.trainingPart[trainingArea].actionList[valueIndex];
+            valueName = this.data.trainingPart[trainingArea].actionList[value];
         } else {
-            value = this.data.equipment[valueIndex];
+            valueName = this.data.equipment[value];
+        }
+        if(valueName == '自定义'){
+            valueName = customizeValue
         }
         this.data.editedIndex.push(index);
         this.setData({
-            [`actionList[${index}].${name}`]: valueIndex,
-            [`actionList[${index}].${name}Name`]: value,
+            [`actionList[${index}].${name}`]: value,
+            [`actionList[${index}].${name}Name`]: valueName,
+            showCustomize: false,
+            showChangeDialog: false
         });
     },
     inputChangeEdit(e) {
@@ -557,6 +579,83 @@ Page({
                     icon: 'error'
                 })
             }
+        })
+    },
+    // 弹窗内选择change，更新changeItem
+    bindDialogSelChange(e){
+        const value = e.detail.value[0];
+        this.data.changeItem.value = value;
+        // this.setData({
+        //     ['changeItem.customizeValue']: ''
+        // })
+    },
+    // 弹窗确定，写数据
+    changeDialogBtntap(e) {
+        if (e.detail.index === 1) {
+            const changeItem = this.data.changeItem;
+            if(!this.data.showCustomize){
+                //选择框
+                // console.log(99999, changeItem.range[changeItem.value])
+                if(changeItem.range[changeItem.value] == '自定义'){
+                    this.setData({
+                        showCustomize: true
+                    })
+                }else{
+                    this.bindSelChangeEdit()
+                }
+            }else{
+                //输入框
+                if(!changeItem.customizeValue){
+                    wx.showToast({
+                        title: '不可为空!'
+                    })
+                    return false;
+                }else{
+                    this.bindSelChangeEdit()
+                }
+            }
+        } else {
+            //取消
+            if(this.data.showCustomize){
+                this.setData({
+                    showCustomize: false
+                })
+            }else{
+                this.setData({
+                    showChangeDialog: false
+                })
+            }
+        }
+    },
+    //点击出弹窗选择
+    changeInfo(e) {
+        const { name, index, range, type } = e.currentTarget.dataset;
+        const value = this.data.actionList[index][name] || 0;
+        this.setData({
+            changeItem: {
+                name, 
+                index, 
+                range, 
+                type
+            },
+            showChangeDialog: true
+        });
+        this.setData({
+            ['changeItem.value']: value,
+            ['changeItem.customizeValue']: range[value]=='自定义' ? this.data.actionList[index][name + 'Name'] : ''
+        })
+    },
+    customizeInput(e) {
+        const value = e.detail.value;
+        this.setData({
+            ['changeItem.customizeValue']: value,
+            showinputClose: (value.length > 0)
+        })
+    },
+    resetInput(e) {
+        this.setData({
+            ['changeItem.customizeValue']: '',
+            showinputClose: false
         })
     },
     /**

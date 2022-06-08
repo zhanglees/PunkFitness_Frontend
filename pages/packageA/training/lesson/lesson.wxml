@@ -46,21 +46,27 @@
                 <view class="action-item-e-content">
                     <view class="action-edit-item">
                         <view class="action-edit-item-label">训练部位</view>
-                        <picker class="physical-item-input action-edit-item-input" placeholder="请选择" bindchange="bindSelChangeEdit" data-name="trainingArea" data-index="{{index}}" value="{{action.trainingArea}}" range="{{trainingPart}}" range-key="name">
+                        <view class="physical-item-input action-edit-item-input" bindtap="changeInfo" data-type="训练部位" data-name="trainingArea" data-index="{{index}}" data-range="{{trainingPart}}">
+                        <!-- <picker class="physical-item-input action-edit-item-input" placeholder="请选择" bindchange="bindSelChangeEdit" data-name="trainingArea" data-index="{{index}}" value="{{action.trainingArea}}" range="{{trainingPart}}" range-key="name"> -->
                             <view class="weui-select {{!trainingPart[action.trainingArea].name ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].name || '请选择'}}</view>
-                        </picker>
+                        <!-- </picker> -->
+                        </view> 
                     </view>
                     <view class="action-edit-item">
                         <view slot="title" class="action-edit-item-label">动作</view>
-                        <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="action" data-index="{{index}}" value="{{action.action}}" range="{{trainingPart[action.trainingArea].actionList}}" disabled="{{!action.trainingArea}}">
-                            <view class="weui-select {{!trainingPart[action.trainingArea].actionList[action.action] ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].actionList[action.action] || '请选择'}}</view>
-                        </picker>
+                        <view class="physical-item-input action-edit-item-input" bindtap="changeInfo" data-type="动作" data-name="action" data-index="{{index}}" data-range="{{trainingPart[action.trainingArea].actionList}}">
+                        <!-- <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="action" data-index="{{index}}" value="{{action.action}}" range="{{trainingPart[action.trainingArea].actionList}}" disabled="{{!action.trainingArea}}"> -->
+                            <view class="weui-select {{!trainingPart[action.trainingArea].actionList[action.action] ? 'select-placeholder' : ''}}">{{action.actionName || '请选择'}}</view>
+                        <!-- </picker> -->
+                        </view> 
                     </view>
                     <view class="action-edit-item">
                         <view slot="title" class="action-edit-item-label">器械</view>
-                        <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="equipment" data-index="{{index}}" value="{{action.equipment}}" range="{{equipment}}">
-                            <view class="weui-select {{!equipment[action.equipment] ? 'select-placeholder' : ''}}">{{equipment[action.equipment] || '请选择'}}</view>
-                        </picker>
+                        <view class="physical-item-input action-edit-item-input" bindtap="changeInfo" data-type="器械" data-name="equipment" data-index="{{index}}" data-range="{{equipment}}">
+                        <!-- <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="equipment" data-index="{{index}}" value="{{action.equipment}}" range="{{equipment}}"> -->
+                            <view class="weui-select {{!equipment[action.equipment] ? 'select-placeholder' : ''}}">{{action.equipmentName || '请选择'}}</view>
+                        <!-- </picker> -->
+                        </view> 
                     </view>
                     <view class="action-edit-item" prop="counterWeight" footer=" kg" title="配重">
                         <view class="action-edit-item-label">配重</view>
@@ -146,4 +152,24 @@
     <mp-dialog title="确认删除该动作" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     </mp-dialog>
     <!-- <canvas id="canvas" type="2d" height="343" width="193"></canvas> -->
+
+    <mp-half-screen-dialog closabled="{{false}}" extClass="change-dialog" bindbuttontap="changeDialogBtntap" show="{{showChangeDialog}}" title="{{changeItem.type}}" buttons="{{showChangeButtons}}">
+        <view slot="desc">
+            <view wx:if="{{!showCustomize}}">
+                <picker-view indicator-class="dialog-picker-item-act" class="dialog-picker" value="{{[changeItem.value]}}" bindchange="bindDialogSelChange">
+                    <picker-view-column>
+                        <view wx:for="{{changeItem.range}}" wx:key="index" class="dialog-picker-item {{item=='自定义' ? 'dialog-picker-item-cus' : ''}}">{{changeItem.name == 'trainingArea' ? item.name : item}}</view>
+                    </picker-view-column>
+                </picker-view>
+            </view>
+            <view class="input-wrapper" wx:else>
+                <input type="number" bindinput="customizeInput" value="{{changeItem.customizeValue}}" class="change-input" placeholder="请输入" />
+                <view class="input-right">
+                    <view class="close-icon" catchtap="resetInput" hidden="{{!showinputClose}}">
+                        <image src="/images/icons/close-icon.png" class="close-icon-i" />
+                    </view>
+                </view>
+            </view>
+        </view>
+    </mp-half-screen-dialog>
 </view>

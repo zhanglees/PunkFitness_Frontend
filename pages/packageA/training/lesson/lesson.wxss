@@ -522,3 +522,108 @@
     top: 46rpx;
     left: 108rpx;
 }
+
+
+
+
+.change-dialog .weui-half-screen-dialog__ft {
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.change-dialog .weui-half-screen-dialog__ft .weui-btn {
+    padding: 0;
+    width: 328rpx !important;
+    height: 88rpx;
+    line-height: 88rpx;
+    border-radius: 12rpx;
+    font-size: 32rpx;
+}
+
+.change-dialog .weui-half-screen-dialog__ft .dialog-btn-cancel {
+    border: 1px solid #E5E5E9;
+    color: #707784;
+    margin: 0;
+    margin-right: 16rpx;
+    background-color: #fff;
+    font-weight: normal;
+}
+
+.change-dialog .weui-half-screen-dialog__ft .dialog-btn-confirm {
+    background: #386DF3;
+    color: #FFFFFF;
+}
+
+.change-dialog .change-input,
+.change-dialog .input-wrapper {
+    height: 104rpx;
+    background: #F7F7F9;
+    border-radius: 12rpx;
+    box-sizing: border-box;
+}
+
+.change-dialog .input-wrapper {
+    position: relative;
+    padding: 0 100rpx 0 32rpx;
+}
+
+.change-dialog .change-input {
+    font-size: 28rpx;
+    line-height: 104rpx;
+}
+
+.change-dialog .input-right {
+    position: absolute;
+    right: 32rpx;
+    top: 35rpx;
+    font-size: 28rpx;
+    color: #707784;
+}
+
+.change-dialog .close-icon {
+    background: #D2D2D3;
+    width: 36rpx;
+    height: 36rpx;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 32rpx;
+}
+
+.change-dialog .close-icon-i {
+    width: 36rpx;
+    height: 36rpx;
+    border-radius: 50%;
+}
+
+.change-dialog .dialog-picker {
+    width: 100%;
+    height: 176rpx;
+}
+
+.change-dialog .dialog-picker-item {
+    line-height: 88rpx;
+    text-align: center;
+}
+
+.change-dialog .dialog-picker-item-act {
+    /* color: #386DF3; */
+    font-size: 32rpx;
+    height: 88rpx;
+}
+.dialog-picker-item-cus{
+    color: #386DF3;
+}
+.weui-half-screen-dialog__title {
+    text-align: center;
+}
+
+.weui-half-screen-dialog__ft .weui-btn:nth-last-child(n+2)+.weui-btn {
+    margin: 0;
+    margin-left: 16rpx;
+    font-weight: 400;
+}
