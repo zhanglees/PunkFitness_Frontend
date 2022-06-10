@@ -7,7 +7,7 @@
         <image wx:elif="{{!hasUserInfo && canIUseGetUserProfile}}" bindtap="bindViewTap" class="head-portrait" src="/images/avatar.png" mode="cover" bindtap="getUserProfile"></image>
     </view> -->
     <view class="form">
-        <mp-cell wx:for="{{info}}" wx:key="index" title="{{item.name}}" link bindtap="{{item.id=='headImg' ? 'changeAvatar' : 'changeInfo'}}" data-index="{{index}}">
+        <mp-cell class="form-cell" wx:for="{{info}}" wx:key="index" title="{{item.name}}" link bindtap="{{item.id=='headImg' ? 'changeAvatar' : 'changeInfo'}}" data-index="{{index}}">
             <image wx:if="{{item.id=='headImg'}}" src="{{formData.headImg || '/images/avatar.png'}}" class="userinfo-avatar-img" />
             <block wx:elif="{{formData[item.id] != null}}">
                 <text wx:if="{{item.id == 'sex'}}">{{genders[formData.sex]}}</text>

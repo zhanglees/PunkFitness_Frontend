@@ -36,7 +36,7 @@
         <view class="lesson-item lesson-item-edit {{expand?'lesson-item-edit-expand':''}} ">
             <view class="lesson-item-title" bindtap="trainingItemExpand">
                 正式训练
-                <mp-icon class="arrow-down-icon" type="field" icon="arrow" color="#333" size="{{10}}"></mp-icon>
+                <image src="/images/icons/arrow-up-icon.png" class="title-arrow-icon" />
             </view>
             <view wx:for="{{actionList}}" wx:key="action" wx:for-item="action" class="action-item-e">
                 <view class="action-item-e-title">
@@ -48,7 +48,9 @@
                         <view class="action-edit-item-label">训练部位</view>
                         <view class="physical-item-input action-edit-item-input" bindtap="changeInfo" data-type="训练部位" data-name="trainingArea" data-index="{{index}}" data-range="{{trainingPart}}">
                         <!-- <picker class="physical-item-input action-edit-item-input" placeholder="请选择" bindchange="bindSelChangeEdit" data-name="trainingArea" data-index="{{index}}" value="{{action.trainingArea}}" range="{{trainingPart}}" range-key="name"> -->
-                            <view class="weui-select {{!trainingPart[action.trainingArea].name ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].name || '请选择'}}</view>
+                            <view class="weui-select {{!trainingPart[action.trainingArea].name ? 'select-placeholder' : ''}}">{{trainingPart[action.trainingArea].name || '请选择'}}
+                            </view>
+                            <image src="/images/icons/arrow-down.png" class="edit-sel-arrow" />
                         <!-- </picker> -->
                         </view> 
                     </view>
@@ -56,7 +58,9 @@
                         <view slot="title" class="action-edit-item-label">动作</view>
                         <view class="physical-item-input action-edit-item-input" bindtap="changeInfo" data-type="动作" data-name="action" data-index="{{index}}" data-range="{{trainingPart[action.trainingArea].actionList}}">
                         <!-- <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="action" data-index="{{index}}" value="{{action.action}}" range="{{trainingPart[action.trainingArea].actionList}}" disabled="{{!action.trainingArea}}"> -->
-                            <view class="weui-select {{!trainingPart[action.trainingArea].actionList[action.action] ? 'select-placeholder' : ''}}">{{action.actionName || '请选择'}}</view>
+                            <view class="weui-select {{!trainingPart[action.trainingArea].actionList[action.action] ? 'select-placeholder' : ''}}">{{action.actionName || '请选择'}}
+                            </view>
+                            <image src="/images/icons/arrow-down.png" class="edit-sel-arrow" />
                         <!-- </picker> -->
                         </view> 
                     </view>
@@ -64,23 +68,25 @@
                         <view slot="title" class="action-edit-item-label">器械</view>
                         <view class="physical-item-input action-edit-item-input" bindtap="changeInfo" data-type="器械" data-name="equipment" data-index="{{index}}" data-range="{{equipment}}">
                         <!-- <picker class="physical-item-input action-edit-item-input" bindchange="bindSelChangeEdit" data-name="equipment" data-index="{{index}}" value="{{action.equipment}}" range="{{equipment}}"> -->
-                            <view class="weui-select {{!equipment[action.equipment] ? 'select-placeholder' : ''}}">{{action.equipmentName || '请选择'}}</view>
+                            <view class="weui-select {{!equipment[action.equipment] ? 'select-placeholder' : ''}}">{{action.equipmentName || '请选择'}}
+                            </view>
+                            <image src="/images/icons/arrow-down.png" class="edit-sel-arrow" />
                         <!-- </picker> -->
                         </view> 
                     </view>
                     <view class="action-edit-item" prop="counterWeight" footer=" kg" title="配重">
                         <view class="action-edit-item-label">配重</view>
-                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="counterWeight" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.counterWeight}}" />
+                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="counterWeight" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.counterWeight}}" placeholder-class="input-placeholder" />
                         <view class="action-edit-item-unit">kg</view>
                     </view>
                     <view class="action-edit-item">
                         <view class="action-edit-item-label">单组次数</view>
-                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.numberSinglegroup}}" />
+                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="numberSinglegroup" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.numberSinglegroup}}" placeholder-class="input-placeholder" />
                         <view class="action-edit-item-unit">次</view>
                     </view>
                     <view class="action-edit-item">
                         <view class="action-edit-item-label">组数</view>
-                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="groups" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.groups}}" />
+                        <input bindinput="inputChangeEdit" type="number" data-index="{{index}}" data-name="groups" class="weui-input input-value action-edit-item-input" placeholder="请输入" value="{{action.groups}}" placeholder-class="input-placeholder" />
                         <view class="action-edit-item-unit">组</view>
                     </view>
                 </view>
@@ -117,7 +123,7 @@
     <view class="lesson-content lesson-content-view" wx:else>
         <view class="lesson-item">
             <view class="lesson-item-title">热身方式：</view>
-            <view>{{warmUp || '--'}}</view>
+            <view class="lesson-item-v">{{warmUp || '--'}}</view>
         </view>
         <view class="lesson-item lesson-item-c">
             <view class="lesson-item-title">正式训练：</view>
@@ -131,7 +137,7 @@
                             <!-- <video class="user-video" data-src="{{action.videourl}}" src="{{action.videourl}}" object-fit="contain" style="{{action.videoStyle}}" data-index="{{i}}" data-type="view" bindloadedmetadata="videometa"></video> -->
                         </view>
                         <view class="action-item-head-c">
-                            <view class="action-item-actionname">{{action.actionName}}</view>
+                            <view class="action-item-actionname lesson-item-v">{{action.actionName}}</view>
                             <view class="action-item-trainname action-item-trainname{{i}}">动作{{i+1}}</view>
                         </view>
                     </view>
@@ -145,7 +151,7 @@
         </view>
         <view class="lesson-item">
             <view class="lesson-item-title">放松方式：</view>
-            <view>{{relax || '--'}}</view>
+            <view class="lesson-item-v">{{relax || '--'}}</view>
         </view>
     </view>
     <video src="{{viewVideoUrl}}" id="viewVideo" direction="{{viewVideoDirection}}" bindfullscreenchange="leaveVideo" class="video-shadow"></video>

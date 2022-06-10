@@ -34,12 +34,11 @@ page {
 .form {
     width: 100%;
     box-sizing: border-box;
-    padding: 20rpx 0;
     background-color: #fff;
     border-radius: 12rpx;
 }
 
-.form .weui-cell::after {
+.form .form-cell:not(:last-child) .weui-cell::after {
     content: " ";
     position: absolute;
     left: 32rpx;

@@ -7,18 +7,15 @@ Page({
      */
     data: {
         buyList: [{
-            title: '连续包月',
-            iOSTitle: '会员月卡',
+            title: '会员月卡',
             price: '9',
             priceDifference: 30
         }, {
-            title: '连续包季',
-            iOSTitle: '会员季卡',
+            title: '会员季卡',
             price: '80',
             priceDifference: 30
         }, {
-            title: '连续包年',
-            iOSTitle: '会员年卡',
+            title: '会员年卡',
             price: '299',
             priceDifference: 30
         }],
