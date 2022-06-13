@@ -68,6 +68,18 @@ Page({
             [`formData.customerTag`]: value.join(',')
         });
     },
+    resetFormData() {
+        this.setData({
+            formData: {
+                userName: '',
+                phone: '',
+                sex: 0,
+                remarks: '',
+                birthday: '',
+                customerTag: ''
+            }
+        })
+    },
     submitForm() {
         const _this = this;
         // this.triggerEvent('showAddRes');
@@ -100,7 +112,7 @@ Page({
                         ...data
                     })
                     .then((res) => {
-                        console.log('返回：', res);
+                        // console.log('返回：', res, res.code == 1012);
                         if (res.code == 0) {
                             const id = res.data.id;
                             if (id) {
@@ -110,16 +122,16 @@ Page({
                                     userid: id
                                 })
                                 wx.showToast({
-                                    title: '保存成功'
+                                    title: '添加成功'
                                 });
                                 wx.redirectTo({
                                     url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + this.data.userid,
                                 })
 
-                            } else {
-                                this.triggerEvent('showAddRes');
                             }
                             // _this.startWaiting();
+                        } else if (res.code == 1012) {
+                            this.triggerEvent('showAddRes');
                         } else {
                             this.setData({
                                 error: res.message
@@ -140,39 +152,39 @@ Page({
         })
     },
     /***轮询接口判断是否绑定成功 */
-    qrStatusUpdate(_this) {
-        const id = _this.data.userid;
-        var maxWait = 10 //超时次数
-        var newWait = _this.data.waitTimes + 1 //执行的次数
-        if (newWait >= maxWait) { //超时了
-            console.log(new Date(), '轮询超时')
-        } else { //未超时
-            var time = setTimeout(function() { _this.qrStatusUpdate(_this) }, 2000)
-            _this.data.timeList.push(time) // 存储定时器
-                //这里发送请求判断绑定结果，如果绑定成功则进入拿到数据流程
-            console.log(new Date(), '第', newWait, '次轮询中...')
-            if (newWait === 1) { //拿到数据，轮询终止
-                console.log(new Date(), '拿到了所需数据！轮询停止')
-                wx.redirectTo({
-                    url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + id,
-                })
-                _this.stopWaiting()
-            } else { //继续轮询
-                _this.setData({
-                    waitTimes: newWait
-                })
-            }
-        }
-    },
-    startWaiting() {
-        const _this = this;
-        setTimeout(function() { _this.qrStatusUpdate(_this) }, 2000)
-    },
-    stopWaiting() {
-        for (var i = 0; i < this.data.timeList.length; i++) {
-            clearTimeout(this.data.timeList[i]); //清除了所有定时器
-        }
-    },
+    // qrStatusUpdate(_this) {
+    //     const id = _this.data.userid;
+    //     var maxWait = 10 //超时次数
+    //     var newWait = _this.data.waitTimes + 1 //执行的次数
+    //     if (newWait >= maxWait) { //超时了
+    //         console.log(new Date(), '轮询超时')
+    //     } else { //未超时
+    //         var time = setTimeout(function() { _this.qrStatusUpdate(_this) }, 2000)
+    //         _this.data.timeList.push(time) // 存储定时器
+    //             //这里发送请求判断绑定结果，如果绑定成功则进入拿到数据流程
+    //         console.log(new Date(), '第', newWait, '次轮询中...')
+    //         if (newWait === 1) { //拿到数据，轮询终止
+    //             console.log(new Date(), '拿到了所需数据！轮询停止')
+    //             wx.redirectTo({
+    //                 url: '/pages/packageA/memberinfo/memberinfo' + '?id=' + id,
+    //             })
+    //             _this.stopWaiting()
+    //         } else { //继续轮询
+    //             _this.setData({
+    //                 waitTimes: newWait
+    //             })
+    //         }
+    //     }
+    // },
+    // startWaiting() {
+    //     const _this = this;
+    //     setTimeout(function() { _this.qrStatusUpdate(_this) }, 2000)
+    // },
+    // stopWaiting() {
+    //     for (var i = 0; i < this.data.timeList.length; i++) {
+    //         clearTimeout(this.data.timeList[i]); //清除了所有定时器
+    //     }
+    // },
     // confirmBind() {
     //     //展示一个列表选择
     //     wx.redirectTo({
@@ -185,10 +197,10 @@ Page({
     //     })
     // },
     onHide: function() {
-        this.stopWaiting();
+        // this.stopWaiting();
     },
     onUnload: function() {
-        this.stopWaiting();
+        // this.stopWaiting();
     },
     onload() {},
 })
